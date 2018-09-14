@@ -1,96 +1,200 @@
 #' @title Get Phyloseq Object
+#' @description Create a phyloseq object using a biom file, phylogenetic tree file, and a
+#'  metadata file. Alternatively, an .Rdata file can be used.  For now this funciton takes
+#'  output from Qiime.  The data provided by this package was processed by the NIH's Nephele
+#'  pipeline.
+#' @param biom_file A file in the BIOM format. Default: NULL
+#' @param tree_file A Phylogenetic tree file. Default: NULL
+#' @param metadata_file Sample metadata in tab delimited format. Default: NULL
+#' @param parse_func The parse function used to parse taxonomy strings from
+#'  Greengenes or SILVA database. Default: NULL
+#' @param rdata_file A .Rdata file.  Default: NULL
+#' @param path A path for the output tree file.  Default: NULL
+#' @return A phyloseq object, and a phylogenetic tree file if one does not already exist.
+#' @pretty_print TRUE
+#' @details This function heavily relys on the phyloseq package to import data into R.
+#'  It also requires you to use an absolute path to your data files or for your data files
+#'  to be in the working directory.
+#' @examples
+#' \dontrun{
 #'
-#' @description Import or Create a phyloseq object
-#'
-#' @param b_file DESCRIPTION.
-#' @param t_file DESCRIPTION.
-#' @param md_file DESCRIPTION.
-#' @param parse_func DESCRIPTION.
-#' @param rdata_file DESCRIPTION.
-#'
-#' @return A phyloseq object
+#' > biom_file <- "input_data/silva_OTU.biom"
+#' > md_file <- "input_data/nephele_metadata.txt"
+#' > phy_obj <- get_phyloseq_obj(biom_file=biom_file, metadata_file=md_file)
+#' }
 #' @export
-get_phyloseq_obj <- function(b_file=NULL, t_file=NULL, md_file=NULL, parse_func=NULL, rdata_file=NULL) {
+#' @family Data Importers
+#' @rdname get_phyloseq_obj
+#' @seealso
+#'  \code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq]{phy_tree}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
+#'  \code{\link[ape]{root}}
+#'  \code{\link[MicrobiomeR]{root_by_longest_edge}}
+
+#' @importFrom phyloseq import_biom phy_tree import_qiime_sample_data merge_phyloseq
+#' @importFrom ape is.rooted write.tree
+get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file = NULL, parse_func = NULL, rdata_file = NULL, path = NULL) {
   if (!is.null(rdata_file)) {
     load(rdata_file)
     phyloseq_obj <- get("phyloseq_obj")
     return(phyloseq_obj)
   } else {
     # Load the biom file and the Full tree file into a phyloseq object
-    phyloseq_biom <- import_biom(BIOMfilename = b_file, parseFunction = parse_func, treefilename = t_file)
+    phyloseq_biom <- phyloseq::import_biom(BIOMfilename = biom_file, parseFunction = parse_func, treefilename = tree_file)
     # Write to a tree file that subsets our data
-    if (!is.null(t_file)) {
-      phyloseq_tree <- phy_tree(phyloseq_biom)
+    if (!is.null(tree_file)) {
+      phyloseq_tree <- phyloseq::phy_tree(phyloseq_biom)
       # If not rooted, then root the tree using the longest edge(s) as an ougroup
       if (!ape::is.rooted(phyloseq_tree)) {
-        phyloseq_tree <- root_by_longest_edge(phyloseq_tree)
+        ape_tree <- MicrobiomeR::root_by_longest_edge(phyloseq_tree)
       }
-      # mkdir("output")
-      # write.tree(biom_tree, "output/OTU_table.tre")
+      tree_path <- mkdir(dirname = "output", path = path)
+      ape::write.tree(ape_tree, sprintf("%s/rooted_%s", tree_path, tree_file))
     }
     # Extract metadata from the phyloseq object:
-    phyloseq_metadata <- import_qiime_sample_data(md_file)
+    phyloseq_metadata <- phyloseq::import_qiime_sample_data(metadata_file)
 
     # Create a phyloseq object with all of our data
-    phyloseq_obj <- merge_phyloseq(phyloseq_biom, phyloseq_metadata)
-    if (!is.null(t_file)) {
-      phy_tree(phyloseq_obj) <- root_by_longest_edge(phy_tree(phyloseq_obj))
+    phyloseq_obj <- phyloseq::merge_phyloseq(phyloseq_biom, phyloseq_metadata)
+    if (!is.null(tree_file)) {
+      phy_tree(phyloseq_obj) <- MicrobiomeR::root_by_longest_edge(phy_tree(phyloseq_obj))
     }
     return(phyloseq_obj)
   }
 }
 
 
-#' @title Pick New Outgroup
-#'
-#' @description The tree rooting functions inspired by recent comments in https://github.com/joey711/phyloseq/issues/597
-#'
-#' @param unrooted_tree DESCRIPTION.
-#'
-#' @return RETURN_DESCRIPTION
+
+#' @title Pick Outgroup for Tree
+#' @description Pick an outgroup for rooting a phylogenetic tree.
+#' @param unrooted_tree An unrooted tree object.
+#' @return A new tree with the longest bracnh as the outgroup.
+#' @pretty_print TRUE
+#' @details This function preprocess a phylogenetic tree for rooting by the longest edge.
+#' Please see this issue for more details \url{https://github.com/joey711/phyloseq/issues/597}.
 #' @export
+#' @family Phylogenetic Tree Manipulators
+#' @rdname pick_new_outgroup
+#' @seealso
+#'  \code{\link[data.table]{data.table-package}}
+#'
+#'  \code{\link[ape]{summary.phylo}}
+#' @importFrom data.table data.table
+#' @importFrom ape Ntip
 pick_new_outgroup <- function(unrooted_tree) {
-  require("magrittr")
-  require("data.table")
-  require("ape") # ape::Ntip
+  # Set up data
+  tree_DT <- data.table::data.table(unrooted_tree$edge)
+  tree_DT_len <- data.table::data.table(length = unrooted_tree$edge.length)
+  tree_DT_id <- data.table::data.table(id = unrooted_tree$tip.label)
+  tree_tips <- ape::Ntip(unrooted_tree)
   # tablify parts of tree that we need.
-  treeDT <-
-    cbind(
-      data.table(unrooted_tree$edge),
-      data.table(length = unrooted_tree$edge.length)
-    )[1:Ntip(unrooted_tree)] %>%
-    cbind(data.table(id = unrooted_tree$tip.label))
+  treeDT <- cbind(tree_DT,tree_DT_len)[1:tree_tips] %>% cbind(tree_DT_id)
   # Take the longest terminal branch as outgroup
   new.outgroup <- treeDT[which.max(length)]$id
   return(new.outgroup)
 }
 
 
-#' @title Root by Longest Edge
-#'
-#' @description FUNCTION_DESCRIPTION
-#'
-#' @param unrooted_tree DESCRIPTION.
-#'
-#' @return RETURN_DESCRIPTION
+
+#' @title Root Phylogenetic Tree
+#' @description This function roots a phylogenetic tree object by it's longest edge.
+#' @param unrooted_tree An unrooted phylogenetic tree object.
+#' @return A rooted phlogenetic tree object.
+#' @pretty_print TRUE
+#' @details Please see this issue for more details \url{https://github.com/joey711/phyloseq/issues/597}.
 #' @export
+#' @family Phylogenetic Tree Manipulators
+#' @rdname root_by_longest_edge
+#' @seealso
+#'  \code{\link[ape]{root}}
+#' @importFrom ape root
 root_by_longest_edge <- function(unrooted_tree) {
   new.outgroup <- pick_new_outgroup(unrooted_tree)
   rootedTree <- ape::root(unrooted_tree, outgroup = new.outgroup, resolve.root = TRUE)
   return(rootedTree)
 }
 
-#' @title Parse SILVA Taxonomy
+
+
+#' @title Parse elements of a taxonomy vector
+#' @description These are provided as both example and default functions for
+#' parsing a character vector of taxonomic rank information for a single taxa.
+#' As default functions, these are intended for cases where the data adheres to
+#' the naming convention used by greengenes
+#' the naming convention used by greengenes and silva.
+#' (\url{http://greengenes.lbl.gov/cgi-bin/nph-index.cgi})
+#' or where the convention is unknown, respectively.
+#' To work, these functions -- and any similar custom function you may want to
+#' create and use -- must take as input a single character vector of taxonomic
+#' ranks for a single OTU, and return a \strong{named} character vector that has
+#' been modified appropriately (according to known naming conventions,
+#' desired length limits, etc.
+#' The length (number of elements) of the output named vector does \strong{not}
+#' need to be equal to the input, which is useful for the cases where the
+#' source data files have extra meaningless elements that should probably be
+#' removed, like the ubiquitous
+#' ``Root'' element often found in greengenes/QIIME taxonomy labels.
+#' In the case of \code{parse_taxonomy_default}, no naming convention is assumed and
+#' so dummy rank names are added to the vector.
+#' More usefully if your taxonomy data is based on greengenes, the
+#' \code{parse_taxonomy_greengenes} function clips the first 3 characters that
+#' identify the rank, and uses these to name the corresponding element according
+#' to the appropriate taxonomic rank name used by greengenes
+#' (e.g. \code{"p__"} at the beginning of an element means that element is
+#' the name of the phylum to which this OTU belongs).
+#' If you taxonomy data is based on SILVA, the \code{parse_taxonomy_silva_128} function
+#' clips the first 5 characters that identify rank, and uses these to name the
+#' corresponding element according to the appropriate taxonomic rank name used
+#' by SILVA (e.g. \code{"D_1__"} at the beginning of an element means that element
+#' is the name of the phylum to which this OTU belongs.
+#' Alternatively you can create your own function to parse this data.
+#' Most importantly, the expectations for these functions described above
+#' make them compatible to use during data import,
+#' specifcally the \code{\link{import_biom}} function, but
+#' it is a flexible structure that will be implemented soon for all phyloseq
+#' import functions that deal with taxonomy (e.g. \code{\link{import_qiime}}).
+#' @param char.vec (Required). A single character vector of taxonomic
+#'  ranks for a single OTU, unprocessed (ugly).
+#' @return A character vector in which each element is a different
+#'  taxonomic rank of the same OTU, and each element name is the name of
+#'  the rank level. For example, an element might be \code{"Firmicutes"}
+#'  and named \code{"phylum"}.
+#'  These parsed, named versions of the taxonomic vector should
+#'  reflect embedded information, naming conventions,
+#'  desired length limits, etc; or in the case of \code{\link{parse_taxonomy_default}},
+#'  not modified at all and given dummy rank names to each element.
+#' @pretty_print TRUE
+#' @details This function is currently under PR review by phyloseq in a well supported
+#' pull request: \url{https://github.com/joey711/phyloseq/pull/854}.  If you use this function,
+#' then please comment on the GitHub PR to encourage merging this feature.
+#' @examples \dontrun{
 #'
-#' @description This function parses SILVA data.
-#'
-#' @param char.vec DESCRIPTION.
-#'
-#' @return RETURN_DESCRIPTION
+#'  > taxvec1 = c("Root", "k__Bacteria", "p__Firmicutes", "c__Bacilli", "o__Bacillales", "f__Staphylococcaceae")
+#'  > parse_taxonomy_default(taxvec1)
+#'  > parse_taxonomy_greengenes(taxvec1)
+#'  > taxvec2 = c("Root;k__Bacteria;p__Firmicutes;c__Bacilli;o__Bacillales;f__Staphylococcaceae")
+#'  > parse_taxonomy_qiime(taxvec2)
+#'  > taxvec3 = c("D_0__Bacteria", "D_1__Firmicutes", "D_2__Bacilli", "D_3__Staphylococcaceae")
+#'  > parse_taxonomy_silva_128(taxvec3)
+#'  }
 #' @export
-parse_taxonomy_silva <- function(char.vec) {
+#' @usage parse_taxonomy_default(char.vec)
+#' parse_taxonomy_greengenes(char.vec)
+#' parse_taxonomy_silva_128(char.vec)
+#' parse_taxonomy_qiime(char.vec)
+#' @rdname parse_taxonomy_silva_128
+#' @seealso
+#'  \code{\link[phyloseq]{parse_taxonomy_default}}
+#'
+#'  \code{\link[phyloseq]{parse_taxonomy_greengenes}}
+#'
+#'  \code{\link[phyloseq]{parse_taxonomy_qiime}}
+#'
+#'  \code{\link[phyloseq]{import_biom}}
+#'
+#'  \code{\link[phyloseq]{import_qiime}}
+parse_taxonomy_silva_128 <- function(char.vec) {
   # Use default to assign names to elements in case problem with greengenes prefix
-  char.vec <- parse_taxonomy_default(char.vec)
+  char.vec <- phyloseq::parse_taxonomy_default(char.vec)
   # Check for unassigned taxa
   if (char.vec["Rank1"] == "Unassigned") {
     char.vec <- c(
@@ -133,14 +237,14 @@ parse_taxonomy_silva <- function(char.vec) {
   return(taxvec)
 }
 
-#' @title Parse Taxonomy Greengenes2
+#'  @title Parse Taxonomy Greengenes2
 #'
-#' @description  A custom Greengenes parsing function
+#'  @description  A custom Greengenes parsing function
 #'
-#' @param char.vec DESCRIPTION.
+#'  @param char.vec DESCRIPTION.
 #'
-#' @return RETURN_DESCRIPTION
-#' @export
+#'  @return RETURN_DESCRIPTION
+#'  @export
 parse_taxonomy_greengenes2 <- function(char.vec) {
   # Use default to assign names to elements in case problem with greengenes prefix
   char.vec <- parse_taxonomy_default(char.vec)
@@ -175,93 +279,203 @@ parse_taxonomy_greengenes2 <- function(char.vec) {
   return(taxvec)
 }
 
-#' @title OTU taxa to dataframe
+
+
+
+#' @title Convert Phyloseq Objects to Tibbles
+#' @description This function converts a phyloseq object to a tibble, while
+#' taking into account the treatment groups found in the sample metadata.
+#' @param phyloseq_obj A phyloseq object.
+#' @param treatment_groups A list of the treatment groups in the sample metadata.
+#' @return A list of tibbles containing all of the phyloseq data in a tidy format.
+#' @pretty_print TRUE
+#' @details MicrobiomeR was developed for processing Qiime data delivered by
+#' the NIH's Nephele pipeline (\url{https://nephele.niaid.nih.gov/}).   MicrobiomeR
+#' was also written using the tidyverse in order to make the workflow reproducible.
+#' This function was written with that data in mind.  In the future this function
+#' can be expanded to accept other data models.  The returned list will contain
+#' a tax tibble, an otu tibble, a sample data tibble, a full data tibble, a
+#' vector of otu names, and a vectors containing the names of treatment group
+#' samples.
 #'
-#' @description A function for manipulating a phyloseq object into a list containing the following tibbles:
-#' Tax table, OTU table, Metadata table, Stressed/Control Samples, OTU names, Merged Tax/OTU table
+#' @examples
+#' \dontrun{
 #'
-#' @param phyloseq_obj DESCRIPTION.
+#' > phy_obj <- get_phyloseq_object(...)
+#' > phy_tibble <- phyloseq_to_tibble(phy_obj, treatment_groups = list("Stressed", "Control"))
+#' > phy_tibble
+#' $tax
+#' # A tibble: 3 x 8
+#'   Kingdom Phylum       Class         Order            Family           Genus           Species          OTU
+#'   <fct>   <fct>        <fct>         <fct>            <fct>            <fct>           <fct>            <chr>
+#' 1 Archaea Euryarchaeo~ Methanobacte~ Methanobacteria~ Methanobacteria~ Methanobreviba~ uncultured arch~ JX522720.1.1265
+#' 2 Archaea Euryarchaeo~ Methanobacte~ Methanobacteria~ Methanobacteria~ Methanobreviba~ uncultured arch~ ADJS01014867.75~
+#' 3 Archaea Euryarchaeo~ Methanobacte~ Methanobacteria~ Methanobacteria~ Methanobreviba~ Ambiguous_taxa   AB906006.1.1368
 #'
-#' @return RETURN_DESCRIPTION
+#' $otu
+#' # A tibble: 3 x 49
+#'   Sample_1 Sample_2 Sample_3 Sample_6 Sample_9 Sample_10 Sample_13 Sample_14 Sample_17 Sample_21 Sample_22 Sample_24
+#'      <dbl>    <dbl>    <dbl>    <dbl>    <dbl>     <dbl>     <dbl>     <dbl>     <dbl>     <dbl>     <dbl>     <dbl>
+#' 1  0.             0  0.             0  0.       0          8.92e-6         0 0.0000154 0.0000268 0.0000851 0
+#' 2  0.             0  1.99e-5        0  0.       0          2.68e-5         0 0.0000154 0.0000625 0.0000638 0.000121
+#' 3  8.14e-5        0  1.15e-3        0  1.11e-5  0.000137   1.78e-5         0 0.0000154 0.0000179 0.000106  0.0000404
+#' #   Sample_56 <dbl>, Sample_58 <dbl>, Sample_8 <dbl>, Sample_4 <dbl>, Sample_52 <dbl>, Sample_36 <dbl>, OTU <chr>
+#'
+#' $sam
+#' # A tibble: 48 x 8
+#'    X.SampleID BarcodeSequence LinkerPrimerSequ~ ForwardFastqFile  ReverseFastqFile TreatmentGroup SampleName Description
+#'  * <fct>      <lgl>           <lgl>             <fct>             <fct>            <fct>               <int> <fct>
+#'  1 Sample_1   NA              NA                33749_S1_L001_R1~ 33749_S1_L001_R~ Stressed            33749 Fecal
+#'  2 Sample_2   NA              NA                33739_S2_L001_R1~ 33739_S2_L001_R~ Stressed            33739 Fecal
+#'  3 Sample_3   NA              NA                33737_S3_L001_R1~ 33737_S3_L001_R~ Stressed            33737 Fecal
+#' # ... with 38 more rows
+#'
+#' $stressed_samples
+#'  [1] "Sample_1"  "Sample_2"  "Sample_3"  "Sample_6"  "Sample_9"  "Sample_10" "Sample_13" "Sample_14" "Sample_17"
+#' [10] "Sample_21" "Sample_22" "Sample_24" "Sample_25" "Sample_26" "Sample_30" "Sample_59" "Sample_7"  "Sample_27"
+#' [19] "Sample_5"  "Sample_20" "Sample_29" "Sample_11" "Sample_12" "Sample_15" "Sample_16" "Sample_18" "Sample_19"
+#' [28] "Sample_23" "Sample_28" "Sample_31" "Sample_8"  "Sample_4"
+#'
+#' $control_samples
+#'  [1] "Sample_50" "Sample_60" "Sample_61" "Sample_45" "Sample_57" "Sample_35" "Sample_40" "Sample_41" "Sample_46"
+#' [10] "Sample_47" "Sample_51" "Sample_55" "Sample_56" "Sample_58" "Sample_52" "Sample_36"
+#'
+#' $otu_names
+#' [1] "JX522720.1.1265"      "ADJS01014867.75.1537" "AB906006.1.1368"
+#'
+#' $data
+#' # A tibble: 3 x 56
+#'   Sample_1 Sample_2 Sample_3 Sample_6 Sample_9 Sample_10 Sample_13 Sample_14 Sample_17 Sample_21 Sample_22 Sample_24
+#'      <dbl>    <dbl>    <dbl>    <dbl>    <dbl>     <dbl>     <dbl>     <dbl>     <dbl>     <dbl>     <dbl>     <dbl>
+#' 1  0.             0  0.             0  0.       0          8.92e-6         0 0.0000154 0.0000268 0.0000851 0
+#' 2  0.             0  1.99e-5        0  0.       0          2.68e-5         0 0.0000154 0.0000625 0.0000638 0.000121
+#' 3  8.14e-5        0  1.15e-3        0  1.11e-5  0.000137   1.78e-5         0 0.0000154 0.0000179 0.000106  0.0000404
+#' # ... with 44 more variables: Sample_25 <dbl>, Sample_26 <dbl>, Sample_30 <dbl>, Sample_50 <dbl>, Sample_59 <dbl>,
+#' #   Sample_56 <dbl>, Sample_58 <dbl>, Sample_8 <dbl>, Sample_4 <dbl>, Sample_52 <dbl>, Sample_36 <dbl>, OTU <chr>,
+#' #   Kingdom <fct>, Phylum <fct>, Class <fct>, Order <fct>, Family <fct>, Genus <fct>, Species <fct>
+#'
+#'  }
 #' @export
-otutax_to_dataframe <- function(phyloseq_obj) {
+#' @family Data Manipulators
+#' @rdname phyloseq_to_tibble
+#' @seealso
+#'  \code{\link[phyloseq]{tax_table}}, \code{\link[phyloseq]{otu_table}}, \code{\link[phyloseq]{sample_data}}
+#'
+#'  \code{\link[stringr]{case}}, \code{\link[tibble]{as_tibble}}, \code{\link[dplyr]{join}}
+#' @importFrom phyloseq tax_table otu_table sample_data
+#' @importFrom stringr str_to_lower
+#' @importFrom tibble as.tibble
+#' @importFrom dplyr left_join
+phyloseq_to_tibble <- function(phyloseq_obj, treatment_groups) {
   tax_otu <- list()
-  tax_otu$tax <- data.frame(tax_table(phyloseq_obj))
-  tax_otu$otu <- data.frame(otu_table(phyloseq_obj))
-  tax_otu$sam <- data.frame(sample_data(phyloseq_obj))
-  tax_otu$stressed_samples <- rownames(tax_otu$sam[tax_otu$sam$TreatmentGroup == "Stressed", ])
-  tax_otu$control_samples <- rownames(tax_otu$sam[tax_otu$sam$TreatmentGroup == "Control", ])
-  tax_otu$sam <- as.tibble(tax_otu$sam)
+  p_tax <- phyloseq::tax_table(phyloseq_obj)
+  p_otu <- phyloseq::otu_table(phyloseq_obj)
+  p_sam <- phyloseq::sample_data(phyloseq_obj)
+  tax_otu$tax <- data.frame(p_tax)
+  tax_otu$otu <- data.frame(p_otu)
+  tax_otu$sam <- data.frame(p_sam)
+  for (tgroup in treatment_groups) {
+    tgindex <- stringr::str_to_lower(tgroup)
+    tgindex <- sprintf("%s_samples", tgindex)
+    tax_otu[[tgindex]] <- rownames(tax_otu$sam[tax_otu$sam$TreatmentGroup == tgroup, ])
+  }
+  tax_otu$sam <- tibble::as.tibble(tax_otu$sam)
   tax_otu$otu_names <- rownames(tax_otu$tax)
-  tax_otu$tax <- as.tibble(mutate(tax_otu$tax, OTU = rownames(tax_otu$tax)))
-  tax_otu$otu <- as.tibble(mutate(tax_otu$otu, OTU = rownames(tax_otu$otu)))
-  tax_otu$data <- as.tibble(left_join(x = tax_otu$otu, y = tax_otu$tax, by = "OTU"))
+  tax_otu$tax <- tibble::as.tibble(mutate(tax_otu$tax, OTU = rownames(tax_otu$tax)))
+  tax_otu$otu <- tibble::as.tibble(mutate(tax_otu$otu, OTU = rownames(tax_otu$otu)))
+  tax_otu_joined <- dplyr::left_join(x = tax_otu$otu, y = tax_otu$tax, by = "OTU")
+  tax_otu$data <- tibble::as.tibble(tax_otu_joined)
   return(tax_otu)
 }
 
-#' @title Remove Ambiguous Taxa
+
+#' @title Remove Ambiguous Taxonomy
+#' @description This function removes ambiguous taxonomy names from specified ranks
+#' in a phyloseq object.
+#' @param phyloseq_obj A phyloseq object to filter.
+#' @param ranks A list of ranks to iterate over.
+#' @param ambiguous_names a list of ambiguous names to remove.
+#' @return Returns a phyloseq object without the ambiguous names in the specified ranks.
+#' MicrobiomeR was also written using the tidyverse in order to make the workflow reproducible.
+#' @pretty_print TRUE
+#' @details This
+#' @examples
+#' \dontrun{
 #'
-#' @description A function for removing named ambiguous taxonomy at specific rank(s)
+#' > phy_obj <- get_phyloseq_object(...)
+#' > phy_obj <- remove_ambiguous_taxa(phy_obj, list("Phylum", "Class", "Order"),
+#' list("Unkown" , "Ambiguous", "uncultured"))
 #'
-#' @param phyloseq_obj DESCRIPTION.
-#' @param ranks DESCRIPTION.
-#' @param ambiguous_names DESCRIPTION.
-#'
-#' @return RETURN_DESCRIPTION
+#' }
 #' @export
+#' @family Filters
+#' @rdname remove_ambiguous_taxa
+#' @seealso
+#'  \code{\link[phyloseq]{tax_table}}, \code{\link[phyloseq]{phy_tree}}, \code{\link[phyloseq]{otu_table}}, \code{\link[phyloseq]{sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
+#'
+#'  \code{\link[dplyr]{filter}}, \code{\link[dplyr]{select}}, \code{\link[tibble]{rownames}}, \code{\link[stringr]{str_detect}}
+#' @importFrom dplyr filter select
+#' @importFrom tibble column_to_rownames
+#' @importFrom phyloseq tax_table phy_tree otu_table sample_data merge_phyloseq phy_tree
+#' @importFrom stringr str_detect
 remove_ambiguous_taxa <- function(phyloseq_obj, ranks, ambiguous_names) {
-  tax_otu <- otutax_to_dataframe(phyloseq_obj)
-  pdat <- tax_otu$data
+  tax_otu <- phyloseq_to_tibble(phyloseq_obj)
+  phyloseq_data <- tax_otu$data
+  # Loop through ranks and remove ambiguous names from various ranks.
   for (r in ranks) {
     if (r == "Kingdom") {
-      pdat <- dplyr::filter(pdat, !Kingdom %in% ambiguous_names)
+      phyloseq_data <- dplyr::filter(phyloseq_data, !Kingdom %in% ambiguous_names)
     } else if (r == "Phylum") {
-      pdat <- dplyr::filter(pdat, !Phylum %in% ambiguous_names)
+      phyloseq_data <- dplyr::filter(phyloseq_data, !Phylum %in% ambiguous_names)
     } else if (r == "Class") {
-      pdat <- dplyr::filter(pdat, !Class %in% ambiguous_names)
+      phyloseq_data <- dplyr::filter(phyloseq_data, !Class %in% ambiguous_names)
     } else if (r == "Order") {
-      pdat <- dplyr::filter(pdat, !Order %in% ambiguous_names)
+      phyloseq_data <- dplyr::filter(phyloseq_data, !Order %in% ambiguous_names)
     } else if (r == "Famlily") {
-      pdat <- dplyr::filter(pdat, !Family %in% ambiguous_names)
+      phyloseq_data <- dplyr::filter(phyloseq_data, !Family %in% ambiguous_names)
     } else if (r == "Genus") {
-      pdat <- dplyr::filter(pdat, !Genus %in% ambiguous_names)
+      phyloseq_data <- dplyr::filter(phyloseq_data, !Genus %in% ambiguous_names)
     } else if (r == "Species") {
-      pdat <- dplyr::filter(pdat, !Speices %in% ambiguous_names)
+      phyloseq_data <- dplyr::filter(phyloseq_data, !Speices %in% ambiguous_names)
     }
   }
 
-  tax <- dplyr::select(pdat, colnames(tax_otu$tax)) %>%
+  tax <- dplyr::select(phyloseq_data, colnames(tax_otu$tax)) %>%
     as.data.frame() %>%
-    column_to_rownames("OTU") %>%
+    tibble::column_to_rownames("OTU") %>%
     as.matrix()
 
-  otu <- dplyr::select(pdat, colnames(tax_otu$otu)) %>%
+  otu <- dplyr::select(phyloseq_data, colnames(tax_otu$otu)) %>%
     as.data.frame() %>%
-    column_to_rownames("OTU") %>%
+    tibble::column_to_rownames("OTU") %>%
     as.matrix()
   # Merge into phyloseq data;  Include tree if applicable
+  tax <- phyloseq::tax_table(tax)
   if (inherits(phyloseq_obj, "taxonomyTable")) {
-    return(tax_table(tax))
+    return(tax)
   } else {
     err_ <- try(phy_tree(phyloseq_obj), silent = TRUE)
+    otu <- phyloseq::otu_table(otu, taxa_are_rows = TRUE)
+    sam <- phyloseq::sample_data(phyloseq_obj)
     if (stringr::str_detect(err_, "Error")) {
-      phyloseq_obj <- merge_phyloseq(tax_table(tax), otu_table(otu, taxa_are_rows = TRUE), sample_data(phyloseq_obj))
+      phyloseq_obj <- phyloseq::merge_phyloseq(tax, otu, sam)
     } else {
-      phyloseq_obj <- merge_phyloseq(tax_table(tax), phy_tree(phyloseq_obj), otu_table(otu, taxa_are_rows = TRUE), sample_data(phyloseq_obj))
+      ptree <- phyloseq::phy_tree(phyloseq_obj)
+      phyloseq_obj <- phyloseq::merge_phyloseq(tax, ptree, otu, sam)
     }
     return(phyloseq_obj)
   }
 }
 
-#' @title Preprocess Phyloseq
+#'  @title Preprocess Phyloseq
 #'
-#' @description The preprocessing function
+#'  @description The preprocessing function
 #'
-#' @param phyloseq_object DESCRIPTION.
-#' @param process_list DESCRIPTION.
+#'  @param phyloseq_object DESCRIPTION.
+#'  @param process_list DESCRIPTION.
 #'
-#' @return RETURN_DESCRIPTION
-#' @export
+#'  @return RETURN_DESCRIPTION
+#'  @export
 preprocess_phyloseq <- function(phyloseq_object, process_list = NULL) {
   pp_p <- phyloseq_object
   if (is.null(process_list)) {
@@ -298,7 +512,7 @@ preprocess_phyloseq <- function(phyloseq_object, process_list = NULL) {
         tf_req_samp_perc <- taxon_filter$r_s_p
         tf_glom <- tax_glom(pp_p, tf_rank, NArm = FALSE)
         tf_unfiltered <- genefilter_sample(tf_glom, filterfun_sample(function(x) x > tf_min_abund),
-                                           A = tf_req_samp_perc * nsamples(tf_glom)
+          A = tf_req_samp_perc * nsamples(tf_glom)
         )
         # tf_filtered <- names(tf_unfiltered[tf_unfiltered==TRUE])
 
@@ -331,7 +545,7 @@ preprocess_phyloseq <- function(phyloseq_object, process_list = NULL) {
       min_abund <- prevalence_filter[1]
       required_sample_percentage <- prevalence_filter[2]
       tx <- genefilter_sample(pp_p, filterfun_sample(function(x) x > min_abund),
-                              A = required_sample_percentage * nsamples(pp_p)
+        A = required_sample_percentage * nsamples(pp_p)
       )
       pp_p <- prune_taxa(tx, pp_p)
     }
@@ -349,7 +563,7 @@ preprocess_phyloseq <- function(phyloseq_object, process_list = NULL) {
     if (proc == "coeff_of_variation") {
       # Standardize abundances to the median sequencing depth
       total <- median(sample_sums(pp_p))
-      standf <- function(x, t=total) round(t * (x / sum(x)))
+      standf <- function(x, t = total) round(t * (x / sum(x)))
       pp_trans <- transform_sample_counts(pp_p, standf)
       # Filter the taxa using the coefficient of variation
       # phyloseq vignette - coeff_of_variation = 0.3
@@ -376,15 +590,15 @@ preprocess_phyloseq <- function(phyloseq_object, process_list = NULL) {
   return(pp_p)
 }
 
-#' @title Get Distance Methods
+#'  @title Get Distance Methods
 #'
-#' @description The function for manipulating phyloseqs native distanceMethodList
+#'  @description The function for manipulating phyloseqs native distanceMethodList
 #'
-#' @param tree_methods DESCRIPTION.
+#'  @param tree_methods DESCRIPTION.
 #'
-#' @return RETURN_DESCRIPTION
-#' @export
-get_distance_methods <- function(tree_methods=TRUE) {
+#'  @return RETURN_DESCRIPTION
+#'  @export
+get_distance_methods <- function(tree_methods = TRUE) {
   ### Create list of distance methods
   dist_methods <- unlist(distanceMethodList)
   if (!tree_methods) {
