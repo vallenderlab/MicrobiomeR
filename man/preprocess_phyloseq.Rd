@@ -2,18 +2,17 @@
 % Please edit documentation in R/phyloseq.R
 \name{preprocess_phyloseq}
 \alias{preprocess_phyloseq}
-\title{Preprocess Phyloseq}
+\title{@title Preprocess Phyloseq}
 \usage{
 preprocess_phyloseq(phyloseq_object, process_list = NULL)
 }
-\arguments{
-\item{phyloseq_object}{DESCRIPTION.}
-
-\item{process_list}{DESCRIPTION.}
-}
-\value{
-RETURN_DESCRIPTION
-}
 \description{
-The preprocessing function
+@description The preprocessing function
+}
+\details{
+@param phyloseq_object DESCRIPTION.
+@param process_list DESCRIPTION.
+
+@return RETURN_DESCRIPTION
+@export
 }

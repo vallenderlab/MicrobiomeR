@@ -2,16 +2,16 @@
 % Please edit documentation in R/phyloseq.R
 \name{get_distance_methods}
 \alias{get_distance_methods}
-\title{Get Distance Methods}
+\title{@title Get Distance Methods}
 \usage{
 get_distance_methods(tree_methods = TRUE)
 }
-\arguments{
-\item{tree_methods}{DESCRIPTION.}
-}
-\value{
-RETURN_DESCRIPTION
-}
 \description{
-The function for manipulating phyloseqs native distanceMethodList
+@description The function for manipulating phyloseqs native distanceMethodList
+}
+\details{
+@param tree_methods DESCRIPTION.
+
+@return RETURN_DESCRIPTION
+@export
 }
