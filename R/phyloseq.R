@@ -467,127 +467,130 @@ remove_ambiguous_taxa <- function(phyloseq_obj, ranks, ambiguous_names) {
   }
 }
 
-#'  @title Preprocess Phyloseq
-#'
-#'  @description The preprocessing function
-#'
-#'  @param phyloseq_object DESCRIPTION.
-#'  @param process_list DESCRIPTION.
-#'
-#'  @return RETURN_DESCRIPTION
-#'  @export
-preprocess_phyloseq <- function(phyloseq_object, process_list = NULL) {
-  pp_p <- phyloseq_object
-  if (is.null(process_list)) {
-    params <- get_default_parameters(smb_data = phyloseq_object, func_names = c("preprocess_phyloseq"))
-    process_list <- params$process_list
+
+
+preprocess_phyloseq <- function(phyloseq_object, process_list = NULL, ...) {
+  dotparam <- list(...)
+  # Set up processing parameters
+  if (length(dotparam) != 0) {
+    process_list <- dotparam
+    } else if (is.null(process_list)) {
+      warning("Warning:  Using default parameters in extdata/process_list.yml")
+      process_list <- yaml::yaml.load_file("extdata/process_list.yaml")
+      } else if (is.character(process_list) & (file.exists(process_list))) {
+        process_list <- yaml::yaml.load_file(process_list)
+      } else {
   }
-  pr_l <- process_list
 
   ## REMOVAL
   # Remove empty samples
-  pp_p <- prune_taxa(taxa_sums(pp_p) > 0, pp_p)
+  processed_phy_obj <- phyloseq::prune_taxa(taxa_sums(phyloseq_object) > 0, phyloseq_object)
 
   ## FILTER
   for (proc in names(process_list)) {
-    # print(proc)
-    # print(process_list[[proc]])
-    if (proc == "master_thresh") {
+    if (proc == "master_thresh" & !is.null(process_list[[proc]])) {
       # Filter anything at a certain threshhold
       # phyloseq vignette - master_thresh = 1e-5
-      pp_p <- phyloseq::filter_taxa(pp_p, function(x) {
-        mean(x) > pr_l[[proc]]
+      processed_phy_obj <- phyloseq::filter_taxa(processed_phy_obj, function(x) {
+        mean(x) > process_list[[proc]]
       }, TRUE)
     }
-    if (proc == "taxon_filter" & length(pr_l[[proc]]) == 3) {
+    if (proc == "taxon_filter" & !is.null(process_list[[proc]])) {
+      taxon_filter <- process_list[[proc]]
       # Taxonomic Prevalence filtering
       # Filter OTUs that do not appear more than a certian amount of times in a certain percentage of samples
       # at the specified agglomerated rank
       # phyloseq vignette - taxa_thresh = c(5, 0.5)
-      taxon_filter <- pr_l[[proc]]
+      counter <- 0
+      for (tf_rank in names(taxon_filter)) {
+          if (length(taxon_filter[[tf_rank]]) == 2) {
+              # Set up data for filtering
+              tf_min_abund <- taxon_filter[[tf_rank]][["min_a"]]
+              tf_req_samp_perc <- taxon_filter[[tf_rank]][["r_s_p"]]
+              tf_glom <- phyloseq::tax_glom(processed_phy_obj, tf_rank, NArm = FALSE)
+              n_samp <- phyloseq::nsamples(tf_glom)
+              filter_fun <- phyloseq::filterfun_sample(function(x) x > tf_min_abund)
 
-      for (tf in taxon_filter) {
-        tf_rank <- tf$rank
-        tf_min_abund <- taxon_filter$min_a
-        tf_req_samp_perc <- taxon_filter$r_s_p
-        tf_glom <- tax_glom(pp_p, tf_rank, NArm = FALSE)
-        tf_unfiltered <- genefilter_sample(tf_glom, filterfun_sample(function(x) x > tf_min_abund),
-          A = tf_req_samp_perc * nsamples(tf_glom)
-        )
-        # tf_filtered <- names(tf_unfiltered[tf_unfiltered==TRUE])
+              # Filter
+              tf_unfiltered <- phyloseq::genefilter_sample(tf_glom, filter_fun,
+                A = tf_req_samp_perc * n_samp)
+              p_filter <- phyloseq::prune_taxa(tf_unfiltered, tf_glom)
 
-        p_filter <- prune_taxa(tf_unfiltered, tf_glom)
-
-        # Formating for standard evaluation
-        r_filter <- get_taxa_unique(p_filter, taxonomic.rank = tf_rank)
-        if (tf_rank == "Kingdom") {
-          pp_p <- subset_taxa(pp_p, Kingdom %in% r_filter)
-        } else if (tf_rank == "Phylum") {
-          pp_p <- subset_taxa(pp_p, Phylum %in% r_filter)
-        } else if (tf_rank == "Class") {
-          pp_p <- subset_taxa(pp_p, Class %in% r_filter)
-        } else if (tf_rank == "Order") {
-          pp_p <- subset_taxa(pp_p, Order %in% r_filter)
-        } else if (tf_rank == "Famlily") {
-          pp_p <- subset_taxa(pp_p, Family %in% r_filter)
-        } else if (tf_rank == "Genus") {
-          pp_p <- subset_taxa(pp_p, Genus %in% r_filter)
-        } else if (tf_rank == "Species") {
-          pp_p <- subset_taxa(pp_p, Speices %in% r_filter)
+              # Formating for standard evaluation
+              r_filter <- get_taxa_unique(p_filter, taxonomic.rank = tf_rank)
+              if (tf_rank == "Kingdom") {
+                processed_phy_obj <- subset_taxa(processed_phy_obj, Kingdom %in% r_filter)
+              } else if (tf_rank == "Phylum") {
+                processed_phy_obj <- subset_taxa(processed_phy_obj, Phylum %in% r_filter)
+              } else if (tf_rank == "Class") {
+                processed_phy_obj <- subset_taxa(processed_phy_obj, Class %in% r_filter)
+              } else if (tf_rank == "Order") {
+                processed_phy_obj <- subset_taxa(processed_phy_obj, Order %in% r_filter)
+              } else if (tf_rank == "Famlily") {
+                processed_phy_obj <- subset_taxa(processed_phy_obj, Family %in% r_filter)
+              } else if (tf_rank == "Genus") {
+                processed_phy_obj <- subset_taxa(processed_phy_obj, Genus %in% r_filter)
+              } else if (tf_rank == "Species") {
+                processed_phy_obj <- subset_taxa(processed_phy_obj, Speices %in% r_filter)
+              }
+          }
         }
       }
-    }
-    if (proc == "prevelance_filter" & length(pr_l[[proc]]) == 2) {
+    if (proc == "prevelance_filter" & length(process_list[[proc]]) == 2) {
+      prevalence_filter <- process_list[[proc]]
       # Prevelance filtering
       # Filter OTUs that do not appear more than a certian amount of times in a certain percentage of samples.
       # phyloseq vignette - taxa_thresh = c(5, 0.5)
-      prevalence_filter <- pr_l[[proc]]
-      min_abund <- prevalence_filter[1]
-      required_sample_percentage <- prevalence_filter[2]
-      tx <- genefilter_sample(pp_p, filterfun_sample(function(x) x > min_abund),
-        A = required_sample_percentage * nsamples(pp_p)
-      )
-      pp_p <- prune_taxa(tx, pp_p)
+
+      # Set up data for filtering
+      min_abund <- prevalence_filter$min_a
+      required_sample_percentage <- prevalence_filter$r_s_p
+      n_samp <- phyloseq::nsamples(processed_phy_obj)
+      filter_fun <- phyloseq::filterfun_sample(function(x) x > min_abund)
+
+      # Filter
+      tx <- genefilter_sample(processed_phy_obj, filter_fun,
+        A = required_sample_percentage * n_samp)
+      processed_phy_obj <- phyloseq::prune_taxa(tx, processed_phy_obj)
+      }
+    if (proc == "glom_rank" & !is.null(process_list[[proc]])) {
+      processed_phy_obj <- phyloseq::tax_glom(processed_phy_obj, taxrank = process_list[[proc]])
     }
-    if (proc == "glom_rank") {
-      pp_p <- tax_glom(pp_p, taxrank = pr_l[[proc]])
-    }
-    if (proc == "ambiguous") {
-      ambiguous <- pr_l[[proc]]
+    if (proc == "ambiguous" & !is.null(process_list[[proc]])) {
+      ambiguous <- process_list[[proc]]
       amb_ranks <- ambiguous$amb_ranks
       amb_items <- ambiguous$amb_items
-
-      pp_p <- remove_ambiguous_taxa(pp_p, amb_ranks, amb_items)
+      processed_phy_obj <- remove_ambiguous_taxa(processed_phy_obj, amb_ranks, amb_items)
     }
     ## Standardize
-    if (proc == "coeff_of_variation") {
+    if (proc == "coeff_of_variation" & !is.null(process_list[[proc]])) {
       # Standardize abundances to the median sequencing depth
-      total <- median(sample_sums(pp_p))
+      total <- median(sample_sums(processed_phy_obj))
       standf <- function(x, t = total) round(t * (x / sum(x)))
-      pp_trans <- transform_sample_counts(pp_p, standf)
+      pp_trans <- phyloseq::transform_sample_counts(processed_phy_obj, standf)
       # Filter the taxa using the coefficient of variation
       # phyloseq vignette - coeff_of_variation = 0.3
-      pp_filter <- phyloseq::filter_taxa(pp_trans, function(x) sd(x) / mean(x) > pr_l[[proc]])
-      pp_p <- prune_taxa(pp_filter, pp_p)
+      pp_filter <- phyloseq::filter_taxa(pp_trans, function(x) sd(x) / mean(x) > process_list[[proc]])
+      processed_phy_obj <- phyloseq::prune_taxa(pp_filter, processed_phy_obj)
     }
 
     ## TRANSFORM
-    if (proc == "transform" & class(pr_l[[proc]]) == "function") {
+    if (proc == "trans_function" & class(process_list[[proc]]) == "function") {
       # Transform to get relative abundance
       # Note:  always do this before removing taxa that contribute to rel abund
-      transform <- pr_l[[proc]]
-      pp_p <- transform_sample_counts(pp_p, transform)
+      trans_function <- process_list[[proc]]
+      processed_phy_obj <- phyloseq::transform_sample_counts(processed_phy_obj, trans_function)
     }
-    if (proc == "merge_samples") {
-      sample_group <- pr_l[[proc]][["group"]]
-      func <- pr_l[[proc]][["func"]]
-      pp_p <- merge_samples(pp_p, group = sample_group, fun = func)
+    if (proc == "merge_samp" & !is.null(process_list[[proc]])) {
+      sample_group <- process_list[[proc]][["group"]]
+      func <- process_list[[proc]][["func"]]
+      processed_phy_obj <- phyloseq::merge_samples(processed_phy_obj, group = sample_group, fun = func)
     }
   }
   ## REMOVAL
   # Remove empty samples
-  pp_p <- prune_taxa(taxa_sums(pp_p) > 0, pp_p)
-  return(pp_p)
+  processed_phy_obj <- phyloseq::prune_taxa(taxa_sums(processed_phy_obj) > 0, processed_phy_obj)
+  return(processed_phy_obj)
 }
 
 #'  @title Get Distance Methods
