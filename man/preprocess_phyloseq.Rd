@@ -2,17 +2,84 @@
 % Please edit documentation in R/phyloseq.R
 \name{preprocess_phyloseq}
 \alias{preprocess_phyloseq}
-\title{@title Preprocess Phyloseq}
+\title{Preprocessing for Phyloseq Objects}
 \usage{
-preprocess_phyloseq(phyloseq_object, process_list = NULL)
+preprocess_phyloseq(phyloseq_object, process_list = NULL, ...)
+}
+\arguments{
+\item{phyloseq_object}{A phyloseq object}
+
+\item{process_list}{This parameter is used to control the way the phyloseq object is
+processed.  It can be one of three values:
+\describe{
+\item{NULL}{Will utilize the default processing strategy or the dot parameters (...).}
+\item{file}{The absolute path to a YAML config file.}
+\item{list}{Equivalent to putting dot parameters in a list (list(...)).}
+}}
+
+\item{...}{The dot parameters can be any combination of the default processing keywords.
+See the "Keywords for Processing" section below for more details}
+}
+\value{
+Returns a phyloseq object that has undergone the specified processing strategies.
 }
 \description{
-@description The preprocessing function
+This function uses techniques from the Bioconductor Workflow in order to
+preprocess phyloseq data for downstream analysis.
 }
 \details{
-@param phyloseq_object DESCRIPTION.
-@param process_list DESCRIPTION.
-
-@return RETURN_DESCRIPTION
-@export
+DETAILS
 }
+\section{Keywords for Pre-processing}{
+
+\describe{
+\item{master_thresh}{DEFAULT: 1e-5.  Filters any taxa that do not meat the mean threshold.}
+\item{taxon_filter}{DEFAULT: list("Phylum"= list("min_a"=5, "r_s_p"=0.5),
+"Class"=list("min_a"=3, "r_s_p"=0.3)).  Filters OTUs that do not appear more than a certian
+amount of times in a certain percentage of samples at the specified agglomerated rank.}
+\item{prevelance_filter}{DEFAULT: list("min_a"=5, "r_s_p"=0.5).  Filters OTUs that do not
+appear more than a certian amount of times in a certain percentage of samples.}
+\item{glom_rank}{DEFAULT: NULL.  Agglomerates the data at the specified rank.}
+\item{ambiguous}{DEFAULT: list(amb_ranks = c("Phylum", "Class", "Order", "Family", "Genus"),
+amb_items = c(NA, "", "uncharacterized", "uncultured", "Unassigned", "Ambiguous", "Ambiguous_taxa")).
+Removes OTUs that are labeled with the specified ambiguous items.  This is done for each specified rank.}
+\item{coeff_of_variation}{DEFAULT: 0.55.  Standardizes abundances to the median sequencing depth}
+\item{trans_function}{DEFAULT:  function(x){x / sum(x)}.  Transforms the abundance values to relative
+abundance values.}
+\item{merge_samples}{DEFAULT:  NULL.}
+}
+}
+
+\examples{
+\dontrun{
+
+> phy_obj <- get_phyloseq_object(...)
+> phy_obj
+phyloseq-class experiment-level object
+otu_table()   OTU Table:         [ 1955 taxa and 48 samples ]
+sample_data() Sample Data:       [ 48 samples by 8 sample variables ]
+tax_table()   Taxonomy Table:    [ 1955 taxa by 7 taxonomic ranks ]
+phy_tree()    Phylogenetic Tree: [ 1955 tips and 1954 internal nodes ]
+> pp_phy_obj <- preprocess_phyloseq(phy_obj, master_thresh = 1e-5,
+                                    taxon_filter = list("Phylum"= list("min_a"=5, "r_s_p"=0.5),
+                                                        "Class"=list("min_a"=3, "r_s_p"=0.3)),
+                                    prevalence_filter = list("min_a"=5, "r_s_p"=0.5), glom_rank = NULL,
+                                    ambiguous=list(amb_ranks = c("Phylum", "Class", "Order", "Family", "Genus"),
+                                    amb_items = c(NA, "", "uncharacterized", "uncultured", "Unassigned", "Ambiguous", "Ambiguous_taxa")),
+                                    coeff_of_variation = 0.55, trans_function = function(x){x / sum(x)}, merge_samp = NULL)
+> pp_phy_obj
+
+}
+}
+\seealso{
+\code{\link[phyloseq]{prune_taxa}}, \code{\link[phyloseq]{taxa_sums}}, \code{\link[phyloseq]{filter_taxa}}, \code{\link[phyloseq]{tax_glom}}, \code{\link[phyloseq]{nsamples}},
+\code{\link[phyloseq]{filterfun_sample}}, \code{\link[phyloseq]{genefilter_sample}}, \code{\link[phyloseq]{get_taxa_unique}}, \code{\link[phyloseq]{transform_sample_counts}},
+\code{\link[phyloseq]{merge_samples}}, \code{\link[phyloseq]{subset_taxa}}
+
+\code{\link[yaml]{yaml.load}}\cr\cr
+Bioconductor Workflow - \url{https://f1000research.com/articles/5-1492/v2}\cr
+Phyloseq Website - \url{https://joey711.github.io/phyloseq/index.html}
+
+Other Filters: \code{\link{remove_ambiguous_taxa}}
+}
+\concept{Filters}

@@ -37,5 +37,7 @@ list("Unkown" , "Ambiguous", "uncultured"))
 \code{\link[phyloseq]{tax_table}}, \code{\link[phyloseq]{phy_tree}}, \code{\link[phyloseq]{otu_table}}, \code{\link[phyloseq]{sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
 
 \code{\link[dplyr]{filter}}, \code{\link[dplyr]{select}}, \code{\link[tibble]{rownames}}, \code{\link[stringr]{str_detect}}
+
+Other Filters: \code{\link{preprocess_phyloseq}}
 }
 \concept{Filters}
