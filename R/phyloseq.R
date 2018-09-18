@@ -367,27 +367,33 @@ parse_taxonomy_greengenes2 <- function(char.vec) {
 #' @importFrom tibble as.tibble
 #' @importFrom dplyr left_join
 phyloseq_to_tibble <- function(phyloseq_obj, treatment_groups) {
+  tax_otu <- phyloseq_to_dataframe(phyloseq_obj = phyloseq_obj, treatment_groups = treatment_groups)
+  tax_otu$sam <- tibble::as.tibble(tax_otu$sam)
+  tax_otu$tax <- tibble::as.tibble(tax_otu$tax)
+  tax_otu$otu <- tibble::as.tibble(tax_otu$otu)
+  tax_otu$data <- tibble::as.tibble(tax_otu$data)
+  return(tax_otu)
+}
+
+phyloseq_to_dataframe <- function(phyloseq_obj, treatment_groups) {
   tax_otu <- list()
   p_tax <- phyloseq::tax_table(phyloseq_obj)
   p_otu <- phyloseq::otu_table(phyloseq_obj)
   p_sam <- phyloseq::sample_data(phyloseq_obj)
   tax_otu$tax <- data.frame(p_tax)
+  tax_otu$otu_names <- rownames(tax_otu$tax)
+  tax_otu$tax <- dplyr::mutate(tax_otu$tax, OTU = rownames(tax_otu$tax))
   tax_otu$otu <- data.frame(p_otu)
+  tax_otu$otu <- dplyr::mutate(tax_otu$otu, OTU = rownames(tax_otu$otu))
   tax_otu$sam <- data.frame(p_sam)
   for (tgroup in treatment_groups) {
     tgindex <- stringr::str_to_lower(tgroup)
     tgindex <- sprintf("%s_samples", tgindex)
     tax_otu[[tgindex]] <- rownames(tax_otu$sam[tax_otu$sam$TreatmentGroup == tgroup, ])
   }
-  tax_otu$sam <- tibble::as.tibble(tax_otu$sam)
-  tax_otu$otu_names <- rownames(tax_otu$tax)
-  tax_otu$tax <- tibble::as.tibble(mutate(tax_otu$tax, OTU = rownames(tax_otu$tax)))
-  tax_otu$otu <- tibble::as.tibble(mutate(tax_otu$otu, OTU = rownames(tax_otu$otu)))
-  tax_otu_joined <- dplyr::left_join(x = tax_otu$otu, y = tax_otu$tax, by = "OTU")
-  tax_otu$data <- tibble::as.tibble(tax_otu_joined)
+  tax_otu$data <- dplyr::left_join(x = tax_otu$otu, y = tax_otu$tax, by = "OTU")
   return(tax_otu)
 }
-
 
 #' @title Remove Ambiguous Taxonomy
 #' @description This function removes ambiguous taxonomy names from specified ranks
