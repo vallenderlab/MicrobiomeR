@@ -403,6 +403,28 @@ phyloseq_to_stats_dataframe <- function(phyloseq_obj, treatment_groups) {
 }
 
 
+phyloseq_to_excel <- function(phyloseq_obj, treatment_groups, rank, file_path) {
+  df_tax_otu <- phyloseq_to_stats_dataframe(phyloseq_obj = phyloseq_obj, treatment_groups = treatment_groups)
+  rownames(df_tax_otu$data) <- df_tax_otu$data$OTU
+  df_tax_otu$data$OTU <- NULL
+  stressed_samples <- df_tax_otu$stressed_samples
+  control_samples <- df_tax_otu$control_samples
+  main_df <- df_tax_otu$data[49:59][, c(rank, "mean_stressed", "mean_control", "wilcox_p_value", "log2_mean_ratio", unlist(ranks[ranks != rank]))]
+  main_df <- main_df %>% select_if(~sum(!is.na(.)) > 0)
+  wb <- createWorkbook(file_path)
+  # TODO Add OTU columns to excel file
+  addWorksheet(wb, "Stats_Taxonomy")
+  addWorksheet(wb, "Stressed")
+  addWorksheet(wb, "Control")
+  addWorksheet(wb, "Master")
+  writeDataTable(wb, 1, main_df)
+  writeDataTable(wb, 2, df_tax_otu$data[, c(stressed_samples)])
+  writeDataTable(wb, 3, df_tax_otu$data[, c(control_samples)])
+  writeDataTable(wb, 4, df_tax_otu$data)
+  saveWorkbook(wb, file = file_path, overwrite = TRUE)
+}
+
+
 phyloseq_to_dataframe <- function(phyloseq_obj, treatment_groups) {
   tax_otu <- list()
   p_tax <- phyloseq::tax_table(phyloseq_obj)
