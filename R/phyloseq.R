@@ -375,6 +375,34 @@ phyloseq_to_tibble <- function(phyloseq_obj, treatment_groups) {
   return(tax_otu)
 }
 
+
+phyloseq_to_stats_dataframe <- function(phyloseq_obj, treatment_groups) {
+  df_tax_otu <- phyloseq_to_dataframe(phyloseq_obj = phyloseq_obj, treatment_groups = treatment_groups)
+  rownames(df_tax_otu$data) <- df_tax_otu$data$OTU
+  stressed_samples <- df_tax_otu$stressed_samples
+  control_samples <- df_tax_otu$control_samples
+  temp <- df_tax_otu$data[, !(colnames(df_tax_otu$data) %in% c("OTU"))][c(stressed_samples, control_samples)]
+  wp_values <- apply(as.matrix(temp), 1, function(x) wilcox.test(x[stressed_samples], x[control_samples])$p.value)
+  mean_stressed <- apply(as.matrix(temp), 1, function(x) mean(x[stressed_samples]))
+  mean_control <- apply(as.matrix(temp), 1, function(x) mean(x[control_samples]))
+  log2_mean_ratio <- apply(as.matrix(temp), 1, function(x) {
+    log_ratio <- log2(mean(x[stressed_samples]) / mean(x[control_samples]))
+    if (is.nan(log_ratio)) {
+      log_ratio <- 0
+    }
+    if (is.infinite(log_ratio)) {
+      log_ratio <- 0
+    }
+    log_ratio
+  })
+  stats <- data.frame(wilcox_p_value = wp_values, mean_stressed = mean_stressed, mean_control = mean_control, log2_mean_ratio = log2_mean_ratio)
+  stats$OTU <- names(wp_values)
+  df_tax_otu$stats <- stats
+  df_tax_otu$data <- left_join(df_tax_otu$data, stats, by = "OTU")
+  return(df_tax_otu)
+}
+
+
 phyloseq_to_dataframe <- function(phyloseq_obj, treatment_groups) {
   tax_otu <- list()
   p_tax <- phyloseq::tax_table(phyloseq_obj)
