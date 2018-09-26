@@ -2,20 +2,42 @@
 % Please edit documentation in R/phyloseq.R
 \name{remove_ambiguous_taxa}
 \alias{remove_ambiguous_taxa}
-\title{Remove Ambiguous Taxa}
+\title{Remove Ambiguous Taxonomy}
 \usage{
 remove_ambiguous_taxa(phyloseq_obj, ranks, ambiguous_names)
 }
 \arguments{
-\item{phyloseq_obj}{DESCRIPTION.}
+\item{phyloseq_obj}{A phyloseq object to filter.}
 
-\item{ranks}{DESCRIPTION.}
+\item{ranks}{A list of ranks to iterate over.}
 
-\item{ambiguous_names}{DESCRIPTION.}
+\item{ambiguous_names}{a list of ambiguous names to remove.}
 }
 \value{
-RETURN_DESCRIPTION
+Returns a phyloseq object without the ambiguous names in the specified ranks.
+MicrobiomeR was also written using the tidyverse in order to make the workflow reproducible.
 }
 \description{
-A function for removing named ambiguous taxonomy at specific rank(s)
+This function removes ambiguous taxonomy names from specified ranks
+in a phyloseq object.
 }
+\details{
+This
+}
+\examples{
+\dontrun{
+
+> phy_obj <- get_phyloseq_object(...)
+> phy_obj <- remove_ambiguous_taxa(phy_obj, list("Phylum", "Class", "Order"),
+list("Unkown" , "Ambiguous", "uncultured"))
+
+}
+}
+\seealso{
+\code{\link[phyloseq]{tax_table}}, \code{\link[phyloseq]{phy_tree}}, \code{\link[phyloseq]{otu_table}}, \code{\link[phyloseq]{sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
+
+\code{\link[dplyr]{filter}}, \code{\link[dplyr]{select}}, \code{\link[tibble]{rownames}}, \code{\link[stringr]{str_detect}}
+
+Other Filters: \code{\link{preprocess_phyloseq}}
+}
+\concept{Filters}
