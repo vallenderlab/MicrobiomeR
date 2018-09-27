@@ -45,7 +45,7 @@ to be in the working directory.
 }
 }
 \seealso{
-\code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq]{phy_tree}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
+\code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree()}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
 \code{\link[ape]{root}}
 \code{\link[MicrobiomeR]{root_by_longest_edge}}
 }

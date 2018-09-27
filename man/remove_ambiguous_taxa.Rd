@@ -34,7 +34,7 @@ list("Unkown" , "Ambiguous", "uncultured"))
 }
 }
 \seealso{
-\code{\link[phyloseq]{tax_table}}, \code{\link[phyloseq]{phy_tree}}, \code{\link[phyloseq]{otu_table}}, \code{\link[phyloseq]{sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
+\code{\link[phyloseq:tax_table-methods]{phyloseq::tax_table}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree}}, \code{\link[phyloseq:otu_table-methods]{phyloseq::otu_table}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}, \code{\link[phyloseq]{merge_phyloseq}}
 
 \code{\link[dplyr]{filter}}, \code{\link[dplyr]{select}}, \code{\link[tibble]{rownames}}, \code{\link[stringr]{str_detect}}
 

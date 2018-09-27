@@ -2,34 +2,29 @@
 % Please edit documentation in R/phyloseq.R
 \name{phyloseq_to_dataframe}
 \alias{phyloseq_to_dataframe}
-\title{FUNCTION_TITLE}
+\title{Convert Phyloseq Object to Dataframe}
 \usage{
 phyloseq_to_dataframe(phyloseq_obj, treatment_groups)
 }
 \arguments{
-\item{phyloseq_obj}{PARAM_DESCRIPTION}
+\item{phyloseq_obj}{A phyloseq object.}
 
-\item{treatment_groups}{PARAM_DESCRIPTION}
+\item{treatment_groups}{A list of the treatment groups in the sample metadata.}
 }
 \value{
-OUTPUT_DESCRIPTION
+A list of dataframes containing all of the phyloseq data
 }
 \description{
-FUNCTION_DESCRIPTION
-}
-\details{
-DETAILS
-}
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
+This function takes a phyloseq object and converts it to a list of
+dataframes for further processing.
 }
 \seealso{
-\code{\link[phyloseq]{tax_table}},\code{\link[phyloseq]{otu_table}},\code{\link[phyloseq]{sample_data}}
+\code{\link[phyloseq:tax_table-methods]{phyloseq::tax_table()}},\code{\link[phyloseq:otu_table-methods]{phyloseq::otu_table()}},\code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data}}
 \code{\link[dplyr]{mutate}},\code{\link[dplyr]{join}}
 \code{\link[stringr]{case}}
+
+Other Data Manipulators: \code{\link{phyloseq_to_excel}},
+  \code{\link{phyloseq_to_stats_dataframe}},
+  \code{\link{phyloseq_to_tibble}}
 }
-\concept{FAMILY_TITLE}
+\concept{Data Manipulators}

@@ -87,8 +87,12 @@ $data
  }
 }
 \seealso{
-\code{\link[phyloseq]{tax_table}}, \code{\link[phyloseq]{otu_table}}, \code{\link[phyloseq]{sample_data}}
+\code{\link[phyloseq:tax_table-methods]{phyloseq::tax_table()}}, \code{\link[phyloseq:otu_table-methods]{phyloseq::otu_table()}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}
 
 \code{\link[stringr]{case}}, \code{\link[tibble]{as_tibble}}, \code{\link[dplyr]{join}}
+
+Other Data Manipulators: \code{\link{phyloseq_to_dataframe}},
+  \code{\link{phyloseq_to_excel}},
+  \code{\link{phyloseq_to_stats_dataframe}}
 }
 \concept{Data Manipulators}
