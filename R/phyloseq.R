@@ -367,15 +367,28 @@ parse_taxonomy_greengenes2 <- function(char.vec) {
 #' @importFrom tibble as.tibble
 #' @importFrom dplyr left_join
 phyloseq_to_tibble <- function(phyloseq_obj, treatment_groups) {
-  tax_otu <- phyloseq_to_dataframe(phyloseq_obj = phyloseq_obj, treatment_groups = treatment_groups)
-  tax_otu$sam <- tibble::as.tibble(tax_otu$sam)
-  tax_otu$tax <- tibble::as.tibble(tax_otu$tax)
-  tax_otu$otu <- tibble::as.tibble(tax_otu$otu)
-  tax_otu$data <- tibble::as.tibble(tax_otu$data)
-  return(tax_otu)
+  df_tax_otu <- phyloseq_to_dataframe(phyloseq_obj = phyloseq_obj, treatment_groups = treatment_groups)
+  df_tax_otu$sam <- tibble::as.tibble(df_tax_otu$sam)
+  df_tax_otu$tax <- tibble::as.tibble(df_tax_otu$tax)
+  df_tax_otu$otu <- tibble::as.tibble(df_tax_otu$otu)
+  df_tax_otu$data <- tibble::as.tibble(df_tax_otu$data)
+  return(df_tax_otu)
 }
 
 
+
+
+
+#' @title Convert Phyloseq Object to Statistical Data Frame
+#' @description This function takes a phyloseq object and converts it to a list of
+#' dataframes followed by analyzing the treatment groups and adding statistical data to
+#' the same list.
+#' @return OUTPUT_DESCRIPTION
+#' @pretty_print TRUE
+#' @details DETAILS
+#' @export
+#' @inherit phyloseq_to_tibble
+#' @rdname phyloseq_to_stats_dataframe
 phyloseq_to_stats_dataframe <- function(phyloseq_obj, treatment_groups) {
   df_tax_otu <- phyloseq_to_dataframe(phyloseq_obj = phyloseq_obj, treatment_groups = treatment_groups)
   rownames(df_tax_otu$data) <- df_tax_otu$data$OTU
@@ -425,24 +438,47 @@ phyloseq_to_excel <- function(phyloseq_obj, treatment_groups, rank, file_path) {
 }
 
 
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
+#' @param phyloseq_obj PARAM_DESCRIPTION
+#' @param treatment_groups PARAM_DESCRIPTION
+#' @return OUTPUT_DESCRIPTION
+#' @pretty_print TRUE
+#' @details DETAILS
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family FAMILY_TITLE
+#' @rdname phyloseq_to_dataframe
+#' @seealso
+#'  \code{\link[phyloseq]{tax_table}},\code{\link[phyloseq]{otu_table}},\code{\link[phyloseq]{sample_data}}
+#'  \code{\link[dplyr]{mutate}},\code{\link[dplyr]{join}}
+#'  \code{\link[stringr]{case}}
+#' @importFrom phyloseq tax_table otu_table sample_data
+#' @importFrom dplyr mutate left_join
+#' @importFrom stringr str_to_lower
 phyloseq_to_dataframe <- function(phyloseq_obj, treatment_groups) {
-  tax_otu <- list()
+  df_tax_otu <- list()
   p_tax <- phyloseq::tax_table(phyloseq_obj)
   p_otu <- phyloseq::otu_table(phyloseq_obj)
   p_sam <- phyloseq::sample_data(phyloseq_obj)
-  tax_otu$tax <- data.frame(p_tax)
-  tax_otu$otu_names <- rownames(tax_otu$tax)
-  tax_otu$tax <- dplyr::mutate(tax_otu$tax, OTU = rownames(tax_otu$tax))
-  tax_otu$otu <- data.frame(p_otu)
-  tax_otu$otu <- dplyr::mutate(tax_otu$otu, OTU = rownames(tax_otu$otu))
-  tax_otu$sam <- data.frame(p_sam)
+  df_tax_otu$tax <- data.frame(p_tax)
+  df_tax_otu$otu_names <- rownames(df_tax_otu$tax)
+  df_tax_otu$tax <- dplyr::mutate(df_tax_otu$tax, OTU = rownames(df_tax_otu$tax))
+  df_tax_otu$otu <- data.frame(p_otu)
+  df_tax_otu$otu <- dplyr::mutate(df_tax_otu$otu, OTU = rownames(df_tax_otu$otu))
+  df_tax_otu$sam <- data.frame(p_sam)
   for (tgroup in treatment_groups) {
     tgindex <- stringr::str_to_lower(tgroup)
     tgindex <- sprintf("%s_samples", tgindex)
-    tax_otu[[tgindex]] <- rownames(tax_otu$sam[tax_otu$sam$TreatmentGroup == tgroup, ])
+    df_tax_otu[[tgindex]] <- rownames(df_tax_otu$sam[df_tax_otu$sam$TreatmentGroup == tgroup, ])
   }
-  tax_otu$data <- dplyr::left_join(x = tax_otu$otu, y = tax_otu$tax, by = "OTU")
-  return(tax_otu)
+  df_tax_otu$data <- dplyr::left_join(x = df_tax_otu$otu, y = df_tax_otu$tax, by = "OTU")
+  return(df_tax_otu)
 }
 
 #' @title Remove Ambiguous Taxonomy
@@ -475,8 +511,8 @@ phyloseq_to_dataframe <- function(phyloseq_obj, treatment_groups) {
 #' @importFrom phyloseq tax_table phy_tree otu_table sample_data merge_phyloseq phy_tree
 #' @importFrom stringr str_detect
 remove_ambiguous_taxa <- function(phyloseq_obj, ranks, ambiguous_names) {
-  tax_otu <- phyloseq_to_tibble(phyloseq_obj)
-  phyloseq_data <- tax_otu$data
+  df_tax_otu <- phyloseq_to_tibble(phyloseq_obj)
+  phyloseq_data <- df_tax_otu$data
   # Loop through ranks and remove ambiguous names from various ranks.
   for (r in ranks) {
     if (r == "Kingdom") {
@@ -496,12 +532,12 @@ remove_ambiguous_taxa <- function(phyloseq_obj, ranks, ambiguous_names) {
     }
   }
 
-  tax <- dplyr::select(phyloseq_data, colnames(tax_otu$tax)) %>%
+  tax <- dplyr::select(phyloseq_data, colnames(df_tax_otu$tax)) %>%
     as.data.frame() %>%
     tibble::column_to_rownames("OTU") %>%
     as.matrix()
 
-  otu <- dplyr::select(phyloseq_data, colnames(tax_otu$otu)) %>%
+  otu <- dplyr::select(phyloseq_data, colnames(df_tax_otu$otu)) %>%
     as.data.frame() %>%
     tibble::column_to_rownames("OTU") %>%
     as.matrix()
