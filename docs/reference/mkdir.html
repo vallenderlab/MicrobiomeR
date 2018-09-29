@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get Phyloseq Object — get_phyloseq_obj • MicrobiomeR</title>
+<title>Make a Directory — mkdir • MicrobiomeR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,12 +30,9 @@
 
 
 
-<meta property="og:title" content="Get Phyloseq Object — get_phyloseq_obj" />
+<meta property="og:title" content="Make a Directory — mkdir" />
 
-<meta property="og:description" content="Create a phyloseq object using a biom file, phylogenetic tree file, and a
-metadata file. Alternatively, an .Rdata file can be used.  For now this funciton takes
-output from Qiime.  The data provided by this package was processed by the NIH's Nephele
-pipeline." />
+<meta property="og:description" content="This is a custom function for creating a directory." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,78 +97,42 @@ pipeline." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get Phyloseq Object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/phyloseq.R'><code>R/phyloseq.R</code></a></small>
-    <div class="hidden name"><code>get_phyloseq_obj.Rd</code></div>
+    <h1>Make a Directory</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>mkdir.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create a phyloseq object using a biom file, phylogenetic tree file, and a
-metadata file. Alternatively, an .Rdata file can be used.  For now this funciton takes
-output from Qiime.  The data provided by this package was processed by the NIH's Nephele
-pipeline.</p>
+    <p>This is a custom function for creating a directory.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_phyloseq_obj</span>(<span class='kw'>biom_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tree_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>metadata_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>parse_func</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rdata_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>mkdir</span>(<span class='no'>dirname</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>biom_file</th>
-      <td><p>A file in the BIOM format. Default: NULL</p></td>
-    </tr>
-    <tr>
-      <th>tree_file</th>
-      <td><p>A Phylogenetic tree file. Default: NULL</p></td>
-    </tr>
-    <tr>
-      <th>metadata_file</th>
-      <td><p>Sample metadata in tab delimited format. Default: NULL</p></td>
-    </tr>
-    <tr>
-      <th>parse_func</th>
-      <td><p>The parse function used to parse taxonomy strings from
-Greengenes or SILVA database. Default: NULL</p></td>
-    </tr>
-    <tr>
-      <th>rdata_file</th>
-      <td><p>A .Rdata file.  Default: NULL</p></td>
+      <th>dirname</th>
+      <td><p>The name of the directory to create</p></td>
     </tr>
     <tr>
       <th>path</th>
-      <td><p>A path for the output tree file.  Default: NULL</p></td>
+      <td><p>The path to create the directory in.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A phyloseq object, and a phylogenetic tree file if one does not already exist.</p>
+    <p>Returns the absolute path of the directory.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function heavily relys on the phyloseq package to import data into R.
-It also requires you to use an absolute path to your data files or for your data files
-to be in the working directory.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/phyloseq/topics/import_biom'>import_biom</a></code>, <code><a href='http://www.rdocumentation.org/packages/phyloseq/topics/phy_tree-methods'>phy_tree</a></code>, <code><a href='http://www.rdocumentation.org/packages/phyloseq/topics/import_qiime_sample_data'>import_qiime_sample_data</a></code>, <code><a href='http://www.rdocumentation.org/packages/phyloseq/topics/merge_phyloseq'>merge_phyloseq</a></code>
-<code><a href='http://www.rdocumentation.org/packages/ape/topics/root'>root</a></code>
-<code><a href='root_by_longest_edge.html'>root_by_longest_edge</a></code></p></div>
+    <p>This function will create a directory only if it doesn't exist
+and then return the path of that directory.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"># NOT RUN {
-> biom_file <- "input_data/silva_OTU.biom"
-> md_file <- "input_data/nephele_metadata.txt"
-> phy_obj <- get_phyloseq_obj(biom_file=biom_file, metadata_file=md_file)
-# }
-</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -181,11 +142,7 @@ to be in the working directory.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

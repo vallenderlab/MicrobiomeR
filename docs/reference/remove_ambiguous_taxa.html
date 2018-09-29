@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Remove Ambiguous Taxa — remove_ambiguous_taxa • MicrobiomeR</title>
+<title>Remove Ambiguous Taxonomy — remove_ambiguous_taxa • MicrobiomeR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Remove Ambiguous Taxa — remove_ambiguous_taxa" />
+<meta property="og:title" content="Remove Ambiguous Taxonomy — remove_ambiguous_taxa" />
 
-<meta property="og:description" content="A function for removing named ambiguous taxonomy at specific rank(s)" />
+<meta property="og:description" content="This function removes ambiguous taxonomy names from specified ranks
+in a phyloseq object." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -97,14 +98,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Remove Ambiguous Taxa</h1>
+    <h1>Remove Ambiguous Taxonomy</h1>
     <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/phyloseq.R'><code>R/phyloseq.R</code></a></small>
     <div class="hidden name"><code>remove_ambiguous_taxa.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A function for removing named ambiguous taxonomy at specific rank(s)</p>
+    <p>This function removes ambiguous taxonomy names from specified ranks
+in a phyloseq object.</p>
     
     </div>
 
@@ -115,23 +117,42 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>phyloseq_obj</th>
-      <td><p>DESCRIPTION.</p></td>
+      <td><p>A phyloseq object to filter.</p></td>
     </tr>
     <tr>
       <th>ranks</th>
-      <td><p>DESCRIPTION.</p></td>
+      <td><p>A list of ranks to iterate over.</p></td>
     </tr>
     <tr>
       <th>ambiguous_names</th>
-      <td><p>DESCRIPTION.</p></td>
+      <td><p>a list of ambiguous names to remove.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>RETURN_DESCRIPTION</p>
+    <p>Returns a phyloseq object without the ambiguous names in the specified ranks.
+MicrobiomeR was also written using the tidyverse in order to make the workflow reproducible.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/phyloseq/topics/tax_table-methods'>tax_table</a></code>, <code><a href='http://www.rdocumentation.org/packages/phyloseq/topics/phy_tree-methods'>phy_tree</a></code>, <code><a href='http://www.rdocumentation.org/packages/phyloseq/topics/otu_table-methods'>otu_table</a></code>, <code><a href='http://www.rdocumentation.org/packages/phyloseq/topics/sample_data-methods'>sample_data</a></code>, <code><a href='http://www.rdocumentation.org/packages/phyloseq/topics/merge_phyloseq'>merge_phyloseq</a></code></p>
+<p><code><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></code>, <code><a href='http://www.rdocumentation.org/packages/tibble/topics/rownames'>rownames</a></code>, <code><a href='http://www.rdocumentation.org/packages/stringr/topics/str_detect'>str_detect</a></code></p>
+<p>Other Filters: <code><a href='preprocess_phyloseq.html'>preprocess_phyloseq</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"># NOT RUN {
+> phy_obj <- get_phyloseq_object(...)
+> phy_obj <- remove_ambiguous_taxa(phy_obj, list("Phylum", "Class", "Order"),
+list("Unkown" , "Ambiguous", "uncultured"))
+
+# }
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -139,7 +160,13 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
