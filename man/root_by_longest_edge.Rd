@@ -2,16 +2,25 @@
 % Please edit documentation in R/phyloseq.R
 \name{root_by_longest_edge}
 \alias{root_by_longest_edge}
-\title{Root by Longest Edge}
+\title{Root Phylogenetic Tree}
 \usage{
 root_by_longest_edge(unrooted_tree)
 }
 \arguments{
-\item{unrooted_tree}{DESCRIPTION.}
+\item{unrooted_tree}{An unrooted phylogenetic tree object.}
 }
 \value{
-RETURN_DESCRIPTION
+A rooted phlogenetic tree object.
 }
 \description{
-FUNCTION_DESCRIPTION
+This function roots a phylogenetic tree object by it's longest edge.
 }
+\details{
+Please see this issue for more details \url{https://github.com/joey711/phyloseq/issues/597}.
+}
+\seealso{
+\code{\link[ape]{root}}
+
+Other Phylogenetic Tree Manipulators: \code{\link{pick_new_outgroup}}
+}
+\concept{Phylogenetic Tree Manipulators}

@@ -2,16 +2,16 @@
 % Please edit documentation in R/phyloseq.R
 \name{parse_taxonomy_greengenes2}
 \alias{parse_taxonomy_greengenes2}
-\title{Parse Taxonomy Greengenes2}
+\title{@title Parse Taxonomy Greengenes2}
 \usage{
 parse_taxonomy_greengenes2(char.vec)
 }
-\arguments{
-\item{char.vec}{DESCRIPTION.}
-}
-\value{
-RETURN_DESCRIPTION
-}
 \description{
-A custom Greengenes parsing function
+@description  A custom Greengenes parsing function
+}
+\details{
+@param char.vec DESCRIPTION.
+
+@return RETURN_DESCRIPTION
+@export
 }

@@ -4,23 +4,49 @@
 \alias{get_phyloseq_obj}
 \title{Get Phyloseq Object}
 \usage{
-get_phyloseq_obj(b_file = NULL, t_file = NULL, md_file = NULL,
-  parse_func = NULL, rdata_file = NULL)
+get_phyloseq_obj(biom_file = NULL, tree_file = NULL,
+  metadata_file = NULL, parse_func = NULL, rdata_file = NULL,
+  path = NULL)
 }
 \arguments{
-\item{b_file}{DESCRIPTION.}
+\item{biom_file}{A file in the BIOM format. Default: NULL}
 
-\item{t_file}{DESCRIPTION.}
+\item{tree_file}{A Phylogenetic tree file. Default: NULL}
 
-\item{md_file}{DESCRIPTION.}
+\item{metadata_file}{Sample metadata in tab delimited format. Default: NULL}
 
-\item{parse_func}{DESCRIPTION.}
+\item{parse_func}{The parse function used to parse taxonomy strings from
+Greengenes or SILVA database. Default: NULL}
 
-\item{rdata_file}{DESCRIPTION.}
+\item{rdata_file}{A .Rdata file.  Default: NULL}
+
+\item{path}{A path for the output tree file.  Default: NULL}
 }
 \value{
-A phyloseq object
+A phyloseq object, and a phylogenetic tree file if one does not already exist.
 }
 \description{
-Import or Create a phyloseq object
+Create a phyloseq object using a biom file, phylogenetic tree file, and a
+metadata file. Alternatively, an .Rdata file can be used.  For now this funciton takes
+output from Qiime.  The data provided by this package was processed by the NIH's Nephele
+pipeline.
 }
+\details{
+This function heavily relys on the phyloseq package to import data into R.
+It also requires you to use an absolute path to your data files or for your data files
+to be in the working directory.
+}
+\examples{
+\dontrun{
+
+> biom_file <- "input_data/silva_OTU.biom"
+> md_file <- "input_data/nephele_metadata.txt"
+> phy_obj <- get_phyloseq_obj(biom_file=biom_file, metadata_file=md_file)
+}
+}
+\seealso{
+\code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq]{phy_tree}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
+\code{\link[ape]{root}}
+\code{\link[MicrobiomeR]{root_by_longest_edge}}
+}
+\concept{Data Importers}
