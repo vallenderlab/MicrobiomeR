@@ -4,29 +4,31 @@ Version: 0.0.1
 Authors@R: c(
     person("Robert", "Gilmore", email = "rgilmore@umc.edu", role = "cre"),
     person("Shaurita", "Hutchins", email = "shutchins2@umc.edu", role = "aut"))
-Description: A package for microbiome analysis.
-Depends: R (>= 3.4.3)
+biocViews: Metagenomics, Microbiome, Sequencing, SystemsBiology
+Description: An R package for microbiome analysis combining functions from phyloseq, metacodeR, 
+    and microbiome into an easy to use and full featured microbiome analysis package.
 License: What license is it under?
 Roxygen: list(markdown = TRUE)
-Remotes: 
-    MadsAlbertsen/ampvis2,
-    grunwaldlab/metacoder,
-    ropensci/taxa,
-    joey711/phyloseq
-Imports:
+Depends:
+    R (>= 3.4.3),
     ggplot2,
     ggthemes,
     stringr,
+    BiocInstaller,
     BiocParallel,
     biomformat,
     ggtree,
     microbiome,
     rstudioapi,
     magrittr
+Remotes: 
+    MadsAlbertsen/ampvis2,
+    grunwaldlab/metacoder,
+    ropensci/taxa,
+    joey711/phyloseq
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0
 URL: https://github.com/vallenderlab/MicrobiomeR
 BugReports: https://github.com/vallenderlab/MicrobiomeR/issues
-biocViews:
 
