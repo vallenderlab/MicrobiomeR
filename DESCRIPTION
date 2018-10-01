@@ -26,6 +26,13 @@ Remotes:
     grunwaldlab/metacoder,
     ropensci/taxa,
     joey711/phyloseq
+Imports:
+    ape,
+    data.table,
+    dplyr,
+    phyloseq,
+    tibble,
+    yaml
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0
