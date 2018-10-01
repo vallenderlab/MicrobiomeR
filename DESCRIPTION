@@ -11,16 +11,8 @@ License: What license is it under?
 Roxygen: list(markdown = TRUE)
 Depends:
     R (>= 3.4.3),
-    ggplot2,
-    ggthemes,
-    stringr,
     BiocInstaller,
-    BiocParallel,
-    biomformat,
-    ggtree,
-    microbiome,
-    rstudioapi,
-    magrittr
+    BiocParallel
 Remotes: 
     MadsAlbertsen/ampvis2,
     grunwaldlab/metacoder,
@@ -32,7 +24,15 @@ Imports:
     dplyr,
     phyloseq,
     tibble,
-    yaml
+    yaml,
+    microbiome,
+    ggpubr,
+    biomformat,
+    ggtree,
+    rstudioapi,
+    magrittr,
+    ggplot2,
+    stringr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0
