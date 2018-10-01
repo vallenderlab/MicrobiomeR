@@ -28,8 +28,10 @@ TODO: Add a stats dataframe here
 }
 }
 \seealso{
-Other Data Manipulators: \code{\link{phyloseq_to_dataframe}},
+Other Data Manipulators: \code{\link{metacoder_comp_func_1}},
+  \code{\link{metacoder_workflow_1}},
+  \code{\link{phyloseq_to_dataframe}},
   \code{\link{phyloseq_to_excel}},
-  \code{\link{phyloseq_to_tibble}}
+  \code{\link{phyloseq_to_tibble}}, \code{\link{vlookup}}
 }
 \concept{Data Manipulators}

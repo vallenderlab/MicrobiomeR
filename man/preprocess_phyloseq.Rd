@@ -80,6 +80,7 @@ phy_tree()    Phylogenetic Tree: [ 1955 tips and 1954 internal nodes ]
 Bioconductor Workflow - \url{https://f1000research.com/articles/5-1492/v2}\cr
 Phyloseq Website - \url{https://joey711.github.io/phyloseq/index.html}
 
-Other Filters: \code{\link{remove_ambiguous_taxa}}
+Other Filters: \code{\link{metacoder_initial_filter}},
+  \code{\link{remove_ambiguous_taxa}}
 }
 \concept{Filters}

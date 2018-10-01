@@ -91,8 +91,11 @@ $data
 
 \code{\link[stringr]{case}}, \code{\link[tibble]{as_tibble}}, \code{\link[dplyr]{join}}
 
-Other Data Manipulators: \code{\link{phyloseq_to_dataframe}},
+Other Data Manipulators: \code{\link{metacoder_comp_func_1}},
+  \code{\link{metacoder_workflow_1}},
+  \code{\link{phyloseq_to_dataframe}},
   \code{\link{phyloseq_to_excel}},
-  \code{\link{phyloseq_to_stats_dataframe}}
+  \code{\link{phyloseq_to_stats_dataframe}},
+  \code{\link{vlookup}}
 }
 \concept{Data Manipulators}
