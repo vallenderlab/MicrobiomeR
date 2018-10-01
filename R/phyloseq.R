@@ -280,6 +280,46 @@ parse_taxonomy_greengenes2 <- function(char.vec) {
 }
 
 
+#' @title Convert Phyloseq Object to Dataframe
+#' @description This function takes a phyloseq object and converts it to a list of
+#' dataframes for further processing.
+#' @param phyloseq_obj A phyloseq object.
+#' @param treatment_groups A list of the treatment groups in the sample metadata.
+#' @return A list of dataframes containing all of the phyloseq data
+#' @pretty_print TRUE
+#' @export
+#' @family Data Manipulators
+#' @rdname phyloseq_to_dataframe
+#' @seealso
+#'  \code{\link[phyloseq:tax_table-methods]{phyloseq::tax_table()}},\code{\link[phyloseq:otu_table-methods]{phyloseq::otu_table()}},\code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data}}
+#'  \code{\link[dplyr]{mutate}},\code{\link[dplyr]{join}}
+#'  \code{\link[stringr]{case}}
+#' @importFrom phyloseq tax_table otu_table sample_data
+#' @importFrom dplyr mutate left_join
+#' @importFrom stringr str_to_lower
+phyloseq_to_dataframe <- function(phyloseq_obj, treatment_groups) {
+  df_tax_otu <- list()
+  p_tax <- phyloseq::tax_table(phyloseq_obj)
+  p_otu <- phyloseq::otu_table(phyloseq_obj)
+  p_sam <- phyloseq::sample_data(phyloseq_obj)
+  df_tax_otu$tax <- data.frame(p_tax)
+  df_tax_otu$otu_names <- rownames(df_tax_otu$tax)
+  df_tax_otu$tax <- dplyr::mutate(df_tax_otu$tax, OTU = rownames(df_tax_otu$tax))
+  df_tax_otu$otu <- data.frame(p_otu)
+  df_tax_otu$otu <- dplyr::mutate(df_tax_otu$otu, OTU = rownames(df_tax_otu$otu))
+  df_tax_otu$sam <- data.frame(p_sam)
+  df_tax_otu$treat_groups <- treatment_groups
+  df_tax_otu$tg_index <- c()
+  for (tgroup in treatment_groups) {
+    tgindex <- stringr::str_to_lower(tgroup)
+    tgindex <- stringr::str_replace(tgindex, " ", "_")
+    tgindex <- sprintf("%s_samples", tgindex)
+    df_tax_otu[[tgindex]] <- rownames(df_tax_otu$sam[df_tax_otu$sam$TreatmentGroup == tgroup, ])
+    df_tax_otu$tg_index <- c(df_tax_otu$tg_index, tgindex)
+  }
+  df_tax_otu$data <- dplyr::left_join(x = df_tax_otu$otu, y = df_tax_otu$tax, by = "OTU")
+  return(df_tax_otu)
+}
 
 
 #' @title Convert Phyloseq Objects to Tibbles
@@ -375,9 +415,6 @@ phyloseq_to_tibble <- function(phyloseq_obj, treatment_groups) {
 }
 
 
-
-
-
 #' @title Convert Phyloseq Object to Statistical Data Frame
 #' @description This function takes a phyloseq object and converts it to a list of
 #' dataframes followed by analyzing the treatment groups and adding statistical data to
@@ -462,46 +499,7 @@ phyloseq_to_excel <- function(phyloseq_obj, treatment_groups, rank, file_path) {
 }
 
 
-#' @title Convert Phyloseq Object to Dataframe
-#' @description This function takes a phyloseq object and converts it to a list of
-#' dataframes for further processing.
-#' @param phyloseq_obj A phyloseq object.
-#' @param treatment_groups A list of the treatment groups in the sample metadata.
-#' @return A list of dataframes containing all of the phyloseq data
-#' @pretty_print TRUE
-#' @export
-#' @family Data Manipulators
-#' @rdname phyloseq_to_dataframe
-#' @seealso
-#'  \code{\link[phyloseq:tax_table-methods]{phyloseq::tax_table()}},\code{\link[phyloseq:otu_table-methods]{phyloseq::otu_table()}},\code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data}}
-#'  \code{\link[dplyr]{mutate}},\code{\link[dplyr]{join}}
-#'  \code{\link[stringr]{case}}
-#' @importFrom phyloseq tax_table otu_table sample_data
-#' @importFrom dplyr mutate left_join
-#' @importFrom stringr str_to_lower
-phyloseq_to_dataframe <- function(phyloseq_obj, treatment_groups) {
-  df_tax_otu <- list()
-  p_tax <- phyloseq::tax_table(phyloseq_obj)
-  p_otu <- phyloseq::otu_table(phyloseq_obj)
-  p_sam <- phyloseq::sample_data(phyloseq_obj)
-  df_tax_otu$tax <- data.frame(p_tax)
-  df_tax_otu$otu_names <- rownames(df_tax_otu$tax)
-  df_tax_otu$tax <- dplyr::mutate(df_tax_otu$tax, OTU = rownames(df_tax_otu$tax))
-  df_tax_otu$otu <- data.frame(p_otu)
-  df_tax_otu$otu <- dplyr::mutate(df_tax_otu$otu, OTU = rownames(df_tax_otu$otu))
-  df_tax_otu$sam <- data.frame(p_sam)
-  df_tax_otu$treat_groups <- treatment_groups
-  df_tax_otu$tg_index <- c()
-  for (tgroup in treatment_groups) {
-    tgindex <- stringr::str_to_lower(tgroup)
-    tgindex <- stringr::str_replace(tgindex, " ", "_")
-    tgindex <- sprintf("%s_samples", tgindex)
-    df_tax_otu[[tgindex]] <- rownames(df_tax_otu$sam[df_tax_otu$sam$TreatmentGroup == tgroup, ])
-    df_tax_otu$tg_index <- c(df_tax_otu$tg_index, tgindex)
-  }
-  df_tax_otu$data <- dplyr::left_join(x = df_tax_otu$otu, y = df_tax_otu$tax, by = "OTU")
-  return(df_tax_otu)
-}
+
 
 #' @title Remove Ambiguous Taxonomy
 #' @description This function removes ambiguous taxonomy names from specified ranks
