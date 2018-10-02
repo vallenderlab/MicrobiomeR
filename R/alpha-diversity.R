@@ -6,6 +6,7 @@
 #'
 #' @return Returns a list object of alpha diversity measurements.
 #' @importFrom microbiome diversities meta
+#' @importFrom utils combn
 #' @export
 get_alpha_diversity <- function(phyloseq_object) {
   # Get all of the diversities.
