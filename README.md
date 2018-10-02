@@ -1,4 +1,4 @@
-[![Travis build status](https://travis-ci.org/vallenderlab/MicrobiomeR.svg?branch=master)](https://travis-ci.org/vallenderlab/MicrobiomeR)
+[![Build Status](https://travis-ci.com/vallenderlab/MicrobiomeR.svg?token=xfnbNTQhjNbir5xACn8R&branch=master)](https://travis-ci.com/vallenderlab/MicrobiomeR)
 
 # MicrobiomeR
 
