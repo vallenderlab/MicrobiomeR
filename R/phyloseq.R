@@ -6,6 +6,8 @@
 #' @param biom_file A file in the BIOM format. Default: NULL
 #' @param tree_file A Phylogenetic tree file. Default: NULL
 #' @param metadata_file Sample metadata in tab delimited format. Default: NULL
+#' @param treatment_group The column number or name in the metadata file that contains the
+#' treatement group names.  Default: NULL
 #' @param parse_func The parse function used to parse taxonomy strings from
 #'  Greengenes or SILVA database. Default: NULL
 #' @param rdata_file A .Rdata file.  Default: NULL
@@ -20,26 +22,37 @@
 #'
 #' > biom_file <- "input_data/silva_OTU.biom"
 #' > md_file <- "input_data/nephele_metadata.txt"
-#' > phy_obj <- get_phyloseq_obj(biom_file=biom_file, metadata_file=md_file)
+#' > phy_obj <- get_phyloseq_obj(biom_file=biom_file, metadata_file=md_file, treatment_group=5)
 #' }
 #' @export
 #' @family Data Importers
 #' @rdname get_phyloseq_obj
 #' @seealso
-#'  \code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree()}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
+#'  \code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree()}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
 #'  \code{\link[ape]{root}}
 #'  \code{\link[MicrobiomeR]{root_by_longest_edge}}
 
-#' @importFrom phyloseq import_biom phy_tree import_qiime_sample_data merge_phyloseq
+#' @importFrom phyloseq import_biom sample_data phy_tree import_qiime_sample_data merge_phyloseq
 #' @importFrom ape is.rooted write.tree
-get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file = NULL, parse_func = NULL, rdata_file = NULL, path = NULL) {
+get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file = NULL, treatment_group = NULL, parse_func = NULL, rdata_file = NULL, path = NULL) {
   if (!is.null(rdata_file)) {
     load(rdata_file)
     phyloseq_obj <- get("phyloseq_obj")
     return(phyloseq_obj)
   } else {
-    # Load the biom file and the Full tree file into a phyloseq object
+    # Load the biom file data
     phyloseq_biom <- phyloseq::import_biom(BIOMfilename = biom_file, parseFunction = parse_func, treefilename = tree_file)
+    # Create the "X.TreatmentGroup" variable for the metadata
+    # This step gives other functions a standard treatment group variable to work with
+    if (!is.null(treatment_group)){
+      if (is.numeric(treatment_group) || is.character(treatment_group)){
+        phyloseq::sample_data(silva_smb_data$phyloseq_data)[["X.TreatmentGroup"]] <- phyloseq::sample_data(silva_smb_data$phyloseq_data)[[treatment_group]]
+      } else {
+        warning("The treatment_group parameter must be numeric or a character string.")
+        warning("The data might not be appropriate for other MicrobiomeR functions.  Please try again.")
+        stop()
+      }
+    }
     # Write to a tree file that subsets our data
     if (!is.null(tree_file)) {
       phyloseq_tree <- phyloseq::phy_tree(phyloseq_biom)
@@ -58,6 +71,7 @@ get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file =
     if (!is.null(tree_file)) {
       phy_tree(phyloseq_obj) <- MicrobiomeR::root_by_longest_edge(phy_tree(phyloseq_obj))
     }
+
     return(phyloseq_obj)
   }
 }
