@@ -18,6 +18,5 @@ Returns the absolute path of the directory.
 This is a custom function for creating a directory.
 }
 \details{
-This function will create a directory only if it doesn't exist
-and then return the path of that directory.
+This function will create a directory only if it doesn't exist and then return the path of that directory.
 }

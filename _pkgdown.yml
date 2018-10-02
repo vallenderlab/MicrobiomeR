@@ -1,0 +1,26 @@
+template:
+  params:
+    bootswatch: cosmo
+
+reference:
+- title: Data Processing
+  contents:
+  - get_phyloseq_obj
+  - parse_taxonomy_silva_128
+  - phyloseq_to_tibble
+  - pick_new_outgroup
+  - preprocess_phyloseq
+  - remove_ambiguous_taxa
+  - root_by_longest_edge
+
+- title: Alpha Diversity
+  contents:
+  - get_alpha_diversity
+
+- title: Utilities
+  contents:
+  - mkdir
+
+- title: Data Visualizations
+  contents:
+  - create_pub_table
