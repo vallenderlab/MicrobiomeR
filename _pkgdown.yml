@@ -15,7 +15,7 @@ reference:
 
 - title: Alpha Diversity
   contents:
-  - create_pub_table
+  - get_alpha_diversity
 
 - title: Utilities
   contents:
