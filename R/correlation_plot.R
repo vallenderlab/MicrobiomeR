@@ -38,10 +38,6 @@
 #' @importFrom DT dataTableOutput renderDataTable
 correlation_plot <- function(label_rank, phyloseq_object, super_taxa = 1, wp_value = 0.05,
                                  plotly = FALSE, excel_export = FALSE, plotly_export = FALSE, ...) {
-  # # TODO: Remove dir creation
-  # if (!dir.exists("output/correlation_plots/")) {
-  #   dir.create("output/correlation_plots", recursive = TRUE)
-  # }
   # TODO:  Create rank_index/rank variables dynamically or from data
   if (is.numeric(super_taxa)) {
     super_rank <- as.character(ranks[rank_index[[label_rank]] - super_taxa])
@@ -72,7 +68,6 @@ correlation_plot <- function(label_rank, phyloseq_object, super_taxa = 1, wp_val
     # phyloseq_to_excel()
   }
   limits <- get_plot_limits(df_tax_otu$mean_stressed, df_tax_otu$mean_control)
-  #if (!plotly) {
   rank_label <- sprintf("%s_label", label_rank)
   # Further data manipulation
   ss_df <- dplyr::filter(df_tax_otu, label == TRUE)
@@ -112,66 +107,4 @@ correlation_plot <- function(label_rank, phyloseq_object, super_taxa = 1, wp_val
   # Add a 1:1 ratio line
   corr <- corr + geom_abline(slope = 1, intercept = 0, linetype = "dashed")
   return(corr)
-  # } else {
-  #   corr <- ggplot(df_tax_otu, aes(x = mean_control, y = mean_stressed, Kingdom = Kingdom, Phylum = Phylum, Class = Class, Order = Order, Family = Family, Genus = Genus, Species = Species)) +
-  #     geom_point(size = 1, aes(color = color)) + labs(title = sprintf("Correlation Plot: %s Level", label_rank), x = "Mean Abundance Before Stress", y = "Mean Abundance After Stress") +
-  #     scale_color_manual(values = c("Significant Increase" = "red", "Significant Decrease" = "blue", "Insignificant Change" = "grey50")) +
-  #     geom_vline(mapping = aes(xintercept = 0.000000001)) + geom_hline(mapping = aes(yintercept = 0.000000001)) +
-  #     geom_abline(slope = 1, intercept = 0, linetype = "dashed")
-  #   scale_y_log10() + scale_x_log10()
-  #   corr <- plotly::ggplotly(corr)
-  #
-  #   data_colors <- list()
-  #   for (j in 1:length(corr$x$data)) {
-  #     if (corr$x$data[[j]]$name != "") {
-  #       df_points <- dplyr::filter(df_tax_otu, color == corr$x$data[[j]]$name)
-  #       df_points$mean_control[df_points$mean_control == 0.000000001] <- 0
-  #       df_points$mean_stressed[df_points$mean_stressed == 0.000000001] <- 0
-  #       text1 <- NULL
-  #       for (i in c("color", "mean_control", "mean_stressed", ranks)) {
-  #         temp <- NULL
-  #         temp <- paste(i, df_points[[i]], sep = ": ")
-  #         if (!is.null(text1)) {
-  #           text1 <- paste(text1, temp, sep = "<br />")
-  #         } else {
-  #           text1 <- temp
-  #         }
-  #       }
-  #       data_colors[[corr$x$data[[j]]$name]] <- text1
-  #       corr$x$data[[j]]$text <- text1
-  #     }
-  #   }
-  #   print(data_colors)
-  # }
-#
-#   if (plotly_export == TRUE) {
-#     margin <- list(
-#       l = 50,
-#       r = 50,
-#       b = 100,
-#       t = 100,
-#       pad = 4
-#     )
-#     corr <- corr %>% layout(autosize = FALSE, width = 700, height = 700, margin = margin)
-#     Sys.setenv("plotly_username" = params$plotly_username)
-#     Sys.setenv("plotly_api_key" = params$plotly_api_key)
-#     print(params$plotly_filename)
-#     api_create(corr, filename = params$plotly_filename)
-#   }
-  # corr_shiny_table <- function() {
-  #   ui <- basicPage(
-  #     h2(sprintf("Correlation Plot Data Table:  %s", label_rank)),
-  #     DT::dataTableOutput("mytable")
-  #   )
-  #
-  #   server <- function(input, output) {
-  #     output$mytable <- DT::renderDataTable({
-  #       df_tax_otu[49:62][, c(label_rank, "mean_stressed", "mean_control", "wilcox_p_value", "log2_mean_ratio", "Significance", unlist(ranks[ranks != label_rank]))]
-  #     })
-  #   }
-  #
-  #   shinyApp(ui, server)
-  # }
-  # corr[["shiny"]] <- corr_shiny_table()
-  # #corr[["table"]] <- main_df
 }
