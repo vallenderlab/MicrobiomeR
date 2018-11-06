@@ -1,12 +1,12 @@
 
-# TODO: Rename correlation_plot().
+# #TODO: Rename correlation_plot().
 # TODO: Create function for generating plotly data.
 # TODO: Create function for generating shiny data table.
 # TODO: Call functions with :: for package.
 #' @title Get a Correlation Plot
 #' @description FUNCTION_DESCRIPTION
-#' @param label_rank PARAM_DESCRIPTION
 #' @param phyloseq_object PARAM_DESCRIPTION
+#' @param label_rank PARAM_DESCRIPTION
 #' @param super_taxa PARAM_DESCRIPTION, Default: 1
 #' @param wp_value PARAM_DESCRIPTION, Default: 0.05
 #' @param plotly PARAM_DESCRIPTION, Default: FALSE
@@ -36,7 +36,7 @@
 #' @importFrom stringr str_detect
 #' @importFrom plotly ggplotly
 #' @importFrom DT dataTableOutput renderDataTable
-correlation_plot <- function(label_rank, phyloseq_object, super_taxa = 1, wp_value = 0.05,
+correlation_plot <- function(phyloseq_object, label_rank, super_taxa = 1, wp_value = 0.05,
                                  plotly = FALSE, excel_export = FALSE, plotly_export = FALSE, ...) {
   # TODO:  Create rank_index/rank variables dynamically or from data
   if (is.numeric(super_taxa)) {
@@ -50,7 +50,6 @@ correlation_plot <- function(label_rank, phyloseq_object, super_taxa = 1, wp_val
       label_rank <- super_taxa
     }
   }
-  params <- list(...)
   # PHYLOSEQ data manipulation
   label_phy <- phyloseq::tax_glom(phyloseq_object, taxrank = label_rank)
   color_phy <- phyloseq::tax_glom(phyloseq_object, taxrank = super_rank)
@@ -107,4 +106,37 @@ correlation_plot <- function(label_rank, phyloseq_object, super_taxa = 1, wp_val
   # Add a 1:1 ratio line
   corr <- corr + geom_abline(slope = 1, intercept = 0, linetype = "dashed")
   return(corr)
+}
+
+point_data <- function(phyloseq_obj, label_rank, color_rank) {
+  # PHYLOSEQ data manipulation
+  label_phy <- phyloseq::tax_glom(phyloseq_object, taxrank = label_rank)
+  color_phy <- phyloseq::tax_glom(phyloseq_object, taxrank = color_rank)
+
+  label_data <- phyloseq_to_stats_dataframe(label_phy, c("Stressed", "Control"))
+  color_data <- phyloseq_to_stats_dataframe(color_phy, c("Stressed", "Control"))
+  label_data$data <- label_data$data %>% mutate(color_wilcox_p_value = vlookup(Phylum, color_data$data, "Phylum", "wilcox_p_value"))
+  # Create columns for easier plotting
+  df_tax_otu <- label_data$data
+  df_tax_otu <- mutate(df_tax_otu, Significance = wilcox_p_value < wp_value)
+  df_tax_otu <- dplyr::mutate(df_tax_otu, Abundance = ifelse(Significance == TRUE, ifelse(sign(log2_mean_ratio) == 1, "Significant Increase", "Significant Decrease"), "Insignificant Change"))
+  df_tax_otu <- dplyr::mutate(df_tax_otu, label = ifelse(Significance == TRUE, ifelse(sign(log2_mean_ratio) == 1, TRUE, TRUE), FALSE))
+  if (excel_export == TRUE) {
+    # TODO: Update the phylsoeq_to_excel function to take a dataframe and list of column names.
+    # phyloseq_to_excel()
+  }
+  limits <- get_plot_limits(df_tax_otu$mean_stressed, df_tax_otu$mean_control)
+  rank_label <- sprintf("%s_label", label_rank)
+  # Further data manipulation
+  ss_df <- dplyr::filter(df_tax_otu, label == TRUE)
+  ss_df <- dplyr::filter(ss_df, !stringr::str_detect(ss_df[[label_rank]], "uncultured"))
+  ss_df <- dplyr::mutate(ss_df, rank_label = ss_df[[label_rank]])
+  ss_df <- dplyr::arrange(ss_df, wilcox_p_value)
+  df_tax_otu <- dplyr::mutate(df_tax_otu, rank_label = vlookup(df_tax_otu[[label_rank]], ss_df, label_rank, "rank_label"))
+  df_tax_otu <- dplyr::arrange(df_tax_otu, label, wilcox_p_value)
+  # Color Palette creation and geom parameter creation
+  getPal <- colorRampPalette(brewer.pal(9, "Dark2"))
+  myPal <- getPal(length(unique(df_tax_otu[[(super_rank)]])))
+  positions <- data.frame(id = c("1", "1", "1", "2", "2", "2"), x = c(0, Inf, 0, 0, Inf, Inf), y = c(0, Inf, Inf, 0, 0, Inf))
+
 }
