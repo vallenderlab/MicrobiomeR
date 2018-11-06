@@ -4,14 +4,14 @@
 \alias{correlation_plot}
 \title{Get a Correlation Plot}
 \usage{
-correlation_plot(label_rank, phyloseq_object, super_taxa = 1,
+correlation_plot(phyloseq_object, label_rank, super_taxa = 1,
   wp_value = 0.05, plotly = FALSE, excel_export = FALSE,
   plotly_export = FALSE, ...)
 }
 \arguments{
-\item{label_rank}{PARAM_DESCRIPTION}
-
 \item{phyloseq_object}{PARAM_DESCRIPTION}
+
+\item{label_rank}{PARAM_DESCRIPTION}
 
 \item{super_taxa}{PARAM_DESCRIPTION, Default: 1}
 

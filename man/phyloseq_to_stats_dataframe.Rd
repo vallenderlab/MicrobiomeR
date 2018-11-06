@@ -4,12 +4,10 @@
 \alias{phyloseq_to_stats_dataframe}
 \title{Convert Phyloseq Object to Statistical Data Frame}
 \usage{
-phyloseq_to_stats_dataframe(phyloseq_obj, treatment_groups)
+phyloseq_to_stats_dataframe(phyloseq_obj)
 }
 \arguments{
 \item{phyloseq_obj}{A phyloseq object.}
-
-\item{treatment_groups}{A list of the treatment groups in the sample metadata.}
 }
 \value{
 A list of dataframes containing all of the phyloseq data with additional statistical data.
