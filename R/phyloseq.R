@@ -40,39 +40,36 @@ get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file =
     phyloseq_obj <- get("phyloseq_obj")
     return(phyloseq_obj)
   } else {
-    # Load the biom file data
+    # Load the biom file data amd qiime metadata separately, and then merge them into a phyloseq object
     phyloseq_biom <- phyloseq::import_biom(BIOMfilename = biom_file, parseFunction = parse_func, treefilename = tree_file)
+    phyloseq_metadata <- phyloseq::import_qiime_sample_data(metadata_file)
+    phyloseq_obj <- phyloseq::merge_phyloseq(phyloseq_biom, phyloseq_metadata)
+
     # Create the "X.TreatmentGroup" variable for the metadata
     # This step gives other functions a standard treatment group variable to work with
     if (!is.null(treatment_group)){
       if (is.numeric(treatment_group) || is.character(treatment_group)){
-        phyloseq::sample_data(silva_smb_data$phyloseq_data)[["X.TreatmentGroup"]] <- phyloseq::sample_data(phyloseq_biom)[[treatment_group]]
+        phyloseq::sample_data(phyloseq_obj)[["X.TreatmentGroup"]] <- phyloseq::sample_data(phyloseq_obj)[[treatment_group]]
       } else {
         warning("The treatment_group parameter must be numeric or a character string.")
         warning("The data might not be appropriate for other MicrobiomeR functions.  Please try again.")
         stop()
       }
     }
-    # Write to a tree file that subsets our data
+    # Write to a tree file that subsets our data and update the phyloseq object
     if (!is.null(tree_file)) {
+      # Root the tree
       phyloseq_tree <- phyloseq::phy_tree(phyloseq_biom)
-      # If not rooted, then root the tree using the longest edge(s) as an ougroup
-      if (!ape::is.rooted(phyloseq_tree)) {
-        ape_tree <- MicrobiomeR::root_by_longest_edge(phyloseq_tree)
-      }
+      ape_tree <- MicrobiomeR::root_by_longest_edge(phyloseq_tree)
+      # Write the tree file
       tree_path <- mkdir(dirname = "output", path = path)
       ape::write.tree(ape_tree, sprintf("%s/rooted_%s", tree_path, tree_file))
+      # Update and return the phyloseq object
+      phy_tree(phyloseq_obj) <- ape_tree
+      return(phyloseq_obj)
+    } else {
+      return(phyloseq_obj)
     }
-    # Extract metadata from the phyloseq object:
-    phyloseq_metadata <- phyloseq::import_qiime_sample_data(metadata_file)
-
-    # Create a phyloseq object with all of our data
-    phyloseq_obj <- phyloseq::merge_phyloseq(phyloseq_biom, phyloseq_metadata)
-    if (!is.null(tree_file)) {
-      phy_tree(phyloseq_obj) <- MicrobiomeR::root_by_longest_edge(phy_tree(phyloseq_obj))
-    }
-
-    return(phyloseq_obj)
   }
 }
 
