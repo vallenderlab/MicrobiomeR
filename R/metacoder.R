@@ -76,11 +76,11 @@ get_metacoder_obj <- function(phyloseq_object=NULL, rdata_file=NULL, filter_flag
 #' @importFrom metacoder calc_obs_props calc_taxon_abund compare_groups
 metacoder_workflow_1 <- function(metacoder_obj, func=metacoder_comp_func_1) {
   # Calculate a proportionate abundance value for each sample
-  metacoder_obj$data$otu_table <- metacoder::calc_obs_props(metacoder_obj, dataset = "otu_table", cols = metacoder_obj$data$sam_data$sample_ids, other_cols = TRUE)
+  metacoder_obj$data$otu_table <- metacoder::calc_obs_props(metacoder_obj, data = "otu_table", cols = metacoder_obj$data$sample_data$sample_id, other_cols = TRUE)
   # Calculate the proportionate abundace per-taxon value for each sample
-  metacoder_obj$data$tax_table <- metacoder::calc_taxon_abund(metacoder_obj, dataset = "otu_table", cols = metacoder_obj$data$sam_data$sample_ids)
+  metacoder_obj$data$tax_table <- metacoder::calc_taxon_abund(metacoder_obj, data = "otu_table", cols = metacoder_obj$data$sample_data$sample_id)
   # Calculate the differences between Stress vs Control
-  metacoder_obj$data$diff_table <- metacoder::compare_groups(metacoder_obj, dataset = "tax_table", cols = metacoder_obj$data$sam_data$sample_ids, groups = metacoder_obj$data$sam_data$TreatmentGroup, func = func, other_cols = TRUE)
+  metacoder_obj$data$diff_table <- metacoder::compare_groups(metacoder_obj, data = "tax_table", cols = metacoder_obj$data$sample_data$sample_id, groups = metacoder_obj$data$sample_data[["X.TreatmentGroup"]], func = func, other_cols = TRUE)
   # Rename the tax_table columns for future filtering or manipulations
   # TODO: Find out if the following code is still relevant or can be updated.
   colnames(metacoder_obj$data$tax_table) <- sapply(colnames(metacoder_obj$data$tax_table), function(x) if(x!="taxon_id"){sprintf("T%s", x)}else{x})
