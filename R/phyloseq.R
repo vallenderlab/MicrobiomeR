@@ -46,7 +46,7 @@ get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file =
     # This step gives other functions a standard treatment group variable to work with
     if (!is.null(treatment_group)){
       if (is.numeric(treatment_group) || is.character(treatment_group)){
-        phyloseq::sample_data(silva_smb_data$phyloseq_data)[["X.TreatmentGroup"]] <- phyloseq::sample_data(silva_smb_data$phyloseq_data)[[treatment_group]]
+        phyloseq::sample_data(silva_smb_data$phyloseq_data)[["X.TreatmentGroup"]] <- phyloseq::sample_data(phyloseq_biom)[[treatment_group]]
       } else {
         warning("The treatment_group parameter must be numeric or a character string.")
         warning("The data might not be appropriate for other MicrobiomeR functions.  Please try again.")
@@ -298,7 +298,6 @@ parse_taxonomy_greengenes2 <- function(char.vec) {
 #' @description This function takes a phyloseq object and converts it to a list of
 #' dataframes for further processing.
 #' @param phyloseq_obj A phyloseq object.
-#' @param treatment_groups A list of the treatment groups in the sample metadata.
 #' @return A list of dataframes containing all of the phyloseq data
 #' @pretty_print TRUE
 #' @export
@@ -311,7 +310,7 @@ parse_taxonomy_greengenes2 <- function(char.vec) {
 #' @importFrom phyloseq tax_table otu_table sample_data
 #' @importFrom dplyr mutate left_join
 #' @importFrom stringr str_to_lower
-phyloseq_to_dataframe <- function(phyloseq_obj, treatment_groups) {
+phyloseq_to_dataframe <- function(phyloseq_obj) {
   df_tax_otu <- list()
   p_tax <- phyloseq::tax_table(phyloseq_obj)
   p_otu <- phyloseq::otu_table(phyloseq_obj)
@@ -322,9 +321,9 @@ phyloseq_to_dataframe <- function(phyloseq_obj, treatment_groups) {
   df_tax_otu$otu <- data.frame(p_otu)
   df_tax_otu$otu <- dplyr::mutate(df_tax_otu$otu, OTU = rownames(df_tax_otu$otu))
   df_tax_otu$sam <- data.frame(p_sam)
-  df_tax_otu$treat_groups <- treatment_groups
+  df_tax_otu$treat_groups <- p_sam[["X.TreatmentGroup"]]
   df_tax_otu$tg_index <- c()
-  for (tgroup in treatment_groups) {
+  for (tgroup in df_tax_otu$treat_groups) {
     tgindex <- stringr::str_to_lower(tgroup)
     tgindex <- stringr::str_replace(tgindex, " ", "_")
     tgindex <- sprintf("%s_samples", tgindex)
@@ -419,8 +418,8 @@ phyloseq_to_dataframe <- function(phyloseq_obj, treatment_groups) {
 #' @importFrom stringr str_to_lower
 #' @importFrom tibble as.tibble
 #' @importFrom dplyr left_join
-phyloseq_to_tibble <- function(phyloseq_obj, treatment_groups) {
-  df_tax_otu <- phyloseq_to_dataframe(phyloseq_obj = phyloseq_obj, treatment_groups = treatment_groups)
+phyloseq_to_tibble <- function(phyloseq_obj) {
+  df_tax_otu <- phyloseq_to_dataframe(phyloseq_obj = phyloseq_obj)
   df_tax_otu$sam <- tibble::as.tibble(df_tax_otu$sam)
   df_tax_otu$tax <- tibble::as.tibble(df_tax_otu$tax)
   df_tax_otu$otu <- tibble::as.tibble(df_tax_otu$otu)
@@ -446,8 +445,8 @@ phyloseq_to_tibble <- function(phyloseq_obj, treatment_groups) {
 #' @family Data Manipulators
 #' @inherit phyloseq_to_tibble params seealso
 #' @rdname phyloseq_to_stats_dataframe
-phyloseq_to_stats_dataframe <- function(phyloseq_obj, treatment_groups) {
-  df_tax_otu <- phyloseq_to_dataframe(phyloseq_obj = phyloseq_obj, treatment_groups = treatment_groups)
+phyloseq_to_stats_dataframe <- function(phyloseq_obj) {
+  df_tax_otu <- phyloseq_to_dataframe(phyloseq_obj = phyloseq_obj)
   rownames(df_tax_otu$data) <- df_tax_otu$data$OTU
   # TODO: Remove Stress/Control from syntax.  Make dynamic for other users.
   stressed_samples <- df_tax_otu$stressed_samples
