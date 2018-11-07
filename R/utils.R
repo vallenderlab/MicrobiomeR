@@ -49,14 +49,15 @@ mkdir <- function(dirname, path = NULL) {
 
 #' @title Merge By Group
 #'
-#' @description FUNCTION_DESCRIPTION
+#' @description Merge samples by group such as control or experimental.
 #'
-#' @param phyloseq_object DESCRIPTION.
+#' @param phyloseq_object A phyloseq object.
+#' @param group_name The name of the group to merge samples by.
 #'
-#' @return RETURN_DESCRIPTION
+#' @return A merged phyloseq object.
 #' @export
-merge_by_group <- function(phyloseq_object) {
-  merged_object <- phyloseq::merge_samples(phyloseq_object, "TreatmentGroup")
+merge_by_group <- function(phyloseq_object, group_name) {
+  merged_object <- phyloseq::merge_samples(phyloseq_object, group_name)
   phyloseq::sample_data(merged_object)$TreamentGroup <- factor(phyloseq::sample_names(merged_object))
   return(merged_object)
 }
