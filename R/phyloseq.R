@@ -15,7 +15,7 @@
 #' @return A phyloseq object, and a phylogenetic tree file if one does not already exist.
 #' @pretty_print TRUE
 #' @details This function heavily relys on the phyloseq package to import data into R.
-#'  It also requires you to use an absolute path to your data files or for your data files
+#'  It also requires you to use an absolute or relative path to your data files or for your data files
 #'  to be in the working directory.
 #' @examples
 #' \dontrun{
@@ -58,12 +58,12 @@ get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file =
     }
     # Write to a tree file that subsets our data and update the phyloseq object
     if (!is.null(tree_file) && !ape::is.rooted(ape::read.tree(tree_file))) {
-      tf <- basename(tree_file)
-      tp <- dirname(tools::file_path_as_absolute(tree_file))
       # Root the tree
       phyloseq_tree <- phyloseq::phy_tree(phyloseq_biom)
       ape_tree <- MicrobiomeR::root_by_longest_edge(phyloseq_tree)
       # Write the tree file
+      tf <- basename(tree_file)
+      tp <- dirname(tools::file_path_as_absolute(tree_file))
       new_tree_file <- sprintf("%s/rooted_%s", tp, tf)
       if (!file.exists(new_tree_file)) {
         ape::write.tree(ape_tree, new_tree_file)

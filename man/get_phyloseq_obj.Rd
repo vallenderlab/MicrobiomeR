@@ -36,7 +36,7 @@ pipeline.
 }
 \details{
 This function heavily relys on the phyloseq package to import data into R.
-It also requires you to use an absolute path to your data files or for your data files
+It also requires you to use an absolute or relative path to your data files or for your data files
 to be in the working directory.
 }
 \examples{
@@ -49,7 +49,7 @@ to be in the working directory.
 }
 \seealso{
 \code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree()}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
-\code{\link[ape]{root}}
+\code{\link[ape]{root}}, \code{\link[ape]{is.rooted}}, \code{\link[ape]{read.tree}}, \code{\link[ape]{write.tree}}
 \code{\link[MicrobiomeR]{root_by_longest_edge}}
 }
 \concept{Data Importers}
