@@ -1,17 +1,3 @@
-#' @title Merge By Group
-#'
-#' @description FUNCTION_DESCRIPTION
-#'
-#' @param phyloseq_object DESCRIPTION.
-#'
-#' @return RETURN_DESCRIPTION
-#' @export
-merge_by_group <- function(phyloseq_object) {
-  merged_object <- phyloseq::merge_samples(phyloseq_object, "TreatmentGroup")
-  phyloseq::sample_data(merged_object)$TreamentGroup <- factor(phyloseq::sample_names(merged_object))
-  return(merged_object)
-}
-
 #' @title Facet Bar Plot
 #'
 #' @description A faceted stacked bar plot ideal for plotting 2 groups.
