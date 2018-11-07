@@ -121,9 +121,10 @@ pick_new_outgroup <- function(unrooted_tree) {
 #' @rdname root_by_longest_edge
 #' @seealso
 #'  \code{\link[ape]{root}}
+#'  \code{\link[MicrobiomeR]{pick_new_outgroup}}
 #' @importFrom ape root
 root_by_longest_edge <- function(unrooted_tree) {
-  new.outgroup <- pick_new_outgroup(unrooted_tree)
+  new.outgroup <- MicrobiomeR::pick_new_outgroup(unrooted_tree)
   rootedTree <- ape::root(unrooted_tree, outgroup = new.outgroup, resolve.root = TRUE)
   return(rootedTree)
 }
