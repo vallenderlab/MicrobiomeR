@@ -29,11 +29,11 @@
 #' @rdname get_phyloseq_obj
 #' @seealso
 #'  \code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree()}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
-#'  \code{\link[ape]{root}}
+#'  \code{\link[ape]{root}}, \code{\link[ape]{is.rooted}}, \code{\link[ape]{read.tree}}, \code{\link[ape]{write.tree}}
 #'  \code{\link[MicrobiomeR]{root_by_longest_edge}}
-
 #' @importFrom phyloseq import_biom sample_data phy_tree import_qiime_sample_data merge_phyloseq
-#' @importFrom ape is.rooted write.tree
+#' @importFrom ape is.rooted write.tree read.tree
+#' @importFrom tools file_path_as_absolute
 get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file = NULL, treatment_group = NULL, parse_func = NULL, rdata_file = NULL, path = NULL) {
   if (!is.null(rdata_file)) {
     load(rdata_file)
@@ -57,15 +57,19 @@ get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file =
       }
     }
     # Write to a tree file that subsets our data and update the phyloseq object
-    if (!is.null(tree_file)) {
+    if (!is.null(tree_file) && !ape::is.rooted(ape::read.tree(tree_file))) {
+      tf <- basename(tree_file)
+      tp <- dirname(tools::file_path_as_absolute(tree_file))
       # Root the tree
       phyloseq_tree <- phyloseq::phy_tree(phyloseq_biom)
       ape_tree <- MicrobiomeR::root_by_longest_edge(phyloseq_tree)
       # Write the tree file
-      tree_path <- mkdir(dirname = "output", path = path)
-      ape::write.tree(ape_tree, sprintf("%s/rooted_%s", tree_path, tree_file))
+      new_tree_file <- sprintf("%s/rooted_%s", tp, tf)
+      if (!file.exists(new_tree_file)) {
+        ape::write.tree(ape_tree, new_tree_file)
+      }
       # Update and return the phyloseq object
-      phy_tree(phyloseq_obj) <- ape_tree
+      phyloseq::phy_tree(phyloseq_obj) <- ape_tree
       return(phyloseq_obj)
     } else {
       return(phyloseq_obj)
