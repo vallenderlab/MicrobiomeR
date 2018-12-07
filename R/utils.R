@@ -283,10 +283,9 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
 #' @family Data Manipulator
 #' @rdname transformer
 #' @seealso
-#'  \code{\link[MicrobiomeR]{character(0)}}
+#'  \code{\link[MicrobiomeR]{transposer}}
 #'  \code{\link[dplyr]{select_all}},\code{\link[dplyr]{select}}
 #'  \code{\link[purrr]{modify}}
-#' @importFrom MicrobiomeR transposer
 #' @importFrom dplyr select_if select
 #' @importFrom purrr modify_at
 transformer <- function(.data, func, by = "column", ids = NULL, header_name = NULL, preserved_categories = TRUE, separated_categories = NULL, ...) {
