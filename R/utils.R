@@ -131,3 +131,49 @@ get_color_palette <- function(pal_func=virdis_palette_func, color_no=20, display
   }
   return(pal)
 }
+
+
+#' @title Object handler
+#' @description A function that handles the conversion of objects to metacoder (taxa::taxmap) objects.
+#' @param obj An object that contains the data being analyzed.  Can be one of the following:
+#' \describe{
+#'   \item{Phyloseq Object}{An object generated from the phyloseq package.}
+#'   \item{Taxmap Object}{An object generated from the metacoder or taxa package.}
+#'   \item{RData file}{An RData file generated from the base::save function.  Can have an extension of .RData or .rda.}
+#'   }
+#' @return The output generated is a taxmap object.
+#' @pretty_print TRUE
+#' @details This function is used to convert data to metacoder/taxmap objects for microbiome analysis.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family FAMILY_TITLE
+#' @rdname object_handler
+#' @seealso
+#'  \code{\link[metacoder]{parse_phyloseq}}
+#'  \code{\link[tools]{fileutils}}
+#' @importFrom metacoder parse_phyloseq
+#' @importFrom tools file_ext
+object_handler <- function(obj) {
+  if (is.null(obj)) {
+    stop("Please use a metacoder/phyloseq object or an rdata file.")
+  } else {
+    if (inherits(obj, "phyloseq")) {
+      metacoder_object <- metacoder::parse_phyloseq(obj)
+    } else if (inherits(obj, "Taxmap")) {
+      metacoder_object <- obj
+    } else if (file.exists(obj)) {
+      if (tools::file_ext(obj) %in% c("RData", ".rda")) {
+        load(file = obj)
+        if (!"metacoder_object" %in% ls()) {
+          stop("Please provide a loadable .RData/.rda file that contains an object called \"metacoder_object\".")
+        }
+      }
+    }
+  }
+  return(metacoder_object)
+}

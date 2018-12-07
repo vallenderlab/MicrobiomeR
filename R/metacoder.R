@@ -1,6 +1,3 @@
-
-
-
 #' @title Get Metacoder Object
 #' @description Create a metacoder object using a phyloseq object or rdata file.
 #' @param phyloseq_object A phyloseq object.  Default: NULL
@@ -26,7 +23,7 @@
 #' @importFrom metacoder parse_phyloseq calc_obs_props calc_taxon_abund compare_groups
 get_metacoder_obj <- function(phyloseq_object=NULL, rdata_file=NULL, filter_flag = FALSE,
                               ambiguous_filter=c("uncultured", "Unassigned", "Ambiguous"),
-                              kingdom_filter=c("Bacteria"), workflow_func = metacoder_workflow_1,
+                              kingdom_filter=c("Archaea"), workflow_func = metacoder_workflow_1,
                               comp_func = metacoder_comp_func_1) {
   if (!is.null(rdata_file)){
     # Load data
@@ -83,7 +80,8 @@ metacoder_workflow_1 <- function(metacoder_obj, func=metacoder_comp_func_1) {
   metacoder_obj$data$diff_table <- metacoder::compare_groups(metacoder_obj, data = "tax_table", cols = metacoder_obj$data$sample_data$sample_id, groups = metacoder_obj$data$sample_data[["X.TreatmentGroup"]], func = func, other_cols = TRUE)
   # Rename the tax_table columns for future filtering or manipulations
   # TODO: Find out if the following code is still relevant or can be updated.
-  colnames(metacoder_obj$data$tax_table) <- sapply(colnames(metacoder_obj$data$tax_table), function(x) if(x!="taxon_id"){sprintf("T%s", x)}else{x})
+  #colnames(metacoder_obj$data$tax_table) <- sapply(colnames(metacoder_obj$data$tax_table), function(x) if(x!="taxon_id"){sprintf("T%s", x)}else{x})
+  return(metacoder_obj)
 }
 
 #' @title Metacoder Comparison Function #1
@@ -158,37 +156,40 @@ metacoder_initial_filter <- function(metacoder_obj, ambiguous_filter, kingdom_fi
   # TODO: Make this function more mature.
   # Filter ambiguous taxon names, and filter kingdoms and return unfiltered taxmap
   if (!is.null(ambiguous_filter) & !is.null(kingdom_filter)) {
-    filtered_meta <- metacoder_obj
+    filtered_meta <- obj
     for (term in ambiguous_filter) {
       filtered_meta <- filtered_meta %>%
+        taxa::filter_obs(c("diff_table", "tax_table"), !stringr::str_detect(taxon_names, term)) %>%
         taxa::filter_taxa(!stringr::str_detect(taxon_names, term))
     }
+    print(filtered_meta)
     for (term in kingdom_filter) {
       filtered_meta <- filtered_meta %>%
-        taxa::filter_taxa(taxon_names == term, subtaxa = TRUE)
+        taxa::filter_taxa(taxon_names == term, subtaxa = TRUE, invert = TRUE)
     }
     return(filtered_meta)
 
     # Filter ambiguous taxon names and return the filtered taxmap
   } else if (!is.null(ambiguous_filter) & is.null(kingdom_filter)) {
-    filtered_meta <- metacoder_obj
+    filtered_meta <- obj
     for (term in ambiguous_filter) {
       filtered_meta <- filtered_meta %>%
+        taxa::filter_obs(c("diff_table", "tax_table"), !stringr::str_detect(taxon_names, term)) %>%
         taxa::filter_taxa(!stringr::str_detect(taxon_names, term))
     }
     return(filtered_meta)
 
     # Filter kingdoms and return the filtered taxmap
   } else if (!is.null(kingdom_filter) & is.null(ambiguous_filter)) {
-    filtered_meta <- metacoder_obj
+    filtered_meta <- obj
     for (term in kingdom_filter) {
       filtered_meta <- filtered_meta %>%
-        taxa::filter_taxa(taxon_names == term, subtaxa = TRUE)
+        taxa::filter_taxa(taxon_names == term, subtaxa = TRUE, invert = TRUE)
     }
     return(filtered_meta)
 
     # If filtering is unceccessary return unfiltered taxmap
   } else {
-    return(metacoder_obj)
+    return(obj)
   }
 }
