@@ -179,9 +179,9 @@ object_handler <- function(obj) {
 }
 
 
-# A function for transposing tibbles with categorical data.
-#' @title Transposer function for tidy data.
-#' @description This function transposes data using the tidyr package.
+#' @title Transposing Tidy Data
+#' @description This function transposes tables containing numeric and categorical data using the
+#' tidyr package.
 #' @param .data A matrix/data_frame/tibble for transposing
 #' @param ids The column to transpose by. Default: The first column.
 #' @param header_name A name for the numeric data that will be transposed.
@@ -250,6 +250,63 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
       n_cats <- stringr::str_count(trans_data[[header_name]][1], pattern = "<_>") + 1
       trans_data <- trans_data %>% tidyr::separate(col = header_name, into = paste("category", seq(1:n_cats), sep = "_"), sep = "<_>")
     }
+  }
+  return(trans_data)
+}
+
+
+
+#' @title Transforming Tidy Data
+#' @description This function transforms a table by rows or by columns.
+#' @param .data A matrix/data_frame/tibble for transforming.
+#' @param func A function, which can be anonymous, that will be used to transform the data.  (e.g. proportions
+#' x/sum(x)).
+#' @param by This denotes how the data should be transformed (column/row). Default: 'column'
+#' @param ids The column to transpose by. Default: The first column.
+#' @param header_name A name for the numeric data that will be transposed.
+#' @param preserved_categories A logical denoting weather categorical data should be conserved.  A
+#' value of FALSE will cause all categorical data except the \emph{ids} to be dropped.  A value of
+#' TRUE will cause the categorical data to preserved by \emph{tidyr::unite}ing these columns.  Default: TRUE
+#' @param separated_categories A vector containing ordered column names to use in a previously transposed
+#' and categorically preserved table.  Retransposing with this set should yield an exact replicate of
+#' the original data.  Default: NULL
+#' @param ... Additional arguments passed on to \emph{func}
+#' @return A tibble that has been transformed.
+#' @pretty_print TRUE
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Data Manipulator
+#' @rdname transformer
+#' @seealso
+#'  \code{\link[MicrobiomeR]{character(0)}}
+#'  \code{\link[dplyr]{select_all}},\code{\link[dplyr]{select}}
+#'  \code{\link[purrr]{modify}}
+#' @importFrom MicrobiomeR transposer
+#' @importFrom dplyr select_if select
+#' @importFrom purrr modify_at
+transformer <- function(.data, func, by = "column", ids = NULL, header_name = NULL, preserved_categories = TRUE, separated_categories = NULL, ...) {
+  if (!(is.matrix(.data) | is.data.frame(.data) | tibble::is.tibble(.data))) {
+    stop("input not transposable")
+  }
+  input <- .data
+  if (by == "row") {
+    # Transpose table and unite all categorical data into one column for row based transformations
+    input <- input %>% MicrobiomeR::transposer(ids = ids, header_name = header_name, preserved_categories = preserved_categories)
+  }
+  # Get numeric column names
+  num_cols <- input %>% dplyr::select_if(is.numeric) %>% dplyr::select_if(!names(.) %in% ids) %>% colnames()
+  # Get all other columsn as preserved columns
+  preserved_categories <- input %>% dplyr::select(-one_of(num_cols)) %>% colnames()
+  # Transform data
+  trans_data <- purrr::modify_at(input, num_cols, func, list(...))
+  if (by == "row") {
+    # Retranspose the table and separate the categorical data for row based transformations
+    trans_data <- trans_data %>% MicrobiomeR::transposer(ids = header_name, header_name = ids, separated_categories = separated_categories, preserved_categories = FALSE)
   }
   return(trans_data)
 }
