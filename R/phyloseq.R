@@ -330,7 +330,6 @@ phyloseq_to_dataframe <- function(phyloseq_obj) {
     tgindex <- stringr::str_replace(tgindex, " ", "_")
     tgindex <- sprintf("%s_samples", tgindex)
     df_tax_otu[[tgindex]] <- rownames(df_tax_otu$sam[df_tax_otu$sam$TreatmentGroup == tgroup, ])
-    df_tax_otu$tg_index <- c(df_tax_otu$tg_index, tgindex)
   }
   df_tax_otu$data <- dplyr::left_join(x = df_tax_otu$otu, y = df_tax_otu$tax, by = "OTU")
   return(df_tax_otu)

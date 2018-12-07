@@ -151,7 +151,7 @@ get_color_palette <- function(pal_func=virdis_palette_func, color_no=20, display
 #'  }
 #' }
 #' @export
-#' @family FAMILY_TITLE
+#' @family Formatting and Validation
 #' @rdname object_handler
 #' @seealso
 #'  \code{\link[metacoder]{parse_phyloseq}}
@@ -176,4 +176,80 @@ object_handler <- function(obj) {
     }
   }
   return(metacoder_object)
+}
+
+
+# A function for transposing tibbles with categorical data.
+#' @title Transposer function for tidy data.
+#' @description This function transposes data using the tidyr package.
+#' @param .data A matrix/data_frame/tibble for transposing
+#' @param ids The column to transpose by. Default: The first column.
+#' @param header_name A name for the numeric data that will be transposed.
+#' @param preserved_categories A logical denoting weather categorical data should be conserved.  A
+#' value of FALSE will cause all categorical data except the \emph{ids} to be dropped.  A value of
+#' TRUE will cause the categorical data to preserved by \emph{tidyr::unite}ing these columns.  Default: TRUE
+#' @param separated_categories A vector containing ordered column names to use in a previously transposed
+#' and categorically preserved table.  Retransposing with this set should yield an exact replicate of
+#' the original data.  Default: NULL
+#' @return A transposed data table as a tibble.
+#' @pretty_print TRUE
+#' @details Transposing can help with preforming operations on the rows of your tibbles.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Data Manipulation
+#' @rdname transposer
+#' @seealso
+#'  \code{\link[tibble]{is_tibble}}
+#'  \code{\link[dplyr]{select_all}},\code{\link[dplyr]{select}},\code{\link[dplyr]{reexports}}
+#'  \code{\link[tidyr]{gather}},\code{\link[tidyr]{unite}},\code{\link[tidyr]{spread}},\code{\link[tidyr]{separate}}
+#'  \code{\link[stringr]{str_detect}},\code{\link[stringr]{str_count}}
+#' @importFrom tibble is.tibble
+#' @importFrom dplyr select_if select as_tibble
+#' @importFrom tidyr gather unite spread separate
+#' @importFrom stringr str_detect str_count
+transposer <- function(.data, ids = NULL, header_name, preserved_categories = TRUE, separated_categories = NULL) {
+  # Verify format
+  if (!(is.matrix(.data) | is.data.frame(.data) | tibble::is.tibble(.data))) {
+    stop("input not transposable")
+  }
+  input <- .data
+  # Get ids if none are given, defaults to the first column
+  if (is.null(ids)) {
+    ids <- input[1] %>% colnames()
+    warning(sprintf("There were no ids given.  Defaulting to the first column: %s", ids))
+  }
+  # Get numeric data (columns)
+  num_cols <- input %>% dplyr::select_if(is.numeric) %>% dplyr::select_if(!names(.) %in% ids) %>% colnames()
+
+  # Transform
+  if (preserved_categories == TRUE) { # All categorical data is preserved
+    warning("Categorical data will be united as a string, which can be tidyr::separated after re-transposing.")
+    preserved_categories <- input %>% dplyr::select(-one_of(c(num_cols))) %>% colnames()
+    trans_data <- input %>%
+      dplyr::as_tibble() %>%
+      tidyr::gather(key = !!sym(header_name), "_data", -c(preserved_categories)) %>% # Gather columns other that aren't preserved
+      tidyr::unite("_categories", c(preserved_categories), sep = "<_>") %>% # Preserve the categorical data in 1 column
+      tidyr::spread("_categories", "_data") # Spread categorical data over the numerical data
+  } else if (preserved_categories == FALSE) { # Only the ids are preserved
+    trans_data <- input %>%
+      dplyr::as_tibble() %>%
+      tidyr::gather(key = !!sym(header_name), "_data", -c(ids)) %>%
+      tidyr::spread(!!sym(ids), "_data")
+  }
+  # Look for previously transformed tibbles and separate any united colums
+  if (all(stringr::str_detect(trans_data[header_name], "\\<\\_\\>"))) {
+    if (!is.null(separated_categories)) {
+      trans_data <- trans_data %>% tidyr::separate(col = header_name, into = separated_categories, sep = "<_>")
+    } else {
+      warning("Separated categories has not been supplied.  Columns will be named as \"category_#\".")
+      n_cats <- stringr::str_count(trans_data[[header_name]][1], pattern = "<_>") + 1
+      trans_data <- trans_data %>% tidyr::separate(col = header_name, into = paste("category", seq(1:n_cats), sep = "_"), sep = "<_>")
+    }
+  }
+  return(trans_data)
 }
