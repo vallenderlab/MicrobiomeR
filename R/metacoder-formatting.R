@@ -1,6 +1,17 @@
+#' The MicrobiomeR Formats
+#'
+#' The MicrobiomeR formats are listed below:
+#'   \item{phyloseq_format}
+#'   \item{raw_format}
+#'   \item{basic_format}
+#'   \item{analyzed_format}
+#'
+#' @name MicrobiomeR_Formats
+NULL
+
 #' @title Which MicrobiomeR Format
 #' @description A function for looking at a metacoder object and returning the identified MicrobiomeR format.
-#' @param obj A Taxmap/metacoder object
+#' @param obj A Taxmap/metacoder object.
 #' @return If the format is verified it returns a character string denoting the identified format.
 #' @pretty_print TRUE
 #' @details This function is used to get basic infomration about the format of the taxmap object
@@ -54,4 +65,31 @@ which_format <- function(obj) {
       warning(sprintf("The table names in the metacoder object are: %s", paste(table_names, collapse = ", ")))
       stop("The object is not in a recognized format.")
     }
+}
+
+
+#' @title Is Raw MicrobiomeR format
+#' @description This function returns a logical based on weather or not the object is in the raw_format.
+#' @param obj A Taxmap/metacoder object.
+#' @return A logical (TRUE/FALSE).
+#' @pretty_print TRUE
+#' @details The "raw_format" is the most basic of the [MicrobiomeR_Formats] other than the "phyloseq_format".
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Formatting and Validation
+#' @rdname is_raw_format
+#' @seealso
+#'  \code{\link[MicrobiomeR]{which_format}}
+is_raw_format <- function(obj) {
+  fmt <- MicrobiomeR::which_format(obj)
+  if (fmt == "raw_format"){
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
 }
