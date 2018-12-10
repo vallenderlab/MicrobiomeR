@@ -408,3 +408,48 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, comp_func = NULL
   mo_clone <- order_metacoder_data(metacoder_object = mo_clone)
   return(mo_clone)
 }
+
+
+#' @title As MicrobiomeR Format
+#' @description Converts a metacoder object to the specified format.
+#' @param obj A Taxmap/metacoder object.
+#' @param format The name of the format to convert the object to.
+#' @param ... An optional list of parameters to use in the as_*_format function specified
+#' by the format parameter.
+#' @return A Taxmap/metacoder object in the specified format.
+#' @pretty_print TRUE
+#' @details See the [MicrobiomeR_Formats] documentation.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Formatting
+#' @rdname as_MicrobiomeR_format
+#' @seealso
+#'  \code{\code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
+#'  \code{\link[glue]{glue}}
+#' @importFrom glue glue
+as_MicrobiomeR_format <- function(obj, format, ...) {
+  mo_clone <- object_handler(obj = obj)
+  current_format <- which_format(mo_clone)
+  if (format != current_format) {
+    if (format == "raw_format") {
+      mo_clone <- as_raw_format(obj = mo_clone)
+    } else if (format == "basic_format") {
+      mo_clone <- as_basic_format(obj = mo_clone, ...)
+    } else if (format == "analyzed_format") {
+      mo_clone <- as_analyzed_format(obj = mo_clone, ...)
+    } else if (format == "phyloseq_format") {
+      mo_clone <- as_phyloseq_format(obj = mo_clone, ...)
+    } else {
+      stop("The format is not recognized.")
+    }
+  } else {
+    warning(glue::glue("Your object is already in the proper format: {format}"))
+  }
+  mo_clone <- order_metacoder_data(metacoder_object = mo_clone)
+  return(mo_clone)
+}
