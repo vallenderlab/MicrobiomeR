@@ -107,7 +107,7 @@ which_format <- function(obj) {
 }
 
 
-#' @title Is Raw MicrobiomeR Rormat
+#' @title Is Raw MicrobiomeR Format
 #' @description This function returns a logical based on weather or not the object is in the raw_format.
 #' @param obj A Taxmap/metacoder object.
 #' @return A logical (TRUE/FALSE).
@@ -133,7 +133,7 @@ is_raw_format <- function(obj) {
   }
 }
 
-#' @title Is Basic MicrobiomeR Rormat
+#' @title Is Basic MicrobiomeR Format
 #' @description This function returns a logical based on weather or not the object is in the basic_format.
 #' @param obj A Taxmap/metacoder object.
 #' @return A logical (TRUE/FALSE).
@@ -159,7 +159,7 @@ is_basic_format <- function(obj) {
   }
 }
 
-#' @title Is Analyzed MicrobiomeR Rormat
+#' @title Is Analyzed MicrobiomeR Format
 #' @description This function returns a logical based on weather or not the object is in the analyzed_format.
 #' @param obj A Taxmap/metacoder object.
 #' @return A logical (TRUE/FALSE).
@@ -179,6 +179,34 @@ is_basic_format <- function(obj) {
 is_analyzed_format <- function(obj) {
   fmt <- which_format(obj)
   if (fmt == "analyzed_format"){
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
+
+# Returns TRUE if the MicrobiomeR format is the phyloseq_format
+#' @title Is Phyloseq MicrobiomeR Format
+#' @description This function returns a logical based on weather or not the object is in the phyloseq_format.
+#' @param obj A Taxmap/metacoder object.
+#' @return A logical (TRUE/FALSE).
+#' @pretty_print TRUE
+#' @details The "phyloseq_format" is Level 0. in the [MicrobiomeR_Formats] hierarchy.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Formatting and Validation
+#' @rdname is_phyloseq_format
+#' @seealso
+#'  \code{\link[MicrobiomeR]{which_format}}
+is_phyloseq_format <- function(obj) {
+  fmt <- which_format(obj)
+  if (fmt == "phyloseq_format"){
     return(TRUE)
   } else {
     return(FALSE)
