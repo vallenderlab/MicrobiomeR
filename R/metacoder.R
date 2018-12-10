@@ -208,6 +208,7 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
 }
 
 
+
 #' @title Agglomerate Metacoder Objects
 #' @description A function similar to the \code{\link[phyloseq:tax_glom]{phyloseq::tax_glom}} function,
 #' that assembles abundance data at a specified rank.  This removes subtaxa and reassigns the
@@ -257,7 +258,7 @@ agglomerate_metacoder <- function(obj, rank, valid_formats = c("raw_format", "ba
 #' @pretty_print TRUE
 #' @details The taxa_prevalence_filter filters taxon_ids that do not appear more than a certian amount of times (minimum abundance) in a certain percentage of
 #' samples (rel_sample_percentage) at the specified agglomerated rank (rank). The \href{http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#filtering}{phyloseq workflow} calls for a minimum abundance of 5 across %50 of the samples.
-#' This method is considered supervised, because the filtering is done based on taxonomic annotation, which is assigned based on a reference database (SILVA or GreenGenes).
+#' This method is considered supervised, because the filtering is done based on taxonomic annotation (taxon_ids), which is assigned based on a reference database (SILVA or GreenGenes).
 #' @examples
 #' \dontrun{
 #' if(interactive()){
@@ -290,3 +291,45 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
   return(mo_clone)
 }
 
+
+#' @title OTU Prevalence Filter (Metacoder)
+#' @description This function filters observations by thier prevelance across samples.
+#' @param obj A Taxmap/metacoder object.
+#' @param minimum_abundance The minimum abundance needed per observation per sample.  Default: 5
+#' @param rel_sample_percentage The percentage of samples per observation that meet the minimum abundance.  Default: 0.5
+#' @param valid_formats A vector of formats that are used for validation.  Default: c("basic_format")
+#' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
+#' @return Returns a taxmap object that contains taxon_ids that have passed the above fiter.
+#' @pretty_print TRUE
+#' @details The otu_prevalence_filter filters taxon_ids that do not appear more than a certian amount of times (minimum abundance) in a certain percentage of
+#' samples (rel_sample_percentage). The \href{http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#filtering}{phyloseq workflow} calls for a minimum abundance of 5 across %50 of the samples.
+#' This filtering method is considered unsupervised, because it soley relies on the data in this experiment (OTU ids).
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Metacoder Filters
+#' @rdname otu_prevalence_filter
+#' @seealso
+#'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
+#'  \code{\link[metacoder]{calc_prop_samples}}
+#'  \code{\link[dplyr]{filter}}
+#'  \code{\link[taxa]{filter_taxa}}
+#' @importFrom metacoder calc_prop_samples
+#' @importFrom dplyr filter
+#' @importFrom taxa filter_taxa
+otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percentage = 0.5,
+                                  valid_formats = c("basic_format"), validated = FALSE) {
+  mo_clone <- obj$clone()
+  mo_clone <- MicrobiomeR::validate_MicrobiomeR_format(obj = mo_clone, valid_formats = valid_formats,
+                                                       force_format = TRUE, validated = validated, min_or_max = min)
+  # Calculate the ids that need to be removed
+  ids_to_remove <- metacoder::calc_prop_samples(mo_clone, "taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
+    dplyr::filter(n_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
+  # Prevalence Filtering
+  mo_clone <- taxa::filter_taxa(mo_clone, !taxon_ids %in% ids_to_remove$taxon_id, reassign_obs = FALSE)
+  return(mo_clone)
+}
