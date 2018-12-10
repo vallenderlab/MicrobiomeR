@@ -43,6 +43,7 @@ metacoder_workflow_1 <- function(metacoder_obj, func=metacoder_comp_func_1) {
 #' @rdname metacoder_comp_func_1
 #' @seealso
 #'  \code{\link[diptest]{dip.test}}
+#'
 #'  \code{\link[modes]{bimodality_coefficient}}
 #' @importFrom diptest dip.test
 #' @importFrom modes bimodality_coefficient
@@ -97,12 +98,15 @@ metacoder_comp_func_1 <- function(abund_1, abund_2) {
 #'  }
 #' }
 #' @export
-#' @family Metacoder Filter
+#' @family Metacoder Filters
 #' @rdname sample_filter
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{transformer}}
+#'
 #'  \code{\link[taxa]{get_dataset}}
+#'
 #'  \code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}},  \code{\link[dplyr]{filter}}
+#'
 #'  \code{\link[purrr]{map}},  \code{\link[purrr]{keep}}
 #' @importFrom taxa get_dataset
 #' @importFrom dplyr select_if select filter
@@ -160,10 +164,11 @@ sample_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #'  }
 #' }
 #' @export
-#' @family Metacoder Filter
+#' @family Metacoder Filters
 #' @rdname agglomerate_metacoder
 #' @seealso
 #'  \code{\link[taxa]{filter_taxa}}
+#'
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
 #' @importFrom taxa filter_taxa
 agglomerate_metacoder <- function(obj, rank, valid_formats = c("raw_format", "basic_format"), validated = FALSE) {
