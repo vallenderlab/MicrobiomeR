@@ -119,7 +119,7 @@ which_format <- function(obj) {
 #' @family Validation
 #' @rdname is_raw_format
 is_raw_format <- function(obj) {
-  fmt <- MicrobiomeR::which_format(obj)
+  fmt <- which_format(obj)
   if (fmt == "raw_format"){
     return(TRUE)
   } else {
@@ -357,7 +357,6 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
 #'  \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{is_raw_format}},  \code{\link[MicrobiomeR]{is_basic_format}},  \code{\link[MicrobiomeR]{is_analyzed_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
 #'  \code{\link[metacoder]{compare_groups}}
 #'  \code{\link[taxa]{taxonomy_table}}
-#'  \code{\link[dplyr]{select}},\code{\link[dplyr]{join}}
 #' @importFrom metacoder compare_groups
 #' @importFrom taxa taxonomy_table
 #' @importFrom dplyr rename right_join
@@ -430,7 +429,6 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, comp_func = NULL
 #' @rdname as_MicrobiomeR_format
 #' @seealso
 #'  \code{\code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
-#'  \code{\link[glue]{glue}}
 #' @importFrom glue glue
 as_MicrobiomeR_format <- function(obj, format, ...) {
   mo_clone <- object_handler(obj = obj)
@@ -453,3 +451,55 @@ as_MicrobiomeR_format <- function(obj, format, ...) {
   mo_clone <- order_metacoder_data(obj = mo_clone)
   return(mo_clone)
 }
+
+
+# Validates that metacoder objects are in a valid format.  A high(max) or low(min) level format can be forced.
+#' @title Validate MicrobiomeR Format
+#' @description This funciton validates that taxmap/metacoder objects are in a valid format MicrobiomeR format.
+#' @param obj A Taxmap/metacoder object.
+#' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
+#' @param valid_formats A vector of formats that are used for validation.
+#' @param force_format A logical denoting if the selected format is to be forced.  Default: FALSE
+#' @param min_or_max A base function (min or max) that determines which format is to be forced.
+#' This is particularly useful if you provide multiple \emph{valid_formats}.  Min will choose the lowest
+#' level format, while max will choose the highest level format.  Default: base::max
+#' @param ... An optional list of parameters to use in \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}.
+#' @return If the object is validated, a Taxmap/metacoder object.
+#' @details This function can provide a way to check if a taxmap object has undergone a
+#' \code{\link[MicrobiomeR:MicrobiomeR_Workflow]{MicrobiomeR Style Workflow}}.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Validation
+#' @rdname validate_MicrobiomeR_format
+#' @seealso
+#'  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
+#' @importFrom base max
+#' @importFrom glue glue
+validate_MicrobiomeR_format <- function(obj, validated = FALSE, valid_formats, force_format = FALSE, min_or_max = base::max, ...) {
+  mo_clone <- obj$clone()
+  if (validated == TRUE) {
+    return(mo_clone)
+  }
+  fmt <- which_format(obj = mo_clone)
+  rank_list <- c(format_list[[fmt]])
+  high_rank <- fmt
+  if (fmt %in% valid_formats) {
+    return(mo_clone)
+  } else if (force_format == TRUE) {
+    for (v_fmt in valid_formats) {
+      rank_list <- c(rank_list, format_list[[v_fmt]])
+      high_rank <- ifelse(format_list[[v_fmt]] >= min_or_max(rank_list), v_fmt, high_rank)
+    }
+    warning(glue::glue("Forcing the metacoder object from the {fmt} to the {high_rank}."))
+    mo_clone <- as_MicrobiomeR_format(obj = mo_clone, format = high_rank, ...)
+    return(mo_clone)
+  } else {
+    stop(glue::glue("The metacoder object is not in one of the valid formats: {valid_formats}." ))
+  }
+}
+
