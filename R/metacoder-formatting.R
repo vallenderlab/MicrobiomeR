@@ -112,7 +112,7 @@ which_format <- function(obj) {
 #' @param obj A Taxmap/metacoder object.
 #' @return A logical (TRUE/FALSE).
 #' @pretty_print TRUE
-#' @details The "raw_format" is the most basic of the [MicrobiomeR_Formats] other than the "phyloseq_format".
+#' @details The "raw_format" is Level 1. in the [MicrobiomeR_Formats] hierarchy.
 #' @examples
 #' \dontrun{
 #' if(interactive()){
@@ -127,6 +127,32 @@ which_format <- function(obj) {
 is_raw_format <- function(obj) {
   fmt <- MicrobiomeR::which_format(obj)
   if (fmt == "raw_format"){
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
+#' @title Is Basic MicrobiomeR format
+#' @description This function returns a logical based on weather or not the object is in the basic_format.
+#' @param obj A Taxmap/metacoder object.
+#' @return A logical (TRUE/FALSE).
+#' @pretty_print TRUE
+#' @details The "basic_format" is Level 2. in the [MicrobiomeR_Formats] hierarchy.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Formatting and Validation
+#' @rdname is_basic_format
+#' @seealso
+#'  \code{\link[MicrobiomeR]{which_format}}
+is_basic_format <- function(obj) {
+  fmt <- which_format(obj)
+  if (fmt == "basic_format"){
     return(TRUE)
   } else {
     return(FALSE)
