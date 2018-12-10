@@ -64,10 +64,6 @@ NULL
 #' @export
 #' @family Formatting and Validation
 #' @rdname which_format
-#' @seealso
-#'   \code{\link[MicrobiomeR]{is_raw_format}},  \code{\link[MicrobiomeR]{is_basic_format}},  \code{\link[MicrobiomeR]{is_analyzed_format}},  \code{\link[MicrobiomeR]{is_phyloseq_format}}
-#'   \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}}
-#'   \code{\link[MicrobiomeR]{as_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
 which_format <- function(obj) {
   mo_clone <- obj$clone()
   # Table names
@@ -122,8 +118,6 @@ which_format <- function(obj) {
 #' @export
 #' @family Formatting and Validation
 #' @rdname is_raw_format
-#' @seealso
-#'  \code{\link[MicrobiomeR]{which_format}}
 is_raw_format <- function(obj) {
   fmt <- MicrobiomeR::which_format(obj)
   if (fmt == "raw_format"){
@@ -148,8 +142,6 @@ is_raw_format <- function(obj) {
 #' @export
 #' @family Formatting and Validation
 #' @rdname is_basic_format
-#' @seealso
-#'  \code{\link[MicrobiomeR]{which_format}}
 is_basic_format <- function(obj) {
   fmt <- which_format(obj)
   if (fmt == "basic_format"){
@@ -174,8 +166,6 @@ is_basic_format <- function(obj) {
 #' @export
 #' @family Formatting and Validation
 #' @rdname is_analyzed_format
-#' @seealso
-#'  \code{\link[MicrobiomeR]{which_format}}
 is_analyzed_format <- function(obj) {
   fmt <- which_format(obj)
   if (fmt == "analyzed_format"){
@@ -202,8 +192,6 @@ is_analyzed_format <- function(obj) {
 #' @export
 #' @family Formatting and Validation
 #' @rdname is_phyloseq_format
-#' @seealso
-#'  \code{\link[MicrobiomeR]{which_format}}
 is_phyloseq_format <- function(obj) {
   fmt <- which_format(obj)
   if (fmt == "phyloseq_format"){
