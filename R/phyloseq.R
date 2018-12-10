@@ -534,7 +534,7 @@ phyloseq_to_excel <- function(phyloseq_obj, treatment_groups, rank, file_path) {
 #'
 #' }
 #' @export
-#' @family Filters
+#' @family Phyloseq Filters
 #' @rdname remove_ambiguous_taxa
 #' @seealso
 #'  \code{\link[phyloseq:tax_table-methods]{phyloseq::tax_table}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree}}, \code{\link[phyloseq:otu_table-methods]{phyloseq::otu_table}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}, \code{\link[phyloseq]{merge_phyloseq}}
@@ -633,7 +633,7 @@ remove_ambiguous_taxa <- function(phyloseq_obj, ranks, ambiguous_names) {
 #'
 #' }
 #' @export
-#' @family Filters
+#' @family Phyloseq Filters
 #' @rdname preprocess_phyloseq
 #' @seealso
 #'  \code{\link[phyloseq:prune_taxa-methods]{phyloseq::prune_taxa()}}, \code{\link[phyloseq]{taxa_sums}}, \code{\link[phyloseq]{filter_taxa}}, \code{\link[phyloseq]{tax_glom}}, \code{\link[phyloseq:nsamples-methods]{phyloseq::nsamples()}},
