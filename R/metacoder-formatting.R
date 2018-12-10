@@ -293,20 +293,20 @@ as_raw_format <- function(obj) {
 #' @family Formatting
 #' @rdname as_basic_format
 #' @seealso
-#'  \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{as_raw_format}}, \code{\link[MicrobiomeR]{is_raw_format}}, \code{\link[MicrobiomeR]{order_metacoder_data}}
+#'  \code{\link[MicrobiomeR]{is_phyloseq_format}},  \code{\link[MicrobiomeR]{is_raw_format}},  \code{\link[MicrobiomeR]{is_basic_format}}, \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
 #'  \code{\link[metacoder]{calc_taxon_abund}}, \code{\link[metacoder]{calc_obs_props}}
 #' @importFrom metacoder calc_taxon_abund calc_obs_props
 as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
   mo_clone <- obj$clone()
   # Convert the metacoder object up the heirarchy of formants.
-  if (MicrobiomeR::is_phyloseq_format(mo_clone) == TRUE) {
-    mo_clone <- MicrobiomeR::as_raw_format(obj = mo_clone)
+  if (is_phyloseq_format(mo_clone) == TRUE) {
+    mo_clone <- as_raw_format(obj = mo_clone)
   }
   # Get metacoder::calc_* parameters
   if (is.null(cols)) {
     cols <- mo_clone$data$sample_data$sample_id
   }
-  if (MicrobiomeR::is_raw_format(mo_clone)) {
+  if (is_raw_format(mo_clone)) {
     # Create a taxonomy abundance table from the OTU abundance table
     mo_clone$data$taxa_abundance <- metacoder::calc_taxon_abund(obj  = mo_clone,
                                                      data = "otu_abundance",
@@ -328,6 +328,6 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
   } else {
     stop("To convert to basic format you have to start in the phyloseq or raw formats.")
   }
-  mo_clone <- MicrobiomeR::order_metacoder_data(metacoder_object = mo_clone)
+  mo_clone <- order_metacoder_data(metacoder_object = mo_clone)
   return(mo_clone)
 }
