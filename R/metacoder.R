@@ -77,6 +77,70 @@ metacoder_comp_func_1 <- function(abund_1, abund_2) {
 }
 
 
+#' @title Filter Samples from Metacoder Objects
+#' @description This function provides a flexible way to filter unwanted samples from the "otu_abundance" and "sample_data"
+#' observations of a MicrobiomeR formatted object.
+#' @param obj A Taxmap/metacoder object.
+#' @param .f_transform A function used for transforming the data.  Default: NULL
+#' @param .f_filter A function used for summarising the data like 'sum' or 'mean'.  Default: NULL
+#' @param .f_condition A function that takes the summarised data and applied a condition like x > 10000.  Default: NULL
+#' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
+#' @param ... An optional list of parameters to use in the .f_filter function specified
+#' @return Returns a metacoder object with samples that pass the filters.
+#' @details Get the samples to keep by using purr and the user supplied transform and filter + condition formulas.
+#' The purr packge allows the use of anonymous functions as described in the link below:
+#' \url{https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html#anonymous_function,_formula}
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Metacoder Filter
+#' @rdname sample_filter
+#' @seealso
+#'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{transformer}}
+#'  \code{\link[taxa]{get_dataset}}
+#'  \code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}},  \code{\link[dplyr]{filter}}
+#'  \code{\link[purrr]{map}},  \code{\link[purrr]{keep}}
+#' @importFrom taxa get_dataset
+#' @importFrom dplyr select_if select filter
+#' @importFrom purrr map keep
+sample_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condition = NULL, validated = FALSE, ...) {
+  mo_clone <- obj$clone()
+  # Make sure the required functions are provided.
+  if (!is.null(.f_filter) && !is.null(.f_condition)) {
+
+    # Validate and get otu_abundance data
+    mo_clone <- validate_MicrobiomeR_format(metacoder_object = mo_clone, valid_formats = c("raw_format", "basic_format"),
+                                            force_format = TRUE, validated = validated, min_or_max = min)
+    abund_data <- taxa::get_dataset(obj = mo_clone, data = "otu_abundance")
+
+    #  Get the sample data columns to work with
+    if (is.null(.f_transform)) { # Get raw sample data
+      sample_cols <- abund_data %>% dplyr::select_if(is.numeric)
+    } else { # Get transfmormed sample data
+      sample_cols <- transformer(.data = abund_data, func = .f_transform) %>% dplyr::select_if(is.numeric)
+    }
+    # Get the samples to keep by using purr and the user supplied filter and condition formulas
+    # The purr packge allows the use of anonymous functions as described in the link below:
+    # https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html#anonymous_function,_formula
+    samples_to_keep <- purrr::map(sample_cols, .f_filter, list(...)) %>% # Apply a summary function like 'sum' or 'mean'
+      purrr::map(.f_condition) %>% # Apply a function to the sample data that does some comparison (f(x)x>10000)
+      purrr::keep(~ . == TRUE) %>%
+      names() # Determine which samples to keep
+
+    # Update the otu_abundance and sample_data in the metacoder object by removing samples
+    other_vars <- abund_data %>% dplyr::select_if(function(x) is.numeric(x) == FALSE) %>% colnames() #%>% purrr::discard(~.=="taxon_id")
+    mo_clone$data$otu_abundance  <- dplyr::select(abund_data, c(other_vars, samples_to_keep))
+    mo_clone$data$sample_data <- mo_clone$data$sample_data %>% dplyr::filter(sample_id %in% samples_to_keep)
+    return(mo_clone)
+  } else {
+    stop("You have to supply a filter formula AND a condition formula.")
+  }
+}
+
 
 #' @title Agglomerate Metacoder Objects
 #' @description A function similar to the \code{\link[phyloseq:tax_glom]{phyloseq::tax_glom}} function,
@@ -112,3 +176,6 @@ agglomerate_metacoder <- function(obj, rank, valid_formats = c("raw_format", "ba
   )
   return(mo_clone)
 }
+
+
+
