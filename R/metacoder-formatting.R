@@ -331,3 +331,80 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
   mo_clone <- order_metacoder_data(metacoder_object = mo_clone)
   return(mo_clone)
 }
+
+
+#' @title As Analyzed MicrobiomeR Format
+#' @description Converts a metacoder object to the analyzed_format.
+#' @param obj A Taxmap/metacoder object.
+#' @param cols Column names used for \code{\link[metacoder]{calc_taxon_abund}}.  Default: NULL
+#' @param groups Group names used for \code{\link[metacoder]{compare_groups}}.  Default: NULL
+#' @param comp_func A Comparison based function used in \code{\link[metacoder]{compare_groups}}.  Default: NULL
+#' @param combinations Combinations of treatments used in \code{\link[metacoder]{compare_groups}}.  Default: NULL
+#' @param out_names Column names of the output used for \code{\link[metacoder]{calc_obs_props}}.  Default: NULL
+#' @return A Taxmap/metacoder object in the "analyzed_format".
+#' @pretty_print TRUE
+#' @details See the [MicrobiomeR_Formats] documentation.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Formatting
+#' @rdname as_analyzed_format
+#' @seealso
+#'  \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{is_raw_format}},  \code{\link[MicrobiomeR]{is_basic_format}},  \code{\link[MicrobiomeR]{is_analyzed_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
+#'  \code{\link[metacoder]{compare_groups}}
+#'  \code{\link[taxa]{taxonomy_table}}
+#'  \code{\link[dplyr]{select}},\code{\link[dplyr]{join}}
+#' @importFrom metacoder compare_groups
+#' @importFrom taxa taxonomy_table
+#' @importFrom dplyr rename right_join
+as_analyzed_format <- function(obj, cols = NULL, groups = NULL, comp_func = NULL, combinations = NULL, out_names = NULL) {
+  mo_clone <- obj$clone()
+  # Convert the metacoder object up the heirarchy of formants.
+  if (is_phyloseq_format(mo_clone)) {
+    mo_clone <- as_raw_format(obj = mo_clone)
+  }
+  if (is_raw_format(mo_clone)) {
+    mo_clone <- as_basic_format(obj = mo_clone, cols = cols, out_names = out_names)
+  }
+  # Get metacoder::compare_groups parameters
+  if (is.null(cols)) {
+    cols <- mo_clone$data$sample_data$sample_id
+  }
+  if (is.null(groups)) {
+    groups <- mo_clone$data$sample_data$TreatmentGroup
+  }
+  if (is.null(comp_func)) {
+    comp_func <- metacoder_comp_func_1
+  }
+  # Continue with conversion to analyzed_format
+  if (is_basic_format(mo_clone)) {
+    # Compare groups of samples for statistical analysis
+    mo_clone$data$statistical_data <- metacoder::compare_groups(obj         = mo_clone,
+                                                     data        = "taxa_proportions",
+                                                     cols        = cols,
+                                                     groups      = groups,
+                                                     func        = comp_func,
+                                                     other_cols  = TRUE,
+                                                     combinations = combinations)
+    # Create a table with taxonomy data and stats data for downstream analysis
+    tax_table <- taxa::taxonomy_table(obj = mo_clone, subset = taxon_ids(mo_clone), add_id_col = TRUE)
+    if ("taxon_ids" %in% names(tax_table)) {
+      tax_table <- tax_table %>% dplyr::rename(taxon_id = taxon_ids)
+    }
+    stats_table <- mo_clone$data$statistical_data
+    mo_clone$data$stats_tax_data <- dplyr::right_join(x  = tax_table,
+                                                      y  = stats_table,
+                                                      by = "taxon_id")
+  } else if (is_analyzed_format(mo_clone)) {
+    warning("The object is already in the analyzed format.")
+  } else {
+    stop("To convert to analyzed format you have to start in the phyloseq, basic, or raw formats.")
+  }
+  # Put data tables in the proper order
+  mo_clone <- order_metacoder_data(metacoder_object = mo_clone)
+  return(mo_clone)
+}
