@@ -176,7 +176,6 @@ is_analyzed_format <- function(obj) {
 }
 
 
-# Returns TRUE if the MicrobiomeR format is the phyloseq_format
 #' @title Is Phyloseq MicrobiomeR Format
 #' @description This function returns a logical based on weather or not the object is in the phyloseq_format.
 #' @param obj A Taxmap/metacoder object.
@@ -274,7 +273,6 @@ as_raw_format <- function(obj) {
   return(mo_clone)
 }
 
-# Converts the metacoder object to the basic_format
 #' @title As Basic MicrobiomeR Format
 #' @description Converts a metacoder object to the basic_format.
 #' @param obj A Taxmap/metacoder object.
@@ -453,7 +451,49 @@ as_MicrobiomeR_format <- function(obj, format, ...) {
 }
 
 
-# Validates that metacoder objects are in a valid format.  A high(max) or low(min) level format can be forced.
+#' @title As Phyloseq MicrobiomeR Format
+#' @description Converts the metacoder object to the phyloseq_format.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @param otu_table The name of the observation table with OTU data.  Default: NULL
+#' @param tax_data The name of the observation table with taxonomic annotations.  Default: NULL
+#' @param sample_data The name of the observation table with metadata.  Default: NULL
+#' @param phy_tree The name of the observation data with the phylogenetic tree.  Default: NULL
+#' @return A Taxmap/metacoder object in the phyloseq_format.
+#' @details See the [MicrobiomeR_Formats] documentation.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Formatting
+#' @rdname as_phyloseq_format
+#' @seealso
+#'  \code{\link[MicrobiomeR]{object_handler}},\code{\link[MicrobiomeR]{order_metacoder_data}}
+as_phyloseq_format <- function(obj, otu_table=NULL, tax_data=NULL, sample_data=NULL, phy_tree=NULL) {
+  obj <- MicrobiomeR::object_handler(obj = obj)
+  mo_clone <- obj$clone()
+  if (!is.null(otu_table)) {
+    mo_clone$data$otu_table <- mo_clone$data[otu_table]
+    mo_clone$data[otu_table] <- NULL
+  }
+  if (!is.null(tax_data)) {
+    mo_clone$data$tax_data <- mo_clone$data[tax_data]
+    mo_clone$data[tax_data] <- NULL
+  }
+  if (!is.null(sample_data)) {
+    mo_clone$data$sample_data <- mo_clone$data[sample_data]
+    mo_clone$data[sample_data] <- NULL
+  }
+  if (!is.null(phy_tree)) {
+    mo_clone$data$phy_tree <- mo_clone$data[phy_tree]
+    mo_clone$data[phy_tree] <- NULL
+  }
+  mo_clone <- MicrobiomeR::order_metacoder_data(metacoder_object = mo_clone)
+  return(mo_clone)
+}
+
 #' @title Validate MicrobiomeR Format
 #' @description This funciton validates that taxmap/metacoder objects are in a valid format MicrobiomeR format.
 #' @param obj A Taxmap/metacoder object.
@@ -478,7 +518,6 @@ as_MicrobiomeR_format <- function(obj, format, ...) {
 #' @rdname validate_MicrobiomeR_format
 #' @seealso
 #'  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
-#' @importFrom base max
 #' @importFrom glue glue
 validate_MicrobiomeR_format <- function(obj, validated = FALSE, valid_formats, force_format = FALSE, min_or_max = base::max, ...) {
   mo_clone <- obj$clone()
