@@ -77,3 +77,38 @@ metacoder_comp_func_1 <- function(abund_1, abund_2) {
 }
 
 
+
+#' @title Agglomerate Metacoder Objects
+#' @description A function similar to the \code{\link[phyloseq:tax_glom]{phyloseq::tax_glom}} function,
+#' that assembles abundance data at a specified rank.  This removes subtaxa and reassigns the
+#' values at the specified rank.
+#' @param obj A Taxmap/metacoder object.
+#' @param rank The rank that will be agllomerated to.
+#' @param valid_formats A vector of formats that are used for validation.  Default: c("raw_format", "basic_format")
+#' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
+#' @return A taxmap object that has been agglomerated at the specified rank.
+#' @pretty_print TRUE
+#' @details This function helps analyzing taxonomic data at intermediate ranks.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Metacoder Filter
+#' @rdname agglomerate_metacoder
+#' @seealso
+#'  \code{\link[taxa]{filter_taxa}}
+#'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
+#' @importFrom taxa filter_taxa
+agglomerate_metacoder <- function(obj, rank, valid_formats = c("raw_format", "basic_format"), validated = FALSE) {
+  mo_clone <- obj$clone()
+  mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = valid_formats,
+                                          force_format = TRUE, validated = validated, min_or_max = min)
+  # Agglomerate
+  mo_clone <- taxa::filter_taxa(mo_clone, taxon_ranks == rank,
+                                supertaxa = TRUE, reassign_obs = FALSE
+  )
+  return(mo_clone)
+}
