@@ -255,6 +255,8 @@ order_metacoder_data <- function(obj) {
 #' @export
 #' @family Formatting
 #' @rdname as_raw_format
+#' @seealso
+#'  \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{is_raw_format}}, \code{\link[MicrobiomeR]{order_metacoder_data}}
 as_raw_format <- function(obj) {
   mo_clone <- obj$clone()
   if (is_phyloseq_format(mo_clone) == TRUE) {
