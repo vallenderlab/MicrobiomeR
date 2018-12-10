@@ -270,7 +270,7 @@ as_raw_format <- function(obj) {
   } else {
     stop("To convert to raw format you have to start in the phyloseq format.")
   }
-  mo_clone <- order_metacoder_data(metacoder_object = mo_clone)
+  mo_clone <- order_metacoder_data(obj = mo_clone)
   return(mo_clone)
 }
 
@@ -328,7 +328,7 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
   } else {
     stop("To convert to basic format you have to start in the phyloseq or raw formats.")
   }
-  mo_clone <- order_metacoder_data(metacoder_object = mo_clone)
+  mo_clone <- order_metacoder_data(obj = mo_clone)
   return(mo_clone)
 }
 
@@ -405,7 +405,7 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, comp_func = NULL
     stop("To convert to analyzed format you have to start in the phyloseq, basic, or raw formats.")
   }
   # Put data tables in the proper order
-  mo_clone <- order_metacoder_data(metacoder_object = mo_clone)
+  mo_clone <- order_metacoder_data(obj = mo_clone)
   return(mo_clone)
 }
 
@@ -450,6 +450,6 @@ as_MicrobiomeR_format <- function(obj, format, ...) {
   } else {
     warning(glue::glue("Your object is already in the proper format: {format}"))
   }
-  mo_clone <- order_metacoder_data(metacoder_object = mo_clone)
+  mo_clone <- order_metacoder_data(obj = mo_clone)
   return(mo_clone)
 }
