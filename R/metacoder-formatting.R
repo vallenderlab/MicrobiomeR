@@ -212,3 +212,42 @@ is_phyloseq_format <- function(obj) {
     return(FALSE)
   }
 }
+
+#' @title Order Metacoder Observation Data
+#' @description A function for changing the order of the observation data in a metacoder object
+#' @param obj A Taxmap/metacoder object.
+#' @return A taxmap object with observation data in the proper order for downstream analysis.
+#' @pretty_print TRUE
+#' @details Changes the order of the observation tables in \strong{metacoder_object$data} to
+#' otu_abundance, otu_annotations, otu_proportions, sample_data, phy_tree, taxa_abundance,
+#' taxa_proportions, statistical_data, and stats_tax_data respectively.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Formatting and Validation
+#' @rdname order_metacoder_data
+order_metacoder_data <- function(obj) {
+  mo_clone <- obj$clone()
+  # Create list of expected table names
+  expected_names <- list(otu_abundance    = "otu_abundance",
+                         otu_annotations  = "otu_annotations",
+                         otu_proportions  = "otu_proportions",
+                         sample_data      = "sample_data",
+                         phy_tree         = "phy_tree",
+                         taxa_abundance   = "taxa_abundance",
+                         taxa_proportions = "taxa_proportions",
+                         statistical_data = "statistical_data",
+                         stats_tax_data   = "stats_tax_data")
+
+  # Create vector that contains expected tables names already in the metacoder object
+  table_order <- names(expected_names[names(expected_names) %in% names(mo_clone$data)])
+  # Get the table names that aren't expected but in the metacoder object
+  other_names <- names(mo_clone$data)[!names(mo_clone$data) %in% c(expected_names)]
+  table_order <- c(table_order, other_names)
+  mo_clone$data <- mo_clone$data[table_order]
+  return(mo_clone)
+}
