@@ -33,5 +33,8 @@ if(interactive()){
 \seealso{
 \code{\link[metacoder]{parse_phyloseq}}
 \code{\link[tools]{fileutils}}
+
+Other Formatting and Validation: \code{\link{is_raw_format}},
+  \code{\link{which_format}}
 }
 \concept{Formatting and Validation}
