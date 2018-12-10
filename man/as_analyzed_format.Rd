@@ -40,10 +40,10 @@ if(interactive()){
 \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{is_raw_format}},  \code{\link[MicrobiomeR]{is_basic_format}},  \code{\link[MicrobiomeR]{is_analyzed_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
 \code{\link[metacoder]{compare_groups}}
 \code{\link[taxa]{taxonomy_table}}
-\code{\link[dplyr]{select}},\code{\link[dplyr]{join}}
 
 Other Formatting: \code{\link{as_MicrobiomeR_format}},
   \code{\link{as_basic_format}},
+  \code{\link{as_phyloseq_format}},
   \code{\link{as_raw_format}}
 }
 \concept{Formatting}

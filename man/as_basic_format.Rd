@@ -35,6 +35,7 @@ if(interactive()){
 
 Other Formatting: \code{\link{as_MicrobiomeR_format}},
   \code{\link{as_analyzed_format}},
+  \code{\link{as_phyloseq_format}},
   \code{\link{as_raw_format}}
 }
 \concept{Formatting}

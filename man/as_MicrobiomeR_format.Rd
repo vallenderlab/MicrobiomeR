@@ -32,10 +32,10 @@ if(interactive()){
 }
 \seealso{
 \code{\code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
-\code{\link[glue]{glue}}
 
 Other Formatting: \code{\link{as_analyzed_format}},
   \code{\link{as_basic_format}},
+  \code{\link{as_phyloseq_format}},
   \code{\link{as_raw_format}}
 }
 \concept{Formatting}
