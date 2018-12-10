@@ -273,3 +273,61 @@ as_raw_format <- function(obj) {
   mo_clone <- order_metacoder_data(metacoder_object = mo_clone)
   return(mo_clone)
 }
+
+# Converts the metacoder object to the basic_format
+#' @title As Basic MicrobiomeR Format
+#' @description Converts a metacoder object to the basic_format.
+#' @param obj A Taxmap/metacoder object.
+#' @param cols Column names used for \code{\link[metacoder]{calc_taxon_abund}}.  Default: NULL
+#' @param out_names Column names of the output used for \code{\link[metacoder]{calc_obs_props}}.  Default: NULL
+#' @return A Taxmap/metacoder object in the "basic_format".
+#' @pretty_print TRUE
+#' @details See the [MicrobiomeR_Formats] documentation.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Formatting
+#' @rdname as_basic_format
+#' @seealso
+#'  \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{as_raw_format}}, \code{\link[MicrobiomeR]{is_raw_format}}, \code{\link[MicrobiomeR]{order_metacoder_data}}
+#'  \code{\link[metacoder]{calc_taxon_abund}}, \code{\link[metacoder]{calc_obs_props}}
+#' @importFrom metacoder calc_taxon_abund calc_obs_props
+as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
+  mo_clone <- obj$clone()
+  # Convert the metacoder object up the heirarchy of formants.
+  if (MicrobiomeR::is_phyloseq_format(mo_clone) == TRUE) {
+    mo_clone <- MicrobiomeR::as_raw_format(obj = mo_clone)
+  }
+  # Get metacoder::calc_* parameters
+  if (is.null(cols)) {
+    cols <- mo_clone$data$sample_data$sample_id
+  }
+  if (MicrobiomeR::is_raw_format(mo_clone)) {
+    # Create a taxonomy abundance table from the OTU abundance table
+    mo_clone$data$taxa_abundance <- metacoder::calc_taxon_abund(obj  = mo_clone,
+                                                     data = "otu_abundance",
+                                                     cols = cols,
+                                                     out_names = out_names)
+    # Create an OTU proportions table from the OTU abundance table
+    mo_clone$data$otu_proportions <- metacoder::calc_obs_props(obj        = mo_clone,
+                                                    data       = "otu_abundance",
+                                                    cols       = cols,
+                                                    other_cols = TRUE,
+                                                    out_names = out_names)
+    # Create a taxonomy proportions table from the OTU proportions table
+    mo_clone$data$taxa_proportions <- metacoder::calc_taxon_abund(obj  = mo_clone,
+                                                       data = "otu_proportions",
+                                                       cols = cols,
+                                                       out_names = out_names)
+  } else if (is_basic_format(mo_clone)) {
+    warning("The object is already in the basic format.")
+  } else {
+    stop("To convert to basic format you have to start in the phyloseq or raw formats.")
+  }
+  mo_clone <- MicrobiomeR::order_metacoder_data(metacoder_object = mo_clone)
+  return(mo_clone)
+}
