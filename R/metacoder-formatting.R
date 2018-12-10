@@ -62,7 +62,7 @@ NULL
 #'  }
 #' }
 #' @export
-#' @family Formatting and Validation
+#' @family Validation
 #' @rdname which_format
 which_format <- function(obj) {
   mo_clone <- obj$clone()
@@ -116,7 +116,7 @@ which_format <- function(obj) {
 #'  }
 #' }
 #' @export
-#' @family Formatting and Validation
+#' @family Validation
 #' @rdname is_raw_format
 is_raw_format <- function(obj) {
   fmt <- MicrobiomeR::which_format(obj)
@@ -140,7 +140,7 @@ is_raw_format <- function(obj) {
 #'  }
 #' }
 #' @export
-#' @family Formatting and Validation
+#' @family Validation
 #' @rdname is_basic_format
 is_basic_format <- function(obj) {
   fmt <- which_format(obj)
@@ -164,7 +164,7 @@ is_basic_format <- function(obj) {
 #'  }
 #' }
 #' @export
-#' @family Formatting and Validation
+#' @family Validation
 #' @rdname is_analyzed_format
 is_analyzed_format <- function(obj) {
   fmt <- which_format(obj)
@@ -190,7 +190,7 @@ is_analyzed_format <- function(obj) {
 #'  }
 #' }
 #' @export
-#' @family Formatting and Validation
+#' @family Validation
 #' @rdname is_phyloseq_format
 is_phyloseq_format <- function(obj) {
   fmt <- which_format(obj)
@@ -216,7 +216,7 @@ is_phyloseq_format <- function(obj) {
 #'  }
 #' }
 #' @export
-#' @family Formatting and Validation
+#' @family Validation
 #' @rdname order_metacoder_data
 order_metacoder_data <- function(obj) {
   mo_clone <- obj$clone()
@@ -237,5 +237,37 @@ order_metacoder_data <- function(obj) {
   other_names <- names(mo_clone$data)[!names(mo_clone$data) %in% c(expected_names)]
   table_order <- c(table_order, other_names)
   mo_clone$data <- mo_clone$data[table_order]
+  return(mo_clone)
+}
+
+#' @title As Raw MicrobiomeR Format
+#' @description Converts a metacoder object to the raw_format.
+#' @param obj A Taxmap/metacoder object.
+#' @return A Taxmap/metacoder object in the "raw_format".
+#' @pretty_print TRUE
+#' @details See the [MicrobiomeR_Formats] documentation.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Formatting
+#' @rdname as_raw_format
+as_raw_format <- function(obj) {
+  mo_clone <- obj$clone()
+  if (is_phyloseq_format(mo_clone) == TRUE) {
+    mo_clone$data$otu_abundance <- mo_clone$data$otu_table
+    mo_clone$data$otu_table <- NULL
+    mo_clone$data$otu_annotations <- mo_clone$data$tax_data
+    mo_clone$data$tax_data <- NULL
+    return(mo_clone)
+  } else if (is_raw_format(mo_clone)) {
+    warning("The object is already in the raw format.")
+  } else {
+    stop("To convert to raw format you have to start in the phyloseq format.")
+  }
+  mo_clone <- order_metacoder_data(metacoder_object = mo_clone)
   return(mo_clone)
 }
