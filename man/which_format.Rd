@@ -27,11 +27,10 @@ if(interactive()){
 }
 }
 \seealso{
-\code{\link[MicrobiomeR]{is_raw_format}},  \code{\link[MicrobiomeR]{is_basic_format}},  \code{\link[MicrobiomeR]{is_analyzed_format}},  \code{\link[MicrobiomeR]{is_phyloseq_format}}
-\code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}}
-\code{\link[MicrobiomeR]{as_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
-
-Other Formatting and Validation: \code{\link{is_raw_format}},
-  \code{\link{object_handler}}
+Other Validation: \code{\link{is_analyzed_format}},
+  \code{\link{is_basic_format}},
+  \code{\link{is_phyloseq_format}},
+  \code{\link{is_raw_format}},
+  \code{\link{order_metacoder_data}}
 }
-\concept{Formatting and Validation}
+\concept{Validation}
