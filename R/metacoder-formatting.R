@@ -86,7 +86,8 @@ which_format <- function(obj) {
       return("phyloseq_format")
     } else {
       warning(sprintf("The table names in the metacoder object are: %s", paste(table_names, collapse = ", ")))
-      stop("You have a mix between phyloseq format and other format.")
+      warning("You have a mix between phyloseq format and other format.")
+      return("mixed_format")
     }
   } else
     # Logic for returning the format type.
@@ -98,7 +99,8 @@ which_format <- function(obj) {
       return("raw_format")
     } else  {
       warning(sprintf("The table names in the metacoder object are: %s", paste(table_names, collapse = ", ")))
-      stop("The object is not in a recognized format.")
+      warning("The object is not in a recognized format.")
+      return("unknown_format")
     }
 }
 
@@ -358,7 +360,7 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
 #' @importFrom metacoder compare_groups
 #' @importFrom taxa taxonomy_table
 #' @importFrom dplyr rename right_join
-as_analyzed_format <- function(obj, cols = NULL, groups = NULL, comp_func = NULL, combinations = NULL, out_names = NULL) {
+as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = NULL, out_names = NULL, comp_func = metacoder_comp_func_1) {
   mo_clone <- obj$clone()
   # Convert the metacoder object up the heirarchy of formants.
   if (is_phyloseq_format(mo_clone)) {
@@ -374,13 +376,10 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, comp_func = NULL
   if (is.null(groups)) {
     groups <- mo_clone$data$sample_data$TreatmentGroup
   }
-  if (is.null(comp_func)) {
-    comp_func <- metacoder_comp_func_1
-  }
   # Continue with conversion to analyzed_format
   if (is_basic_format(mo_clone)) {
     # Compare groups of samples for statistical analysis
-    mo_clone$data$statistical_data <- metacoder::compare_groups(obj         = mo_clone,
+    mo_clone$data$statistical_data <- metacoder::compare_groups(obj = mo_clone,
                                                      data        = "taxa_proportions",
                                                      cols        = cols,
                                                      groups      = groups,
@@ -471,7 +470,7 @@ as_MicrobiomeR_format <- function(obj, format, ...) {
 #' @rdname as_phyloseq_format
 #' @seealso
 #'  \code{\link[MicrobiomeR]{object_handler}},\code{\link[MicrobiomeR]{order_metacoder_data}}
-as_phyloseq_format <- function(obj, otu_table=NULL, tax_data=NULL, sample_data=NULL, phy_tree=NULL) {
+as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_annotations", sample_data="sample_data", phy_tree="phy_tree") {
   obj <- MicrobiomeR::object_handler(obj = obj)
   mo_clone <- obj$clone()
   if (!is.null(otu_table)) {
@@ -490,7 +489,22 @@ as_phyloseq_format <- function(obj, otu_table=NULL, tax_data=NULL, sample_data=N
     mo_clone$data$phy_tree <- mo_clone$data[phy_tree]
     mo_clone$data[phy_tree] <- NULL
   }
-  mo_clone <- MicrobiomeR::order_metacoder_data(metacoder_object = mo_clone)
+  mo_clone <- MicrobiomeR::order_metacoder_data(obj = mo_clone)
+  return(mo_clone)
+}
+
+format_list <- list("phyloseq_format" = 0, "raw_format" = 1, "basic_format" = 2, "analyzed_format" = 3)
+
+# A function creating our most basic metacoder object.
+format_metacoder_object <- function(obj, format, otu_abundance=NULL, otu_annotations=NULL, otu_proportions=NULL,
+                                    taxa_abundance=NULL, taxa_proportions=NULL, statistical_data=NULL,
+                                    stats_tax_data=NULL, otu_table=NULL, tax_data=NULL, sample_data=NULL,
+                                    phy_tree=NULL) {
+  obj <- object_handler(obj = obj)
+  mo_clone <- obj$clone()
+  fmt <- which_format(obj = mo_clone)
+
+  mo_clone <- order_metacoder_data(obj = mo_clone)
   return(mo_clone)
 }
 
