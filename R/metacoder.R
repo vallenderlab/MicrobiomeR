@@ -395,4 +395,10 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
 }
 
 
-
+otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FALSE) {
+  mo_clone <- obj$clone()
+  mo_clone <- MicrobiomeR::validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
+                                                       force_format = TRUE, validated = validated, min_or_max = min)
+  mo_clone <- MicrobiomeR::otu_id_filter(obj = mo_clone, .f_transform = , .f_filter = ~mean(.), .f_condition = ~.> otu_percentage)
+  return(mo_clone)
+}
