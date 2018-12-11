@@ -493,17 +493,70 @@ as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_ann
   return(mo_clone)
 }
 
-format_list <- list("phyloseq_format" = 0, "raw_format" = 1, "basic_format" = 2, "analyzed_format" = 3)
+format_number_list <- list(unkown_format = -1, mixed_format = -1,
+                    phyloseq_format = 0, raw_format = 1,
+                    basic_format = 2, analyzed_format = 3)
 
-# A function creating our most basic metacoder object.
-format_metacoder_object <- function(obj, format, otu_abundance=NULL, otu_annotations=NULL, otu_proportions=NULL,
-                                    taxa_abundance=NULL, taxa_proportions=NULL, statistical_data=NULL,
-                                    stats_tax_data=NULL, otu_table=NULL, tax_data=NULL, sample_data=NULL,
-                                    phy_tree=NULL) {
+
+format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
+  # Get table lists and vectors
+  format_level_list <- list(unknown_format = -1, mixed_format = -1,
+                             phyloseq_format = 0, raw_format = 1,
+                             basic_format = 2, analyzed_format = 3)
+  # Metacoder Objects
   obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
   fmt <- which_format(obj = mo_clone)
 
+  # Create vector of current table names
+  obs_tables <- names(mo_clone$data)
+
+  # Logic for getting to the right format
+  if (fmt == format) {
+    mo_clone <- order_metacoder_data(obj = mo_clone)
+    return(mo_clone)
+  } else if (!is.null(change_name_list)) {   # Create a list of tables to change if necessary
+    # Create a list of key/values used to change names
+    changed_tables <- change_name_list[names(change_name_list) %in% obs_tables]
+    # Create a list of key/values used to create new tables
+    bad_table_names <- change_name_list[!names(change_name_list) %in% obs_tables]
+
+    # Throw errors for bad table names
+    if (length(bad_table_names != 0)) {
+      if (length(bad_table_names) == length(change_name_list)) {
+        stop(glue::glue{"None of the parameters that you've given are in your observation data:
+             {bad_table_names}"})
+      } else {
+        stop(glue::glue("You have given some bad table names that aren't in you metacoder object:
+                       {bad_table_names}"))
+      }
+    }
+    # Change the table names
+    for (current_table in names(changed_tables)) {
+      # Create a new table from the data in the current table
+      mo_clone$data[changed_tables[[current_table]]] <- mo_clone$data[[current_table]]
+      # Remove the current table from the observation list
+      mo_clone$data[current_table] <- NULL
+    }
+    # See if the changed names helped with the format
+    changed_obs_tables <- names(mo_clone$data)
+    fmt = which_format(obj = mo_clone)
+    if (fmt == format) {
+      mo_clone <- order_metacoder_data(obj = mo_clone)
+      return(mo_clone)
+    }
+  }
+  # If the current format is at a lower level than the expected format continue
+  if (format_level_list[[fmt]] < format_level_list[[format]]) {
+    # If the level is not negative continue
+    if (sign(format_level_list[[fmt]]) == 1) {
+      mo_clone <- as_MicrobiomeR_format(obj = mo_clone, format = format = format, ...)
+    } else { # Throw an error if the level is negative (unknown or mixed format)
+      warning(glue::glue("Here is a list of your observation data:
+                           {changed_obs_tables}"))
+      stop("Your data is in an unknown or mixed format.")
+    }
+  }
   mo_clone <- order_metacoder_data(obj = mo_clone)
   return(mo_clone)
 }
