@@ -236,7 +236,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
       tidyr::unite("_categories", c(preserved_categories), sep = "<_>") %>% # Preserve the categorical data in 1 column
       tidyr::spread("_categories", "_data") # Spread categorical data over the numerical data
   } else if (preserved_categories == FALSE) { # Only the ids are preserved
-    trans_data <- input %>%
+    trans_data <- input %>% select(c(ids, num_cols)) %>%
       dplyr::as_tibble() %>%
       tidyr::gather(key = !!sym(header_name), "_data", -c(ids)) %>%
       tidyr::spread(!!sym(ids), "_data")
