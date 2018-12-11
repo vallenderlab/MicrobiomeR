@@ -208,6 +208,67 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
 }
 
 
+#' @title Filter OTU Ids from Metacoder Objects
+#' @description This function provides a flexible way to filter unwanted otu_ids from the taxmap object and from the
+#' observations of a MicrobiomeR formatted object.
+#' @inheritParams sample_filter
+#' @return Returns a metacoder object with otu_ids that pass the filters.
+#' @pretty_print TRUE
+#' @details Get the otu_ids to keep by using purr and the user supplied transform and filter + condition formulas.
+#' The purr packge allows the use of anonymous functions as described in the link below:
+#'
+#' \url{https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html#anonymous_function,_formula}
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Metacoder Filters
+#' @rdname otu_id_filter
+#' @seealso
+#'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{transposer}},  \code{\link[MicrobiomeR]{transformer}}
+#'
+#'  \code{\link[taxa]{get_dataset}},  \code{\link[taxa]{filter_taxa}}
+#'
+#'  \code{\link[dplyr]{select_all}}
+#'
+#'  \code{\link[purrr]{map}},  \code{\link[purrr]{keep}}
+#' @importFrom taxa get_dataset filter_taxa
+#' @importFrom dplyr select_if
+#' @importFrom purrr map keep
+otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condition = NULL, validated = FALSE, ...) {
+  mo_clone <- obj$clone()
+  # Make sure the required functions are provided.
+  if (!is.null(.f_filter) && !is.null(.f_condition)) {
+
+    # Validate and get taxa_abundance data
+    mo_clone <- validate_MicrobiomeR_format(metacoder_object = mo_clone, valid_formats = c("raw_format", "basic_format"),
+                                                         force_format = TRUE, validated = validated, min_or_max = min)
+    fmt <- which_format(mo_clone)
+    abund_data <- taxa::get_dataset(obj = mo_clone, data = "otu_abundance")
+    trans_data <- transposer(abund_data, ids = "otu_id", header_name = "samples", preserved_categories = FALSE)
+    #  Get the taxon_id data columns to work with
+    if (is.null(.f_transform)) { # Get raw sample data
+      otu_id_cols <- trans_data %>% dplyr::select_if(is.numeric)
+    } else { # Get transfmormed sample data
+      otu_id_cols <- transformer(.data = trans_data, func = .f_transform) %>% dplyr::select_if(is.numeric)
+    }
+    # Get the samples to keep by using purr and the user supplied filter and condition formulas
+    otu_ids_to_keep <- purrr::map(otu_id_cols, .f_filter, ...) %>% # Apply a summary function like 'sum' or 'mean'
+      purrr::map(.f_condition) %>% # Apply a function to the sample data that does some comparison (f(x)x>10000)
+      purrr::keep(~ . == TRUE) %>%
+      names() # Determine which samples to keep
+    # Update the observation data tables and the taxmap object
+    mo_clone <- taxa::filter_obs(mo_clone, valid_list[[fmt]], otu_id %in% otu_ids_to_keep, drop_taxa = TRUE)
+    return(mo_clone)
+  } else {
+    stop("You have to supply a filter formula AND a condition formula.")
+  }
+}
+
+
 #' @title Agglomerate Metacoder Objects
 #' @description A function similar to the \code{\link[phyloseq:tax_glom]{phyloseq::tax_glom}} function,
 #' that assembles abundance data at a specified rank.  This removes subtaxa and reassigns the
@@ -320,7 +381,7 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
 otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percentage = 0.5,
                                   validated = FALSE) {
   mo_clone <- obj$clone()
-  mo_clone <- MicrobiomeR::validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("basic_format"),
+  mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("basic_format"),
                                                        force_format = TRUE, validated = validated, min_or_max = min)
   # Calculate the ids that need to be removed
   ids_to_remove <- metacoder::calc_prop_samples(mo_clone, "taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
@@ -329,3 +390,8 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
   mo_clone <- taxa::filter_taxa(mo_clone, !taxon_ids %in% ids_to_remove$taxon_id, reassign_obs = FALSE)
   return(mo_clone)
 }
+
+
+
+
+
