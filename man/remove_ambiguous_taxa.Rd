@@ -38,6 +38,6 @@ list("Unkown" , "Ambiguous", "uncultured"))
 
 \code{\link[dplyr]{filter}}, \code{\link[dplyr]{select}}, \code{\link[tibble]{rownames}}, \code{\link[stringr]{str_detect}}
 
-Other Filters: \code{\link{preprocess_phyloseq}}
+Other Phyloseq Filters: \code{\link{preprocess_phyloseq}}
 }
-\concept{Filters}
+\concept{Phyloseq Filters}

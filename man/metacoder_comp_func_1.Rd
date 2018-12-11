@@ -23,6 +23,7 @@ every combination of treatment groups.
 }
 \seealso{
 \code{\link[diptest]{dip.test}}
+
 \code{\link[modes]{bimodality_coefficient}}
 
 Other Data Manipulators: \code{\link{metacoder_workflow_1}},
