@@ -208,14 +208,12 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
 }
 
 
-
 #' @title Agglomerate Metacoder Objects
 #' @description A function similar to the \code{\link[phyloseq:tax_glom]{phyloseq::tax_glom}} function,
 #' that assembles abundance data at a specified rank.  This removes subtaxa and reassigns the
 #' values at the specified rank.
 #' @param obj A Taxmap/metacoder object.
 #' @param rank The rank that will be agllomerated to.
-#' @param valid_formats A vector of formats that are used for validation.  Default: c("raw_format", "basic_format")
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
 #' @return A taxmap object that has been agglomerated at the specified rank.
 #' @pretty_print TRUE
@@ -235,9 +233,9 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
 #'
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
 #' @importFrom taxa filter_taxa
-agglomerate_metacoder <- function(obj, rank, valid_formats = c("raw_format", "basic_format"), validated = FALSE) {
+agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
   mo_clone <- obj$clone()
-  mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = valid_formats,
+  mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
                                           force_format = TRUE, validated = validated, min_or_max = min)
   # Agglomerate
   mo_clone <- taxa::filter_taxa(mo_clone, taxon_ranks == rank,
@@ -252,7 +250,6 @@ agglomerate_metacoder <- function(obj, rank, valid_formats = c("raw_format", "ba
 #' @param rank The rank being analyzed for prevalence across samples.
 #' @param minimum_abundance The minimum abundance needed per observation per sample.  Default: 5
 #' @param rel_sample_percentage The percentage of samples per observation that meet the minimum abundance.  Default: 0.5
-#' @param valid_formats A vector of formats that are used for validation.  Default: c("basic_format")
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
 #' @return Returns a taxmap object that contains taxon_ids that have passed the above fiter.
 #' @pretty_print TRUE
@@ -277,9 +274,9 @@ agglomerate_metacoder <- function(obj, rank, valid_formats = c("raw_format", "ba
 #' @importFrom dplyr filter
 #' @importFrom taxa filter_taxa
 taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_percentage = 0.5,
-                                   valid_formats = c("basic_format"), validated = FALSE) {
+                                   validated = FALSE) {
   mo_clone <- obj$clone()
-  mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = valid_formats,
+  mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("basic_format"),
                                           force_format = TRUE, validated = validated, min_or_max = min)
   # Calculate the ids that need to be removed based on taxonomic rank
   ids_to_remove <- agglomerate_metacoder(obj = mo_clone, rank = rank,
@@ -297,7 +294,6 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
 #' @param obj A Taxmap/metacoder object.
 #' @param minimum_abundance The minimum abundance needed per observation per sample.  Default: 5
 #' @param rel_sample_percentage The percentage of samples per observation that meet the minimum abundance.  Default: 0.5
-#' @param valid_formats A vector of formats that are used for validation.  Default: c("basic_format")
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
 #' @return Returns a taxmap object that contains taxon_ids that have passed the above fiter.
 #' @pretty_print TRUE
@@ -322,9 +318,9 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
 #' @importFrom dplyr filter
 #' @importFrom taxa filter_taxa
 otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percentage = 0.5,
-                                  valid_formats = c("basic_format"), validated = FALSE) {
+                                  validated = FALSE) {
   mo_clone <- obj$clone()
-  mo_clone <- MicrobiomeR::validate_MicrobiomeR_format(obj = mo_clone, valid_formats = valid_formats,
+  mo_clone <- MicrobiomeR::validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("basic_format"),
                                                        force_format = TRUE, validated = validated, min_or_max = min)
   # Calculate the ids that need to be removed
   ids_to_remove <- metacoder::calc_prop_samples(mo_clone, "taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
