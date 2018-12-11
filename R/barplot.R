@@ -1,10 +1,12 @@
 #' @title Melt Metacoder Object
 #'
-#' @description Melt the metacoder tables into a dataframe.
+#' @description Melt the metacoder or phyloseq tables into a dataframe.
 #'
-#' @param obj DESCRIPTION.
+#' @param obj A metacoder or phyloseq object.
 #'
-#' @return RETURN_DESCRIPTION
+#' @importFrom dplyr right_join rename gather_ setdiff
+#'
+#' @return Returns a melted dataframe.
 melt_metacoder_obj <- function(obj) {
   sd <- data.frame(obj$data$sample_data)
   TT <- data.frame(obj$data$otu_annotations, stringsAsFactors = FALSE)
@@ -17,20 +19,22 @@ melt_metacoder_obj <- function(obj) {
     rename(OTU = `otu_id`)
 }
 
-#' @title Transform Metacoder Object
+#' @title Transform Metacoder Dataframe
 #'
-#' @description Transform the dataframe abundance values.
+#' @description Transform the dataframe abundance values to percent 100.
 #'
-#' @param melted_metacoder_df DESCRIPTION.
+#' @param melted_df DESCRIPTION.
 #' @param tax_level DESCRIPTION.
 #'
-#' @return RETURN_DESCRIPTION
-transform_metacoder_obj <- function(melted_metacoder_df, tax_level) {
+#' @importFrom dplyr group_by summarize filter mutate
+#'
+#' @return Returns a transformed dataframe.
+transform_metacoder_df <- function(melted_df, tax_level) {
   # TODO: Add data wrangling step here or object validation.
   t <- enquo(tax_level)
   tax_level.abund <- paste0(quo_name(t), ".Abundance")
 
-  melted_metacoder_df %>%
+  melted_df %>%
     group_by(SampleID, !!sym(tax_level)) %>%
     filter(Abundance > 0) %>%
     summarize(!!tax_level.abund := sum(as.numeric(Abundance)), TreatmentGroup = first(TreatmentGroup)) %>%
@@ -40,33 +44,36 @@ transform_metacoder_obj <- function(melted_metacoder_df, tax_level) {
 
 
 
-#' @title Bar Plot
+#' @title Stacked Barplot
 #'
 #' @description FUNCTION_DESCRIPTION
 #'
-#' @param obj DESCRIPTION.
+#' @param obj A metacoder or phyloseq object.
 #' @param tax_level DESCRIPTION.
 #' @param fill DESCRIPTION.
 #' @param xlabel DESCRIPTION.
 #' @param title DESCRIPTION.
 #' @param palette_values DESCRIPTION.
 #'
+#' @importFrom ggplot2 ggplot aes annotate geom_bar
+#' @importFrom magrittr %>%
+#'
 #' @inheritParams transform_metacoder_obj
 #'
-#' @return RETURN_DESCRIPTION
+#' @return Returns a stacked barplot.
 #' @export
-bar_plot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel = "Samples", title = NULL, palette_values) {
+stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel = "Samples", title = NULL, palette_values) {
 
   # TODO: Add data wrangling step here or object validation.
   # TODO: Add default palette values.
 
   # Start by melting the data in the "standard" way using psmelt.
   # Also, transform the abundance data to relative abundance
-  mdf <- transform_metacoder_obj(melt_metacoder_obj(obj), tax_level)
+  mdf <- transform_metacoder_df(melt_metacoder_obj(obj), tax_level)
   mdf <- mutate(mdf, !!sym(tax_level) := factor(!!sym(tax_level), levels = unique(mdf[[tax_level]])))
 
   # Build the plot data structure
-  p <- ggplot(mdf, aes(x = SampleID, y = Relative.Abundance, fill = !!sym(fill)), fill = fill)
+  p <- ggplot2::ggplot(mdf, aes(x = SampleID, y = Relative.Abundance, fill = !!sym(fill)), fill = fill)
 
   # Add the bar geometric object. Creates a basic graphic. Basis for the rest.
   # Test weather additional
