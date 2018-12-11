@@ -244,16 +244,18 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
   if (!is.null(.f_filter) && !is.null(.f_condition)) {
 
     # Validate and get taxa_abundance data
-    mo_clone <- validate_MicrobiomeR_format(metacoder_object = mo_clone, valid_formats = c("raw_format", "basic_format"),
+    mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
                                                          force_format = TRUE, validated = validated, min_or_max = min)
     fmt <- which_format(mo_clone)
     abund_data <- taxa::get_dataset(obj = mo_clone, data = "otu_abundance")
-    trans_data <- transposer(abund_data, ids = "otu_id", header_name = "samples", preserved_categories = FALSE)
     #  Get the taxon_id data columns to work with
     if (is.null(.f_transform)) { # Get raw sample data
-      otu_id_cols <- trans_data %>% dplyr::select_if(is.numeric)
+      otu_id_cols <- transposer(abund_data, ids = "otu_id", header_name = "samples", preserved_categories = FALSE) %>%
+        dplyr::select_if(is.numeric)
     } else { # Get transfmormed sample data
-      otu_id_cols <- transformer(.data = trans_data, func = .f_transform) %>% dplyr::select_if(is.numeric)
+      otu_id_cols <- transformer(.data = abund_data, func = .f_transform) %>%
+        transposer(ids = "otu_id", header_name = "samples", preserved_categories = FALSE) %>%
+        dplyr::select_if(is.numeric)
     }
     # Get the samples to keep by using purr and the user supplied filter and condition formulas
     otu_ids_to_keep <- purrr::map(otu_id_cols, .f_filter, ...) %>% # Apply a summary function like 'sum' or 'mean'
