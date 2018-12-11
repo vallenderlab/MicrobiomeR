@@ -17,7 +17,7 @@ otu_prevalence_filter(obj, minimum_abundance = 5,
 \item{validated}{This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE}
 }
 \value{
-Returns a taxmap object that contains taxon_ids that have passed the above fiter.
+Returns a taxmap object that contains taxon_ids that have passed the above filter.
 }
 \description{
 This function filters observations by thier prevelance across samples.
@@ -41,7 +41,9 @@ if(interactive()){
 \code{\link[taxa]{filter_taxa}}
 
 Other Metacoder Filters: \code{\link{agglomerate_metacoder}},
-  \code{\link{otu_id_filter}}, \code{\link{sample_filter}},
+  \code{\link{cov_filter}}, \code{\link{otu_id_filter}},
+  \code{\link{otu_proportion_filter}},
+  \code{\link{sample_filter}},
   \code{\link{taxa_prevalence_filter}},
   \code{\link{taxon_id_filter}}
 }

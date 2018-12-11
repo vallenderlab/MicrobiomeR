@@ -50,8 +50,9 @@ if(interactive()){
 \code{\link[purrr]{map}},  \code{\link[purrr]{keep}}
 
 Other Metacoder Filters: \code{\link{agglomerate_metacoder}},
-  \code{\link{otu_id_filter}},
+  \code{\link{cov_filter}}, \code{\link{otu_id_filter}},
   \code{\link{otu_prevalence_filter}},
+  \code{\link{otu_proportion_filter}},
   \code{\link{sample_filter}},
   \code{\link{taxa_prevalence_filter}}
 }
