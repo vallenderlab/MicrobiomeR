@@ -184,18 +184,19 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
     mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
                                             force_format = TRUE, validated = validated, min_or_max = min)
     abund_data <- taxa::get_dataset(obj = mo_clone, data = "taxa_abundance")
-    trans_data <- transposer(.data = abund_data, ids = "taxon_id", header_name = "samples")
-
     #  Get the taxon_id data columns to work with
     if (is.null(.f_transform)) { # Get raw sample data
-      taxon_id_cols <- trans_data %>% dplyr::select_if(is.numeric)
+      taxon_id_cols <- transposer(abund_data, ids = "taxon_id", header_name = "samples", preserved_categories = FALSE) %>%
+        dplyr::select_if(is.numeric)
     } else { # Get transfmormed sample data
-      taxon_id_cols <- transformer(.data = trans_data, func = .f_transform) %>% dplyr::select_if(is.numeric)
+      taxon_id_cols <- transformer(.data = abund_data, func = .f_transform) %>%
+        transposer(ids = "taxon_id", header_name = "samples", preserved_categories = FALSE) %>%
+        dplyr::select_if(is.numeric)
     }
     # Get the samples to keep by using purr and the user supplied filter and condition formulas
     # The purr packge allows the use of anonymous functions as described in the link below:
     # https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html#anonymous_function,_formula
-    taxon_ids_to_keep <- purrr::map(taxon_id_cols, .f_filter, list(...)) %>% # Apply a summary function like 'sum' or 'mean'
+    taxon_ids_to_keep <- purrr::map(taxon_id_cols, .f_filter, ...) %>% # Apply a summary function like 'sum' or 'mean'
       purrr::map(.f_condition) %>% # Apply a function to the sample data that does some comparison (f(x)x>10000)
       purrr::keep(~ . == TRUE) %>%
       names() # Determine which samples to keep
@@ -392,8 +393,6 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
   mo_clone <- taxa::filter_taxa(mo_clone, !taxon_ids %in% ids_to_remove$taxon_id, reassign_obs = FALSE)
   return(mo_clone)
 }
-
-
 
 
 
