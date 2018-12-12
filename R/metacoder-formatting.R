@@ -222,15 +222,7 @@ is_phyloseq_format <- function(obj) {
 order_metacoder_data <- function(obj) {
   mo_clone <- obj$clone()
   # Create list of expected table names
-  expected_names <- list(otu_abundance    = "otu_abundance",
-                         otu_annotations  = "otu_annotations",
-                         otu_proportions  = "otu_proportions",
-                         sample_data      = "sample_data",
-                         phy_tree         = "phy_tree",
-                         taxa_abundance   = "taxa_abundance",
-                         taxa_proportions = "taxa_proportions",
-                         statistical_data = "statistical_data",
-                         stats_tax_data   = "stats_tax_data")
+  expected_names <- pkg.private$format_table_list$expected_table_order
 
   # Create vector that contains expected tables names already in the metacoder object
   table_order <- names(expected_names[names(expected_names) %in% names(mo_clone$data)])
