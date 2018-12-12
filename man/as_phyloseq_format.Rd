@@ -4,8 +4,9 @@
 \alias{as_phyloseq_format}
 \title{As Phyloseq MicrobiomeR Format}
 \usage{
-as_phyloseq_format(obj, otu_table = NULL, tax_data = NULL,
-  sample_data = NULL, phy_tree = NULL)
+as_phyloseq_format(obj, otu_table = "otu_abundance",
+  tax_data = "otu_annotations", sample_data = "sample_data",
+  phy_tree = "phy_tree")
 }
 \arguments{
 \item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
@@ -40,6 +41,7 @@ if(interactive()){
 Other Formatting: \code{\link{as_MicrobiomeR_format}},
   \code{\link{as_analyzed_format}},
   \code{\link{as_basic_format}},
-  \code{\link{as_raw_format}}
+  \code{\link{as_raw_format}},
+  \code{\link{format_metacoder_object}}
 }
 \concept{Formatting}

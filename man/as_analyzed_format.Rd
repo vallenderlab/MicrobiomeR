@@ -4,21 +4,22 @@
 \alias{as_analyzed_format}
 \title{As Analyzed MicrobiomeR Format}
 \usage{
-as_analyzed_format(obj, cols = NULL, groups = NULL, comp_func = NULL,
-  combinations = NULL, out_names = NULL)
+as_analyzed_format(obj, cols = NULL, groups = NULL,
+  combinations = NULL, out_names = NULL,
+  comp_func = metacoder_comp_func_1)
 }
 \arguments{
-\item{obj}{A Taxmap/metacoder object.}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
 
 \item{cols}{Column names used for \code{\link[metacoder]{calc_taxon_abund}}.  Default: NULL}
 
 \item{groups}{Group names used for \code{\link[metacoder]{compare_groups}}.  Default: NULL}
 
-\item{comp_func}{A Comparison based function used in \code{\link[metacoder]{compare_groups}}.  Default: NULL}
-
 \item{combinations}{Combinations of treatments used in \code{\link[metacoder]{compare_groups}}.  Default: NULL}
 
 \item{out_names}{Column names of the output used for \code{\link[metacoder]{calc_obs_props}}.  Default: NULL}
+
+\item{comp_func}{A Comparison based function used in \code{\link[metacoder]{compare_groups}}.  Default: NULL}
 }
 \value{
 A Taxmap/metacoder object in the "analyzed_format".
@@ -44,6 +45,7 @@ if(interactive()){
 Other Formatting: \code{\link{as_MicrobiomeR_format}},
   \code{\link{as_basic_format}},
   \code{\link{as_phyloseq_format}},
-  \code{\link{as_raw_format}}
+  \code{\link{as_raw_format}},
+  \code{\link{format_metacoder_object}}
 }
 \concept{Formatting}

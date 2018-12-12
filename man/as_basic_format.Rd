@@ -7,7 +7,7 @@
 as_basic_format(obj, cols = NULL, out_names = NULL)
 }
 \arguments{
-\item{obj}{A Taxmap/metacoder object.}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
 
 \item{cols}{Column names used for \code{\link[metacoder]{calc_taxon_abund}}.  Default: NULL}
 
@@ -36,6 +36,7 @@ if(interactive()){
 Other Formatting: \code{\link{as_MicrobiomeR_format}},
   \code{\link{as_analyzed_format}},
   \code{\link{as_phyloseq_format}},
-  \code{\link{as_raw_format}}
+  \code{\link{as_raw_format}},
+  \code{\link{format_metacoder_object}}
 }
 \concept{Formatting}

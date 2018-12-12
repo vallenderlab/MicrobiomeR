@@ -7,7 +7,7 @@
 order_metacoder_data(obj)
 }
 \arguments{
-\item{obj}{A Taxmap/metacoder object.}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
 }
 \value{
 A taxmap object with observation data in the proper order for downstream analysis.
