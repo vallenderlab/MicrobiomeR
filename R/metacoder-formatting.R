@@ -69,11 +69,11 @@ which_format <- function(obj) {
   # Table names
   table_names <- names(mo_clone$data)
   # Format names
-  raw_names <- c("otu_abundance", "otu_annotations")
-  basic_names <- c(raw_names, "taxa_abundance", "otu_proportions", "taxa_proportions")
-  analyzed_names <- c(basic_names, "statistical_data", "stats_tax_data")
-  phyloseq_names <- c("otu_table", "tax_data", "sample_data", "phy_tree")
-  # Flags
+  raw_names <- pkg.private$format_table_list$raw_format
+  basic_names <- pkg.private$format_table_list$basic_format
+  analyzed_names <- pkg.private$format_table_list$analyzed_format
+  phyloseq_names <- pkg.private$format_table_list$phyloseq_format
+  # Format Flags
   raw_flag <- all(raw_names %in% table_names)
   basic_flag <- all(basic_names %in% table_names)
   analyzed_flag <- all(analyzed_names %in% table_names)
