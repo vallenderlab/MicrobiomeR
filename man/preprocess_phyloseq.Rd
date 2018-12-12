@@ -72,14 +72,14 @@ phy_tree()    Phylogenetic Tree: [ 1955 tips and 1954 internal nodes ]
 }
 }
 \seealso{
-\code{\link[phyloseq]{prune_taxa}}, \code{\link[phyloseq]{taxa_sums}}, \code{\link[phyloseq]{filter_taxa}}, \code{\link[phyloseq]{tax_glom}}, \code{\link[phyloseq]{nsamples}},
-\code{\link[phyloseq]{filterfun_sample}}, \code{\link[phyloseq]{genefilter_sample}}, \code{\link[phyloseq]{get_taxa_unique}}, \code{\link[phyloseq]{transform_sample_counts}},
-\code{\link[phyloseq]{merge_samples}}, \code{\link[phyloseq]{subset_taxa}}
+\code{\link[phyloseq:prune_taxa-methods]{phyloseq::prune_taxa()}}, \code{\link[phyloseq]{taxa_sums}}, \code{\link[phyloseq]{filter_taxa}}, \code{\link[phyloseq]{tax_glom}}, \code{\link[phyloseq:nsamples-methods]{phyloseq::nsamples()}},
+\code{\link[phyloseq]{filterfun_sample}}, \code{\link[phyloseq:genefilter_sample-methods]{phyloseq::genefilter_sample()}}, \code{\link[phyloseq]{get_taxa_unique}}, \code{\link[phyloseq:transformcounts]{phyloseq::transform_sample_counts()}},
+\code{\link[phyloseq:merge_samples-methods]{phyloseq::merge_samples()}}, \code{\link[phyloseq:subset_taxa-methods]{phyloseq::subset_taxa()}}
 
 \code{\link[yaml]{yaml.load}}\cr\cr
 Bioconductor Workflow - \url{https://f1000research.com/articles/5-1492/v2}\cr
 Phyloseq Website - \url{https://joey711.github.io/phyloseq/index.html}
 
-Other Filters: \code{\link{remove_ambiguous_taxa}}
+Other Phyloseq Filters: \code{\link{remove_ambiguous_taxa}}
 }
-\concept{Filters}
+\concept{Phyloseq Filters}

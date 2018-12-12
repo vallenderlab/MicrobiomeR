@@ -5,8 +5,8 @@
 \title{Get Phyloseq Object}
 \usage{
 get_phyloseq_obj(biom_file = NULL, tree_file = NULL,
-  metadata_file = NULL, parse_func = NULL, rdata_file = NULL,
-  path = NULL)
+  metadata_file = NULL, treatment_group = NULL, parse_func = NULL,
+  rdata_file = NULL, path = NULL)
 }
 \arguments{
 \item{biom_file}{A file in the BIOM format. Default: NULL}
@@ -14,6 +14,9 @@ get_phyloseq_obj(biom_file = NULL, tree_file = NULL,
 \item{tree_file}{A Phylogenetic tree file. Default: NULL}
 
 \item{metadata_file}{Sample metadata in tab delimited format. Default: NULL}
+
+\item{treatment_group}{The column number or name in the metadata file that contains the
+treatement group names.  Default: NULL}
 
 \item{parse_func}{The parse function used to parse taxonomy strings from
 Greengenes or SILVA database. Default: NULL}
@@ -33,7 +36,7 @@ pipeline.
 }
 \details{
 This function heavily relys on the phyloseq package to import data into R.
-It also requires you to use an absolute path to your data files or for your data files
+It also requires you to use an absolute or relative path to your data files or for your data files
 to be in the working directory.
 }
 \examples{
@@ -41,12 +44,12 @@ to be in the working directory.
 
 > biom_file <- "input_data/silva_OTU.biom"
 > md_file <- "input_data/nephele_metadata.txt"
-> phy_obj <- get_phyloseq_obj(biom_file=biom_file, metadata_file=md_file)
+> phy_obj <- get_phyloseq_obj(biom_file=biom_file, metadata_file=md_file, treatment_group=5)
 }
 }
 \seealso{
-\code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq]{phy_tree}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
-\code{\link[ape]{root}}
+\code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree()}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
+\code{\link[ape]{root}}, \code{\link[ape]{is.rooted}}, \code{\link[ape]{read.tree}}, \code{\link[ape]{write.tree}}
 \code{\link[MicrobiomeR]{root_by_longest_edge}}
 }
 \concept{Data Importers}
