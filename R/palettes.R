@@ -1,6 +1,6 @@
 #' @title Get Color palette
 #' @description Get a color palette with a specific number of colors.
-#' @param pal_func A function that returns the output from grDevoces::colorRampPalette. Default: virdis_palette_func
+#' @param pal_func A function that returns the output from grDevoces::colorRampPalette. Default: virmag_palette_func
 #' @param color_no The number of colors in the palette. Default: 20
 #' @param display Boolean for displaying a pie chart of the palette. Default: TRUE
 #' @param ... Parameters for the pal_func.
@@ -16,7 +16,7 @@
 #' @export
 #' @family Color Palettes
 #' @rdname get_color_palette
-get_color_palette <- function(pal_func=virdis_palette_func, color_no=20, display=TRUE, ...) {
+get_color_palette <- function(pal_func=virmag_palette_func, color_no=20, display=TRUE, ...) {
   pal_func <- pal_func(...)
   pal <- pal_func(color_no)
   if (display){
@@ -25,6 +25,30 @@ get_color_palette <- function(pal_func=virdis_palette_func, color_no=20, display
   return(pal)
 }
 
+#' @title Scico Palette Function
+#' @description A function that returns a color palette function based off of the scico package.
+#' @param scico_palette The scico palette to use.  Default: 'batlow'
+#' @param scico_number The number of colors to use in the scico palette.  Default: 800
+#' @param scico_range The range in the color palette to use.  Default: c(0, scico_number)
+#' @return The output of this function is another function, which takes a number to generate a color
+#' palette as a character vector.
+#' @pretty_print TRUE
+#' @details The purpose of this function is to provide an interpolated scico palette for using with the
+#' get_color_palette function.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Color Palettes
+#' @rdname scico_palette_func
+#' @seealso
+#'  \code{\link[grDevices]{colorRamp}}
+#'  \code{\link[scico]{scico}}
+#' @importFrom grDevices colorRampPalette
+#' @importFrom scico scico
 scico_palette_func <- function(scico_palette="batlow", scico_number=800, scico_range=c(0,scico_number)) {
   s_min <- scico_range[1]
   s_max <- scico_range[2]
