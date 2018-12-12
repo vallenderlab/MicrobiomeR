@@ -17,8 +17,7 @@
 #' @family Color Palettes
 #' @rdname get_color_palette
 get_color_palette <- function(pal_func=virdis_palette_func, color_no=20, display=TRUE, ...) {
-  func_params <- list(...)
-  pal_func <- pal_func(func_params)
+  pal_func <- pal_func(...)
   pal <- pal_func(color_no)
   if (display){
     pie(rep(1, length(pal)), col=pal)
@@ -26,8 +25,15 @@ get_color_palette <- function(pal_func=virdis_palette_func, color_no=20, display
   return(pal)
 }
 
+scico_palette_func <- function(scico_palette="batlow", scico_number=800, scico_range=c(0,scico_number)) {
+  s_min <- scico_range[1]
+  s_max <- scico_range[2]
+  crp <- grDevices::colorRampPalette(unique(scico::scico(scico_number, palette = scico_palette)[s_min:s_max]))
+  return(crp)
+}
 
-#' @title Viridis Palette Function
+
+#' @title Viridis-Magma Palette Function
 #' @description A function that returns a color palette function based off of the veridis package.
 #' @param viridis_number The total number of colors used to generate the viridis palette. Default: 800
 #' @param viridis_range Tne range of colors in the viridis palette to use. Default: c(300, 800)
@@ -55,20 +61,24 @@ get_color_palette <- function(pal_func=virdis_palette_func, color_no=20, display
 #' }
 #' @export
 #' @family Color Palettes
-#' @rdname virdis_palette_func
+#' @rdname virmag_palette_func
 #' @seealso
 #'  \code{\link[viridis]{reexports}}
 #'  \code{\link[MicrobiomeR]{get_color_palette}}
 #' @importFrom viridis viridis magma
-virdis_palette_func <- function(viridis_number=800, viridis_range=c(300,800), magma_number=500, magma_range=c(0, 500)) {
+virmag_palette_func <- function(viridis_number=800, viridis_range=c(300,800), magma_number=500, magma_range=c(0, 500)) {
   v_min = viridis_range[1]
   v_max = viridis_range[2]
   m_min = magma_range[1]
   m_max = magma_range[2]
-  colorRampPalette(
-    unique(c(
-      rev(viridis::viridis(viridis_number)[v_min:v_max]), viridis::magma(magma_number)[m_min:m_max])
+  crp <- colorRampPalette(
+    unique(
+      c(
+        rev(viridis::viridis(viridis_number)[v_min:v_max]),
+        viridis::magma(magma_number)[m_min:m_max]
+      )
     )
   )
+  return(crp)
 }
 
