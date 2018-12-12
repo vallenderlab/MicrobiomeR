@@ -410,17 +410,30 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
 ####################### Private Package Variable #######################
 pkg.private <- new.env(parent = emptyenv())
 
-pkg.private$format_level_list <- list(unknown_format = -1, mixed_format = -1,
-                                      phyloseq_format = 0, raw_format = 1,
-                                      basic_format = 2, analyzed_format = 3)
+pkg.private$format_level_list <- list(unknown_format = -1, mixed_format = -1,phyloseq_format = 0,
+                                      raw_format = 1, basic_format = 2, analyzed_format = 3)
 
 pkg.private$format_table_list <- list(
   raw_format =  c("otu_abundance", "otu_annotations"),
-  basic_format = c("otu_abundance", "otu_annotations", "taxa_abundance", "otu_proportions", "taxa_proportions"),
-  analyzed_format = c("otu_abundance", "otu_annotations", "taxa_abundance", "otu_proportions", "taxa_proportions", "statistical_data", "stats_tax_data"),
+  basic_format = c("otu_abundance", "otu_annotations",
+                   "taxa_abundance", "otu_proportions", "taxa_proportions"),
+  analyzed_format = c("otu_abundance", "otu_annotations",
+                      "taxa_abundance", "otu_proportions", "taxa_proportions",
+                      "statistical_data", "stats_tax_data"),
   phyloseq_format = c("otu_table", "tax_data", "sample_data", "phy_tree"),
-  all_formats = c("otu_abundance", "otu_annotations", "taxa_abundance", "otu_proportions", "taxa_proportions", "statistical_data", "stats_tax_data",
-                  "otu_table", "tax_data", "sample_data", "phy_tree")
+  all_formats = c("otu_abundance", "otu_annotations",
+                  "taxa_abundance", "otu_proportions", "taxa_proportions",
+                  "statistical_data", "stats_tax_data",
+                  "otu_table", "tax_data", "sample_data", "phy_tree"),
+  expected_table_order = list(otu_abundance   = "otu_abundance",
+                             otu_annotations  = "otu_annotations",
+                             otu_proportions  = "otu_proportions",
+                             sample_data      = "sample_data",
+                             phy_tree         = "phy_tree",
+                             taxa_abundance   = "taxa_abundance",
+                             taxa_proportions = "taxa_proportions",
+                             statistical_data = "statistical_data",
+                             stats_tax_data   = "stats_tax_data")
 )
 
 pkg.private$ranks <- list(c("Kingdom"),
