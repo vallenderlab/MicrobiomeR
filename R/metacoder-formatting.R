@@ -204,7 +204,7 @@ is_phyloseq_format <- function(obj) {
 
 #' @title Order Metacoder Observation Data
 #' @description A function for changing the order of the observation data in a metacoder object
-#' @param obj A Taxmap/metacoder object.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @return A taxmap object with observation data in the proper order for downstream analysis.
 #' @pretty_print TRUE
 #' @details Changes the order of the observation tables in \strong{metacoder_object$data} to
@@ -220,6 +220,7 @@ is_phyloseq_format <- function(obj) {
 #' @family Validation
 #' @rdname order_metacoder_data
 order_metacoder_data <- function(obj) {
+  obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
   # Create list of expected table names
   expected_names <- pkg.private$format_table_list$expected_table_order
@@ -235,7 +236,7 @@ order_metacoder_data <- function(obj) {
 
 #' @title As Raw MicrobiomeR Format
 #' @description Converts a metacoder object to the raw_format.
-#' @param obj A Taxmap/metacoder object.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @return A Taxmap/metacoder object in the "raw_format".
 #' @pretty_print TRUE
 #' @details See the [MicrobiomeR_Formats] documentation.
@@ -251,6 +252,7 @@ order_metacoder_data <- function(obj) {
 #' @seealso
 #'  \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{is_raw_format}}, \code{\link[MicrobiomeR]{order_metacoder_data}}
 as_raw_format <- function(obj) {
+  obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
   if (is_phyloseq_format(mo_clone) == TRUE) {
     mo_clone$data$otu_abundance <- mo_clone$data$otu_table
@@ -269,7 +271,7 @@ as_raw_format <- function(obj) {
 
 #' @title As Basic MicrobiomeR Format
 #' @description Converts a metacoder object to the basic_format.
-#' @param obj A Taxmap/metacoder object.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @param cols Column names used for \code{\link[metacoder]{calc_taxon_abund}}.  Default: NULL
 #' @param out_names Column names of the output used for \code{\link[metacoder]{calc_obs_props}}.  Default: NULL
 #' @return A Taxmap/metacoder object in the "basic_format".
@@ -289,6 +291,7 @@ as_raw_format <- function(obj) {
 #'  \code{\link[metacoder]{calc_taxon_abund}}, \code{\link[metacoder]{calc_obs_props}}
 #' @importFrom metacoder calc_taxon_abund calc_obs_props
 as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
+  obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
   # Convert the metacoder object up the heirarchy of formants.
   if (is_phyloseq_format(mo_clone) == TRUE) {
@@ -327,7 +330,7 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
 
 #' @title As Analyzed MicrobiomeR Format
 #' @description Converts a metacoder object to the analyzed_format.
-#' @param obj A Taxmap/metacoder object.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @param cols Column names used for \code{\link[metacoder]{calc_taxon_abund}}.  Default: NULL
 #' @param groups Group names used for \code{\link[metacoder]{compare_groups}}.  Default: NULL
 #' @param comp_func A Comparison based function used in \code{\link[metacoder]{compare_groups}}.  Default: NULL
@@ -353,6 +356,7 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
 #' @importFrom taxa taxonomy_table
 #' @importFrom dplyr rename right_join
 as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = NULL, out_names = NULL, comp_func = metacoder_comp_func_1) {
+  obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
   # Convert the metacoder object up the heirarchy of formants.
   if (is_phyloseq_format(mo_clone)) {
@@ -400,7 +404,7 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
 
 #' @title As MicrobiomeR Format
 #' @description Converts a metacoder object to the specified format.
-#' @param obj A Taxmap/metacoder object.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @param format The name of the format to convert the object to.
 #' @param ... An optional list of parameters to use in the as_*_format function specified
 #' by the format parameter.
@@ -420,7 +424,8 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
 #'  \code{\code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
 #' @importFrom glue glue
 as_MicrobiomeR_format <- function(obj, format, ...) {
-  mo_clone <- object_handler(obj = obj)
+  obj <- object_handler(obj = obj)
+  mo_clone <- obj$clone()
   current_format <- which_format(mo_clone)
   if (format != current_format) {
     if (format == "raw_format") {
@@ -463,7 +468,7 @@ as_MicrobiomeR_format <- function(obj, format, ...) {
 #' @seealso
 #'  \code{\link[MicrobiomeR]{object_handler}},\code{\link[MicrobiomeR]{order_metacoder_data}}
 as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_annotations", sample_data="sample_data", phy_tree="phy_tree") {
-  obj <- MicrobiomeR::object_handler(obj = obj)
+  obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
   if (!is.null(otu_table)) {
     mo_clone$data$otu_table <- mo_clone$data[otu_table]
@@ -485,20 +490,43 @@ as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_ann
   return(mo_clone)
 }
 
+#' @title Format Metacoder Objects
+#' @description A function for formatting metacoder objects in the MicrobiomeR format.  This function
+#' attempts to give more customization than the as_*_format functions.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @param format PARAM_DESCRIPTION
+#' @param change_name_list PARAM_DESCRIPTION, Default: NULL
+#' @param ... PARAM_DESCRIPTION
+#' @return OUTPUT_DESCRIPTION
+#' @pretty_print TRUE
+#' @details DETAILS
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Formatting
+#' @rdname format_metacoder_object
+#' @seealso
+#'  \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
+#' @importFrom glue glue
 format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
+
+  # Metacoder Objects
+  obj <- MicrobiomeR::object_handler(obj = obj)
+  mo_clone <- obj$clone()
+  fmt <- MicrobiomeR::which_format(obj = mo_clone)
   # Get table lists and vectors
   format_level_list <- pkg.private$format_level_list
-  # Metacoder Objects
-  obj <- object_handler(obj = obj)
-  mo_clone <- obj$clone()
-  fmt <- which_format(obj = mo_clone)
 
   # Create vector of current table names
   obs_tables <- names(mo_clone$data)
 
   # Logic for getting to the right format
   if (fmt == format) {
-    mo_clone <- order_metacoder_data(obj = mo_clone)
+    mo_clone <- MicrobiomeR::order_metacoder_data(obj = mo_clone)
     return(mo_clone)
   } else if (!is.null(change_name_list)) {   # Create a list of tables to change if necessary
     # Create a list of key/values used to change names
@@ -525,9 +553,9 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
     }
     # See if the changed names helped with the format
     changed_obs_tables <- names(mo_clone$data)
-    fmt = which_format(obj = mo_clone)
+    fmt = MicrobiomeR::which_format(obj = mo_clone)
     if (fmt == format) {
-      mo_clone <- order_metacoder_data(obj = mo_clone)
+      mo_clone <- MicrobiomeR::order_metacoder_data(obj = mo_clone)
       return(mo_clone)
     }
   }
@@ -535,14 +563,14 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
   if (format_level_list[[fmt]] < format_level_list[[format]]) {
     # If the level is not negative continue
     if (sign(format_level_list[[fmt]]) == 1) {
-      mo_clone <- as_MicrobiomeR_format(obj = mo_clone, format = format, ...)
+      mo_clone <- MicrobiomeR::as_MicrobiomeR_format(obj = mo_clone, format = format, ...)
     } else { # Throw an error if the level is negative (unknown or mixed format)
       warning(glue::glue("Here is a list of your observation data:
                            {changed_obs_tables}"))
       stop("Your data is in an unknown or mixed format.")
     }
   }
-  mo_clone <- order_metacoder_data(obj = mo_clone)
+  mo_clone <- MicrobiomeR::order_metacoder_data(obj = mo_clone)
   return(mo_clone)
 }
 
