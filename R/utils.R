@@ -59,79 +59,6 @@ mkdir <- function(dirname, path=NULL) {
   }
 }
 
-#' @title Viridis Palette Function
-#' @description A function that returns a color palette function based off of the veridis package.
-#' @param viridis_number The total number of colors used to generate the viridis palette. Default: 800
-#' @param viridis_range Tne range of colors in the viridis palette to use. Default: c(300, 800)
-#' @param magma_number The total number of colors used to generate the magma palette. Default: 500
-#' @param magma_range The range of colors in the magma palette to use. Default: c(0, 500)
-#' @return The output of this function is another function, which takes a number to generate a color
-#' palette as a character vector.
-#' @details The primary purpose of this function is to return a palette-function for generating virdis style
-#' color palettes.  By taking the viridis::viridis() and the viridis::magma() colors, and manipulating
-#' them, this function can help create a unique set of colors that you can distinguish on a busy plot.
-#' The hopes of this function is to help improve plots that use more than 20 colors.  Use the provided
-#' example to view the color palette.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  # Use the default values
-#'  > pal_func <- viridis_palette_func()
-#'
-#'  # Get a palette with 20 colors
-#'  > pal <- pal_func(20)
-#'
-#'  # Make a pie plot of the colros.
-#'  > pie(rep(1, length(pal)), col=pal)
-#'  }
-#' }
-#' @export
-#' @family Color Palettes
-#' @rdname virdis_palette_func
-#' @seealso
-#'  \code{\link[viridis]{reexports}}
-#'  \code{\link[MicrobiomeR]{get_color_palette}}
-#' @importFrom viridis viridis magma
-virdis_palette_func <- function(viridis_number=800, viridis_range=c(300,800), magma_number=500, magma_range=c(0, 500)) {
-  v_min = viridis_range[1]
-  v_max = viridis_range[2]
-  m_min = magma_range[1]
-  m_max = magma_range[2]
-  colorRampPalette(
-    unique(c(
-      rev(viridis::viridis(viridis_number)[v_min:v_max]), viridis::magma(magma_number)[m_min:m_max])
-      )
-    )
-}
-
-#' @title Get Color palette
-#' @description Get a color palette with a specific number of colors.
-#' @param pal_func A function that returns the output from grDevoces::colorRampPalette. Default: virdis_palette_func
-#' @param color_no The number of colors in the palette. Default: 20
-#' @param display Boolean for displaying a pie chart of the palette. Default: TRUE
-#' @param ... Parameters for the pal_func.
-#' @return Returns a color palette in the form of a character vector.
-#' @pretty_print TRUE
-#' @details This function is meant to be a plugin style function for user created palettes.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @export
-#' @family Color Palettes
-#' @rdname get_color_palette
-get_color_palette <- function(pal_func=virdis_palette_func, color_no=20, display=TRUE, ...) {
-  func_params <- list(...)
-  pal_func <- pal_func(func_params)
-  pal <- pal_func(color_no)
-  if (display){
-    pie(rep(1, length(pal)), col=pal)
-  }
-  return(pal)
-}
-
 
 #' @title Object handler
 #' @description A function that handles the conversion of objects to metacoder (taxa::taxmap) objects.
@@ -407,7 +334,7 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
   return(full_path)
 }
 
-####################### Private Package Variable #######################
+####################### Private Package Variables #######################
 pkg.private <- new.env(parent = emptyenv())
 
 pkg.private$format_level_list <- list(unknown_format = -1, mixed_format = -1,phyloseq_format = 0,
