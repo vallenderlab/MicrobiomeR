@@ -39,6 +39,8 @@
 correlation_plot <- function(phyloseq_object, label_rank, super_taxa = 1, wp_value = 0.05,
                                  plotly = FALSE, excel_export = FALSE, plotly_export = FALSE, ...) {
   # TODO:  Create rank_index/rank variables dynamically or from data
+  ranks <- pkg.private$ranks
+  rank_index <- pkg.private$rank_index
   if (is.numeric(super_taxa)) {
     super_rank <- as.character(ranks[rank_index[[label_rank]] - super_taxa])
   } else if (is.character(super_taxa)) {

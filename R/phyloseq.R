@@ -124,7 +124,7 @@ pick_new_outgroup <- function(unrooted_tree) {
 #'  \code{\link[MicrobiomeR]{pick_new_outgroup}}
 #' @importFrom ape root
 root_by_longest_edge <- function(unrooted_tree) {
-  new.outgroup <- MicrobiomeR::pick_new_outgroup(unrooted_tree)
+  new.outgroup <- pick_new_outgroup(unrooted_tree)
   rootedTree <- ape::root(unrooted_tree, outgroup = new.outgroup, resolve.root = TRUE)
   return(rootedTree)
 }
@@ -495,6 +495,7 @@ phyloseq_to_stats_dataframe <- function(phyloseq_obj) {
 #' @importFrom openxlsx createWorkbook addWorksheet writeDataTable saveWorkbook
 phyloseq_to_excel <- function(phyloseq_obj, treatment_groups, rank, file_path) {
   df_tax_otu <- phyloseq_to_stats_dataframe(phyloseq_obj = phyloseq_obj, treatment_groups = treatment_groups)
+  ranks <- pkg.private$ranks
   stressed_samples <- df_tax_otu$stressed_samples
   control_samples <- df_tax_otu$control_samples
   # TODO:  Remove Control/Stress from syntax.  Make dynamic for other users.
