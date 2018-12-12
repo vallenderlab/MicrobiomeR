@@ -407,4 +407,62 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
   return(full_path)
 }
 
+####################### Private Package Variable #######################
+pkg.private <- new.env(parent = emptyenv())
+
+pkg.private$format_level_list <- list(unknown_format = -1, mixed_format = -1,
+                                      phyloseq_format = 0, raw_format = 1,
+                                      basic_format = 2, analyzed_format = 3)
+
+pkg.private$format_table_list <- list(
+  raw_format =  c("otu_abundance", "otu_annotations"),
+  basic_format = c("otu_abundance", "otu_annotations", "taxa_abundance", "otu_proportions", "taxa_proportions"),
+  analyzed_format = c("otu_abundance", "otu_annotations", "taxa_abundance", "otu_proportions", "taxa_proportions", "statistical_data", "stats_tax_data"),
+  phyloseq_format = c("otu_table", "tax_data", "sample_data", "phy_tree"),
+  all_formats = c("otu_abundance", "otu_annotations", "taxa_abundance", "otu_proportions", "taxa_proportions", "statistical_data", "stats_tax_data",
+                  "otu_table", "tax_data", "sample_data", "phy_tree")
+)
+
+pkg.private$ranks <- list(c("Kingdom"),
+                          c("Phylum"),
+                          c("Class"),
+                          c("Order"),
+                          c("Family"),
+                          c("Genus"),
+                          c("Species"))
+pkg.private$rank_index <- list(Kingdom = 1,
+                               Phylum = 2,
+                               Class = 3,
+                               Order = 4,
+                               Family = 5,
+                               Genus = 6,
+                               Species = 7)
+pkg.private$mc_df_rank_list <- list(Kingdom = 4,
+                                    Phylum = 5,
+                                    Class = 6,
+                                    Order = 7,
+                                    Family = 8,
+                                    Genus = 9,
+                                    Species = 10)
+pkg.private$input_files = list(
+  biom_files = list(
+    silva = "data/silva_OTU.biom",
+    greengenes = "data/greengenes_OTU.biom"),
+  tree_files = list(
+    silva = "data/silva.tre",
+    greengenes = "data/greengenes.tre"),
+  metadata = "data/nephele_metadata.txt"
+)
+
+pkg.private$rdata_files = list(
+  phyloseq = list(
+    silva = "data/silva_phyloseq_obj.RData",
+    greengenes = "data/greengenes_phyloseq_obj.RData"
+  ),
+  metacoder = list(
+    silva = "data/silva_metacoder_obj.RData",
+    greengenes = "data/greengenes_metacoder_obj.RData"
+  )
+)
+
 
