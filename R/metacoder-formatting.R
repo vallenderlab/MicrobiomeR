@@ -493,16 +493,9 @@ as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_ann
   return(mo_clone)
 }
 
-format_number_list <- list(unkown_format = -1, mixed_format = -1,
-                    phyloseq_format = 0, raw_format = 1,
-                    basic_format = 2, analyzed_format = 3)
-
-
 format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
   # Get table lists and vectors
-  format_level_list <- list(unknown_format = -1, mixed_format = -1,
-                             phyloseq_format = 0, raw_format = 1,
-                             basic_format = 2, analyzed_format = 3)
+  format_level_list <- pkg.private$format_level_list
   # Metacoder Objects
   obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
@@ -524,8 +517,8 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
     # Throw errors for bad table names
     if (length(bad_table_names != 0)) {
       if (length(bad_table_names) == length(change_name_list)) {
-        stop(glue::glue{"None of the parameters that you've given are in your observation data:
-             {bad_table_names}"})
+        stop(glue::glue("None of the parameters that you've given are in your observation data:
+             {bad_table_names}"))
       } else {
         stop(glue::glue("You have given some bad table names that aren't in you metacoder object:
                        {bad_table_names}"))
@@ -550,7 +543,7 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
   if (format_level_list[[fmt]] < format_level_list[[format]]) {
     # If the level is not negative continue
     if (sign(format_level_list[[fmt]]) == 1) {
-      mo_clone <- as_MicrobiomeR_format(obj = mo_clone, format = format = format, ...)
+      mo_clone <- as_MicrobiomeR_format(obj = mo_clone, format = format, ...)
     } else { # Throw an error if the level is negative (unknown or mixed format)
       warning(glue::glue("Here is a list of your observation data:
                            {changed_obs_tables}"))
