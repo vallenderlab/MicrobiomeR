@@ -494,12 +494,13 @@ as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_ann
 #' @description A function for formatting metacoder objects in the MicrobiomeR format.  This function
 #' attempts to give more customization than the as_*_format functions.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
-#' @param format PARAM_DESCRIPTION
-#' @param change_name_list PARAM_DESCRIPTION, Default: NULL
-#' @param ... PARAM_DESCRIPTION
-#' @return OUTPUT_DESCRIPTION
+#' @param format The name of the format to convert the object to.
+#' @param change_name_list A list with names of the tables in the observation data, that have matching
+#' values that are used to change the names of the table.   Default: NULL
+#' @param ... An optional list of parameters to use in the as_*_format function specified
+#' @return A metacoder object that we have tried to format with all of our heart.
 #' @pretty_print TRUE
-#' @details DETAILS
+#' @details This function is meant to be more helpful for customizing the metacoder object.
 #' @examples
 #' \dontrun{
 #' if(interactive()){
