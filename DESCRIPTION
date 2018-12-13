@@ -14,25 +14,33 @@ Depends:
     BiocInstaller,
     BiocParallel
 Remotes: 
-    MadsAlbertsen/ampvis2,
-    grunwaldlab/metacoder,
-    ropensci/taxa,
-    joey711/phyloseq
-Imports:
-    ape,
-    data.table,
-    dplyr,
-    phyloseq,
-    tibble,
-    yaml,
-    microbiome,
-    ggpubr,
+    github::MadsAlbertsen/ampvis2,
+    github::ropensci/taxa,
+    github::grunwaldlab/metacoder,
+    github::joey711/phyloseq
+    ggthemes,
+    BiocParallel,
     biomformat,
     ggtree,
-    rstudioapi,
-    magrittr,
+    microbiome,
+    phyloseq
+Imports:
+    ape,
     ggplot2,
-    stringr
+    stringr,
+    rstudioapi,
+    magrittr
+    ggpubr,
+    tibble,
+    dplyr,
+    data.table,
+    yaml
+Additional_repositories:
+    http://bioconductor.org/packages/release/bioc/,
+    http://bioconductor.org/packages/release/data/annotation,
+    http://bioconductor.org/packages/release/data/experiment,
+    http://bioconductor.org/packages/release/extra
+biocViews:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1

@@ -4,12 +4,10 @@
 \alias{phyloseq_to_tibble}
 \title{Convert Phyloseq Objects to Tibbles}
 \usage{
-phyloseq_to_tibble(phyloseq_obj, treatment_groups)
+phyloseq_to_tibble(phyloseq_obj)
 }
 \arguments{
 \item{phyloseq_obj}{A phyloseq object.}
-
-\item{treatment_groups}{A list of the treatment groups in the sample metadata.}
 }
 \value{
 A list of tibbles containing all of the phyloseq data in a tidy format.
@@ -87,8 +85,15 @@ $data
  }
 }
 \seealso{
-\code{\link[phyloseq]{tax_table}}, \code{\link[phyloseq]{otu_table}}, \code{\link[phyloseq]{sample_data}}
+\code{\link[phyloseq:tax_table-methods]{phyloseq::tax_table()}}, \code{\link[phyloseq:otu_table-methods]{phyloseq::otu_table()}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}
 
 \code{\link[stringr]{case}}, \code{\link[tibble]{as_tibble}}, \code{\link[dplyr]{join}}
+
+Other Data Manipulators: \code{\link{metacoder_comp_func_1}},
+  \code{\link{metacoder_workflow_1}},
+  \code{\link{phyloseq_to_dataframe}},
+  \code{\link{phyloseq_to_excel}},
+  \code{\link{phyloseq_to_stats_dataframe}},
+  \code{\link{vlookup}}
 }
 \concept{Data Manipulators}

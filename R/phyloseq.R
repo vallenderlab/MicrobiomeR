@@ -6,6 +6,8 @@
 #' @param biom_file A file in the BIOM format. Default: NULL
 #' @param tree_file A Phylogenetic tree file. Default: NULL
 #' @param metadata_file Sample metadata in tab delimited format. Default: NULL
+#' @param treatment_group The column number or name in the metadata file that contains the
+#' treatement group names.  Default: NULL
 #' @param parse_func The parse function used to parse taxonomy strings from
 #'  Greengenes or SILVA database. Default: NULL
 #' @param rdata_file A .Rdata file.  Default: NULL
@@ -13,52 +15,65 @@
 #' @return A phyloseq object, and a phylogenetic tree file if one does not already exist.
 #' @pretty_print TRUE
 #' @details This function heavily relys on the phyloseq package to import data into R.
-#'  It also requires you to use an absolute path to your data files or for your data files
+#'  It also requires you to use an absolute or relative path to your data files or for your data files
 #'  to be in the working directory.
 #' @examples
 #' \dontrun{
 #'
 #' > biom_file <- "input_data/silva_OTU.biom"
 #' > md_file <- "input_data/nephele_metadata.txt"
-#' > phy_obj <- get_phyloseq_obj(biom_file=biom_file, metadata_file=md_file)
+#' > phy_obj <- get_phyloseq_obj(biom_file=biom_file, metadata_file=md_file, treatment_group=5)
 #' }
 #' @export
 #' @family Data Importers
 #' @rdname get_phyloseq_obj
 #' @seealso
-#'  \code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq]{phy_tree}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
-#'  \code{\link[ape]{root}}
+#'  \code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree()}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
+#'  \code{\link[ape]{root}}, \code{\link[ape]{is.rooted}}, \code{\link[ape]{read.tree}}, \code{\link[ape]{write.tree}}
 #'  \code{\link[MicrobiomeR]{root_by_longest_edge}}
-
-#' @importFrom phyloseq import_biom phy_tree import_qiime_sample_data merge_phyloseq
-#' @importFrom ape is.rooted write.tree
-get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file = NULL, parse_func = NULL, rdata_file = NULL, path = NULL) {
+#' @importFrom phyloseq import_biom sample_data phy_tree import_qiime_sample_data merge_phyloseq
+#' @importFrom ape is.rooted write.tree read.tree
+#' @importFrom tools file_path_as_absolute
+get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file = NULL, treatment_group = NULL, parse_func = NULL, rdata_file = NULL, path = NULL) {
   if (!is.null(rdata_file)) {
     load(rdata_file)
     phyloseq_obj <- get("phyloseq_obj")
     return(phyloseq_obj)
   } else {
-    # Load the biom file and the Full tree file into a phyloseq object
+    # Load the biom file data amd qiime metadata separately, and then merge them into a phyloseq object
     phyloseq_biom <- phyloseq::import_biom(BIOMfilename = biom_file, parseFunction = parse_func, treefilename = tree_file)
-    # Write to a tree file that subsets our data
-    if (!is.null(tree_file)) {
-      phyloseq_tree <- phyloseq::phy_tree(phyloseq_biom)
-      # If not rooted, then root the tree using the longest edge(s) as an ougroup
-      if (!ape::is.rooted(phyloseq_tree)) {
-        ape_tree <- MicrobiomeR::root_by_longest_edge(phyloseq_tree)
-      }
-      tree_path <- mkdir(dirname = "output", path = path)
-      ape::write.tree(ape_tree, sprintf("%s/rooted_%s", tree_path, tree_file))
-    }
-    # Extract metadata from the phyloseq object:
     phyloseq_metadata <- phyloseq::import_qiime_sample_data(metadata_file)
-
-    # Create a phyloseq object with all of our data
     phyloseq_obj <- phyloseq::merge_phyloseq(phyloseq_biom, phyloseq_metadata)
-    if (!is.null(tree_file)) {
-      phy_tree(phyloseq_obj) <- MicrobiomeR::root_by_longest_edge(phy_tree(phyloseq_obj))
+
+    # Create the "X.TreatmentGroup" variable for the metadata
+    # This step gives other functions a standard treatment group variable to work with
+    if (!is.null(treatment_group)){
+      if (is.numeric(treatment_group) || is.character(treatment_group)){
+        phyloseq::sample_data(phyloseq_obj)[["X.TreatmentGroup"]] <- phyloseq::sample_data(phyloseq_obj)[[treatment_group]]
+      } else {
+        warning("The treatment_group parameter must be numeric or a character string.")
+        warning("The data might not be appropriate for other MicrobiomeR functions.  Please try again.")
+        stop()
+      }
     }
-    return(phyloseq_obj)
+    # Write to a tree file that subsets our data and update the phyloseq object
+    if (!is.null(tree_file) && !ape::is.rooted(ape::read.tree(tree_file))) {
+      # Root the tree
+      phyloseq_tree <- phyloseq::phy_tree(phyloseq_biom)
+      ape_tree <- MicrobiomeR::root_by_longest_edge(phyloseq_tree)
+      # Write the tree file
+      tf <- basename(tree_file)
+      tp <- dirname(tools::file_path_as_absolute(tree_file))
+      new_tree_file <- sprintf("%s/rooted_%s", tp, tf)
+      if (!file.exists(new_tree_file)) {
+        ape::write.tree(ape_tree, new_tree_file)
+      }
+      # Update and return the phyloseq object
+      phyloseq::phy_tree(phyloseq_obj) <- ape_tree
+      return(phyloseq_obj)
+    } else {
+      return(phyloseq_obj)
+    }
   }
 }
 
@@ -106,6 +121,7 @@ pick_new_outgroup <- function(unrooted_tree) {
 #' @rdname root_by_longest_edge
 #' @seealso
 #'  \code{\link[ape]{root}}
+#'  \code{\link[MicrobiomeR]{pick_new_outgroup}}
 #' @importFrom ape root
 root_by_longest_edge <- function(unrooted_tree) {
   new.outgroup <- pick_new_outgroup(unrooted_tree)
@@ -280,13 +296,49 @@ parse_taxonomy_greengenes2 <- function(char.vec) {
 }
 
 
+#' @title Convert Phyloseq Object to Dataframe
+#' @description This function takes a phyloseq object and converts it to a list of
+#' dataframes for further processing.
+#' @param phyloseq_obj A phyloseq object.
+#' @return A list of dataframes containing all of the phyloseq data
+#' @pretty_print TRUE
+#' @export
+#' @family Data Manipulators
+#' @rdname phyloseq_to_dataframe
+#' @seealso
+#'  \code{\link[phyloseq:tax_table-methods]{phyloseq::tax_table()}},\code{\link[phyloseq:otu_table-methods]{phyloseq::otu_table()}},\code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data}}
+#'  \code{\link[dplyr]{mutate}},\code{\link[dplyr]{join}}
+#'  \code{\link[stringr]{case}}
+#' @importFrom phyloseq tax_table otu_table sample_data
+#' @importFrom dplyr mutate left_join
+#' @importFrom stringr str_to_lower
+phyloseq_to_dataframe <- function(phyloseq_obj) {
+  df_tax_otu <- list()
+  p_tax <- phyloseq::tax_table(phyloseq_obj)
+  p_otu <- phyloseq::otu_table(phyloseq_obj)
+  p_sam <- phyloseq::sample_data(phyloseq_obj)
+  df_tax_otu$tax <- data.frame(p_tax)
+  df_tax_otu$otu_names <- rownames(df_tax_otu$tax)
+  df_tax_otu$tax <- dplyr::mutate(df_tax_otu$tax, OTU = rownames(df_tax_otu$tax))
+  df_tax_otu$otu <- data.frame(p_otu)
+  df_tax_otu$otu <- dplyr::mutate(df_tax_otu$otu, OTU = rownames(df_tax_otu$otu))
+  df_tax_otu$sam <- data.frame(p_sam)
+  df_tax_otu$treat_groups <- p_sam[["X.TreatmentGroup"]]
+  df_tax_otu$tg_index <- c()
+  for (tgroup in df_tax_otu$treat_groups) {
+    tgindex <- stringr::str_to_lower(tgroup)
+    tgindex <- stringr::str_replace(tgindex, " ", "_")
+    tgindex <- sprintf("%s_samples", tgindex)
+    df_tax_otu[[tgindex]] <- rownames(df_tax_otu$sam[df_tax_otu$sam$TreatmentGroup == tgroup, ])
+  }
+  df_tax_otu$data <- dplyr::left_join(x = df_tax_otu$otu, y = df_tax_otu$tax, by = "OTU")
+  return(df_tax_otu)
+}
 
 
 #' @title Convert Phyloseq Objects to Tibbles
 #' @description This function converts a phyloseq object to a tibble, while
 #' taking into account the treatment groups found in the sample metadata.
-#' @param phyloseq_obj A phyloseq object.
-#' @param treatment_groups A list of the treatment groups in the sample metadata.
 #' @return A list of tibbles containing all of the phyloseq data in a tidy format.
 #' @pretty_print TRUE
 #' @details MicrobiomeR was developed for processing Qiime data delivered by
@@ -357,28 +409,47 @@ parse_taxonomy_greengenes2 <- function(char.vec) {
 #'  }
 #' @export
 #' @family Data Manipulators
+#' @inherit phyloseq_to_dataframe params
 #' @rdname phyloseq_to_tibble
 #' @seealso
-#'  \code{\link[phyloseq]{tax_table}}, \code{\link[phyloseq]{otu_table}}, \code{\link[phyloseq]{sample_data}}
+#'  \code{\link[phyloseq:tax_table-methods]{phyloseq::tax_table()}}, \code{\link[phyloseq:otu_table-methods]{phyloseq::otu_table()}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}
 #'
 #'  \code{\link[stringr]{case}}, \code{\link[tibble]{as_tibble}}, \code{\link[dplyr]{join}}
 #' @importFrom phyloseq tax_table otu_table sample_data
 #' @importFrom stringr str_to_lower
 #' @importFrom tibble as.tibble
 #' @importFrom dplyr left_join
-phyloseq_to_tibble <- function(phyloseq_obj, treatment_groups) {
-  tax_otu <- phyloseq_to_dataframe(phyloseq_obj = phyloseq_obj, treatment_groups = treatment_groups)
-  tax_otu$sam <- tibble::as.tibble(tax_otu$sam)
-  tax_otu$tax <- tibble::as.tibble(tax_otu$tax)
-  tax_otu$otu <- tibble::as.tibble(tax_otu$otu)
-  tax_otu$data <- tibble::as.tibble(tax_otu$data)
-  return(tax_otu)
+phyloseq_to_tibble <- function(phyloseq_obj) {
+  df_tax_otu <- phyloseq_to_dataframe(phyloseq_obj = phyloseq_obj)
+  df_tax_otu$sam <- tibble::as.tibble(df_tax_otu$sam)
+  df_tax_otu$tax <- tibble::as.tibble(df_tax_otu$tax)
+  df_tax_otu$otu <- tibble::as.tibble(df_tax_otu$otu)
+  df_tax_otu$data <- tibble::as.tibble(df_tax_otu$data)
+  return(df_tax_otu)
 }
 
 
-phyloseq_to_stats_dataframe <- function(phyloseq_obj, treatment_groups) {
-  df_tax_otu <- phyloseq_to_dataframe(phyloseq_obj = phyloseq_obj, treatment_groups = treatment_groups)
+#' @title Convert Phyloseq Object to Statistical Data Frame
+#' @description This function takes a phyloseq object and converts it to a list of
+#' dataframes followed by analyzing the treatment groups and adding statistical data to
+#' the same list.
+#' @return A list of dataframes containing all of the phyloseq data with additional statistical data.
+#' @pretty_print TRUE
+#' @examples
+#' \dontrun{
+#' > phy_obj <- get_phyloseq_object(...)
+#' > stats_df <- phyloseq_to_stats_dataframe(phy_obj, treatment_groups = list("Stressed", "Control"))
+#' > stats_df$stats
+#' TODO: Add a stats dataframe here
+#' }
+#' @export
+#' @family Data Manipulators
+#' @inherit phyloseq_to_tibble params seealso
+#' @rdname phyloseq_to_stats_dataframe
+phyloseq_to_stats_dataframe <- function(phyloseq_obj) {
+  df_tax_otu <- phyloseq_to_dataframe(phyloseq_obj = phyloseq_obj)
   rownames(df_tax_otu$data) <- df_tax_otu$data$OTU
+  # TODO: Remove Stress/Control from syntax.  Make dynamic for other users.
   stressed_samples <- df_tax_otu$stressed_samples
   control_samples <- df_tax_otu$control_samples
   temp <- df_tax_otu$data[, !(colnames(df_tax_otu$data) %in% c("OTU"))][c(stressed_samples, control_samples)]
@@ -403,47 +474,47 @@ phyloseq_to_stats_dataframe <- function(phyloseq_obj, treatment_groups) {
 }
 
 
+#' @title Convert Phyloseq Object to Statistical Excel File
+#' @description This function takes a phyloseq object and converts it to a list of
+#' dataframes followed by analyzing the treatment groups and adding statistical data to
+#' the same list.  It then creates an excel file from this object.
+#' @return An Excel file containing all of the phyloseq data with additional statistical data.
+#' @param phyloseq_obj A phyloseq object.
+#' @param treatment_groups A list of the treatment groups in the sample metadata.
+#' @param rank The agglomerated rank of the phyloseq object
+#' @param file_path Absolute path of the Excel file that will be created.
+#' @return No objects are returned, but an Excel file is created.
+#' @pretty_print TRUE
+#' @export
+#' @family Data Manipulators
+#' @rdname phyloseq_to_excel
+#' @seealso
+#'  \code{\link[dplyr]{select_all}}
+#'  \code{\link[openxlsx]{createWorkbook}},\code{\link[openxlsx]{addWorksheet}},\code{\link[openxlsx]{writeDataTable}},\code{\link[openxlsx]{saveWorkbook}}
+#' @importFrom dplyr select_if
+#' @importFrom openxlsx createWorkbook addWorksheet writeDataTable saveWorkbook
 phyloseq_to_excel <- function(phyloseq_obj, treatment_groups, rank, file_path) {
   df_tax_otu <- phyloseq_to_stats_dataframe(phyloseq_obj = phyloseq_obj, treatment_groups = treatment_groups)
-  rownames(df_tax_otu$data) <- df_tax_otu$data$OTU
-  df_tax_otu$data$OTU <- NULL
+  ranks <- pkg.private$ranks
   stressed_samples <- df_tax_otu$stressed_samples
   control_samples <- df_tax_otu$control_samples
-  main_df <- df_tax_otu$data[49:59][, c(rank, "mean_stressed", "mean_control", "wilcox_p_value", "log2_mean_ratio", unlist(ranks[ranks != rank]))]
-  main_df <- main_df %>% select_if(~sum(!is.na(.)) > 0)
-  wb <- createWorkbook(file_path)
-  # TODO Add OTU columns to excel file
-  addWorksheet(wb, "Stats_Taxonomy")
-  addWorksheet(wb, "Stressed")
-  addWorksheet(wb, "Control")
-  addWorksheet(wb, "Master")
-  writeDataTable(wb, 1, main_df)
-  writeDataTable(wb, 2, df_tax_otu$data[, c(stressed_samples)])
-  writeDataTable(wb, 3, df_tax_otu$data[, c(control_samples)])
-  writeDataTable(wb, 4, df_tax_otu$data)
-  saveWorkbook(wb, file = file_path, overwrite = TRUE)
+  # TODO:  Remove Control/Stress from syntax.  Make dynamic for other users.
+  main_df <- df_tax_otu$data[49:60][, c("OTU", rank, "mean_stressed", "mean_control", "wilcox_p_value", "log2_mean_ratio", unlist(ranks[ranks != rank]))]
+  main_df <- main_df %>% dplyr::select_if(~sum(!is.na(.)) > 0)
+  wb <- openxlsx::createWorkbook(file_path)
+  openxlsx::addWorksheet(wb, "Stats_Taxonomy")
+  openxlsx::addWorksheet(wb, "Stressed")
+  openxlsx::addWorksheet(wb, "Control")
+  openxlsx::addWorksheet(wb, "Master")
+  openxlsx::writeDataTable(wb, 1, main_df)
+  openxlsx::writeDataTable(wb, 2, df_tax_otu$data[, c("OTU", stressed_samples)])
+  openxlsx::writeDataTable(wb, 3, df_tax_otu$data[, c("OTU", control_samples)])
+  openxlsx::writeDataTable(wb, 4, df_tax_otu$data)
+  openxlsx::saveWorkbook(wb, file = file_path, overwrite = TRUE)
 }
 
 
-phyloseq_to_dataframe <- function(phyloseq_obj, treatment_groups) {
-  tax_otu <- list()
-  p_tax <- phyloseq::tax_table(phyloseq_obj)
-  p_otu <- phyloseq::otu_table(phyloseq_obj)
-  p_sam <- phyloseq::sample_data(phyloseq_obj)
-  tax_otu$tax <- data.frame(p_tax)
-  tax_otu$otu_names <- rownames(tax_otu$tax)
-  tax_otu$tax <- dplyr::mutate(tax_otu$tax, OTU = rownames(tax_otu$tax))
-  tax_otu$otu <- data.frame(p_otu)
-  tax_otu$otu <- dplyr::mutate(tax_otu$otu, OTU = rownames(tax_otu$otu))
-  tax_otu$sam <- data.frame(p_sam)
-  for (tgroup in treatment_groups) {
-    tgindex <- stringr::str_to_lower(tgroup)
-    tgindex <- sprintf("%s_samples", tgindex)
-    tax_otu[[tgindex]] <- rownames(tax_otu$sam[tax_otu$sam$TreatmentGroup == tgroup, ])
-  }
-  tax_otu$data <- dplyr::left_join(x = tax_otu$otu, y = tax_otu$tax, by = "OTU")
-  return(tax_otu)
-}
+
 
 #' @title Remove Ambiguous Taxonomy
 #' @description This function removes ambiguous taxonomy names from specified ranks
@@ -464,10 +535,10 @@ phyloseq_to_dataframe <- function(phyloseq_obj, treatment_groups) {
 #'
 #' }
 #' @export
-#' @family Filters
+#' @family Phyloseq Filters
 #' @rdname remove_ambiguous_taxa
 #' @seealso
-#'  \code{\link[phyloseq]{tax_table}}, \code{\link[phyloseq]{phy_tree}}, \code{\link[phyloseq]{otu_table}}, \code{\link[phyloseq]{sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
+#'  \code{\link[phyloseq:tax_table-methods]{phyloseq::tax_table}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree}}, \code{\link[phyloseq:otu_table-methods]{phyloseq::otu_table}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}, \code{\link[phyloseq]{merge_phyloseq}}
 #'
 #'  \code{\link[dplyr]{filter}}, \code{\link[dplyr]{select}}, \code{\link[tibble]{rownames}}, \code{\link[stringr]{str_detect}}
 #' @importFrom dplyr filter select
@@ -475,8 +546,8 @@ phyloseq_to_dataframe <- function(phyloseq_obj, treatment_groups) {
 #' @importFrom phyloseq tax_table phy_tree otu_table sample_data merge_phyloseq phy_tree
 #' @importFrom stringr str_detect
 remove_ambiguous_taxa <- function(phyloseq_obj, ranks, ambiguous_names) {
-  tax_otu <- phyloseq_to_tibble(phyloseq_obj)
-  phyloseq_data <- tax_otu$data
+  df_tax_otu <- phyloseq_to_tibble(phyloseq_obj)
+  phyloseq_data <- df_tax_otu$data
   # Loop through ranks and remove ambiguous names from various ranks.
   for (r in ranks) {
     if (r == "Kingdom") {
@@ -496,12 +567,12 @@ remove_ambiguous_taxa <- function(phyloseq_obj, ranks, ambiguous_names) {
     }
   }
 
-  tax <- dplyr::select(phyloseq_data, colnames(tax_otu$tax)) %>%
+  tax <- dplyr::select(phyloseq_data, colnames(df_tax_otu$tax)) %>%
     as.data.frame() %>%
     tibble::column_to_rownames("OTU") %>%
     as.matrix()
 
-  otu <- dplyr::select(phyloseq_data, colnames(tax_otu$otu)) %>%
+  otu <- dplyr::select(phyloseq_data, colnames(df_tax_otu$otu)) %>%
     as.data.frame() %>%
     tibble::column_to_rownames("OTU") %>%
     as.matrix()
@@ -563,12 +634,12 @@ remove_ambiguous_taxa <- function(phyloseq_obj, ranks, ambiguous_names) {
 #'
 #' }
 #' @export
-#' @family Filters
+#' @family Phyloseq Filters
 #' @rdname preprocess_phyloseq
 #' @seealso
-#'  \code{\link[phyloseq]{prune_taxa}}, \code{\link[phyloseq]{taxa_sums}}, \code{\link[phyloseq]{filter_taxa}}, \code{\link[phyloseq]{tax_glom}}, \code{\link[phyloseq]{nsamples}},
-#'  \code{\link[phyloseq]{filterfun_sample}}, \code{\link[phyloseq]{genefilter_sample}}, \code{\link[phyloseq]{get_taxa_unique}}, \code{\link[phyloseq]{transform_sample_counts}},
-#'  \code{\link[phyloseq]{merge_samples}}, \code{\link[phyloseq]{subset_taxa}}
+#'  \code{\link[phyloseq:prune_taxa-methods]{phyloseq::prune_taxa()}}, \code{\link[phyloseq]{taxa_sums}}, \code{\link[phyloseq]{filter_taxa}}, \code{\link[phyloseq]{tax_glom}}, \code{\link[phyloseq:nsamples-methods]{phyloseq::nsamples()}},
+#'  \code{\link[phyloseq]{filterfun_sample}}, \code{\link[phyloseq:genefilter_sample-methods]{phyloseq::genefilter_sample()}}, \code{\link[phyloseq]{get_taxa_unique}}, \code{\link[phyloseq:transformcounts]{phyloseq::transform_sample_counts()}},
+#'  \code{\link[phyloseq:merge_samples-methods]{phyloseq::merge_samples()}}, \code{\link[phyloseq:subset_taxa-methods]{phyloseq::subset_taxa()}}
 #'
 #'  \code{\link[yaml]{yaml.load}}\cr\cr
 #'  Bioconductor Workflow - \url{https://f1000research.com/articles/5-1492/v2}\cr

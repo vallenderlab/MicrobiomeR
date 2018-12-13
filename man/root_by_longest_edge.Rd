@@ -20,6 +20,7 @@ Please see this issue for more details \url{https://github.com/joey711/phyloseq/
 }
 \seealso{
 \code{\link[ape]{root}}
+\code{\link[MicrobiomeR]{pick_new_outgroup}}
 
 Other Phylogenetic Tree Manipulators: \code{\link{pick_new_outgroup}}
 }
