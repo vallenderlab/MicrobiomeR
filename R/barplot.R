@@ -26,7 +26,7 @@ melt_metacoder_obj <- function(obj) {
 #' @param melted_df DESCRIPTION.
 #' @param tax_level DESCRIPTION.
 #'
-#' @importFrom dplyr group_by summarize filter mutate
+#' @import dplyr
 #'
 #' @return Returns a transformed dataframe.
 transform_metacoder_df <- function(melted_df, tax_level) {
@@ -102,13 +102,21 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
 
 
 #' @title Save Barplot
-#'
 #' @description Save a stacked barplot.
-#'
-#' @param plot The stacked barplot object.
-#' @param filename The filename of the plot. (It will be saved as .tiff)
-#'
+#' @param plot The plot object.
+#' @param filename The name of the file. (an extension should not be included.)
+#' @return OUTPUT_DESCRIPTION
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
 #' @export
+#' @rdname save_barplot
+#' @seealso
+#'
+#' @import ggplot2
 save_barplot <- function(plot, filename) {
   if (is.null(filename)) {
     filename <- plot
