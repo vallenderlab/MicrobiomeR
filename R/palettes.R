@@ -56,7 +56,48 @@ scico_palette_func <- function(scico_palette="batlow", scico_number=800, scico_r
   return(crp)
 }
 
+#' @title Viridis Palette Function
+#' @description A function that returns a color palette function based off of the viridis package.
+#' @param viridis_palette The viridis palette to use.  Default: 'batlow'
+#' @param viridis_number The number of colors to use in the viridis palette.  Default: 800
+#' @param viridis_range The range in the color palette to use.  Default: c(0, viridis_number)
+#' @return The output of this function is another function, which takes a number to generate a color
+#' palette as a character vector.
+#' @pretty_print TRUE
+#' @details The purpose of this function is to provide an interpolated viridis palette for using with the
+#' get_color_palette function.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Color Palettes
+#' @rdname viridis_palette_func
+#' @seealso
+#'  \code{\link[grDevices]{colorRamp}}
+#'  \code{\link[viridis]{viridis}}
+#' @importFrom grDevices colorRampPalette
+#' @importFrom viridis viridis
+viridis_palette_func <- function(viridis_palette="viridis", viridis_number=800, viridis_range=c(0,viridis_number)) {
+  s_min <- viridis_range[1]
+  s_max <- viridis_range[2]
+  crp <- grDevices::colorRampPalette(unique(viridis::viridis(viridis_number, option = viridis_palette)[s_min:s_max]))
+  return(crp)
+}
+combo_palette_func <- function(...) {
+  params <- list(...)
+  for (item in list) {
+    if (inherits(x = item, what = "list")) {
 
+    } else {
+      stop("Each parameter you provide must be a \"list\" with 3 variables: \n
+           palette:  a character vector of colors (color palette).\n
+           number:  an integer used within the ")
+    }
+  }
+}
 #' @title Viridis-Magma Palette Function
 #' @description A function that returns a color palette function based off of the veridis package.
 #' @param viridis_number The total number of colors used to generate the viridis palette. Default: 800
