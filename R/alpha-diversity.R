@@ -1,13 +1,19 @@
 #' @title Get Alpha Diversity
-#'
 #' @description This function generates various alpha diversity measures include Shannon, Fisher, Coverage, Gini Simpson, and Inverse Simpson.
-#'
-#' @param phyloseq_object A phyloseq or metacoder object.
-#'
-#' @return Returns a list object of alpha diversity measurements.
-#' @importFrom microbiome diversities meta
-#' @importFrom utils combn
+#' @param obj A phyloseq or metacoder object.
+#' @return Returns a list an alpha diversity object.
+#' @pretty_print TRUE
+#' @examples
+#' \dontrun{
+#' if (interactive()) {
+#'   # EXAMPLE1
+#' }
+#' }
 #' @export
+#' @rdname get_alpha_diversity
+#' @seealso
+#'  \code{\link[microbiome]{diversities}},\code{\link[microbiome]{meta}}
+#' @importFrom microbiome diversities meta
 get_alpha_diversity <- function(obj) {
   # Get all of the diversities.
   divs <- microbiome::diversities(obj, index = "all")
