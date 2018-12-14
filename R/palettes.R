@@ -54,10 +54,10 @@ get_color_palette <- function(pal_func=virmag_palette_func, color_no=20, display
 #'  \code{\link[scico]{scico}}
 #' @importFrom grDevices colorRampPalette
 #' @importFrom scico scico
-scico_palette_func <- function(scico_palette="batlow", scico_number=800, scico_range=c(0,scico_number)) {
-  s_min <- scico_range[1]
-  s_max <- scico_range[2]
-  crp <- grDevices::colorRampPalette(unique(scico::scico(scico_number, palette = scico_palette)[s_min:s_max]))
+scico_palette_func <- function(scico_palette="batlow", scico_number=800, scico_range=0:scico_number) {
+  pal <- scico::scico(scico_number, palette = scico_palette)[scico_range]
+  pal <- unique(pal)
+  crp <- grDevices::colorRampPalette(pal)
   return(crp)
 }
 
@@ -85,10 +85,10 @@ scico_palette_func <- function(scico_palette="batlow", scico_number=800, scico_r
 #'  \code{\link[viridis:reexports]{viridis}}
 #' @importFrom grDevices colorRampPalette
 #' @importFrom viridis viridis
-viridis_palette_func <- function(viridis_palette="viridis", viridis_number=800, viridis_range=c(0,viridis_number)) {
-  s_min <- viridis_range[1]
-  s_max <- viridis_range[2]
-  crp <- grDevices::colorRampPalette(unique(viridis::viridis(viridis_number, option = viridis_palette)[s_min:s_max]))
+viridis_palette_func <- function(viridis_palette="viridis", viridis_number=800, viridis_range=0:viridis_number) {
+  pal <- viridis::viridis(viridis_number, option = viridis_palette)[viridis_range]
+  pal <- unique(pal)
+  crp <- grDevices::colorRampPalette()
   return(crp)
 }
 
