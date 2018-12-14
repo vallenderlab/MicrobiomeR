@@ -17,8 +17,13 @@
 #' @family Color Palettes
 #' @rdname get_color_palette
 get_color_palette <- function(pal_func=virmag_palette_func, color_no=20, display=TRUE, ...) {
-  pal_func <- pal_func(...)
-  pal <- pal_func(color_no)
+  err_handle <- try({
+    pal_func <- pal_func(...)
+    pal <- pal_func(n=color_no, ...)
+  }, silent = TRUE)
+  if (inherits(err_handle, "try-error")) {
+    pal <- pal_func(n=color_no, ...)
+  }
   if (display){
     pie(rep(1, length(pal)), col=pal)
   }
@@ -86,18 +91,45 @@ viridis_palette_func <- function(viridis_palette="viridis", viridis_number=800, 
   crp <- grDevices::colorRampPalette(unique(viridis::viridis(viridis_number, option = viridis_palette)[s_min:s_max]))
   return(crp)
 }
-combo_palette_func <- function(...) {
-  params <- list(...)
-  for (item in list) {
-    if (inherits(x = item, what = "list")) {
 
+
+combo_palette_func <- function(...) {
+  # Set up parameters and variables for the palette functions
+  params <- list(...)
+  sub_params <- list()
+  pal_build <- c()
+  # Loop through parameter list that consists of palette functions to combine
+  for (item in names(params)) {
+    if (inherits(x = params[[item]], what = "list")) {
+      sub_params <- params[[item]]
+      # Get the required palette function
+      pal_func <- sub_params$palette
+      # Get the required palette args
+      pal_args <- sub_params$args
+      # Call the palette function
+      pal <- do.call(what = pal_func, args = pal_args)
+      # Optionally subset the color palette
+      if ("range" %in% names(sub_params)) {
+        pal <- pal[sub_params$range]
+      }
+      # Optionally reverse the color palette
+      if ("rev" %in% names(sub_params) && sub_params[["rev"]] == TRUE) {
+        pal <- rev(pal)
+      }
     } else {
       stop("Each parameter you provide must be a \"list\" with 3 variables: \n
-           palette:  a character vector of colors (color palette).\n
-           number:  an integer used within the ")
+
+           palette:  a function that creates a palette as a vector of colors.
+           args:  a list used with the palette function.
+           range (optional):  a ranged used with '[]' to subset the color palette character vector.\n
+           rev (optional):  a logical indicating weather or not to reverse the color palette")
     }
+    pal_build <- c(pal_build, pal)
   }
+  crp <- grDevices::colorRampPalette(unique(pal_build))
+  return(crp)
 }
+
 #' @title Viridis-Magma Palette Function
 #' @description A function that returns a color palette function based off of the veridis package.
 #' @param viridis_number The total number of colors used to generate the viridis palette. Default: 800
@@ -130,7 +162,9 @@ combo_palette_func <- function(...) {
 #' @seealso
 #'  \code{\link[viridis]{reexports}}
 #'  \code{\link[MicrobiomeR]{get_color_palette}}
+#'  \code{\link[grDevices]{colorRampPalette}}
 #' @importFrom viridis viridis magma
+#' @importFrom grDevices colorRampPalette
 virmag_palette_func <- function(viridis_number=800, viridis_range=c(300,800), magma_number=500, magma_range=c(0, 500)) {
   v_min = viridis_range[1]
   v_max = viridis_range[2]
