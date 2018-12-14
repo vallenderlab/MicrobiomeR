@@ -486,7 +486,7 @@ as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_ann
     mo_clone$data$phy_tree <- mo_clone$data[phy_tree]
     mo_clone$data[phy_tree] <- NULL
   }
-  mo_clone <- MicrobiomeR::order_metacoder_data(obj = mo_clone)
+  mo_clone <- order_metacoder_data(obj = mo_clone)
   return(mo_clone)
 }
 
@@ -516,9 +516,9 @@ as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_ann
 format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
 
   # Metacoder Objects
-  obj <- MicrobiomeR::object_handler(obj = obj)
+  obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
-  fmt <- MicrobiomeR::which_format(obj = mo_clone)
+  fmt <- which_format(obj = mo_clone)
   # Get table lists and vectors
   format_level_list <- pkg.private$format_level_list
 
@@ -527,7 +527,7 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
 
   # Logic for getting to the right format
   if (fmt == format) {
-    mo_clone <- MicrobiomeR::order_metacoder_data(obj = mo_clone)
+    mo_clone <- order_metacoder_data(obj = mo_clone)
     return(mo_clone)
   } else if (!is.null(change_name_list)) {   # Create a list of tables to change if necessary
     # Create a list of key/values used to change names
@@ -554,9 +554,9 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
     }
     # See if the changed names helped with the format
     changed_obs_tables <- names(mo_clone$data)
-    fmt = MicrobiomeR::which_format(obj = mo_clone)
+    fmt = which_format(obj = mo_clone)
     if (fmt == format) {
-      mo_clone <- MicrobiomeR::order_metacoder_data(obj = mo_clone)
+      mo_clone <- order_metacoder_data(obj = mo_clone)
       return(mo_clone)
     }
   }
@@ -564,14 +564,14 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
   if (format_level_list[[fmt]] < format_level_list[[format]]) {
     # If the level is not negative continue
     if (sign(format_level_list[[fmt]]) == 1) {
-      mo_clone <- MicrobiomeR::as_MicrobiomeR_format(obj = mo_clone, format = format, ...)
+      mo_clone <- as_MicrobiomeR_format(obj = mo_clone, format = format, ...)
     } else { # Throw an error if the level is negative (unknown or mixed format)
       warning(glue::glue("Here is a list of your observation data:
                            {changed_obs_tables}"))
       stop("Your data is in an unknown or mixed format.")
     }
   }
-  mo_clone <- MicrobiomeR::order_metacoder_data(obj = mo_clone)
+  mo_clone <- order_metacoder_data(obj = mo_clone)
   return(mo_clone)
 }
 

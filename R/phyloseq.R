@@ -60,7 +60,7 @@ get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file =
     if (!is.null(tree_file) && !ape::is.rooted(ape::read.tree(tree_file))) {
       # Root the tree
       phyloseq_tree <- phyloseq::phy_tree(phyloseq_biom)
-      ape_tree <- MicrobiomeR::root_by_longest_edge(phyloseq_tree)
+      ape_tree <- root_by_longest_edge(phyloseq_tree)
       # Write the tree file
       tf <- basename(tree_file)
       tp <- dirname(tools::file_path_as_absolute(tree_file))

@@ -222,7 +222,7 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
   input <- .data
   if (by == "row") {
     # Transpose table and unite all categorical data into one column for row based transformations
-    input <- input %>% MicrobiomeR::transposer(ids = ids, header_name = header_name, preserved_categories = preserved_categories)
+    input <- input %>% transposer(ids = ids, header_name = header_name, preserved_categories = preserved_categories)
   }
   # Get numeric column names
   num_cols <- input %>% dplyr::select_if(is.numeric) %>% dplyr::select_if(!names(.) %in% ids) %>% colnames()
@@ -232,7 +232,7 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
   trans_data <- purrr::modify_at(input, num_cols, func, list(...))
   if (by == "row") {
     # Retranspose the table and separate the categorical data for row based transformations
-    trans_data <- trans_data %>% MicrobiomeR::transposer(ids = header_name, header_name = ids, separated_categories = separated_categories, preserved_categories = FALSE)
+    trans_data <- trans_data %>% transposer(ids = header_name, header_name = ids, separated_categories = separated_categories, preserved_categories = FALSE)
   }
   return(trans_data)
 }
