@@ -130,14 +130,19 @@ combo_palette_func <- function(...) {
   return(crp)
 }
 
+
 #' @title Viridis-Magma Palette Function
 #' @description A function that returns a color palette function based off of the veridis package.
-#' @param viridis_number The total number of colors used to generate the viridis palette. Default: 800
-#' @param viridis_range Tne range of colors in the viridis palette to use. Default: c(300, 800)
-#' @param magma_number The total number of colors used to generate the magma palette. Default: 500
-#' @param magma_range The range of colors in the magma palette to use. Default: c(0, 500)
+#' @param viridis_number The total number of colors used to generate the viridis palette.  Default: 800
+#' @param viridis_range Tne range of colors in the viridis palette to use.  Default: 300:viridis_number
+#' @param viridis_rev PARAM_DESCRIPTION, Default: TRUE
+#' @param magma_number The total number of colors used to generate the magma palette.  Default: 500
+#' @param magma_range The range of colors in the magma palette to use.  Default: 0:magma_number
+#' @param magma_rev PARAM_DESCRIPTION, Default: FALSE
+#' @param ... PARAM_DESCRIPTION
 #' @return The output of this function is another function, which takes a number to generate a color
 #' palette as a character vector.
+#' @pretty_print TRUE
 #' @details The primary purpose of this function is to return a palette-function for generating virdis style
 #' color palettes.  By taking the viridis::viridis() and the viridis::magma() colors, and manipulating
 #' them, this function can help create a unique set of colors that you can distinguish on a busy plot.
@@ -160,24 +165,29 @@ combo_palette_func <- function(...) {
 #' @family Color Palettes
 #' @rdname virmag_palette_func
 #' @seealso
+#'  \code{\link[MicrobiomeR]{combo_palette_func}}
 #'  \code{\link[viridis]{reexports}}
-#'  \code{\link[MicrobiomeR]{get_color_palette}}
 #'  \code{\link[grDevices]{colorRampPalette}}
 #' @importFrom viridis viridis magma
-#' @importFrom grDevices colorRampPalette
-virmag_palette_func <- function(viridis_number=800, viridis_range=c(300,800), magma_number=500, magma_range=c(0, 500)) {
-  v_min = viridis_range[1]
-  v_max = viridis_range[2]
-  m_min = magma_range[1]
-  m_max = magma_range[2]
-  crp <- colorRampPalette(
-    unique(
-      c(
-        rev(viridis::viridis(viridis_number)[v_min:v_max]),
-        viridis::magma(magma_number)[m_min:m_max]
-      )
-    )
-  )
+virmag_palette_func <- function(viridis_number = 800, viridis_range = 300:viridis_number, viridis_rev = TRUE,
+                                magma_number = 500, magma_range = 0:magma_number, magma_rev = FALSE, ...) {
+  if (!missing(...)){
+    v_args = list(n=viridis_number, ...)
+    m_args = list(n=magma_number, ...)
+  } else {
+    v_args = list(n=viridis_number)
+    m_args = list(n=magma_number)
+  }
+  crp <- MicrobiomeR::combo_palette_func(viridis =
+                              list(palette = viridis::viridis,
+                                   args = v_args,
+                                   range = viridis_range,
+                                   rev = viridis_rev),
+                            magma =
+                              list(palette = viridis::magma,
+                                   args = m_args,
+                                   range = magma_range,
+                                   rev = magma_rev))
   return(crp)
 }
 
