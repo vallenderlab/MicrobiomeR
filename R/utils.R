@@ -179,17 +179,17 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
   # Transform
   if (preserved_categories == TRUE) { # All categorical data is preserved
     warning("Categorical data will be united as a string, which can be tidyr::separated after re-transposing.")
-    preserved_categories <- input %>% dplyr::select(-one_of(c(num_cols))) %>% colnames()
+    preserved_categories <- input %>% dplyr::select(-dplyr::one_of(c(num_cols))) %>% colnames()
     trans_data <- input %>%
       dplyr::as_tibble() %>%
       tidyr::gather(key = !!dplyr::sym(header_name), "_data", -c(preserved_categories)) %>% # Gather columns other that aren't preserved
       tidyr::unite("_categories", c(preserved_categories), sep = "<_>") %>% # Preserve the categorical data in 1 column
       tidyr::spread("_categories", "_data") # Spread categorical data over the numerical data
   } else if (preserved_categories == FALSE) { # Only the ids are preserved
-    trans_data <- input %>% select(c(ids, num_cols)) %>%
+    trans_data <- input %>% dplyr::select(c(ids, num_cols)) %>%
       dplyr::as_tibble() %>%
-      tidyr::gather(key = !!sym(header_name), "_data", -c(ids)) %>%
-      tidyr::spread(!!sym(ids), "_data")
+      tidyr::gather(key = !!dplyr::sym(header_name), "_data", -c(ids)) %>%
+      tidyr::spread(!!dplyr::sym(ids), "_data")
   }
   # Look for previously transformed tibbles and separate any united colums
   if (all(stringr::str_detect(trans_data[header_name], "\\<\\_\\>"))) {
@@ -250,9 +250,9 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
   # Get numeric column names
   num_cols <- input %>% dplyr::select_if(is.numeric) %>% dplyr::select_if(!names(.) %in% ids) %>% colnames()
   # Get all other columsn as preserved columns
-  preserved_categories <- input %>% dplyr::select(-one_of(num_cols)) %>% colnames()
+  preserved_categories <- input %>% dplyr::select(-dplyr::one_of(num_cols)) %>% colnames()
   # Transform data
-  trans_data <- purrr::modify_at(input, num_cols, func, list(...))
+  trans_data <- purrr::modify_at(input, num_cols, func, ...)
   if (by == "row") {
     # Retranspose the table and separate the categorical data for row based transformations
     trans_data <- trans_data %>% transposer(ids = header_name, header_name = ids, separated_categories = separated_categories, preserved_categories = FALSE)
@@ -383,7 +383,10 @@ pkg.private$format_table_list <- list(
                              taxa_abundance   = "taxa_abundance",
                              taxa_proportions = "taxa_proportions",
                              statistical_data = "statistical_data",
-                             stats_tax_data   = "stats_tax_data")
+                             stats_tax_data   = "stats_tax_data"),
+  otu_tables = c("otu_abundance", "otu_annotations", "otu_proportions"),
+  taxa_tables = c("taxa_abundance", "taxa_proportions",
+                  "statistical_data", "stats_tax_data")
 )
 
 pkg.private$ranks <- list(c("Kingdom"),
