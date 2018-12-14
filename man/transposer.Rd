@@ -41,8 +41,8 @@ if(interactive()){
 }
 \seealso{
 \code{\link[tibble]{is_tibble}}
-\code{\link[dplyr]{select_all}},\code{\link[dplyr]{select}},\code{\link[dplyr]{reexports}}
-\code{\link[tidyr]{gather}},\code{\link[tidyr]{unite}},\code{\link[tidyr]{spread}},\code{\link[tidyr]{separate}}
-\code{\link[stringr]{str_detect}},\code{\link[stringr]{str_count}}
+\code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}},  \code{\link[dplyr]{reexports}},  \code{\link[dplyr]{sym}},  \code{\link[dplyr]{one_of}}
+\code{\link[tidyr]{gather}},  \code{\link[tidyr]{unite}},  \code{\link[tidyr]{spread}},  \code{\link[tidyr]{separate}}
+\code{\link[stringr]{str_detect}},  \code{\link[stringr]{str_count}}
 }
 \concept{Data Manipulation}

@@ -25,7 +25,7 @@ vlookup <- function(lookup_data, df, match_data, return_data) {
 
 
 set_path <- function() {
-  library(rstudioapi, quietly = TRUE)
+  requireNamespace("rstudioapi", quietly = TRUE)
   # Initialize the Environment
   current_path <- getActiveDocumentContext()$path
   # The next line set the working directory to the relevant one:
@@ -80,79 +80,6 @@ mkdir <- function(dirname, path = NULL) {
     dir.create(dirpath)
     return(dirpath)
   }
-}
-
-#' @title Viridis Palette Function
-#' @description A function that returns a color palette function based off of the veridis package.
-#' @param viridis_number The total number of colors used to generate the viridis palette. Default: 800
-#' @param viridis_range Tne range of colors in the viridis palette to use. Default: c(300, 800)
-#' @param magma_number The total number of colors used to generate the magma palette. Default: 500
-#' @param magma_range The range of colors in the magma palette to use. Default: c(0, 500)
-#' @return The output of this function is another function, which takes a number to generate a color
-#' palette as a character vector.
-#' @details The primary purpose of this function is to return a palette-function for generating virdis style
-#' color palettes.  By taking the viridis::viridis() and the viridis::magma() colors, and manipulating
-#' them, this function can help create a unique set of colors that you can distinguish on a busy plot.
-#' The hopes of this function is to help improve plots that use more than 20 colors.  Use the provided
-#' example to view the color palette.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  # Use the default values
-#'  > pal_func <- viridis_palette_func()
-#'
-#'  # Get a palette with 20 colors
-#'  > pal <- pal_func(20)
-#'
-#'  # Make a pie plot of the colros.
-#'  > pie(rep(1, length(pal)), col=pal)
-#'  }
-#' }
-#' @export
-#' @family Color Palettes
-#' @rdname virdis_palette_func
-#' @seealso
-#'  \code{\link[viridis]{reexports}}
-#'  \code{\link[MicrobiomeR]{get_color_palette}}
-#' @importFrom viridis viridis magma
-virdis_palette_func <- function(viridis_number=800, viridis_range=c(300,800), magma_number=500, magma_range=c(0, 500)) {
-  v_min = viridis_range[1]
-  v_max = viridis_range[2]
-  m_min = magma_range[1]
-  m_max = magma_range[2]
-  colorRampPalette(
-    unique(c(
-      rev(viridis::viridis(viridis_number)[v_min:v_max]), viridis::magma(magma_number)[m_min:m_max])
-      )
-    )
-}
-
-#' @title Get Color palette
-#' @description Get a color palette with a specific number of colors.
-#' @param pal_func A function that returns the output from grDevoces::colorRampPalette. Default: virdis_palette_func
-#' @param color_no The number of colors in the palette. Default: 20
-#' @param display Boolean for displaying a pie chart of the palette. Default: TRUE
-#' @param ... Parameters for the pal_func.
-#' @return Returns a color palette in the form of a character vector.
-#' @pretty_print TRUE
-#' @details This function is meant to be a plugin style function for user created palettes.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @export
-#' @family Color Palettes
-#' @rdname get_color_palette
-get_color_palette <- function(pal_func=virdis_palette_func, color_no=20, display=TRUE, ...) {
-  func_params <- list(...)
-  pal_func <- pal_func(func_params)
-  pal <- pal_func(color_no)
-  if (display){
-    pie(rep(1, length(pal)), col=pal)
-  }
-  return(pal)
 }
 
 
@@ -228,11 +155,11 @@ object_handler <- function(obj) {
 #' @rdname transposer
 #' @seealso
 #'  \code{\link[tibble]{is_tibble}}
-#'  \code{\link[dplyr]{select_all}},\code{\link[dplyr]{select}},\code{\link[dplyr]{reexports}}
-#'  \code{\link[tidyr]{gather}},\code{\link[tidyr]{unite}},\code{\link[tidyr]{spread}},\code{\link[tidyr]{separate}}
-#'  \code{\link[stringr]{str_detect}},\code{\link[stringr]{str_count}}
+#'  \code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}},  \code{\link[dplyr]{reexports}},  \code{\link[dplyr]{sym}},  \code{\link[dplyr]{one_of}}
+#'  \code{\link[tidyr]{gather}},  \code{\link[tidyr]{unite}},  \code{\link[tidyr]{spread}},  \code{\link[tidyr]{separate}}
+#'  \code{\link[stringr]{str_detect}},  \code{\link[stringr]{str_count}}
 #' @importFrom tibble is.tibble
-#' @importFrom dplyr select_if select as_tibble
+#' @importFrom dplyr select_if select as_tibble sym one_of
 #' @importFrom tidyr gather unite spread separate
 #' @importFrom stringr str_detect str_count
 transposer <- function(.data, ids = NULL, header_name, preserved_categories = TRUE, separated_categories = NULL) {
@@ -255,7 +182,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
     preserved_categories <- input %>% dplyr::select(-one_of(c(num_cols))) %>% colnames()
     trans_data <- input %>%
       dplyr::as_tibble() %>%
-      tidyr::gather(key = !!sym(header_name), "_data", -c(preserved_categories)) %>% # Gather columns other that aren't preserved
+      tidyr::gather(key = !!dplyr::sym(header_name), "_data", -c(preserved_categories)) %>% # Gather columns other that aren't preserved
       tidyr::unite("_categories", c(preserved_categories), sep = "<_>") %>% # Preserve the categorical data in 1 column
       tidyr::spread("_categories", "_data") # Spread categorical data over the numerical data
   } else if (preserved_categories == FALSE) { # Only the ids are preserved
@@ -318,7 +245,7 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
   input <- .data
   if (by == "row") {
     # Transpose table and unite all categorical data into one column for row based transformations
-    input <- input %>% MicrobiomeR::transposer(ids = ids, header_name = header_name, preserved_categories = preserved_categories)
+    input <- input %>% transposer(ids = ids, header_name = header_name, preserved_categories = preserved_categories)
   }
   # Get numeric column names
   num_cols <- input %>% dplyr::select_if(is.numeric) %>% dplyr::select_if(!names(.) %in% ids) %>% colnames()
@@ -328,7 +255,7 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
   trans_data <- purrr::modify_at(input, num_cols, func, list(...))
   if (by == "row") {
     # Retranspose the table and separate the categorical data for row based transformations
-    trans_data <- trans_data %>% MicrobiomeR::transposer(ids = header_name, header_name = ids, separated_categories = separated_categories, preserved_categories = FALSE)
+    trans_data <- trans_data %>% transposer(ids = header_name, header_name = ids, separated_categories = separated_categories, preserved_categories = FALSE)
   }
   return(trans_data)
 }
@@ -430,7 +357,7 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
   return(full_path)
 }
 
-####################### Private Package Variable #######################
+####################### Private Package Variables #######################
 pkg.private <- new.env(parent = emptyenv())
 
 pkg.private$format_level_list <- list(unknown_format = -1, mixed_format = -1,phyloseq_format = 0,

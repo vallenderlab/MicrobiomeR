@@ -49,7 +49,7 @@ to be in the working directory.
 }
 \seealso{
 \code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree()}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
-\code{\link[ape]{root}}, \code{\link[ape]{is.rooted}}, \code{\link[ape]{read.tree}}, \code{\link[ape]{write.tree}}
+\code{\link[ape]{root}}, \code{\link[ape:root]{is.rooted}}, \code{\link[ape]{read.tree}}, \code{\link[ape]{write.tree}}
 \code{\link[MicrobiomeR]{root_by_longest_edge}}
 }
 \concept{Data Importers}

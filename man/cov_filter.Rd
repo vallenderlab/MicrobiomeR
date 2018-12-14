@@ -32,7 +32,8 @@ if(interactive()){
 }
 }
 \seealso{
-\code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},\code{\link[MicrobiomeR]{character(0)}},\code{\link[MicrobiomeR]{otu_id_filter}}
+\code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{otu_id_filter}}
+\code{\link[dplyr:summarise_all]{summarise_if}}
 
 Other Metacoder Filters: \code{\link{agglomerate_metacoder}},
   \code{\link{otu_id_filter}},
