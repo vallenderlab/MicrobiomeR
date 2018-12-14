@@ -383,7 +383,7 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
                                                      other_cols  = TRUE,
                                                      combinations = combinations)
     # Create a table with taxonomy data and stats data for downstream analysis
-    tax_table <- taxa::taxonomy_table(obj = mo_clone, subset = taxa::taxon_ids(mo_clone), add_id_col = TRUE)
+    tax_table <- taxa::taxonomy_table(obj = mo_clone, subset = taxon_ids, add_id_col = TRUE)
     if ("taxon_ids" %in% names(tax_table)) {
       tax_table <- tax_table %>% dplyr::rename(taxon_id = taxon_ids)
     }
