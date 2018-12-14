@@ -102,7 +102,7 @@ pick_new_outgroup <- function(unrooted_tree) {
   tree_DT_id <- data.table::data.table(id = unrooted_tree$tip.label)
   tree_tips <- ape::Ntip(unrooted_tree)
   # tablify parts of tree that we need.
-  treeDT <- cbind(tree_DT,tree_DT_len)[1:tree_tips] %>% cbind(tree_DT_id)
+  treeDT <- cbind(tree_DT, tree_DT_len)[1:tree_tips] %>% cbind(tree_DT_id)
   # Take the longest terminal branch as outgroup
   new.outgroup <- treeDT[which.max(length)]$id
   return(new.outgroup)
@@ -668,12 +668,12 @@ preprocess_phyloseq <- function(phyloseq_object, process_list = NULL, ...) {
   # Set up processing parameters
   if (length(dotparam) != 0) {
     process_list <- dotparam
-    } else if (is.null(process_list)) {
-      warning("Warning:  Using default parameters in extdata/process_list.yml")
-      process_list <- yaml::yaml.load_file("extdata/process_list.yml")
-      } else if (is.character(process_list) & (file.exists(process_list))) {
-        process_list <- yaml::yaml.load_file(process_list)
-        }
+  } else if (is.null(process_list)) {
+    warning("Warning:  Using default parameters in extdata/process_list.yml")
+    process_list <- yaml::yaml.load_file("extdata/process_list.yml")
+  } else if (is.character(process_list) & (file.exists(process_list))) {
+    process_list <- yaml::yaml.load_file(process_list)
+  }
 
   ## REMOVAL
   # Remove empty samples
@@ -697,39 +697,40 @@ preprocess_phyloseq <- function(phyloseq_object, process_list = NULL, ...) {
       # phyloseq vignette - taxa_thresh = c(5, 0.5)
       counter <- 0
       for (tf_rank in names(taxon_filter)) {
-          if (length(taxon_filter[[tf_rank]]) == 2) {
-              # Set up data for filtering
-              tf_min_abund <- taxon_filter[[tf_rank]][["min_a"]]
-              tf_req_samp_perc <- taxon_filter[[tf_rank]][["r_s_p"]]
-              tf_glom <- phyloseq::tax_glom(processed_phy_obj, tf_rank, NArm = FALSE)
-              n_samp <- phyloseq::nsamples(tf_glom)
-              filter_fun <- phyloseq::filterfun_sample(function(x) x > tf_min_abund)
+        if (length(taxon_filter[[tf_rank]]) == 2) {
+          # Set up data for filtering
+          tf_min_abund <- taxon_filter[[tf_rank]][["min_a"]]
+          tf_req_samp_perc <- taxon_filter[[tf_rank]][["r_s_p"]]
+          tf_glom <- phyloseq::tax_glom(processed_phy_obj, tf_rank, NArm = FALSE)
+          n_samp <- phyloseq::nsamples(tf_glom)
+          filter_fun <- phyloseq::filterfun_sample(function(x) x > tf_min_abund)
 
-              # Filter
-              tf_unfiltered <- phyloseq::genefilter_sample(tf_glom, filter_fun,
-                A = tf_req_samp_perc * n_samp)
-              p_filter <- phyloseq::prune_taxa(tf_unfiltered, tf_glom)
+          # Filter
+          tf_unfiltered <- phyloseq::genefilter_sample(tf_glom, filter_fun,
+            A = tf_req_samp_perc * n_samp
+          )
+          p_filter <- phyloseq::prune_taxa(tf_unfiltered, tf_glom)
 
-              # Formating for standard evaluation
-              r_filter <- phyloseq::get_taxa_unique(p_filter, taxonomic.rank = tf_rank)
-              if (tf_rank == "Kingdom") {
-                processed_phy_obj <- phyloseq::subset_taxa(processed_phy_obj, Kingdom %in% r_filter)
-              } else if (tf_rank == "Phylum") {
-                processed_phy_obj <- phyloseq::subset_taxa(processed_phy_obj, Phylum %in% r_filter)
-              } else if (tf_rank == "Class") {
-                processed_phy_obj <- phyloseq::subset_taxa(processed_phy_obj, Class %in% r_filter)
-              } else if (tf_rank == "Order") {
-                processed_phy_obj <- phyloseq::subset_taxa(processed_phy_obj, Order %in% r_filter)
-              } else if (tf_rank == "Famlily") {
-                processed_phy_obj <- phyloseq::subset_taxa(processed_phy_obj, Family %in% r_filter)
-              } else if (tf_rank == "Genus") {
-                processed_phy_obj <- phyloseq::subset_taxa(processed_phy_obj, Genus %in% r_filter)
-              } else if (tf_rank == "Species") {
-                processed_phy_obj <- phyloseq::subset_taxa(processed_phy_obj, Speices %in% r_filter)
-              }
+          # Formating for standard evaluation
+          r_filter <- phyloseq::get_taxa_unique(p_filter, taxonomic.rank = tf_rank)
+          if (tf_rank == "Kingdom") {
+            processed_phy_obj <- phyloseq::subset_taxa(processed_phy_obj, Kingdom %in% r_filter)
+          } else if (tf_rank == "Phylum") {
+            processed_phy_obj <- phyloseq::subset_taxa(processed_phy_obj, Phylum %in% r_filter)
+          } else if (tf_rank == "Class") {
+            processed_phy_obj <- phyloseq::subset_taxa(processed_phy_obj, Class %in% r_filter)
+          } else if (tf_rank == "Order") {
+            processed_phy_obj <- phyloseq::subset_taxa(processed_phy_obj, Order %in% r_filter)
+          } else if (tf_rank == "Famlily") {
+            processed_phy_obj <- phyloseq::subset_taxa(processed_phy_obj, Family %in% r_filter)
+          } else if (tf_rank == "Genus") {
+            processed_phy_obj <- phyloseq::subset_taxa(processed_phy_obj, Genus %in% r_filter)
+          } else if (tf_rank == "Species") {
+            processed_phy_obj <- phyloseq::subset_taxa(processed_phy_obj, Speices %in% r_filter)
           }
         }
       }
+    }
     if (proc == "prevelance_filter" & length(process_list[[proc]]) == 2) {
       prevalence_filter <- process_list[[proc]]
       # Prevelance filtering
@@ -744,9 +745,10 @@ preprocess_phyloseq <- function(phyloseq_object, process_list = NULL, ...) {
 
       # Filter
       tx <- genefilter_sample(processed_phy_obj, filter_fun,
-        A = required_sample_percentage * n_samp)
+        A = required_sample_percentage * n_samp
+      )
       processed_phy_obj <- phyloseq::prune_taxa(tx, processed_phy_obj)
-      }
+    }
     if (proc == "glom_rank" & !is.null(process_list[[proc]])) {
       processed_phy_obj <- phyloseq::tax_glom(processed_phy_obj, taxrank = process_list[[proc]])
     }
