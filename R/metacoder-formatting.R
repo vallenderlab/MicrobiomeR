@@ -351,9 +351,9 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
 #' @seealso
 #'  \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{is_raw_format}},  \code{\link[MicrobiomeR]{is_basic_format}},  \code{\link[MicrobiomeR]{is_analyzed_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
 #'  \code{\link[metacoder]{compare_groups}}
-#'  \code{\link[taxa]{taxonomy_table}}
+#'  \code{\link[taxa]{taxonomy_table}},  \code{\link[taxa]{taxon_ids}}
 #' @importFrom metacoder compare_groups
-#' @importFrom taxa taxonomy_table
+#' @importFrom taxa taxonomy_table taxon_ids
 #' @importFrom dplyr rename right_join
 as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = NULL, out_names = NULL, comp_func = metacoder_comp_func_1) {
   obj <- object_handler(obj = obj)
@@ -383,7 +383,7 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
                                                      other_cols  = TRUE,
                                                      combinations = combinations)
     # Create a table with taxonomy data and stats data for downstream analysis
-    tax_table <- taxa::taxonomy_table(obj = mo_clone, subset = taxon_ids(mo_clone), add_id_col = TRUE)
+    tax_table <- taxa::taxonomy_table(obj = mo_clone, subset = taxa::taxon_ids(mo_clone), add_id_col = TRUE)
     if ("taxon_ids" %in% names(tax_table)) {
       tax_table <- tax_table %>% dplyr::rename(taxon_id = taxon_ids)
     }
@@ -421,7 +421,7 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
 #' @family Formatting
 #' @rdname as_MicrobiomeR_format
 #' @seealso
-#'  \code{\code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
+#'  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
 #' @importFrom glue glue
 as_MicrobiomeR_format <- function(obj, format, ...) {
   obj <- object_handler(obj = obj)
@@ -602,6 +602,7 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
 #' @importFrom glue glue
 validate_MicrobiomeR_format <- function(obj, validated = FALSE, valid_formats, force_format = FALSE, min_or_max = base::max, ...) {
   mo_clone <- obj$clone()
+  format_list <- pkg.private$format_level_list
   if (validated == TRUE) {
     return(mo_clone)
   }

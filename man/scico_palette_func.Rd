@@ -5,7 +5,7 @@
 \title{Scico Palette Function}
 \usage{
 scico_palette_func(scico_palette = "batlow", scico_number = 800,
-  scico_range = c(0, scico_number))
+  scico_range = 0:scico_number)
 }
 \arguments{
 \item{scico_palette}{The scico palette to use.  Default: 'batlow'}

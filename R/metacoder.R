@@ -63,6 +63,7 @@ metacoder_workflow_1 <- function(metacoder_obj, func=metacoder_comp_func_1) {
 #'  \code{\link[modes]{bimodality_coefficient}}
 #' @importFrom diptest dip.test
 #' @importFrom modes bimodality_coefficient
+#' @importFrom stats wilcox.test median
 metacoder_comp_func_1 <- function(abund_1, abund_2) {
   log_med_ratio <- log2(median(abund_1) / median(abund_2))
   if (is.nan(log_med_ratio)) {
@@ -312,7 +313,7 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #'  \code{\link[taxa]{filter_taxa}}
 #'
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
-#' @importFrom taxa filter_taxa
+#' @importFrom taxa filter_taxa taxon_ranks
 agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
   mo_clone <- obj$clone()
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
@@ -426,8 +427,8 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
 taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_percentage = 0.5,
                                    validated = FALSE) {
   mo_clone <- obj$clone()
-  mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("basic_format"),
-                                          force_format = TRUE, validated = validated, min_or_max = min)
+  mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, force_format = TRUE, validated = validated,
+                                          min_or_max = min)
   # Calculate the ids that need to be removed based on taxonomic rank
   ids_to_remove <- agglomerate_metacoder(obj = mo_clone, rank = rank,
                                          valid_formats = c("basic_format"), validated = TRUE) %>% # Agglomeration
@@ -462,6 +463,7 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{otu_id_filter}}
 #'  \code{\link[dplyr:summarise_all]{summarise_if}}
 #' @importFrom dplyr summarise_if
+#' @importFrom stats sd
 cov_filter <- function(obj, coefficient_of_variation, validated = FALSE) {
   mo_clone <- obj$clone()
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),

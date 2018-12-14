@@ -5,7 +5,7 @@
 \title{Viridis Palette Function}
 \usage{
 viridis_palette_func(viridis_palette = "viridis", viridis_number = 800,
-  viridis_range = c(0, viridis_number))
+  viridis_range = 0:viridis_number)
 }
 \arguments{
 \item{viridis_palette}{The viridis palette to use.  Default: 'batlow'}

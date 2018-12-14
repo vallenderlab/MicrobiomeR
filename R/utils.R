@@ -25,7 +25,7 @@ vlookup <- function(lookup_data, df, match_data, return_data) {
 
 
 set_path <- function() {
-  library(rstudioapi, quietly = TRUE)
+  requireNamespace("rstudioapi", quietly = TRUE)
   # Initialize the Environment
   current_path <- getActiveDocumentContext()$path
   # The next line set the working directory to the relevant one:
@@ -132,11 +132,11 @@ object_handler <- function(obj) {
 #' @rdname transposer
 #' @seealso
 #'  \code{\link[tibble]{is_tibble}}
-#'  \code{\link[dplyr]{select_all}},\code{\link[dplyr]{select}},\code{\link[dplyr]{reexports}}
-#'  \code{\link[tidyr]{gather}},\code{\link[tidyr]{unite}},\code{\link[tidyr]{spread}},\code{\link[tidyr]{separate}}
-#'  \code{\link[stringr]{str_detect}},\code{\link[stringr]{str_count}}
+#'  \code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}},  \code{\link[dplyr]{reexports}},  \code{\link[dplyr]{sym}},  \code{\link[dplyr]{one_of}}
+#'  \code{\link[tidyr]{gather}},  \code{\link[tidyr]{unite}},  \code{\link[tidyr]{spread}},  \code{\link[tidyr]{separate}}
+#'  \code{\link[stringr]{str_detect}},  \code{\link[stringr]{str_count}}
 #' @importFrom tibble is.tibble
-#' @importFrom dplyr select_if select as_tibble
+#' @importFrom dplyr select_if select as_tibble sym one_of
 #' @importFrom tidyr gather unite spread separate
 #' @importFrom stringr str_detect str_count
 transposer <- function(.data, ids = NULL, header_name, preserved_categories = TRUE, separated_categories = NULL) {
@@ -159,7 +159,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
     preserved_categories <- input %>% dplyr::select(-one_of(c(num_cols))) %>% colnames()
     trans_data <- input %>%
       dplyr::as_tibble() %>%
-      tidyr::gather(key = !!sym(header_name), "_data", -c(preserved_categories)) %>% # Gather columns other that aren't preserved
+      tidyr::gather(key = !!dplyr::sym(header_name), "_data", -c(preserved_categories)) %>% # Gather columns other that aren't preserved
       tidyr::unite("_categories", c(preserved_categories), sep = "<_>") %>% # Preserve the categorical data in 1 column
       tidyr::spread("_categories", "_data") # Spread categorical data over the numerical data
   } else if (preserved_categories == FALSE) { # Only the ids are preserved

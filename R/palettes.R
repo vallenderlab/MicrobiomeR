@@ -16,6 +16,7 @@
 #' @export
 #' @family Color Palettes
 #' @rdname get_color_palette
+#' @importFrom graphics pie
 get_color_palette <- function(pal_func=virmag_palette_func, color_no=20, display=TRUE, ...) {
   err_handle <- try({
     pal_func <- pal_func(...)
