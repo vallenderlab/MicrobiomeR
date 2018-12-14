@@ -1,6 +1,6 @@
 #' @title Get Color palette
 #' @description Get a color palette with a specific number of colors.
-#' @param pal_func A function that returns the output from grDevoces::colorRampPalette. Default: virmag_palette_func
+#' @param pal_func A function that returns the output from grDevoces::colorRampPalette. Default: viridis_magma_palette
 #' @param color_no The number of colors in the palette. Default: 20
 #' @param display Boolean for displaying a pie chart of the palette. Default: TRUE
 #' @param ... Parameters for the pal_func.
@@ -17,7 +17,7 @@
 #' @family Color Palettes
 #' @rdname get_color_palette
 #' @importFrom graphics pie
-get_color_palette <- function(pal_func=virmag_palette_func, color_no=20, display=TRUE, ...) {
+get_color_palette <- function(pal_func=viridis_magma_palette, color_no=20, display=TRUE, ...) {
   err_handle <- try({
     pal_func <- pal_func(...)
     pal <- pal_func(n=color_no, ...)
@@ -49,13 +49,13 @@ get_color_palette <- function(pal_func=virmag_palette_func, color_no=20, display
 #' }
 #' @export
 #' @family Color Palettes
-#' @rdname scico_palette_func
+#' @rdname scico_palette
 #' @seealso
 #'  \code{\link[grDevices]{colorRamp}}
 #'  \code{\link[scico]{scico}}
 #' @importFrom grDevices colorRampPalette
 #' @importFrom scico scico
-scico_palette_func <- function(scico_palette="batlow", scico_number=800, scico_range=0:scico_number) {
+scico_palette <- function(scico_palette="batlow", scico_number=800, scico_range=0:scico_number) {
   pal <- scico::scico(scico_number, palette = scico_palette)[scico_range]
   pal <- unique(pal)
   crp <- grDevices::colorRampPalette(pal)
@@ -80,13 +80,13 @@ scico_palette_func <- function(scico_palette="batlow", scico_number=800, scico_r
 #' }
 #' @export
 #' @family Color Palettes
-#' @rdname viridis_palette_func
+#' @rdname viridis_palette
 #' @seealso
 #'  \code{\link[grDevices]{colorRamp}}
 #'  \code{\link[viridis:reexports]{viridis}}
 #' @importFrom grDevices colorRampPalette
 #' @importFrom viridis viridis
-viridis_palette_func <- function(viridis_palette="viridis", viridis_number=800, viridis_range=0:viridis_number) {
+viridis_palette <- function(viridis_palette="viridis", viridis_number=800, viridis_range=0:viridis_number) {
   pal <- viridis::viridis(viridis_number, option = viridis_palette)[viridis_range]
   pal <- unique(pal)
   crp <- grDevices::colorRampPalette()
@@ -120,11 +120,11 @@ viridis_palette_func <- function(viridis_palette="viridis", viridis_number=800, 
 #' }
 #' @export
 #' @family Color Palettes
-#' @rdname combo_palette_func
+#' @rdname combination_palette
 #' @seealso
 #'  \code{\link[grDevices]{colorRamp}}
 #' @importFrom grDevices colorRampPalette
-combo_palette_func <- function(...) {
+combination_palette <- function(...) {
   # Set up parameters and variables for the palette functions
   params <- list(...)
   sub_params <- list()
@@ -183,7 +183,7 @@ combo_palette_func <- function(...) {
 #' \dontrun{
 #' if(interactive()){
 #'  # Use the default values
-#'  > pal_func <- viridis_palette_func()
+#'  > pal_func <- viridis_palette()
 #'
 #'  # Get a palette with 20 colors
 #'  > pal <- pal_func(20)
@@ -194,13 +194,13 @@ combo_palette_func <- function(...) {
 #' }
 #' @export
 #' @family Color Palettes
-#' @rdname virmag_palette_func
+#' @rdname viridis_magma_palette
 #' @seealso
-#'  \code{\link[MicrobiomeR]{combo_palette_func}}
+#'  \code{\link[MicrobiomeR]{combination_palette}}
 #'  \code{\link[viridis:reexports]{viridis}},  \code{\link[viridis:reexports]{magma}}
 #'  \code{\link[grDevices]{colorRamp}}
 #' @importFrom viridis viridis magma
-virmag_palette_func <- function(viridis_number = 800, viridis_range = 300:viridis_number, viridis_rev = TRUE,
+viridis_magma_palette <- function(viridis_number = 800, viridis_range = 300:viridis_number, viridis_rev = TRUE,
                                 magma_number = 500, magma_range = 0:magma_number, magma_rev = FALSE, ...) {
   if (!missing(...)){
     v_args = list(n=viridis_number, ...)
@@ -209,7 +209,7 @@ virmag_palette_func <- function(viridis_number = 800, viridis_range = 300:viridi
     v_args = list(n=viridis_number)
     m_args = list(n=magma_number)
   }
-  crp <- combo_palette_func(viridis =
+  crp <- combination_palette(viridis =
                               list(palette = viridis::viridis,
                                    args = v_args,
                                    range = viridis_range,
