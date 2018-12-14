@@ -82,7 +82,7 @@ scico_palette_func <- function(scico_palette="batlow", scico_number=800, scico_r
 #' @rdname viridis_palette_func
 #' @seealso
 #'  \code{\link[grDevices]{colorRamp}}
-#'  \code{\link[viridis]{viridis}}
+#'  \code{\link[viridis:reexports]{viridis}}
 #' @importFrom grDevices colorRampPalette
 #' @importFrom viridis viridis
 viridis_palette_func <- function(viridis_palette="viridis", viridis_number=800, viridis_range=c(0,viridis_number)) {
@@ -196,8 +196,8 @@ combo_palette_func <- function(...) {
 #' @rdname virmag_palette_func
 #' @seealso
 #'  \code{\link[MicrobiomeR]{combo_palette_func}}
-#'  \code{\link[viridis]{reexports}}
-#'  \code{\link[grDevices]{colorRampPalette}}
+#'  \code{\link[viridis:reexports]{viridis}},  \code{\link[viridis:reexports]{magma}}
+#'  \code{\link[grDevices]{colorRamp}}
 #' @importFrom viridis viridis magma
 virmag_palette_func <- function(viridis_number = 800, viridis_range = 300:viridis_number, viridis_rev = TRUE,
                                 magma_number = 500, magma_range = 0:magma_number, magma_rev = FALSE, ...) {

@@ -29,7 +29,7 @@
 #' @rdname get_phyloseq_obj
 #' @seealso
 #'  \code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree()}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
-#'  \code{\link[ape]{root}}, \code{\link[ape]{is.rooted}}, \code{\link[ape]{read.tree}}, \code{\link[ape]{write.tree}}
+#'  \code{\link[ape]{root}}, \code{\link[ape:root]{is.rooted}}, \code{\link[ape]{read.tree}}, \code{\link[ape]{write.tree}}
 #'  \code{\link[MicrobiomeR]{root_by_longest_edge}}
 #' @importFrom phyloseq import_biom sample_data phy_tree import_qiime_sample_data merge_phyloseq
 #' @importFrom ape is.rooted write.tree read.tree
@@ -90,7 +90,7 @@ get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file =
 #' @family Phylogenetic Tree Manipulators
 #' @rdname pick_new_outgroup
 #' @seealso
-#'  \code{\link[data.table]{data.table-package}}
+#'  \code{\link[data.table]{data.table}}
 #'
 #'  \code{\link[ape]{summary.phylo}}
 #' @importFrom data.table data.table
@@ -199,11 +199,11 @@ root_by_longest_edge <- function(unrooted_tree) {
 #' parse_taxonomy_qiime(char.vec)
 #' @rdname parse_taxonomy_silva_128
 #' @seealso
-#'  \code{\link[phyloseq]{parse_taxonomy_default}}
+#'  \code{\link[phyloseq:parseTaxonomy-functions]{parse_taxonomy_default}}
 #'
-#'  \code{\link[phyloseq]{parse_taxonomy_greengenes}}
+#'  \code{\link[phyloseq:parseTaxonomy-functions]{parse_taxonomy_greengenes}}
 #'
-#'  \code{\link[phyloseq]{parse_taxonomy_qiime}}
+#'  \code{\link[phyloseq:parseTaxonomy-functions]{parse_taxonomy_qiime}}
 #'
 #'  \code{\link[phyloseq]{import_biom}}
 #'

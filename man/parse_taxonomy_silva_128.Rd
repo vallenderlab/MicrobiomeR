@@ -79,11 +79,11 @@ then please comment on the GitHub PR to encourage merging this feature.
  }
 }
 \seealso{
-\code{\link[phyloseq]{parse_taxonomy_default}}
+\code{\link[phyloseq:parseTaxonomy-functions]{parse_taxonomy_default}}
 
-\code{\link[phyloseq]{parse_taxonomy_greengenes}}
+\code{\link[phyloseq:parseTaxonomy-functions]{parse_taxonomy_greengenes}}
 
-\code{\link[phyloseq]{parse_taxonomy_qiime}}
+\code{\link[phyloseq:parseTaxonomy-functions]{parse_taxonomy_qiime}}
 
 \code{\link[phyloseq]{import_biom}}
 

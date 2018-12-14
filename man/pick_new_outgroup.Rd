@@ -20,7 +20,7 @@ This function preprocess a phylogenetic tree for rooting by the longest edge.
 Please see this issue for more details \url{https://github.com/joey711/phyloseq/issues/597}.
 }
 \seealso{
-\code{\link[data.table]{data.table-package}}
+\code{\link[data.table]{data.table}}
 
 \code{\link[ape]{summary.phylo}}
 

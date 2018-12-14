@@ -343,12 +343,12 @@ agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
 #' @family Metacoder Filters
 #' @rdname otu_proportion_filter
 #' @seealso
-#'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},\code{\link[MicrobiomeR]{character(0)}}
+#'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},\code{\link[MicrobiomeR]{otu_id_filter}}
 otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FALSE) {
   mo_clone <- obj$clone()
-  mo_clone <- MicrobiomeR::validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
+  mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
                                                        force_format = TRUE, validated = validated, min_or_max = min)
-  mo_clone <- MicrobiomeR::otu_id_filter(obj = mo_clone, .f_transform = ~./sum(.), .f_filter = ~mean(.), .f_condition = ~.> otu_percentage)
+  mo_clone <- otu_id_filter(obj = mo_clone, .f_transform = ~./sum(.), .f_filter = ~mean(.), .f_condition = ~.> otu_percentage)
   return(mo_clone)
 }
 
@@ -459,18 +459,20 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
 #' @family Metacoder Filters
 #' @rdname cov_filter
 #' @seealso
-#'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},\code{\link[MicrobiomeR]{character(0)}},\code{\link[MicrobiomeR]{otu_id_filter}}
+#'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{otu_id_filter}}
+#'  \code{\link[dplyr:summarise_all]{summarise_if}}
+#' @importFrom dplyr summarise_if
 cov_filter <- function(obj, coefficient_of_variation, validated = FALSE) {
   mo_clone <- obj$clone()
-  mo_clone <- MicrobiomeR::validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
+  mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
                                           force_format = TRUE, validated = validated, min_or_max = min)
   # Standardize abundances to the median sequencing depth
   total <- mo_clone$data$otu_abundance %>%
-    MicrobiomeR::summarise_if(is.numeric, sum) %>%
+    dplyr::summarise_if(is.numeric, sum) %>%
     as.numeric() %>%
     median()
   standf <- function(x, t = total) round(t * (x / sum(x)))
   # Filter OTUs that don't pass the maximum coefficient of variation.
-  mo_clone <- MicrobiomeR::otu_id_filter(obj = mo_clone, .f_transform = standf, .f_filter = ~sd(.)/mean(.), .f_condition = ~.<coefficient_of_variation)
+  mo_clone <- otu_id_filter(obj = mo_clone, .f_transform = standf, .f_filter = ~sd(.)/mean(.), .f_condition = ~.<coefficient_of_variation)
   return(mo_clone)
 }
