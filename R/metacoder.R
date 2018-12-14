@@ -260,7 +260,6 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
   mo_clone <- obj$clone()
   # Make sure the required functions are provided.
   if (!is.null(.f_filter) && !is.null(.f_condition)) {
-
     # Validate and get taxa_abundance data
     mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
                                                          force_format = TRUE, validated = validated, min_or_max = min)
@@ -280,8 +279,11 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
       purrr::map(.f_condition) %>% # Apply a function to the sample data that does some comparison (f(x)x>10000)
       purrr::keep(~ . == TRUE) %>%
       names() # Determine which samples to keep
+    # Get an updated vector of the observation tables to filter
+    otu_table_list <- pkg.private$format_table_list$otu_tables
+    otu_table_list <- otu_table_list[otu_table_list %in% names(mo_clone$data)]
     # Update the observation data tables and the taxmap object
-    mo_clone <- taxa::filter_obs(mo_clone, valid_list[[fmt]], otu_id %in% otu_ids_to_keep, drop_taxa = TRUE)
+    mo_clone <- taxa::filter_obs(mo_clone, otu_table_list, otu_id %in% otu_ids_to_keep, drop_taxa = TRUE)
     return(mo_clone)
   } else {
     stop("You have to supply a filter formula AND a condition formula.")
@@ -428,10 +430,9 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
                                    validated = FALSE) {
   mo_clone <- obj$clone()
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, force_format = TRUE, validated = validated,
-                                          min_or_max = min)
+                                          min_or_max = min, valid_formats = c("basic_format"))
   # Calculate the ids that need to be removed based on taxonomic rank
-  ids_to_remove <- agglomerate_metacoder(obj = mo_clone, rank = rank,
-                                         valid_formats = c("basic_format"), validated = TRUE) %>% # Agglomeration
+  ids_to_remove <- agglomerate_metacoder(obj = mo_clone, rank = rank, validated = TRUE) %>% # Agglomeration
     metacoder::calc_prop_samples("taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
     dplyr::filter(n_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
   # Taxonomic Prevalence Filtering
