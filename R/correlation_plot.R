@@ -2,7 +2,8 @@
 #' @description Create a correlation plot from a metacoder/taxmap object.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @param primary_rank The primary rank used to label the points.
-#' @param secondary_rank The secondary rank used to color the points.  Default: TRUE
+#' @param secondary_rank The secondary rank used to color the points.  Can be an integer specifying
+#' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
 #' @param wp_value The Wilcoxian P-Value used to represent significant points.  Default: 0.05
 #' @return A 1:1 correlation plot built with ggplot2.
 #' @pretty_print TRUE
@@ -109,6 +110,26 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
   return(corr)
 }
 
+#' @title Get Multiple Correlation Plots
+#' @description This function allows the user to create a list of multiple correlation plots.
+#' @param obj PARAM_DESCRIPTION
+#' @param primary_rank A vector of primary ranks used to label the points.
+#' @param secondary_rank The secondary rank used to color the points.  Can be an integer specifying
+#' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
+#' @param pairwise This does a pairwise comparison of the primary and secondary ranks.  Default: FALSE
+#' @param ... An optional list of parameters to use in the correlation_plot function.
+#' @return A list object containing correlation plots.  A pairwise comparison returns a nested list.
+#' @pretty_print TRUE
+#' @details This function makes it easier to generate multiple correlation plots at once.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Visualizations
+#' @rdname get_correlation_plots
 get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, pairwise = FALSE, ...) {
   corr <- list()
   params <- list(...)
