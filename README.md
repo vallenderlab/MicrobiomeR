@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/vallenderlab/MicrobiomeR.svg?token=xfnbNTQhjNbir5xACn8R&branch=master)](https://travis-ci.com/vallenderlab/MicrobiomeR)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
 # MicrobiomeR
 
@@ -7,7 +8,7 @@ An R package for microbiome analysis combining the `phyloseq`, `metacodeR`, and 
 ## Features
 
 - Standardization of data processing.
-- Publication ready figures for various ranks
+- Publication ready figures for various ranks.
 - Easily access taxonomic ranks from data objects.
 - Import various data types from different pipelines.
 
