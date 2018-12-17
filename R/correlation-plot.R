@@ -1,4 +1,4 @@
-#' @title Correlation Plots
+#' @title Correlation Plot
 #' @description Create a correlation plot from a metacoder/taxmap object.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @param primary_rank The primary rank used to label the points.
