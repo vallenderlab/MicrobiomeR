@@ -26,10 +26,6 @@ every combination of treatment groups.
 
 \code{\link[modes]{bimodality_coefficient}}
 
-Other Data Manipulators: \code{\link{metacoder_workflow_1}},
-  \code{\link{phyloseq_to_dataframe}},
-  \code{\link{phyloseq_to_excel}},
-  \code{\link{phyloseq_to_stats_dataframe}},
-  \code{\link{phyloseq_to_tibble}}, \code{\link{vlookup}}
+Other Data Manipulators: \code{\link{vlookup}}
 }
 \concept{Data Manipulators}
