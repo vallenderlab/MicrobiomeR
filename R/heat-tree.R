@@ -142,3 +142,16 @@ get_heat_tree_parameters <- function(obj, title, ...) {
   param_list <- purrr::list_modify(param_list, ...)
   return(param_list$params)
 }
+
+
+save_heat_tree_plots <- function (htrees, format="tiff", experiment=NULL, end_path=NULL, overwrite=FALSE, start_path = "output", ...) {
+  # Create the relative path to the heat_tree plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
+  # With the parameters set the full path will be <pwd>/output/<experiment>/heat_trees/<extra_path>.
+  full_path <- MicrobiomeR::get_output_dir(start_path = start_path, plot_type = "heat_trees", ...)
+  # Iterate the heat_tree plot list and save them in the proper directory
+  for (rank in names(htrees)) {
+    if (rank != "metacoder_object"){
+      ggplot2::ggsave(filename = sprintf("%s.heat_tree.%s", rank, format), plot = htrees[[rank]], device = format, path = full_path, dpi = 500)
+    }
+  }
+}
