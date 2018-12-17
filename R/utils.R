@@ -1,18 +1,22 @@
 #' @title Object handler
-#' @description A function that handles the conversion of objects to metacoder (taxa::taxmap) objects.
+#' @description A function that handles the conversion of objects to metacoder (\strong{taxa::taxmap}) objects.
 #' @param obj An object that contains the data being analyzed.  Can be one of the following:
 #' \describe{
 #'   \item{Phyloseq Object}{An object generated from the phyloseq package.}
 #'   \item{Taxmap Object}{An object generated from the metacoder or taxa package.}
 #'   \item{RData file}{An RData file generated from the base::save function.  Can have an extension of .RData or .rda.}
 #'   }
-#' @return The output generated is a taxmap object.
+#' @return The output generated is a \strong{taxa::taxmap} object.
 #' @pretty_print TRUE
-#' @details This function is used to convert data to metacoder/taxmap objects for microbiome analysis.
+#' @details This function is used to convert data to metacoder/taxmap objects for \emph{microbiome} analysis.
+#' This function is used at the beginning of every other function to support multiple types of input
+#' for the obj parameter in those functions.
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#'  library(MicrobiomeR)
+#'  phy_obj <- MicrobiomeR::phyloseq_silva
+#'  mc_obj <- object_handler(phy_obj)
 #'  }
 #' }
 #' @export
