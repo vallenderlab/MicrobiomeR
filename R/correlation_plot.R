@@ -28,8 +28,8 @@
 #' @importFrom ggrepel geom_label_repel
 correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
                              wp_value = 0.05) {
-  metacoder_object <- MicrobiomeR::object_handler(obj)
-  metacoder_object <- MicrobiomeR::validate_MicrobiomeR_format(obj = metacoder_object,
+  metacoder_object <- object_handler(obj)
+  metacoder_object <- validate_MicrobiomeR_format(obj = metacoder_object,
                                                   valid_formats = c("analyzed_format"))
   ranks <- pkg.private$ranks
   rank_index <- pkg.private$rank_index
@@ -53,10 +53,10 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
   # Quotes
   quoted_str <- dplyr::enquo(secondary_rank)
   # Create the primary metacoder object
-  primary_mo <- MicrobiomeR::agglomerate_metacoder(obj = metacoder_object, rank = primary_rank,
+  primary_mo <- agglomerate_metacoder(obj = metacoder_object, rank = primary_rank,
                                       validated = TRUE)
   # Create the secondary metacoder object
-  secondary_mo <- MicrobiomeR::agglomerate_metacoder(obj = metacoder_object, rank = secondary_rank,
+  secondary_mo <- agglomerate_metacoder(obj = metacoder_object, rank = secondary_rank,
                                         validated = TRUE)
   # Get the primary and secondary statistical-taxonomy data frame
   primary_data <- primary_mo$data$stats_tax_data
@@ -64,7 +64,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 
   # Add a P-Value column for color, a Significance column (TRUE/FALSE) for subsetting, an Abundance column for the
   # legend, and a label column (TRUE/FALSE) for subsetting
-  primary_data <- primary_data %>% dplyr::mutate(color_wilcox_p_value = MicrobiomeR::vlookup(!! quoted_str, secondary_data, secondary_rank, "wilcox_p_value")) %>%
+  primary_data <- primary_data %>% dplyr::mutate(color_wilcox_p_value = vlookup(!! quoted_str, secondary_data, secondary_rank, "wilcox_p_value")) %>%
     dplyr::mutate(Significance = wilcox_p_value < wp_value) %>%
     dplyr::mutate(Abundance = ifelse(Significance == TRUE, ifelse(sign(log2_mean_ratio) == 1, "Significant Increase", "Significant Decrease"), "Insignificant Change")) %>%
     dplyr::mutate(label = ifelse(Significance == TRUE, ifelse(sign(log2_mean_ratio) == 1, TRUE, TRUE), FALSE))
@@ -80,17 +80,17 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
   significant_data <- dplyr::filter(primary_data, label == TRUE) %>%
     dplyr::mutate(rank_label = .[[primary_rank]])
   # Add a column for labeling the points with taxonomy data based on significance
-  primary_data <- dplyr::mutate(primary_data, rank_label = MicrobiomeR::vlookup(primary_data[[primary_rank]], significant_data, primary_rank, "rank_label"))
+  primary_data <- dplyr::mutate(primary_data, rank_label = vlookup(primary_data[[primary_rank]], significant_data, primary_rank, "rank_label"))
   primary_data <- dplyr::arrange(primary_data, label, wilcox_p_value)
   significant_data <- dplyr::arrange(significant_data, wilcox_p_value)
 
   # Get the limits of the plot based on the data
-  plot_limits <- MicrobiomeR::get_plot_limits(primary_data$mean_treat1, primary_data$mean_treat2)
+  plot_limits <- get_plot_limits(primary_data$mean_treat1, primary_data$mean_treat2)
   # Create a dataframe for background color
   background_limits <- data.frame(id = c("1", "1", "1", "2", "2", "2"), x = c(0, Inf, 0, 0, Inf, Inf), y = c(0, Inf, Inf, 0, 0, Inf))
   # Get a color palette
   secondary_taxa <- length(unique(primary_data[[(secondary_rank)]]))
-  myPal <- MicrobiomeR::get_color_palette(color_no = secondary_taxa)
+  myPal <- get_color_palette(color_no = secondary_taxa)
 
   # Start ggplot2 workflow
   corr <- ggplot2::ggplot(primary_data, ggplot2::aes(x = mean_treat1, y = mean_treat2)) +
