@@ -521,24 +521,3 @@ preprocess_phyloseq <- function(phyloseq_object, process_list = NULL, ...) {
   processed_phy_obj <- phyloseq::prune_taxa(taxa_sums(processed_phy_obj) > 0, processed_phy_obj)
   return(processed_phy_obj)
 }
-
-#'  @title Get Distance Methods
-#'
-#'  @description The function for manipulating phyloseqs native distanceMethodList
-#'
-#'  @param tree_methods DESCRIPTION.
-#'
-#'  @return RETURN_DESCRIPTION
-#'  @export
-get_distance_methods <- function(tree_methods = TRUE) {
-  ### Create list of distance methods
-  dist_methods <- unlist(distanceMethodList)
-  if (!tree_methods) {
-    ### Remove the two distance-methods that require a tree, and the generic custom method that requires
-    ### user-defined distance arguments.
-    dist_methods <- dist_methods[-(1:3)]
-  }
-  ### Remove the user-defined distance
-  dist_methods <- dist_methods[-which(dist_methods == "ANY")]
-  return(dist_methods)
-}
