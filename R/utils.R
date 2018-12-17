@@ -412,23 +412,12 @@ pkg.private$mc_df_rank_list <- list(Kingdom = 4,
                                     Species = 10)
 pkg.private$input_files = list(
   biom_files = list(
-    silva = "data/silva_OTU.biom",
-    greengenes = "data/greengenes_OTU.biom"),
+    silva = system.file("extdata", "silva_OTU.biom", package = "MicrobiomeR"),
+    greengenes = system.file("extdata", "greengenes_OTU.biom", package = "MicrobiomeR")),
   tree_files = list(
-    silva = "data/silva.tre",
-    greengenes = "data/greengenes.tre"),
-  metadata = "data/nephele_metadata.txt"
-)
-
-pkg.private$rdata_files = list(
-  phyloseq = list(
-    silva = "data/silva_phyloseq_obj.RData",
-    greengenes = "data/greengenes_phyloseq_obj.RData"
-  ),
-  metacoder = list(
-    silva = "data/silva_metacoder_obj.RData",
-    greengenes = "data/greengenes_metacoder_obj.RData"
-  )
+    silva = system.file("extdata", "silva.tre", package = "MicrobiomeR"),
+    greengenes = system.file("extdata", "greengenes.tre", package = "MicrobiomeR")),
+  metadata = system.file("extdata", "nephele_metadata.txt", package = "MicrobiomeR")
 )
 
 
