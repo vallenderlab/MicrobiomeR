@@ -14,6 +14,9 @@ branches:
 
 env:
   - R_REMOTES_NO_ERRORS_FROM_WARNINGS = true
+  - WARNINGS_ARE_ERRORS=1
+  - r_build_args: "--no-resave-data"
+  - r_check_args: "--as-cran"
 
 r:
 - oldrel
@@ -21,10 +24,18 @@ r:
 - devel
 
 r_packages:
-- tidyverse
 - vegan
-- ggpubr
 - ape
+- dplyr
+- ggplot2
+- ggpubr
+- tidyr
+- tibble
+- purrr
+- scico
+- rstudioapi
+- openxlsx
+- ggthemes
 
 bioc_packages:
 - biomformat
