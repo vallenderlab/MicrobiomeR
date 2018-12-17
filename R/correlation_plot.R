@@ -134,26 +134,34 @@ get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, pa
   corr <- list()
   params <- list(...)
   rank_index <- pkg.private$rank_index
+  ranks <- pkg.private$ranks
   # Allow secondary_ranks to be TRUE/FALSE isntead of vector
-  if (is.vector(primary_ranks) && !is.vector(secondary_ranks)) {
-    if (is.logical(secondary_ranks) || is.character(secondary_ranks)) {
+  if (is.vector(primary_ranks) && length(secondary_ranks) == 1) {
+    # Get the primary and secondary rank of interest
+    if (secondary_ranks == TRUE) {
+      secondary_ranks <- 1
+    }
+    if (is.numeric(secondary_ranks) || is.character(secondary_ranks)) {
       secondary_ranks <- rep(secondary_ranks, length(primary_ranks))
     }
-  } else if (is.vector(secondary_ranks) && !is.vector(primary_ranks)) {
-    if (is.logical(primary_ranks) || is.character(primary_ranks)) {
-      primary_ranks <- rep(primary_ranks, length(secondary_ranks))
-    }
   }
+
   if (pairwise == TRUE) {
     for (i in 1:length(primary_ranks)) {
       pr <- primary_ranks[i]
       corr[[pr]] <- list()
-      for (j in 1:length(secondary_ranks)) {
+      for (j in 1:length(unique(secondary_ranks))) {
         sr <- secondary_ranks[j]
+        if (is.numeric(sr)) {
+          sr <- as.character(ranks[rank_index[[pr]] - sr])
+
+        } else if (sr == FALSE) {
+          sr <- pr
+        }
         if (rank_index[[pr]] < rank_index[[sr]]) {
           next()
         }
-        print(paste0("pr: ", pr, "\nsr: ", sr))
+        message(paste0("Comparing ", pr, " to ", sr))
         corr[[pr]][[sr]] <- do.call(correlation_plot, c(list(obj = obj, primary_rank = pr, secondary_rank = sr), params))
       }
     }
