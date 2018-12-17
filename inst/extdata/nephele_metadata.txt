@@ -44,6 +44,6 @@ Sample_55			15502_S55_L001_R1_001.fastq	15502_S55_L001_R2_001.fastq	Control	1550
 Sample_56			15400_S56_L001_R1_001.fastq	15400_S56_L001_R2_001.fastq	Control	15400	Fecal
 Sample_57			22413_S57_L001_R1_001.fastq	22413_S57_L001_R2_001.fastq	Control	22413	Fecal
 Sample_58			12906_S58_L001_R1_001.fastq	12906_S58_L001_R2_001.fastq	Control	12906	Fecal
-Sample_59			33303_S59_L001_R1_001.fastq	33303_S59_L001_R2_001.fastq	Stressed	33303	Fecal
+Sample_59			33303_S59_L001_R1_001.fastq	33303_S59_L001_R2_001.fastq	Control	33303	Fecal
 Sample_60			11113_S60_L001_R1_001.fastq	11113_S60_L001_R2_001.fastq	Control	11113	Fecal
 Sample_61			10813_S61_L001_R1_001.fastq	10813_S61_L001_R2_001.fastq	Control	10813	Fecal
