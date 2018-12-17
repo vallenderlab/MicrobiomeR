@@ -12,11 +12,11 @@ branches:
   - dev-master
   - build-fixes
 
+
 env:
-  - R_REMOTES_NO_ERRORS_FROM_WARNINGS = true
-  - WARNINGS_ARE_ERRORS=1
-  - r_build_args: "--no-resave-data"
-  - r_check_args: "--as-cran"
+  global:
+    - _R_CHECK_FORCE_SUGGESTS_=false
+    - R_REMOTES_NO_ERRORS_FROM_WARNINGS=true
 
 r:
 - oldrel
