@@ -4,6 +4,7 @@ language: R
 sudo: false
 cache: packages
 warnings_are_errors: false
+cran: http://cran.rstudio.com
 
 branches:
   only:
@@ -34,6 +35,7 @@ r_github_packages:
 - joey711/phyloseq
 - grunwaldlab/metacoder
 - ropensci/taxa
+- microbiome/microbiome
 
 after_success:
   - R CMD INSTALL $PKG_TARBALL
