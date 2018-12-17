@@ -201,6 +201,8 @@ get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, pa
 #'  \code{\link[ggplot2]{ggsave}}
 #' @importFrom ggplot2 ggsave
 save_correlation_plots <- function(corr, pairwise = FALSE, format = "tiff", start_path = "output", ...) {
+  # Create the relative path to the heat_tree plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
+  # With the parameters set the full path will be <pwd>/output/<experiment>/heat_trees/<extra_path>.
   full_path <- get_output_dir(start_path = start_path, plot_type = "corr_plot", ...)
   # Iterate the heat_tree plot list and save them in the proper directory
   if (pairwise == FALSE) {
