@@ -108,3 +108,21 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
     ggplot2::geom_abline(slope = 1, intercept = 0, linetype = "dashed")
   return(corr)
 }
+
+
+#' @title Get Plot Limits
+#' @description Get the limits of the plot using data values.
+#' @param x Data used to plot the x axis.
+#' @param y Data used to plot the y axis.
+#' @return A vector that supplies the overarching x and y limits.
+#' @pretty_print TRUE
+#' @family Visualizations
+#' @rdname get_plot_limits
+get_plot_limits <- function(x, y) {
+  x_max <- max(x)
+  x_min <- min(x)
+  y_max <- max(y)
+  y_min <- min(y)
+  xy_limits <- c((min(c(x_min, y_min))), (max(c(x_max, y_max))))
+  return(xy_limits)
+}
