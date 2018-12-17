@@ -1,4 +1,4 @@
-## Initialize a list for storing heat tree plots
+
 get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
   rank_index <- pkg.private$rank_index
   if (is.null(rank_list)) {
@@ -16,9 +16,10 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
     rank_level <- rank_index[[rank]]
     filtered_obj <- metacoder_object %>% taxa::filter_obs(data = c("statistical_data", "taxa_proportions", "taxa_abundance", "stats_tax_data"), n_supertaxa < rank_level, drop_taxa = TRUE)
     title <- sprintf("Bacterial Abundance (%s Level)", rank)
+    message(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(crayon::red(title))))
     default_heat_tree_parameters <- get_heat_tree_parameters(obj = filtered_obj, title = title, ...)
     # Filter by Taxonomy Rank and then create a heat tree.
-    htrees[[rank]] <- do.call(what = "heat_tree", args = c(default_heat_tree_parameters))
+    htrees[[rank]] <- do.call(what = metacoder::heat_tree, args = default_heat_tree_parameters$params)
     # Made plot title centered
     htrees[[rank]] <- htrees[[rank]] +
       ggplot2::theme(
@@ -30,8 +31,11 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
   return(htrees)
 }
 
+
 get_heat_tree_parameters <- function(obj, title, ...) {
-  input <- .data
+  input <- obj
+  log2_mean_ratio <- input$data$statistical_data$log2_mean_ratio
+  wilcox_p_value <- input$data$statistical_data$wilcox_p_value
   default_parameters <- list(
     .input = input,
     title = title,
