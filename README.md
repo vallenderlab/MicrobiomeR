@@ -8,6 +8,9 @@ An R package for microbiome analysis combining the `phyloseq`, `metacodeR`, and 
 ## Features
 
 - Standardization of data processing.
+    - Phyloseq for data import.
+    - Metacoder for data analysis.
+    - Ggplot2 for data visualization.
 - Publication ready figures for various ranks.
 - Easily access taxonomic ranks from data objects.
 - Import various data types from different pipelines.
