@@ -249,48 +249,6 @@ parse_taxonomy_silva_128 <- function(char.vec) {
   return(taxvec)
 }
 
-#' @title Convert Phyloseq Object to Statistical Excel File
-#' @description This function takes a phyloseq object and converts it to a list of
-#' dataframes followed by analyzing the treatment groups and adding statistical data to
-#' the same list.  It then creates an excel file from this object.
-#' @return An Excel file containing all of the phyloseq data with additional statistical data.
-#' @param phyloseq_obj A phyloseq object.
-#' @param treatment_groups A list of the treatment groups in the sample metadata.
-#' @param rank The agglomerated rank of the phyloseq object
-#' @param file_path Absolute path of the Excel file that will be created.
-#' @return No objects are returned, but an Excel file is created.
-#' @pretty_print TRUE
-#' @export
-#' @family Data Manipulators
-#' @rdname phyloseq_to_excel
-#' @seealso
-#'  \code{\link[dplyr]{select_all}}
-#'  \code{\link[openxlsx]{createWorkbook}},\code{\link[openxlsx]{addWorksheet}},\code{\link[openxlsx]{writeDataTable}},\code{\link[openxlsx]{saveWorkbook}}
-#' @importFrom dplyr select_if
-#' @importFrom openxlsx createWorkbook addWorksheet writeDataTable saveWorkbook
-phyloseq_to_excel <- function(phyloseq_obj, treatment_groups, rank, file_path) {
-  df_tax_otu <- phyloseq_to_stats_dataframe(phyloseq_obj = phyloseq_obj, treatment_groups = treatment_groups)
-  ranks <- pkg.private$ranks
-  stressed_samples <- df_tax_otu$stressed_samples
-  control_samples <- df_tax_otu$control_samples
-  # TODO:  Remove Control/Stress from syntax.  Make dynamic for other users.
-  main_df <- df_tax_otu$data[49:60][, c("OTU", rank, "mean_stressed", "mean_control", "wilcox_p_value", "log2_mean_ratio", unlist(ranks[ranks != rank]))]
-  main_df <- main_df %>% dplyr::select_if(~sum(!is.na(.)) > 0)
-  wb <- openxlsx::createWorkbook(file_path)
-  openxlsx::addWorksheet(wb, "Stats_Taxonomy")
-  openxlsx::addWorksheet(wb, "Stressed")
-  openxlsx::addWorksheet(wb, "Control")
-  openxlsx::addWorksheet(wb, "Master")
-  openxlsx::writeDataTable(wb, 1, main_df)
-  openxlsx::writeDataTable(wb, 2, df_tax_otu$data[, c("OTU", stressed_samples)])
-  openxlsx::writeDataTable(wb, 3, df_tax_otu$data[, c("OTU", control_samples)])
-  openxlsx::writeDataTable(wb, 4, df_tax_otu$data)
-  openxlsx::saveWorkbook(wb, file = file_path, overwrite = TRUE)
-}
-
-
-
-
 #' @title Remove Ambiguous Taxonomy
 #' @description This function removes ambiguous taxonomy names from specified ranks
 #' in a phyloseq object.
