@@ -45,10 +45,10 @@ Imports:
     data.table,
     ggthemes,
     biomformat,
-    yaml
+    phyloseq,
+    microbiome
 Suggests:
-    BiocInstaller,
-    BiocParallel
+    knitr
 Additional_repositories:
     http://bioconductor.org/packages/release/bioc/,
     http://bioconductor.org/packages/release/data/annotation,
