@@ -1,4 +1,4 @@
-#' Stress Microbiome Phylseq Data (SILVA)
+#' Stress Microbiome Phyloseq Data (SILVA)
 #'
 #' Data from the Nephele-16S-Qiime-Silva microbiome pipeline
 #' in the form of a phyloseq object.
