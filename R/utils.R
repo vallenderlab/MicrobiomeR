@@ -67,7 +67,15 @@ object_handler <- function(obj) {
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  # Get
+#'  # Get the path to an output directory without creating
+#'  library(MicrobiomeR)
+#'  output_dir <- get_output_dir(start_path="output", experiment="microbiome-proj", mkdir=FALSE)
+#'  print(output_dir)
+#'
+#'  # Create a folder for your plot types
+#'  output_dir <- get_output_dir(plot_type="scatter-plots")
+#'  print(output_dir)
+#'
 #'  }
 #' }
 #' @export
