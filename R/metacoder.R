@@ -1,52 +1,3 @@
-#' @title Metacoder Comparison Function #1
-#' @description A comparison function for metacoder::compare_groups "func" parameter.
-#' @param abund_1 A character vector of abundances.
-#' @param abund_2 A character vector of abundances.
-#' @return A list of statistical results used to compare groups.
-#' @pretty_print TRUE
-#' @details This function is used by metacoder::compare_groups in order to compare
-#' every combination of treatment groups.
-#' @export
-#' @family Data Manipulators
-#' @rdname metacoder_comp_func_1
-#' @seealso
-#'  \code{\link[diptest]{dip.test}}
-#'
-#'  \code{\link[modes]{bimodality_coefficient}}
-#' @importFrom diptest dip.test
-#' @importFrom modes bimodality_coefficient
-#' @importFrom stats wilcox.test median
-metacoder_comp_func_1 <- function(abund_1, abund_2) {
-  log_med_ratio <- log2(median(abund_1) / median(abund_2))
-  if (is.nan(log_med_ratio)) {
-    log_med_ratio <- 0
-  }
-  if (is.infinite(log_med_ratio)) {
-    log_med_ratio <- 0
-  }
-  log_mean_ratio <- log2(mean(abund_1) / mean(abund_2))
-  if (is.nan(log_mean_ratio)) {
-    log_mean_ratio <- 0
-  }
-  if (is.infinite(log_mean_ratio)) {
-    log_mean_ratio <- 0
-  }
-  list(
-    log2_median_ratio = log_med_ratio,
-    log2_mean_ratio = log_mean_ratio,
-    median_diff = median(abund_1) - median(abund_2),
-    mean_diff = mean(abund_1) - mean(abund_2),
-    mean_treat1 = mean(abund_1),
-    mean_treat2 = mean(abund_2),
-    wilcox_p_value = wilcox.test(abund_1, abund_2)$p.value,
-    hartigan_dip_treat1 = diptest::dip.test(abund_1)$p.value,
-    hartigan_dip_treat2 = diptest::dip.test(abund_2)$p.value,
-    bimodality_coeff_treat1 = modes::bimodality_coefficient(abund_1),
-    bimodality_coeff_treat2 = modes::bimodality_coefficient(abund_2)
-  )
-}
-
-
 #' @title Filter Samples from Metacoder Objects
 #' @description This function provides a flexible way to filter unwanted samples from the "otu_abundance" and "sample_data"
 #' observations of a MicrobiomeR formatted object.
@@ -113,7 +64,6 @@ sample_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
   }
 }
 
-
 #' @title Filter Taxon Ids from Metacoder Objects
 #' @description This function provides a flexible way to filter unwanted taxon_ids from the taxmap object and from the
 #' observations of a MicrobiomeR formatted object.
@@ -176,7 +126,6 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
     stop("You have to supply a filter formula AND a condition formula.")
   }
 }
-
 
 #' @title Filter OTU Ids from Metacoder Objects
 #' @description This function provides a flexible way to filter unwanted otu_ids from the taxmap object and from the
@@ -241,7 +190,6 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
     stop("You have to supply a filter formula AND a condition formula.")
   }
 }
-
 
 #' @title Agglomerate Metacoder Objects
 #' @description A function similar to the \code{\link[phyloseq:tax_glom]{phyloseq::tax_glom}} function,
@@ -348,7 +296,6 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
   return(mo_clone)
 }
 
-
 #' @title Taxonomic Prevalence Filter (Metacoder)
 #' @description This function filters observations at a specific rank by thier prevelance across samples.
 #' @param obj A Taxmap/metacoder object.
@@ -392,7 +339,6 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
   return(mo_clone)
 }
 
-
 #' @title Coefficient of Variation Filter
 #' @description This function filters OTUs that have a variance higher than the
 #' specified CoV.
@@ -430,4 +376,52 @@ cov_filter <- function(obj, coefficient_of_variation, validated = FALSE) {
   # Filter OTUs that don't pass the maximum coefficient of variation.
   mo_clone <- otu_id_filter(obj = mo_clone, .f_transform = standf, .f_filter = ~sd(.)/mean(.), .f_condition = ~.<coefficient_of_variation)
   return(mo_clone)
+}
+
+#' @title Metacoder Comparison Function #1
+#' @description A comparison function for metacoder::compare_groups "func" parameter.
+#' @param abund_1 A character vector of abundances.
+#' @param abund_2 A character vector of abundances.
+#' @return A list of statistical results used to compare groups.
+#' @pretty_print TRUE
+#' @details This function is used by metacoder::compare_groups in order to compare
+#' every combination of treatment groups.
+#' @export
+#' @family Data Manipulators
+#' @rdname metacoder_comp_func_1
+#' @seealso
+#'  \code{\link[diptest]{dip.test}}
+#'
+#'  \code{\link[modes]{bimodality_coefficient}}
+#' @importFrom diptest dip.test
+#' @importFrom modes bimodality_coefficient
+#' @importFrom stats wilcox.test median
+metacoder_comp_func_1 <- function(abund_1, abund_2) {
+  log_med_ratio <- log2(median(abund_1) / median(abund_2))
+  if (is.nan(log_med_ratio)) {
+    log_med_ratio <- 0
+  }
+  if (is.infinite(log_med_ratio)) {
+    log_med_ratio <- 0
+  }
+  log_mean_ratio <- log2(mean(abund_1) / mean(abund_2))
+  if (is.nan(log_mean_ratio)) {
+    log_mean_ratio <- 0
+  }
+  if (is.infinite(log_mean_ratio)) {
+    log_mean_ratio <- 0
+  }
+  list(
+    log2_median_ratio = log_med_ratio,
+    log2_mean_ratio = log_mean_ratio,
+    median_diff = median(abund_1) - median(abund_2),
+    mean_diff = mean(abund_1) - mean(abund_2),
+    mean_treat1 = mean(abund_1),
+    mean_treat2 = mean(abund_2),
+    wilcox_p_value = wilcox.test(abund_1, abund_2)$p.value,
+    hartigan_dip_treat1 = diptest::dip.test(abund_1)$p.value,
+    hartigan_dip_treat2 = diptest::dip.test(abund_2)$p.value,
+    bimodality_coeff_treat1 = modes::bimodality_coefficient(abund_1),
+    bimodality_coeff_treat2 = modes::bimodality_coefficient(abund_2)
+  )
 }
