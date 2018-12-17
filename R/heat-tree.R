@@ -1,4 +1,32 @@
 
+#' @title Get Heat Tree Plots
+#' @description A function for getting multiple heat_tree plots per rank.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @param rank_list A vector of ranks used to generate heat_trees.  Default: NULL
+#' @param ... Any of the heat tree parameters list below can be used to change the way the heat_tree
+#' output is displayed.
+#' @return A list of heat_tree plots.
+#' @pretty_print TRUE
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Visualizations
+#' @rdname get_heat_tree_plots
+#' @seealso
+#'  \code{\link[metacoder]{heat_tree}}
+#'
+#'  \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{get_heat_tree_parameters}}
+#'  \code{\link[taxa]{filter_obs}}
+#'  \code{\link[crayon]{crayon}}
+#'  \code{\link[ggplot2]{theme}},  \code{\link[ggplot2]{margin}},  \code{\link[ggplot2]{labs}}
+#' @importFrom taxa filter_obs
+#' @importFrom crayon bgWhite red
+#' @importFrom metacoder heat_tree
+#' @importFrom ggplot2 theme element_text ggtitle
 get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
   rank_index <- pkg.private$rank_index
   if (is.null(rank_list)) {
@@ -6,8 +34,8 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
   }
   htrees <- list()
   # Create a metacoder object from a phyloseq/metacoder/RData file
-  metacoder_object <- MicrobiomeR::object_handler(obj)
-  metacoder_object <- MicrobiomeR::validate_MicrobiomeR_format(
+  metacoder_object <- object_handler(obj)
+  metacoder_object <- validate_MicrobiomeR_format(
     obj = metacoder_object,
     valid_formats = c("analyzed_format"),
     force_format = TRUE)
@@ -19,7 +47,7 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
     message(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(crayon::red(title))))
     default_heat_tree_parameters <- get_heat_tree_parameters(obj = filtered_obj, title = title, ...)
     # Filter by Taxonomy Rank and then create a heat tree.
-    htrees[[rank]] <- do.call(what = metacoder::heat_tree, args = default_heat_tree_parameters$params)
+    htrees[[rank]] <- do.call(what = metacoder::heat_tree, args = default_heat_tree_parameters)
     # Made plot title centered
     htrees[[rank]] <- htrees[[rank]] +
       ggplot2::theme(
@@ -32,6 +60,31 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
 }
 
 
+#' @title Get Heat Tree Parameters
+#' @description This function get's the parameters used for the get_heat_tree_plots function.
+#' @param obj A metacoder object.
+#' @param title The title used in the heat_tree plot.
+#' @param ... Any of the heat tree parameters list below can be used to change the way the heat_tree
+#' output is displayed.  However, this function acts as a default list of parameters.  The memebers
+#' of the default list will be overridden by the dot parameters.
+#' @return A list used with do.call and the metacoder::heat_tree function.
+#' @pretty_print TRUE
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Visualizations
+#' @rdname get_heat_tree_parameters
+#' @seealso
+#'  \code{\link[metacoder]{heat_tree}}
+#'
+#'  \code{\link[taxa]{n_obs}},\code{\link[taxa]{taxon_names}}
+#'  \code{\link[purrr]{list_modify}}
+#' @importFrom taxa n_obs taxon_names
+#' @importFrom purrr list_modify
 get_heat_tree_parameters <- function(obj, title, ...) {
   input <- obj
   log2_mean_ratio <- input$data$statistical_data$log2_mean_ratio
@@ -43,9 +96,9 @@ get_heat_tree_parameters <- function(obj, title, ...) {
     ## The node size is relevant to the Abundance level
     ## The node color is relevant to wheather the abundance is higher in control vs stressed animals
     ## The node labels are relevant to significant taxon names.
-    node_size = input$n_obs(),
+    node_size = taxa::n_obs(input),
     node_color = log2_mean_ratio,
-    node_label = ifelse(wilcox_p_value < 0.05, input$taxon_names(), NA),
+    node_label = ifelse(wilcox_p_value < 0.05, taxa::taxon_names(input), NA),
     node_label_size = 1,
     ### The color red indicates higher abundance in Stressed animals
     ### The color blue indicates higher abundance in Control animals
@@ -87,5 +140,5 @@ get_heat_tree_parameters <- function(obj, title, ...) {
   )
   param_list <-list(params = default_parameters)
   param_list <- purrr::list_modify(param_list, ...)
-  return(param_list)
+  return(param_list$params)
 }
