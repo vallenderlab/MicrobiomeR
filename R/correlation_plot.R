@@ -1,7 +1,7 @@
 correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
                              wp_value = 0.05) {
   metacoder_object <- MicrobiomeR::object_handler(obj)
-  metacoder_object <- MicrobiomeR::validate_MicrobiomeR_format(metacoder_object = metacoder_object,
+  metacoder_object <- MicrobiomeR::validate_MicrobiomeR_format(obj = metacoder_object,
                                                   valid_formats = c("analyzed_format"))
   ranks <- pkg.private$ranks
   rank_index <- pkg.private$rank_index
@@ -25,10 +25,10 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
   # Quotes
   quoted_str <- dplyr::enquo(secondary_rank)
   # Create the primary metacoder object
-  primary_mo <- MicrobiomeR::agglomerate_metacoder(metacoder_object = metacoder_object, rank = primary_rank,
+  primary_mo <- MicrobiomeR::agglomerate_metacoder(obj = metacoder_object, rank = primary_rank,
                                       validated = TRUE)
   # Create the secondary metacoder object
-  secondary_mo <- MicrobiomeR::agglomerate_metacoder(metacoder_object = metacoder_object, rank = secondary_rank,
+  secondary_mo <- MicrobiomeR::agglomerate_metacoder(obj = metacoder_object, rank = secondary_rank,
                                         validated = TRUE)
   # Get the primary and secondary statistical-taxonomy data frame
   primary_data <- primary_mo$data$stats_tax_data
@@ -65,7 +65,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
   myPal <- MicrobiomeR::get_color_palette(color_no = secondary_taxa)
 
   # Start ggplot2 workflow
-  corr <- ggplot(primary_data, ggplot2::aes(x = mean_treat1, y = mean_treat2)) +
+  corr <- ggplot2::ggplot(primary_data, ggplot2::aes(x = mean_treat1, y = mean_treat2)) +
     ggplot2::geom_polygon(background_limits, mapping = ggplot2::aes(x = x, y = y, fill = id), alpha = 0.07, show.legend = FALSE) +
     ggplot2::geom_point(data = significant_data, ggplot2::aes(shape = Abundance), size = 3.2, color = "black", stroke = 2, show.legend = FALSE) +
     ggplot2::geom_point(data = primary_data, ggplot2::aes(shape = Abundance, color = forcats::fct_reorder(primary_data[[secondary_rank]], color_wilcox_p_value, min)), size = 2.5, stroke = 1.5) +
@@ -79,5 +79,4 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
     ggplot2::scale_color_manual(values = c(myPal), name = sprintf("%s:", c(secondary_rank)), guide = ggplot2::guide_legend(ncol = 2)) +
     ggplot2::geom_abline(slope = 1, intercept = 0, linetype = "dashed")
   return(corr)
-
 }
