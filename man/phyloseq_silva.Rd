@@ -3,7 +3,7 @@
 \docType{data}
 \name{phyloseq_silva}
 \alias{phyloseq_silva}
-\title{Stress Microbiome Phylseq Data (SILVA)}
+\title{Stress Microbiome Phyloseq Data (SILVA)}
 \format{An object of class \code{"phyloseq"}}
 \source{
 \href{https://nephele.niaid.nih.gov/user_guide_pipes/#amplicon_pipes}{Nephele-16S Qiime Pipeline}
