@@ -78,7 +78,6 @@ get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file =
 }
 
 
-
 #' @title Pick Outgroup for Tree
 #' @description Pick an outgroup for rooting a phylogenetic tree.
 #' @param unrooted_tree An unrooted tree object.
@@ -109,7 +108,6 @@ pick_new_outgroup <- function(unrooted_tree) {
 }
 
 
-
 #' @title Root Phylogenetic Tree
 #' @description This function roots a phylogenetic tree object by it's longest edge.
 #' @param unrooted_tree An unrooted phylogenetic tree object.
@@ -128,8 +126,6 @@ root_by_longest_edge <- function(unrooted_tree) {
   rootedTree <- ape::root(unrooted_tree, outgroup = new.outgroup, resolve.root = TRUE)
   return(rootedTree)
 }
-
-
 
 #' @title Parse elements of a taxonomy vector
 #' @description These are provided as both example and default functions for
@@ -252,49 +248,6 @@ parse_taxonomy_silva_128 <- function(char.vec) {
   }
   return(taxvec)
 }
-
-#'  @title Parse Taxonomy Greengenes2
-#'
-#'  @description  A custom Greengenes parsing function
-#'
-#'  @param char.vec DESCRIPTION.
-#'
-#'  @return RETURN_DESCRIPTION
-#'  @export
-parse_taxonomy_greengenes2 <- function(char.vec) {
-  # Use default to assign names to elements in case problem with greengenes prefix
-  char.vec <- parse_taxonomy_default(char.vec)
-  # Check for unassigned taxa
-  if (char.vec["Rank1"] == "Unassigned") {
-    char.vec <- c(
-      Rank1 = "k__Unassigned", Rank2 = "p__Unassigned", Rank3 = "c__Unassigned", Rank4 = "o__Unassigned",
-      Rank5 = "f__Unassigned", Rank6 = "g__Unassigned", Rank7 = "s__Unassigned"
-    )
-  }
-  # Define the meaning of each prefix according to GreenGenes taxonomy
-  Tranks <- c(k = "Kingdom", p = "Phylum", c = "Class", o = "Order", f = "Family", g = "Genus", s = "Species")
-  # Check for prefix using regexp, warn if there were none. trim indices, ti
-  ti <- grep("[[:alpha:]]{1}\\_\\_", char.vec)
-  if (length(ti) == 0L) {
-    warning(
-      "No greengenes prefixes were found. \n",
-      "Consider using parse_taxonomy_default() instead if true for all OTUs. \n",
-      "Dummy ranks may be included among taxonomic ranks now."
-    )
-    # Will want to return without further modifying char.vec
-    taxvec <- char.vec
-    # Replace names of taxvec according to prefix, if any present...
-  } else {
-    # Remove prefix using sub-"" regexp, call result taxvec
-    taxvec <- gsub("[[:alpha:]]{1}\\_\\_", "", char.vec)
-    # Define the ranks that will be replaced
-    repranks <- Tranks[substr(char.vec[ti], 1, 1)]
-    # Replace, being sure to avoid prefixes not present in Tranks
-    names(taxvec)[ti[!is.na(repranks)]] <- repranks[!is.na(repranks)]
-  }
-  return(taxvec)
-}
-
 
 #' @title Convert Phyloseq Object to Dataframe
 #' @description This function takes a phyloseq object and converts it to a list of
