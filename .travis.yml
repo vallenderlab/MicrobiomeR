@@ -5,6 +5,12 @@ sudo: false
 cache: packages
 warnings_are_errors: false
 
+branches:
+  only:
+  - master
+  - dev-master
+  - build-fixes
+
 env:
   - R_REMOTES_NO_ERRORS_FROM_WARNINGS = true
 
@@ -18,9 +24,9 @@ r_packages:
 - vegan
 - ggpubr
 - ape
+- BiocManager
 
 bioc_packages:
-- BiocInstaller
 - biomformat
 - ggtree
 
