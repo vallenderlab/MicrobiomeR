@@ -23,17 +23,6 @@ vlookup <- function(lookup_data, df, match_data, return_data) {
   df[[return_data]][m]
 }
 
-
-set_path <- function() {
-  requireNamespace("rstudioapi", quietly = TRUE)
-  # Initialize the Environment
-  current_path <- getActiveDocumentContext()$path
-  # The next line set the working directory to the relevant one:
-  setwd(dirname(current_path))
-}
-
-
-
 #' @title Create a table from a data frame
 #'
 #' @description Creates an image of a table from a dataframe.
