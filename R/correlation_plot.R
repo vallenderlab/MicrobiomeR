@@ -109,6 +109,43 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
   return(corr)
 }
 
+get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, pairwise = FALSE, ...) {
+  corr <- list()
+  params <- list(...)
+  rank_index <- pkg.private$rank_index
+  # Allow secondary_ranks to be TRUE/FALSE isntead of vector
+  if (is.vector(primary_ranks) && !is.vector(secondary_ranks)) {
+    if (is.logical(secondary_ranks) || is.character(secondary_ranks)) {
+      secondary_ranks <- rep(secondary_ranks, length(primary_ranks))
+    }
+  } else if (is.vector(secondary_ranks) && !is.vector(primary_ranks)) {
+    if (is.logical(primary_ranks) || is.character(primary_ranks)) {
+      primary_ranks <- rep(primary_ranks, length(secondary_ranks))
+    }
+  }
+  if (pairwise == TRUE) {
+    for (i in 1:length(primary_ranks)) {
+      pr <- primary_ranks[i]
+      corr[[pr]] <- list()
+      for (j in 1:length(secondary_ranks)) {
+        sr <- secondary_ranks[j]
+        if (rank_index[[pr]] < rank_index[[sr]]) {
+          next()
+        }
+        print(paste0("pr: ", pr, "\nsr: ", sr))
+        corr[[pr]][[sr]] <- do.call(correlation_plot, c(list(obj = obj, primary_rank = pr, secondary_rank = sr), params))
+      }
+    }
+  } else {
+    for (i in 1:length(primary_ranks)) {
+      pr <- primary_ranks[i]
+      sr <- secondary_ranks[i]
+      corr[[pr]] <- do.call(correlation_plot, c(list(obj = obj, primary_rank = pr, secondary_rank = sr), params))
+    }
+  }
+  return(corr)
+}
+
 
 #' @title Get Plot Limits
 #' @description Get the limits of the plot using data values.
