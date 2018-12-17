@@ -23,29 +23,5 @@ r:
 - release
 - devel
 
-r_packages:
-- vegan
-- ape
-- dplyr
-- ggplot2
-- ggpubr
-- tidyr
-- tibble
-- purrr
-- scico
-- rstudioapi
-- openxlsx
-- ggthemes
-
-bioc_packages:
-- biomformat
-- ggtree
-
-r_github_packages:
-- joey711/phyloseq
-- grunwaldlab/metacoder
-- ropensci/taxa
-- microbiome/microbiome
-
 after_success:
   - R CMD INSTALL $PKG_TARBALL
