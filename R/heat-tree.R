@@ -144,10 +144,33 @@ get_heat_tree_parameters <- function(obj, title, ...) {
 }
 
 
-save_heat_tree_plots <- function (htrees, format="tiff", experiment=NULL, end_path=NULL, overwrite=FALSE, start_path = "output", ...) {
+#' @title Save Heat Tree Plots
+#' @description This function saves heat tree plots storred in a list object to an output folder.
+#' @param htrees A named list of heat trees.
+#' @param format The format of the output image.  Default: 'tiff'
+#' @param start_path The starting path of the output directory.  Default: 'output'
+#' @param ... An optional list of parameters to use in the get_output_dir function.
+#' @return An output directory that contains heat tree plots.
+#' @pretty_print TRUE
+#' @details This function creates an appropriate output directory, where it saves publication ready
+#' plots.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Visualizations
+#' @rdname save_heat_tree_plots
+#' @seealso
+#'  \code{\link[MicrobiomeR]{get_output_dir}}
+#'  \code{\link[ggplot2]{ggsave}}
+#' @importFrom ggplot2 ggsave
+save_heat_tree_plots <- function (htrees, format="tiff", start_path = "output", ...) {
   # Create the relative path to the heat_tree plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
   # With the parameters set the full path will be <pwd>/output/<experiment>/heat_trees/<extra_path>.
-  full_path <- MicrobiomeR::get_output_dir(start_path = start_path, plot_type = "heat_trees", ...)
+  full_path <- get_output_dir(start_path = start_path, plot_type = "heat_trees", ...)
   # Iterate the heat_tree plot list and save them in the proper directory
   for (rank in names(htrees)) {
     if (rank != "metacoder_object"){
