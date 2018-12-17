@@ -5,6 +5,9 @@ sudo: false
 cache: packages
 warnings_are_errors: false
 
+env:
+  - R_REMOTES_NO_ERRORS_FROM_WARNINGS = true
+
 r:
 - oldrel
 - release
