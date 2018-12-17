@@ -12,7 +12,8 @@ correlation_plot(obj, primary_rank, secondary_rank = TRUE,
 
 \item{primary_rank}{The primary rank used to label the points.}
 
-\item{secondary_rank}{The secondary rank used to color the points.  Default: TRUE}
+\item{secondary_rank}{The secondary rank used to color the points.  Can be an integer specifying
+the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE}
 
 \item{wp_value}{The Wilcoxian P-Value used to represent significant points.  Default: 0.05}
 }
@@ -39,6 +40,8 @@ if(interactive()){
 \code{\link[ggrepel]{geom_label_repel}}
 \code{\link[forcats]{fct_reorder}}
 
-Other Visualizations: \code{\link{get_plot_limits}}
+Other Visualizations: \code{\link{get_correlation_plots}},
+  \code{\link{get_plot_limits}},
+  \code{\link{save_correlation_plots}}
 }
 \concept{Visualizations}
