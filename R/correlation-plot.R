@@ -161,7 +161,7 @@ get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, pa
         if (rank_index[[pr]] < rank_index[[sr]]) {
           next()
         }
-        message(paste0("Comparing ", pr, " to ", sr, "."))
+        message(paste0("Comparing ", crayon::bgWhite(crayon::red(pr)), " to ", crayon::bgWhite(crayon::red(sr)), "."))
         corr[[pr]][[sr]] <- do.call(correlation_plot, c(list(obj = obj, primary_rank = pr, secondary_rank = sr), params))
       }
     }
