@@ -1,11 +1,16 @@
 ## Initialize a list for storing heat tree plots
 get_heat_tree_plots <- function(obj, rank_list = NULL) {
+  rank_index <- pkg.private$rank_index
   if (is.null(rank_list)) {
-    rank_list <- pkg.private$rank_list
+    rank_list <- unlist(pkg.private$ranks)
   }
   htrees <- list()
   # Create a metacoder object from a phyloseq/metacoder/RData file
   metacoder_object <- MicrobiomeR::object_handler(obj)
+  metacoder_object <- MicrobiomeR::validate_MicrobiomeR_format(
+    obj = metacoder_object,
+    valid_formats = c("analyzed_format"),
+    force_format = TRUE)
   # Create a list of heat_tree plots for saving
   for (rank in rank_list) {
     rank_level <- rank_index[[rank]]
@@ -23,4 +28,8 @@ get_heat_tree_plots <- function(obj, rank_list = NULL) {
   }
   htrees[["metacoder_object"]] <- metacoder_object
   return(htrees)
+}
+
+get_heat_tree_parameters <- function() {
+
 }
