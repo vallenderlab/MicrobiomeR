@@ -249,51 +249,6 @@ parse_taxonomy_silva_128 <- function(char.vec) {
   return(taxvec)
 }
 
-#' @title Convert Phyloseq Object to Statistical Data Frame
-#' @description This function takes a phyloseq object and converts it to a list of
-#' dataframes followed by analyzing the treatment groups and adding statistical data to
-#' the same list.
-#' @return A list of dataframes containing all of the phyloseq data with additional statistical data.
-#' @pretty_print TRUE
-#' @examples
-#' \dontrun{
-#' > phy_obj <- get_phyloseq_object(...)
-#' > stats_df <- phyloseq_to_stats_dataframe(phy_obj, treatment_groups = list("Stressed", "Control"))
-#' > stats_df$stats
-#' TODO: Add a stats dataframe here
-#' }
-#' @export
-#' @family Data Manipulators
-#' @inherit phyloseq_to_tibble params seealso
-#' @rdname phyloseq_to_stats_dataframe
-phyloseq_to_stats_dataframe <- function(phyloseq_obj) {
-  df_tax_otu <- phyloseq_to_dataframe(phyloseq_obj = phyloseq_obj)
-  rownames(df_tax_otu$data) <- df_tax_otu$data$OTU
-  # TODO: Remove Stress/Control from syntax.  Make dynamic for other users.
-  stressed_samples <- df_tax_otu$stressed_samples
-  control_samples <- df_tax_otu$control_samples
-  temp <- df_tax_otu$data[, !(colnames(df_tax_otu$data) %in% c("OTU"))][c(stressed_samples, control_samples)]
-  wp_values <- apply(as.matrix(temp), 1, function(x) wilcox.test(x[stressed_samples], x[control_samples])$p.value)
-  mean_stressed <- apply(as.matrix(temp), 1, function(x) mean(x[stressed_samples]))
-  mean_control <- apply(as.matrix(temp), 1, function(x) mean(x[control_samples]))
-  log2_mean_ratio <- apply(as.matrix(temp), 1, function(x) {
-    log_ratio <- log2(mean(x[stressed_samples]) / mean(x[control_samples]))
-    if (is.nan(log_ratio)) {
-      log_ratio <- 0
-    }
-    if (is.infinite(log_ratio)) {
-      log_ratio <- 0
-    }
-    log_ratio
-  })
-  stats <- data.frame(wilcox_p_value = wp_values, mean_stressed = mean_stressed, mean_control = mean_control, log2_mean_ratio = log2_mean_ratio)
-  stats$OTU <- names(wp_values)
-  df_tax_otu$stats <- stats
-  df_tax_otu$data <- left_join(df_tax_otu$data, stats, by = "OTU")
-  return(df_tax_otu)
-}
-
-
 #' @title Convert Phyloseq Object to Statistical Excel File
 #' @description This function takes a phyloseq object and converts it to a list of
 #' dataframes followed by analyzing the treatment groups and adding statistical data to
