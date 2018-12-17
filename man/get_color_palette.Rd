@@ -4,11 +4,11 @@
 \alias{get_color_palette}
 \title{Get Color palette}
 \usage{
-get_color_palette(pal_func = virmag_palette_func, color_no = 20,
+get_color_palette(pal_func = viridis_magma_palette, color_no = 20,
   display = TRUE, ...)
 }
 \arguments{
-\item{pal_func}{A function that returns the output from grDevoces::colorRampPalette. Default: virmag_palette_func}
+\item{pal_func}{A function that returns the output from grDevoces::colorRampPalette. Default: viridis_magma_palette}
 
 \item{color_no}{The number of colors in the palette. Default: 20}
 
@@ -33,9 +33,9 @@ if(interactive()){
 }
 }
 \seealso{
-Other Color Palettes: \code{\link{combo_palette_func}},
-  \code{\link{scico_palette_func}},
-  \code{\link{viridis_palette_func}},
-  \code{\link{virmag_palette_func}}
+Other Color Palettes: \code{\link{combination_palette}},
+  \code{\link{scico_palette}},
+  \code{\link{viridis_magma_palette}},
+  \code{\link{viridis_palette}}
 }
 \concept{Color Palettes}

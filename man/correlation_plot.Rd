@@ -2,34 +2,26 @@
 % Please edit documentation in R/correlation_plot.R
 \name{correlation_plot}
 \alias{correlation_plot}
-\title{Get a Correlation Plot}
+\title{Correlation Plots}
 \usage{
-correlation_plot(phyloseq_object, label_rank, super_taxa = 1,
-  wp_value = 0.05, plotly = FALSE, excel_export = FALSE,
-  plotly_export = FALSE, ...)
+correlation_plot(obj, primary_rank, secondary_rank = TRUE,
+  wp_value = 0.05)
 }
 \arguments{
-\item{phyloseq_object}{PARAM_DESCRIPTION}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
 
-\item{label_rank}{PARAM_DESCRIPTION}
+\item{primary_rank}{The primary rank used to label the points.}
 
-\item{super_taxa}{PARAM_DESCRIPTION, Default: 1}
+\item{secondary_rank}{The secondary rank used to color the points.  Can be an integer specifying
+the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE}
 
-\item{wp_value}{PARAM_DESCRIPTION, Default: 0.05}
-
-\item{plotly}{PARAM_DESCRIPTION, Default: FALSE}
-
-\item{excel_export}{PARAM_DESCRIPTION, Default: FALSE}
-
-\item{plotly_export}{PARAM_DESCRIPTION, Default: FALSE}
-
-\item{...}{PARAM_DESCRIPTION}
+\item{wp_value}{The Wilcoxian P-Value used to represent significant points.  Default: 0.05}
 }
 \value{
-OUTPUT_DESCRIPTION
+A 1:1 correlation plot built with ggplot2.
 }
 \description{
-FUNCTION_DESCRIPTION
+Create a correlation plot from a metacoder/taxmap object.
 }
 \details{
 DETAILS
@@ -42,10 +34,14 @@ if(interactive()){
 }
 }
 \seealso{
-\code{\link[phyloseq]{tax_glom}}
-\code{\link[dplyr]{mutate}},\code{\link[dplyr]{filter}},\code{\link[dplyr]{arrange}}
-\code{\link[stringr]{str_detect}}
-\code{\link[plotly]{ggplotly}}
-\code{\link[DT]{dataTableOutput}}
+\code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{agglomerate_metacoder}},  \code{\link[MicrobiomeR]{vlookup}},  \code{\link[MicrobiomeR]{get_plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
+\code{\link[dplyr]{tidyeval}},  \code{\link[dplyr]{mutate}},  \code{\link[dplyr]{filter}},  \code{\link[dplyr]{arrange}}
+\code{\link[ggplot2]{ggplot}},  \code{\link[ggplot2]{aes}},  \code{\link[ggplot2]{geom_polygon}},  \code{\link[ggplot2]{geom_point}},  \code{\link[ggplot2]{labs}},  \code{\link[ggplot2]{scale_continuous}},  \code{\link[ggplot2]{scale_manual}},  \code{\link[ggplot2]{guide_legend}},  \code{\link[ggplot2]{geom_abline}}
+\code{\link[ggrepel]{geom_label_repel}}
+\code{\link[forcats]{fct_reorder}}
+
+Other Visualizations: \code{\link{get_correlation_plots}},
+  \code{\link{get_plot_limits}},
+  \code{\link{save_correlation_plots}}
 }
-\concept{FAMILY_TITLE}
+\concept{Visualizations}
