@@ -25,7 +25,6 @@ r_packages:
 - vegan
 - ggpubr
 - ape
-- BiocManager
 
 bioc_packages:
 - biomformat
