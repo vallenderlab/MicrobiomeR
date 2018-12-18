@@ -158,8 +158,8 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
 #' @title Transposing Tidy Data
 #' @description This function transposes tables containing numeric and categorical data using the
 #' tidyr package.
-#' @param .data A matrix/data_frame/tibble for transposing
-#' @param ids The column to transpose by. Default: The first column.
+#' @param .data A matrix/data_frame/tibble for transposing.
+#' @param ids The column to transpose by.  Default: The first column.
 #' @param header_name A name for the numeric data that will be transposed.
 #' @param preserved_categories A logical denoting weather categorical data should be conserved.  A
 #' value of FALSE will cause all categorical data except the \emph{ids} to be dropped.  A value of
@@ -173,7 +173,12 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#'  library(MicrobiomeR)
+#'  data <- MicrobiomeR::basic_silva$data$taxa_abundance
+#'  trans_data <- data %>%
+#'    transposer(ids = "taxon_id", header_name = "samples")
+#'  retrans_data <- trans_data %>%
+#'    transposer(ids="samples", header_name="taxon_id")
 #'  }
 #' }
 #' @export
