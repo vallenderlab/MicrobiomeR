@@ -235,29 +235,36 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
   return(trans_data)
 }
 
-
-
 #' @title Transforming Tidy Data
 #' @description This function transforms a table by rows or by columns.
 #' @param .data A matrix/data_frame/tibble for transforming.
-#' @param func A function, which can be anonymous, that will be used to transform the data.  (e.g. proportions
-#' x/sum(x)).
-#' @param by This denotes how the data should be transformed (column/row). Default: 'column'
-#' @param ids The column to transpose by. Default: The first column.
-#' @param header_name A name for the numeric data that will be transposed.
-#' @param preserved_categories A logical denoting weather categorical data should be conserved.  A
+#' @param func A function, which can be anonymous, that will be used to transform the data.  (e.g. proportions:
+#' \emph{x/sum(x)}).
+#' @param by This denotes how the data should be transformed (\strong{column/row}). Default: 'column'
+#' @param ids The column to transpose by if \emph{by = 'row'}. Default: The first column.
+#' @param header_name A name for the numeric data that will be transposed if \emph{by = 'row'}.
+#' @param preserved_categories A logical denoting weather categorical data should be conserved if \emph{by = 'row'}.  A
 #' value of FALSE will cause all categorical data except the \emph{ids} to be dropped.  A value of
 #' TRUE will cause the categorical data to preserved by \emph{tidyr::unite}ing these columns.  Default: TRUE
 #' @param separated_categories A vector containing ordered column names to use in a previously transposed
-#' and categorically preserved table.  Retransposing with this set should yield an exact replicate of
+#' and categorically preserved table if \emph{by = 'row'}.  Retransposing with this set should yield an exact replicate of
 #' the original data.  Default: NULL
-#' @param ... Additional arguments passed on to \emph{func}
+#' @param ... Additional arguments passed on to \emph{func}.
 #' @return A tibble that has been transformed.
+#' @details This function transforms the supplied data using the \emph{func} parameter, which is used
+#' in the purrr package.  The purr package allows the use of anonymous functions as described in the link below:
+#'
+#' \url{https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html#anonymous_function,_formula}
 #' @pretty_print TRUE
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#'  library(MicrobiomeR)
+#'  data <- MicrobiomeR::basic_silva$data$taxa_abundance
+#'  # Get proportions using the anonymous functions
+#'  tax_props <- data %>% transformer(~./sum(.))
+#'  # Get proportions using explicit functions
+#'  alt_tax_props <- data %>% transformer(function(x)x/sum(x))
 #'  }
 #' }
 #' @export
@@ -265,7 +272,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
 #' @rdname transformer
 #' @seealso
 #'  \code{\link[MicrobiomeR]{transposer}}
-#'  \code{\link[dplyr]{select_all}},\code{\link[dplyr]{select}}
+#'  \code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}}
 #'  \code{\link[purrr]{modify}}
 #' @importFrom dplyr select_if select
 #' @importFrom purrr modify_at
