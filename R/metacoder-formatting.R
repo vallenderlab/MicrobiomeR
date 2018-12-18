@@ -56,7 +56,6 @@ which_format <- function(obj) {
     }
 }
 
-
 #' @title Is Raw MicrobiomeR Format
 #' @description This function returns a logical based on weather or not the object is in the raw_format.
 #' @param obj A Taxmap/metacoder object.
@@ -66,7 +65,14 @@ which_format <- function(obj) {
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' if(is_raw_format(MicrobiomeR::raw_silva)){
+#'     print("It's raw!")
+#' } else {
+#'     fmt <- which_format(MicrobiomeR::raw_silva)
+#'     print("It's not analyzed!")
+#'     print(sprintf("It's %s!", fmt))
+#' }
 #'  }
 #' }
 #' @export
@@ -90,7 +96,15 @@ is_raw_format <- function(obj) {
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' if(is_basic_format(MicrobiomeR::raw_silva)){
+#'     print("It's basic!")
+#' } else {
+#'     fmt <- which_format(MicrobiomeR::raw_silva)
+#'     print("It's not analyzed!")
+#'     print(sprintf("It's %s!", fmt))
+#' }
+#'  }
 #'  }
 #' }
 #' @export
@@ -114,7 +128,15 @@ is_basic_format <- function(obj) {
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' if(is_analyzed_format(MicrobiomeR::raw_silva)){
+#'     print("It's analyzed!")
+#' } else {
+#'     fmt <- which_format(MicrobiomeR::raw_silva)
+#'     print("It's not analyzed!")
+#'     print(sprintf("It's %s!", fmt))
+#' }
+#'  }
 #'  }
 #' }
 #' @export
@@ -139,7 +161,14 @@ is_analyzed_format <- function(obj) {
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' if(is_analyzed_format(MicrobiomeR::raw_silva)){
+#'     print("It's phyloseq format!")
+#' } else {
+#'     fmt <- which_format(MicrobiomeR::raw_silva)
+#'     print("It's not phyloseq fomrat!")
+#'     print(sprintf("It's %s!", fmt))
+#' }
 #'  }
 #' }
 #' @export
@@ -162,12 +191,6 @@ is_phyloseq_format <- function(obj) {
 #' @details Changes the order of the observation tables in \strong{metacoder_object$data} to
 #' otu_abundance, otu_annotations, otu_proportions, sample_data, phy_tree, taxa_abundance,
 #' taxa_proportions, statistical_data, and stats_tax_data respectively.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Validation
 #' @rdname order_metacoder_data
