@@ -46,10 +46,11 @@ Imports:
     ggthemes,
     biomformat,
     phyloseq,
-    microbiome
+    microbiome,
+    forcats,
+    ggrepel
 Suggests:
-    knitr,
-    BiocManager
+    knitr
 Additional_repositories:
     http://bioconductor.org/packages/release/bioc/,
     http://bioconductor.org/packages/release/data/annotation,
