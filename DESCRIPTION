@@ -44,6 +44,7 @@ Imports:
     dplyr,
     data.table,
     ggthemes,
+    crayon,
     biomformat,
     phyloseq,
     microbiome,
