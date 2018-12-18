@@ -26,7 +26,7 @@
 #'
 #'  \code{\link[crayon]{crayon}}
 #'
-#'  \code{\link[ggplot2]{theme}},  \code{\link[ggplot2]{margin}},  \code{\link[ggplot2]{labs}}
+#'  \code{\link[ggplot2]{theme}},  \code{\link[ggplot2:element]{margin}},  \code{\link[ggplot2]{labs}}
 #' @importFrom taxa filter_obs
 #' @importFrom crayon bgWhite red
 #' @importFrom metacoder heat_tree

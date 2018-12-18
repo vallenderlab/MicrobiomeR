@@ -25,7 +25,7 @@
 #'
 #'  \code{\link[ggplot2]{ggplot}},  \code{\link[ggplot2]{aes}},  \code{\link[ggplot2]{geom_polygon}},  \code{\link[ggplot2]{geom_point}},  \code{\link[ggplot2]{labs}},  \code{\link[ggplot2]{scale_continuous}},  \code{\link[ggplot2]{scale_manual}},  \code{\link[ggplot2]{guide_legend}},  \code{\link[ggplot2]{geom_abline}}
 #'
-#'  \code{\link[ggrepel]{geom_label_repel}}
+#'  \code{\link[ggrepel:geom_text_repel]{geom_label_repel}}
 #'
 #'  \code{\link[forcats]{fct_reorder}}
 #' @importFrom dplyr enquo mutate filter arrange
