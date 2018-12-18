@@ -257,7 +257,10 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' phylum_obj <- agglomerate_metacoder(obj = MicrobiomeR::basic_silva, rank = "Phylum")
+#' class_obj <- agglomerate_metacoder(obj = MicrobiomeR::basic_silva, rank = "Class")
+#' order_obj <- agglomerate_metacoder(obj = MicrobiomeR::basic_silva, rank = "Order")
 #'  }
 #' }
 #' @export
