@@ -36,7 +36,20 @@ The purr packge allows the use of anonymous functions as described in the link b
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+# Below is the code for the otu_prevelence_filter function.
+# It's a good example of how to use the otu_id_filter function.
+library(MicrobiomeR)
+otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FALSE) {
+    mo_clone <- obj$clone()
+    mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
+        force_format = TRUE, validated = validated, min_or_max = min)
+    # Filter OTU ids
+    mo_clone <- otu_id_filter(obj = mo_clone,
+                              .f_transform = ~./sum(.),
+                              .f_filter = ~mean(.),
+                              .f_condition = ~.> otu_percentage)
+return(mo_clone)
+}
  }
 }
 }

@@ -23,13 +23,6 @@ Converts a metacoder object to the specified format.
 \details{
 See the \link{MicrobiomeR_Formats} documentation.
 }
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
 \seealso{
 Other Formatting: \code{\link{as_analyzed_format}},
   \code{\link{as_basic_format}},

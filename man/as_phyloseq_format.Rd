@@ -28,13 +28,6 @@ Converts the metacoder object to the phyloseq_format.
 \details{
 See the \link{MicrobiomeR_Formats} documentation.
 }
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
 \seealso{
 \code{\link[MicrobiomeR]{object_handler}},\code{\link[MicrobiomeR]{order_metacoder_data}}
 

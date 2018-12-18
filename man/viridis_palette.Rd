@@ -8,7 +8,7 @@ viridis_palette(viridis_palette = "viridis", viridis_number = 800,
   viridis_range = 0:viridis_number)
 }
 \arguments{
-\item{viridis_palette}{The viridis palette to use.  Default: 'batlow'}
+\item{viridis_palette}{The viridis palette to use.  Default: 'viridis'}
 
 \item{viridis_number}{The number of colors to use in the viridis palette.  Default: 800}
 
@@ -28,12 +28,15 @@ get_color_palette function.
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+library(Microbiome)
+basic_pal <- viridis(viridis_palette="magma")(25)
+better_pal <- get_color_palette(pal_func = viridis_palette, color_no = 25)
  }
 }
 }
 \seealso{
 \code{\link[grDevices]{colorRamp}}
+
 \code{\link[viridis:reexports]{viridis}}
 
 Other Color Palettes: \code{\link{combination_palette}},

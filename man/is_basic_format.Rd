@@ -18,13 +18,6 @@ This function returns a logical based on weather or not the object is in the bas
 \details{
 The "basic_format" is Level 2. in the \link{MicrobiomeR_Formats} hierarchy.
 }
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
 \seealso{
 Other Validation: \code{\link{is_analyzed_format}},
   \code{\link{is_phyloseq_format}},

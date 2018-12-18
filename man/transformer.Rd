@@ -11,24 +11,24 @@ transformer(.data, func, by = "column", ids = NULL,
 \arguments{
 \item{.data}{A matrix/data_frame/tibble for transforming.}
 
-\item{func}{A function, which can be anonymous, that will be used to transform the data.  (e.g. proportions
-x/sum(x)).}
+\item{func}{A function, which can be anonymous, that will be used to transform the data.  (e.g. proportions:
+\emph{x/sum(x)}).}
 
-\item{by}{This denotes how the data should be transformed (column/row). Default: 'column'}
+\item{by}{This denotes how the data should be transformed (\strong{column/row}). Default: 'column'}
 
-\item{ids}{The column to transpose by. Default: The first column.}
+\item{ids}{The column to transpose by if \emph{by = 'row'}. Default: The first column.}
 
-\item{header_name}{A name for the numeric data that will be transposed.}
+\item{header_name}{A name for the numeric data that will be transposed if \emph{by = 'row'}.}
 
-\item{preserved_categories}{A logical denoting weather categorical data should be conserved.  A
+\item{preserved_categories}{A logical denoting weather categorical data should be conserved if \emph{by = 'row'}.  A
 value of FALSE will cause all categorical data except the \emph{ids} to be dropped.  A value of
 TRUE will cause the categorical data to preserved by \emph{tidyr::unite}ing these columns.  Default: TRUE}
 
 \item{separated_categories}{A vector containing ordered column names to use in a previously transposed
-and categorically preserved table.  Retransposing with this set should yield an exact replicate of
+and categorically preserved table if \emph{by = 'row'}.  Retransposing with this set should yield an exact replicate of
 the original data.  Default: NULL}
 
-\item{...}{Additional arguments passed on to \emph{func}}
+\item{...}{Additional arguments passed on to \emph{func}.}
 }
 \value{
 A tibble that has been transformed.
@@ -36,16 +36,27 @@ A tibble that has been transformed.
 \description{
 This function transforms a table by rows or by columns.
 }
+\details{
+This function transforms the supplied data using the \emph{func} parameter, which is used
+in the purrr package.  The purr package allows the use of anonymous functions as described in the link below:
+
+\url{https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html#anonymous_function,_formula}
+}
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+ library(MicrobiomeR)
+ data <- MicrobiomeR::basic_silva$data$taxa_abundance
+ # Get proportions using the anonymous functions
+ tax_props <- data \%>\% transformer(~./sum(.))
+ # Get proportions using explicit functions
+ alt_tax_props <- data \%>\% transformer(function(x)x/sum(x))
  }
 }
 }
 \seealso{
 \code{\link[MicrobiomeR]{transposer}}
-\code{\link[dplyr]{select_all}},\code{\link[dplyr]{select}}
+\code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}}
 \code{\link[purrr]{modify}}
 }
 \concept{Data Manipulator}

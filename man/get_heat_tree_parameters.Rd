@@ -21,13 +21,6 @@ A list used with do.call and the metacoder::heat_tree function.
 \description{
 This function get's the parameters used for the get_heat_tree_plots function.
 }
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
 \seealso{
 \code{\link[metacoder]{heat_tree}}
 

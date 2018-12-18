@@ -9,17 +9,20 @@ get_phyloseq_obj(biom_file = NULL, tree_file = NULL,
   rdata_file = NULL, path = NULL)
 }
 \arguments{
-\item{biom_file}{A file in the BIOM format. Default: NULL}
+\item{biom_file}{A file in the \href{http://biom-format.org/}{BIOM format}.  Default: NULL}
 
-\item{tree_file}{A Phylogenetic tree file. Default: NULL}
+\item{tree_file}{A phylogenetic tree file.  This function will generate a rooted
+tree file if your phylogenetic tree isn't already rooted.  Default: NULL}
 
-\item{metadata_file}{Sample metadata in tab delimited format. Default: NULL}
+\item{metadata_file}{Sample metadata in tab delimited format.  It's very important that you make
+sure that you have a \strong{sample_id} and \strong{TreatmentGroup} column in your metadata
+file.  You might otherwise run into problems.  Default: NULL}
 
 \item{treatment_group}{The column number or name in the metadata file that contains the
 treatement group names.  Default: NULL}
 
 \item{parse_func}{The parse function used to parse taxonomy strings from
-Greengenes or SILVA database. Default: NULL}
+Greengenes or SILVA database.  Default: NULL}
 
 \item{rdata_file}{A .Rdata file.  Default: NULL}
 
@@ -38,18 +41,28 @@ pipeline.
 This function heavily relys on the phyloseq package to import data into R.
 It also requires you to use an absolute or relative path to your data files or for your data files
 to be in the working directory.
+
+It's very important that you make sure that you have a \strong{sample_id} and \strong{TreatmentGroup}
+column in your metadata file.
 }
 \examples{
 \dontrun{
-
-> biom_file <- "input_data/silva_OTU.biom"
-> md_file <- "input_data/nephele_metadata.txt"
-> phy_obj <- get_phyloseq_obj(biom_file=biom_file, metadata_file=md_file, treatment_group=5)
+if(interactive()){
+library(Microbiome)
+# Get the datafiles from the package
+biom_file <- system.file("extdata", "silva_OTU.biom", package = "MicrobiomeR")
+tree_file <- system.file("extdata", "silva.tre", package = "MicrobiomeR")
+md_file <- system.file("extdata", "nephele_metadata.txt", package = "MicrobiomeR")
+}
+# Create a phylose object from the data files.
+phy_obj <- get_phyloseq_obj(biom_file = biome_file, tree_file = tree_file, metadata_file = md_file)
 }
 }
 \seealso{
 \code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree()}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
+
 \code{\link[ape]{root}}, \code{\link[ape:root]{is.rooted}}, \code{\link[ape]{read.tree}}, \code{\link[ape]{write.tree}}
+
 \code{\link[MicrobiomeR]{root_by_longest_edge}}
 }
 \concept{Data Importers}

@@ -54,7 +54,9 @@ if(interactive()){
 }
 \seealso{
 \code{\link[MicrobiomeR]{combination_palette}}
+
 \code{\link[viridis:reexports]{viridis}},  \code{\link[viridis:reexports]{magma}}
+
 \code{\link[grDevices]{colorRamp}}
 
 Other Color Palettes: \code{\link{combination_palette}},

@@ -18,13 +18,6 @@ Converts a metacoder object to the raw_format.
 \details{
 See the \link{MicrobiomeR_Formats} documentation.
 }
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
 \seealso{
 \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{is_raw_format}}, \code{\link[MicrobiomeR]{order_metacoder_data}}
 

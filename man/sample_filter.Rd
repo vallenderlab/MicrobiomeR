@@ -24,8 +24,8 @@ sample_filter(obj, .f_transform = NULL, .f_filter = NULL,
 Returns a metacoder object with samples that pass the filters.
 }
 \description{
-This function provides a flexible way to filter unwanted samples from the "otu_abundance" and "sample_data"
-observations of a MicrobiomeR formatted object.
+This function provides a flexible way to filter unwanted samples from the
+\emph{"otu_abundance"} and \emph{"sample_data"} observations of a MicrobiomeR formatted object.
 }
 \details{
 Get the samples to keep by using purr and the user supplied transform and filter + condition formulas.
@@ -36,7 +36,27 @@ The purr packge allows the use of anonymous functions as described in the link b
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+# Use the sample_filter early on in your analysis
+library(MicrobiomeR)
+library(metacoder)
+library(taxa)
+# Convert Phyloseq object to metacoder object
+metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
+
+# Remove Archaea from the metacoder object
+metacoder_obj <- filter_taxa(
+  obj = metacoder_obj,
+  taxon_names == "Archaea",
+  subtaxa = TRUE,
+  invert = TRUE)
+
+# Ambiguous Annotation Filter - Remove taxonomies with ambiguous names
+metacoder_obj <- filter_ambiguous_taxa(metacoder_obj, subtaxa = TRUE)
+
+# Low Sample Filter - Remove the low samples
+metacoder_obj <- sample_filter(obj          = metacoder_obj,
+                               .f_filter    = ~sum(.),
+                               .f_condition = ~.>= 20, validated = TRUE)
  }
 }
 }

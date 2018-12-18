@@ -27,7 +27,34 @@ This function must be used conservatively, hence why the default otu_percentage 
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+# Use the otu_proportions filter early on in your analysis
+library(MicrobiomeR)
+library(metacoder)
+library(taxa)
+
+# Convert Phyloseq object to metacoder object
+metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
+
+# Remove Archaea from the metacoder object
+metacoder_obj <- filter_taxa(
+  obj = metacoder_obj,
+  taxon_names == "Archaea",
+  subtaxa = TRUE,
+  invert = TRUE)
+
+# Ambiguous Annotation Filter - Remove taxonomies with ambiguous names
+metacoder_obj <- filter_ambiguous_taxa(metacoder_obj, subtaxa = TRUE)
+
+# Low Sample Filter - Remove the low samples
+metacoder_obj <- sample_filter(obj          = metacoder_obj,
+                               .f_filter    = ~sum(.),
+                               .f_condition = ~.>= 20, validated = TRUE)
+
+# Master Threshold Filter - Add the otu_proportions table and then filter OTUs based on min \%
+metacoder_obj <- otu_proportion_filter(
+    obj = metacoder_obj,
+    otu_percentage = 0.00001
+    )
  }
 }
 }
