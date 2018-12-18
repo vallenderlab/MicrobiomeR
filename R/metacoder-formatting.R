@@ -3,12 +3,14 @@
 #' @param obj A Taxmap/metacoder object.
 #' @return If the format is verified it returns a character string denoting the identified format.
 #' @pretty_print TRUE
-#' @details This function is used to get basic infomration about the format of the taxmap object
+#' @details This function is used to get basic information about the format of the taxmap object
 #' that is supplied by the user.
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' fmt <- which fmt(MicrobiomeR::analyzed_silva)
+#' print(fmt)
 #'  }
 #' }
 #' @export
