@@ -472,8 +472,11 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
 #' @rdname taxa_prevalence_filter
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
+#'
 #'  \code{\link[metacoder]{calc_prop_samples}}
+#'
 #'  \code{\link[dplyr]{filter}}
+#'
 #'  \code{\link[taxa]{filter_taxa}}
 #' @importFrom metacoder calc_prop_samples
 #' @importFrom dplyr filter
@@ -561,6 +564,7 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
 #' @rdname cov_filter
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{otu_id_filter}}
+#'
 #'  \code{\link[dplyr:summarise_all]{summarise_if}}
 #' @importFrom dplyr summarise_if
 #' @importFrom stats sd
