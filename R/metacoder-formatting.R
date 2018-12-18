@@ -215,12 +215,6 @@ order_metacoder_data <- function(obj) {
 #' @return A Taxmap/metacoder object in the "raw_format".
 #' @pretty_print TRUE
 #' @details See the [MicrobiomeR_Formats] documentation.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Formatting
 #' @rdname as_raw_format
@@ -252,17 +246,12 @@ as_raw_format <- function(obj) {
 #' @return A Taxmap/metacoder object in the "basic_format".
 #' @pretty_print TRUE
 #' @details See the [MicrobiomeR_Formats] documentation.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Formatting
 #' @rdname as_basic_format
 #' @seealso
 #'  \code{\link[MicrobiomeR]{is_phyloseq_format}},  \code{\link[MicrobiomeR]{is_raw_format}},  \code{\link[MicrobiomeR]{is_basic_format}}, \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
+#'
 #'  \code{\link[metacoder]{calc_taxon_abund}}, \code{\link[metacoder]{calc_obs_props}}
 #' @importFrom metacoder calc_taxon_abund calc_obs_props
 as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
@@ -314,18 +303,14 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
 #' @return A Taxmap/metacoder object in the "analyzed_format".
 #' @pretty_print TRUE
 #' @details See the [MicrobiomeR_Formats] documentation.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Formatting
 #' @rdname as_analyzed_format
 #' @seealso
 #'  \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{is_raw_format}},  \code{\link[MicrobiomeR]{is_basic_format}},  \code{\link[MicrobiomeR]{is_analyzed_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
+#'
 #'  \code{\link[metacoder]{compare_groups}}
+#'
 #'  \code{\link[taxa]{taxonomy_table}},  \code{\link[taxa]{taxon_ids}}
 #' @importFrom metacoder compare_groups
 #' @importFrom taxa taxonomy_table taxon_ids
@@ -386,12 +371,6 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
 #' @return A Taxmap/metacoder object in the specified format.
 #' @pretty_print TRUE
 #' @details See the [MicrobiomeR_Formats] documentation.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Formatting
 #' @rdname as_MicrobiomeR_format
@@ -431,12 +410,6 @@ as_MicrobiomeR_format <- function(obj, format, ...) {
 #' @param phy_tree The name of the observation data with the phylogenetic tree.  Default: NULL
 #' @return A Taxmap/metacoder object in the phyloseq_format.
 #' @details See the [MicrobiomeR_Formats] documentation.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Formatting
 #' @rdname as_phyloseq_format
