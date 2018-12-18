@@ -7,11 +7,12 @@
 #' @param wp_value The Wilcoxian P-Value used to represent significant points.  Default: 0.05
 #' @return A 1:1 correlation plot built with ggplot2.
 #' @pretty_print TRUE
-#' @details DETAILS
+#' @details Correlation plots help to better explain the heat tree findings.
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' correlation_plot(MicrobiomeR::analyzed_silva, primary_rank = "Class", secondary_rank = "Phylum")
 #'  }
 #' }
 #' @export
@@ -19,9 +20,13 @@
 #' @rdname correlation_plot
 #' @seealso
 #'  \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{agglomerate_metacoder}},  \code{\link[MicrobiomeR]{vlookup}},  \code{\link[MicrobiomeR]{get_plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
+#'
 #'  \code{\link[dplyr]{tidyeval}},  \code{\link[dplyr]{mutate}},  \code{\link[dplyr]{filter}},  \code{\link[dplyr]{arrange}}
+#'
 #'  \code{\link[ggplot2]{ggplot}},  \code{\link[ggplot2]{aes}},  \code{\link[ggplot2]{geom_polygon}},  \code{\link[ggplot2]{geom_point}},  \code{\link[ggplot2]{labs}},  \code{\link[ggplot2]{scale_continuous}},  \code{\link[ggplot2]{scale_manual}},  \code{\link[ggplot2]{guide_legend}},  \code{\link[ggplot2]{geom_abline}}
+#'
 #'  \code{\link[ggrepel]{geom_label_repel}}
+#'
 #'  \code{\link[forcats]{fct_reorder}}
 #' @importFrom dplyr enquo mutate filter arrange
 #' @importFrom ggplot2 ggplot aes geom_polygon geom_point labs scale_y_log10 scale_x_log10 scale_shape_manual scale_fill_manual scale_color_manual guide_legend geom_abline
@@ -124,7 +129,11 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' corr_plots <- get_correlation_plots(MicrobiomeR::analyzed_silva, primary_ranks = c("Phylum", "Class", "Order"),
+#'                       secondary_ranks = c("Phylum", "Class", "Order", "Family", "Genus"), pairwise = TRUE)
+#' # Show a plot
+#' corr_plots$Class$Phylum
 #'  }
 #' }
 #' @export
