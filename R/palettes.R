@@ -49,7 +49,9 @@ get_color_palette <- function(pal_func=viridis_magma_palette, color_no=20, displ
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(Microbiome)
+#' basic_pal <- scico_palette(scico_palette="hawaii")(25)
+#' better_pal <- get_color_palette(pal_func = scico_palette, color_no = 25)
 #'  }
 #' }
 #' @export
@@ -69,7 +71,7 @@ scico_palette <- function(scico_palette="batlow", scico_number=800, scico_range=
 
 #' @title Viridis Palette Function
 #' @description A function that returns a color palette function based off of the viridis package.
-#' @param viridis_palette The viridis palette to use.  Default: 'batlow'
+#' @param viridis_palette The viridis palette to use.  Default: 'viridis'
 #' @param viridis_number The number of colors to use in the viridis palette.  Default: 800
 #' @param viridis_range The range in the color palette to use.  Default: c(0, viridis_number)
 #' @return The output of this function is another function (grDevoces::colorRampPalette), which takes
@@ -80,7 +82,9 @@ scico_palette <- function(scico_palette="batlow", scico_number=800, scico_range=
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(Microbiome)
+#' basic_pal <- viridis(viridis_palette="magma")(25)
+#' better_pal <- get_color_palette(pal_func = viridis_palette, color_no = 25)
 #'  }
 #' }
 #' @export
