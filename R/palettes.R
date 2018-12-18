@@ -92,6 +92,7 @@ scico_palette <- function(scico_palette="batlow", scico_number=800, scico_range=
 #' @rdname viridis_palette
 #' @seealso
 #'  \code{\link[grDevices]{colorRamp}}
+#'
 #'  \code{\link[viridis:reexports]{viridis}}
 #' @importFrom grDevices colorRampPalette
 #' @importFrom viridis viridis
@@ -229,7 +230,9 @@ combination_palette <- function(...) {
 #' @rdname viridis_magma_palette
 #' @seealso
 #'  \code{\link[MicrobiomeR]{combination_palette}}
+#'
 #'  \code{\link[viridis:reexports]{viridis}},  \code{\link[viridis:reexports]{magma}}
+#'
 #'  \code{\link[grDevices]{colorRamp}}
 #' @importFrom viridis viridis magma
 viridis_magma_palette <- function(viridis_number = 800, viridis_range = 300:viridis_number, viridis_rev = TRUE,

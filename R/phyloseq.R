@@ -40,7 +40,9 @@
 #' @rdname get_phyloseq_obj
 #' @seealso
 #'  \code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree()}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
+#'
 #'  \code{\link[ape]{root}}, \code{\link[ape:root]{is.rooted}}, \code{\link[ape]{read.tree}}, \code{\link[ape]{write.tree}}
+#'
 #'  \code{\link[MicrobiomeR]{root_by_longest_edge}}
 #' @importFrom phyloseq import_biom sample_data phy_tree import_qiime_sample_data merge_phyloseq
 #' @importFrom ape is.rooted write.tree read.tree
