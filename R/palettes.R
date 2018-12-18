@@ -124,7 +124,30 @@ viridis_palette <- function(viridis_palette="viridis", viridis_number=800, virid
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' # Below is the code for the viridis_magma_palette function.
+#' # It's a good example of how to use the combination_palette function.
+#' viridis_magma_palette <- function(viridis_number = 800, viridis_range = 300:viridis_number, viridis_rev = TRUE,
+#'                                    magma_number = 500, magma_range = 0:magma_number, magma_rev = FALSE, ...) {
+#'     if (!missing(...)){
+#'         v_args = list(n=viridis_number, ...)
+#'         m_args = list(n=magma_number, ...)
+#'     } else {
+#'         v_args = list(n=viridis_number)
+#'         m_args = list(n=magma_number)
+#'         }
+#'    crp <- combination_palette(viridis =
+#'                                 list(palette = viridis::viridis,
+#'                                       args = v_args,
+#'                                       range = viridis_range,
+#'                                       rev = viridis_rev),
+#'                                magma =
+#'                                  list(palette = viridis::magma,
+#'                                       args = m_args,
+#'                                       range = magma_range,
+#'                                       rev = magma_rev)
+#'                                )
+#'  return(crp)
+#' }
 #'  }
 #' }
 #' @export
