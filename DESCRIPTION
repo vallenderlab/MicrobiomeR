@@ -10,20 +10,12 @@ Description: An R package for microbiome analysis combining functions from phylo
     and microbiome into an easy to use and full featured microbiome analysis package.
 Roxygen: list(markdown = TRUE)
 Depends:
-    R (>= 3.4.3),
-    BiocInstaller,
-    BiocParallel
+    R (>= 3.5.0)
 Remotes: 
-    github::MadsAlbertsen/ampvis2,
     github::ropensci/taxa,
     github::grunwaldlab/metacoder,
-    github::joey711/phyloseq
-    ggthemes,
-    BiocParallel,
-    biomformat,
-    ggtree,
-    microbiome,
-    phyloseq
+    github::joey711/phyloseq,
+    github::microbiome/microbiome
 Imports:
     ape,
     DT,
@@ -51,7 +43,15 @@ Imports:
     tibble,
     dplyr,
     data.table,
-    yaml
+    ggthemes,
+    crayon,
+    biomformat,
+    phyloseq,
+    microbiome,
+    forcats,
+    ggrepel
+Suggests:
+    knitr
 Additional_repositories:
     http://bioconductor.org/packages/release/bioc/,
     http://bioconductor.org/packages/release/data/annotation,
