@@ -1,16 +1,17 @@
-
 #' @title Get Heat Tree Plots
 #' @description A function for getting multiple heat_tree plots per rank.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @param rank_list A vector of ranks used to generate heat_trees.  Default: NULL
-#' @param ... Any of the heat tree parameters list below can be used to change the way the heat_tree
+#' @param ... Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
 #' output is displayed.
 #' @return A list of heat_tree plots.
 #' @pretty_print TRUE
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' h_trees <- get_heat_tree_plots(MicrobiomeR::analyzed_silva, rank_list = c("Phylum", "Class"))
+#' h_trees$Class
 #'  }
 #' }
 #' @export
@@ -20,8 +21,11 @@
 #'  \code{\link[metacoder]{heat_tree}}
 #'
 #'  \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{get_heat_tree_parameters}}
+#'
 #'  \code{\link[taxa]{filter_obs}}
+#'
 #'  \code{\link[crayon]{crayon}}
+#'
 #'  \code{\link[ggplot2]{theme}},  \code{\link[ggplot2]{margin}},  \code{\link[ggplot2]{labs}}
 #' @importFrom taxa filter_obs
 #' @importFrom crayon bgWhite red
@@ -69,12 +73,6 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
 #' of the default list will be overridden by the dot parameters.
 #' @return A list used with do.call and the metacoder::heat_tree function.
 #' @pretty_print TRUE
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Visualizations
 #' @rdname get_heat_tree_parameters
@@ -157,7 +155,10 @@ get_heat_tree_parameters <- function(obj, title, ...) {
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' h_trees <- get_heat_tree_plots(MicrobiomeR::analyzed_silva, rank_list = c("Phylum", "Class"))
+#' # Save to \emph{./output/heat_trees} folder.
+#' save_heat_tree_plots(h_trees)
 #'  }
 #' }
 #' @export
