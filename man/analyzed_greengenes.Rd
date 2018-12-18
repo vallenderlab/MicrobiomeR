@@ -15,9 +15,9 @@ ForwardFastqFile, ReverseFastqFile, TreatmentGroup, SampleName, Description}
 \item{taxa_abundance}{A taxonomy table interpolated from the otu_abundance table with taxon_id,
 and Sample_* columns.}
 \item{taxa_proportions}{A taxonomy table derived from the taxa_abundance table.}
-}
 \item{statistical_data}{A data table that contains statistical analysis comparing treatment groups.}
-\item{stats_tax_data}{A data table that combines taxa and statistical datasets for plotting.}}
+\item{stats_tax_data}{A data table that combines taxa and statistical datasets for plotting.}
+}}
 \source{
 \href{https://nephele.niaid.nih.gov/user_guide_pipes/#amplicon_pipes}{Nephele-16S Qiime Pipeline}
 }
