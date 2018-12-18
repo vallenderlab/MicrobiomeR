@@ -449,12 +449,6 @@ as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_ann
 #' @return A metacoder object that we have tried to format with all of our heart.
 #' @pretty_print TRUE
 #' @details This function is meant to be more helpful for customizing the metacoder object.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Formatting
 #' @rdname format_metacoder_object
@@ -536,12 +530,6 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
 #' @return If the object is validated, a Taxmap/metacoder object.
 #' @details This function can provide a way to check if a taxmap object has undergone a
 #' \code{\link[MicrobiomeR:MicrobiomeR_Workflow]{MicrobiomeR Style Workflow}}.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Validation
 #' @rdname validate_MicrobiomeR_format
