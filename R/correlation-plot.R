@@ -199,7 +199,10 @@ get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, pa
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' corr_plot <- correlation_plot(MicrobiomeR::analyzed_silva, primary_rank = "Class", secondary_rank = "Phylum")
+#' # Save to \emph{./output/corr_plot} folder.
+#' save_correlation_plots(corr_plot)
 #'  }
 #' }
 #' @export
