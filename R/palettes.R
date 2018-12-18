@@ -1,16 +1,21 @@
-#' @title Get Color palette
+#' @title Get a Color Palette
 #' @description Get a color palette with a specific number of colors.
-#' @param pal_func A function that returns the output from grDevoces::colorRampPalette. Default: viridis_magma_palette
-#' @param color_no The number of colors in the palette. Default: 20
-#' @param display Boolean for displaying a pie chart of the palette. Default: TRUE
-#' @param ... Parameters for the pal_func.
+#' @param pal_func A function that \emph{returns the output function} from \code{\link[grDevices]{colorRamp}} or
+#' a \emph{the output of the output function} from \code{\link[grDevices]{colorRamp}}.  Default: viridis_magma_palette
+#' @param color_no The number of colors in the palette.  Default: 20
+#' @param display A logical for displaying a pie chart of the palette. Default: TRUE
+#' @param ... Parameters for the \emph{pal_func}.
 #' @return Returns a color palette in the form of a character vector.
 #' @pretty_print TRUE
-#' @details This function is meant to be a plugin style function for user created palettes.
+#' @details This function is meant to be a plugin style function for users to created palettes.
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#'  library(MicrobiomeR)
+#'  data <- MicrobiomeR::analyzed_silva$data$stats_tax_data$Phylum
+#'  data_len <- length(unique(data))
+#'  custom_pal <- get_color_palette(color_no=data_len)
+#'  print(custom_pal)
 #'  }
 #' }
 #' @export
