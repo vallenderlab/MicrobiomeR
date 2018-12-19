@@ -31,7 +31,11 @@ This function makes it easier to generate multiple correlation plots at once.
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+library(MicrobiomeR)
+corr_plots <- get_correlation_plots(MicrobiomeR::analyzed_silva, primary_ranks = c("Phylum", "Class", "Order"),
+                      secondary_ranks = c("Phylum", "Class", "Order", "Family", "Genus"), pairwise = TRUE)
+# Show a plot
+corr_plots$Class$Phylum
  }
 }
 }

@@ -153,9 +153,9 @@
 #' \item{taxa_abundance}{A taxonomy table interpolated from the otu_abundance table with taxon_id,
 #' and Sample_* columns.}
 #' \item{taxa_proportions}{A taxonomy table derived from the taxa_abundance table.}
-#' }
 #' \item{statistical_data}{A data table that contains statistical analysis comparing treatment groups.}
 #' \item{stats_tax_data}{A data table that combines taxa and statistical datasets for plotting.}
+#' }
 #' @keywords datasets
 #'
 #' @references Zhang et al. (2019)
@@ -183,9 +183,9 @@
 #' \item{taxa_abundance}{A taxonomy table interpolated from the otu_abundance table with taxon_id,
 #' and Sample_* columns.}
 #' \item{taxa_proportions}{A taxonomy table derived from the taxa_abundance table.}
-#' }
 #' \item{statistical_data}{A data table that contains statistical analysis comparing treatment groups.}
 #' \item{stats_tax_data}{A data table that combines taxa and statistical datasets for plotting.}
+#' }
 #' @keywords datasets
 #'
 #' @references Zhang et al. (2019)

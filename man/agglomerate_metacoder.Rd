@@ -28,7 +28,10 @@ and the taxmap object.
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+library(MicrobiomeR)
+phylum_obj <- agglomerate_metacoder(obj = MicrobiomeR::basic_silva, rank = "Phylum")
+class_obj <- agglomerate_metacoder(obj = MicrobiomeR::basic_silva, rank = "Class")
+order_obj <- agglomerate_metacoder(obj = MicrobiomeR::basic_silva, rank = "Order")
  }
 }
 }

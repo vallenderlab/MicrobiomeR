@@ -29,7 +29,10 @@ plots.
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+library(MicrobiomeR)
+h_trees <- get_heat_tree_plots(MicrobiomeR::analyzed_silva, rank_list = c("Phylum", "Class"))
+# Save to \\emph{./output/heat_trees} folder.
+save_heat_tree_plots(h_trees)
  }
 }
 }

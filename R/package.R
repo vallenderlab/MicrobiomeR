@@ -37,10 +37,12 @@ NULL
 #' a \code{\link[phyloseq:taxonomyTable-class]{phyloseq::tax_table}}, a \code{\link[phyloseq:sample_data-class]{phyloseq::sample_data}},
 #' and a \code{\link[phyloseq:phylo-class]{phyloseq::phy_tree}}.  The data is preferrably not filtered
 #' with phyloseq at this stage.
+#'
 #' @section Data Manipulation:
 #' Data is manipulated into a \code{\link[taxa:taxmap]{taxa::taxmap}} object using the \code{\link[metacoder:parse_phyloseq]{metacoder::parse_phyloseq}}
 #' function.  Custom [MicrobiomeR_Formats] are used to validate the data for consistency.  MicrobiomeR and metacoder filtering
 #' functions can be used to preprocess the data before visualization.
+#'
 #' @section Visualizations:
 #' MicrobiomeR contains useful functions for creating visualizations such as heat_trees, correlations plots, stacked bar charts,
 #' violin plots, and PCA plots.  These functions are also coupled with save functions that organize saved output by experiment.

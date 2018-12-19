@@ -27,12 +27,61 @@ of variation.
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+# Use the cov_filter towards the end of your analysis
+library(MicrobiomeR)
+library(metacoder)
+library(taxa)
+
+# Convert Phyloseq object to metacoder object
+metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
+
+# Remove Archaea from the metacoder object
+metacoder_obj <- filter_taxa(
+  obj = metacoder_obj,
+  taxon_names == "Archaea",
+  subtaxa = TRUE,
+  invert = TRUE)
+
+# Ambiguous Annotation Filter - Remove taxonomies with ambiguous names
+metacoder_obj <- filter_ambiguous_taxa(metacoder_obj, subtaxa = TRUE)
+
+# Low Sample Filter - Remove the low samples
+metacoder_obj <- sample_filter(obj          = metacoder_obj,
+                               .f_filter    = ~sum(.),
+                               .f_condition = ~.>= 20, validated = TRUE)
+
+# Master Threshold Filter - Add the otu_proportions table and then filter OTUs based on min \%
+metacoder_obj <- otu_proportion_filter(
+    obj = metacoder_obj,
+    otu_percentage = 0.00001
+    )
+# Taxa Prevalence Filter
+# The default minimum abundance is 5 and the sample percentage is 0.5 (5\%).
+# Phylum
+metacoder_obj <- taxa_prevalence_filter(
+    obj = metacoder_obj,
+    rank = "Phylum"
+    )
+# Class
+metacoder_obj <- taxa_prevalence_filter(
+    obj = metacoder_obj,
+    rank = "Class",
+    validated = TRUE
+    )
+
+# OTU prevalence filter
+metacoder_obj <- otu_prevalence_filter(obj = metacoder_obj, validated = TRUE)
+
+# Coefficient of Variation Filter - Filter OTUs based on the coefficient of variation
+metacoder_obj <- cov_filter(obj = metacoder_obj,
+                            coefficient_of_variation = 3,
+                            validated = TRUE)
  }
 }
 }
 \seealso{
 \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{otu_id_filter}}
+
 \code{\link[dplyr:summarise_all]{summarise_if}}
 
 Other Metacoder Filters: \code{\link{agglomerate_metacoder}},

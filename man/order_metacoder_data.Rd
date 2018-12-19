@@ -20,13 +20,6 @@ Changes the order of the observation tables in \strong{metacoder_object$data} to
 otu_abundance, otu_annotations, otu_proportions, sample_data, phy_tree, taxa_abundance,
 taxa_proportions, statistical_data, and stats_tax_data respectively.
 }
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
 \seealso{
 Other Validation: \code{\link{is_analyzed_format}},
   \code{\link{is_basic_format}},

@@ -32,13 +32,6 @@ This funciton validates that taxmap/metacoder objects are in a valid format Micr
 This function can provide a way to check if a taxmap object has undergone a
 \code{\link[MicrobiomeR:MicrobiomeR_Workflow]{MicrobiomeR Style Workflow}}.
 }
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
 \seealso{
 \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
 

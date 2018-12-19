@@ -3,12 +3,14 @@
 #' @param obj A Taxmap/metacoder object.
 #' @return If the format is verified it returns a character string denoting the identified format.
 #' @pretty_print TRUE
-#' @details This function is used to get basic infomration about the format of the taxmap object
+#' @details This function is used to get basic information about the format of the taxmap object
 #' that is supplied by the user.
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' fmt <- which fmt(MicrobiomeR::analyzed_silva)
+#' print(fmt)
 #'  }
 #' }
 #' @export
@@ -54,7 +56,6 @@ which_format <- function(obj) {
     }
 }
 
-
 #' @title Is Raw MicrobiomeR Format
 #' @description This function returns a logical based on weather or not the object is in the raw_format.
 #' @param obj A Taxmap/metacoder object.
@@ -64,7 +65,14 @@ which_format <- function(obj) {
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' if(is_raw_format(MicrobiomeR::raw_silva)){
+#'     print("It's raw!")
+#' } else {
+#'     fmt <- which_format(MicrobiomeR::raw_silva)
+#'     print("It's not analyzed!")
+#'     print(sprintf("It's %s!", fmt))
+#' }
 #'  }
 #' }
 #' @export
@@ -88,7 +96,15 @@ is_raw_format <- function(obj) {
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' if(is_basic_format(MicrobiomeR::raw_silva)){
+#'     print("It's basic!")
+#' } else {
+#'     fmt <- which_format(MicrobiomeR::raw_silva)
+#'     print("It's not analyzed!")
+#'     print(sprintf("It's %s!", fmt))
+#' }
+#'  }
 #'  }
 #' }
 #' @export
@@ -112,7 +128,15 @@ is_basic_format <- function(obj) {
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' if(is_analyzed_format(MicrobiomeR::raw_silva)){
+#'     print("It's analyzed!")
+#' } else {
+#'     fmt <- which_format(MicrobiomeR::raw_silva)
+#'     print("It's not analyzed!")
+#'     print(sprintf("It's %s!", fmt))
+#' }
+#'  }
 #'  }
 #' }
 #' @export
@@ -137,7 +161,14 @@ is_analyzed_format <- function(obj) {
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(MicrobiomeR)
+#' if(is_analyzed_format(MicrobiomeR::raw_silva)){
+#'     print("It's phyloseq format!")
+#' } else {
+#'     fmt <- which_format(MicrobiomeR::raw_silva)
+#'     print("It's not phyloseq fomrat!")
+#'     print(sprintf("It's %s!", fmt))
+#' }
 #'  }
 #' }
 #' @export
@@ -160,12 +191,6 @@ is_phyloseq_format <- function(obj) {
 #' @details Changes the order of the observation tables in \strong{metacoder_object$data} to
 #' otu_abundance, otu_annotations, otu_proportions, sample_data, phy_tree, taxa_abundance,
 #' taxa_proportions, statistical_data, and stats_tax_data respectively.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Validation
 #' @rdname order_metacoder_data
@@ -190,12 +215,6 @@ order_metacoder_data <- function(obj) {
 #' @return A Taxmap/metacoder object in the "raw_format".
 #' @pretty_print TRUE
 #' @details See the [MicrobiomeR_Formats] documentation.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Formatting
 #' @rdname as_raw_format
@@ -227,17 +246,12 @@ as_raw_format <- function(obj) {
 #' @return A Taxmap/metacoder object in the "basic_format".
 #' @pretty_print TRUE
 #' @details See the [MicrobiomeR_Formats] documentation.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Formatting
 #' @rdname as_basic_format
 #' @seealso
 #'  \code{\link[MicrobiomeR]{is_phyloseq_format}},  \code{\link[MicrobiomeR]{is_raw_format}},  \code{\link[MicrobiomeR]{is_basic_format}}, \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
+#'
 #'  \code{\link[metacoder]{calc_taxon_abund}}, \code{\link[metacoder]{calc_obs_props}}
 #' @importFrom metacoder calc_taxon_abund calc_obs_props
 as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
@@ -289,18 +303,14 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
 #' @return A Taxmap/metacoder object in the "analyzed_format".
 #' @pretty_print TRUE
 #' @details See the [MicrobiomeR_Formats] documentation.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Formatting
 #' @rdname as_analyzed_format
 #' @seealso
 #'  \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{is_raw_format}},  \code{\link[MicrobiomeR]{is_basic_format}},  \code{\link[MicrobiomeR]{is_analyzed_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
+#'
 #'  \code{\link[metacoder]{compare_groups}}
+#'
 #'  \code{\link[taxa]{taxonomy_table}},  \code{\link[taxa]{taxon_ids}}
 #' @importFrom metacoder compare_groups
 #' @importFrom taxa taxonomy_table taxon_ids
@@ -361,12 +371,6 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
 #' @return A Taxmap/metacoder object in the specified format.
 #' @pretty_print TRUE
 #' @details See the [MicrobiomeR_Formats] documentation.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Formatting
 #' @rdname as_MicrobiomeR_format
@@ -406,12 +410,6 @@ as_MicrobiomeR_format <- function(obj, format, ...) {
 #' @param phy_tree The name of the observation data with the phylogenetic tree.  Default: NULL
 #' @return A Taxmap/metacoder object in the phyloseq_format.
 #' @details See the [MicrobiomeR_Formats] documentation.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Formatting
 #' @rdname as_phyloseq_format
@@ -451,12 +449,6 @@ as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_ann
 #' @return A metacoder object that we have tried to format with all of our heart.
 #' @pretty_print TRUE
 #' @details This function is meant to be more helpful for customizing the metacoder object.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Formatting
 #' @rdname format_metacoder_object
@@ -538,12 +530,6 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
 #' @return If the object is validated, a Taxmap/metacoder object.
 #' @details This function can provide a way to check if a taxmap object has undergone a
 #' \code{\link[MicrobiomeR:MicrobiomeR_Workflow]{MicrobiomeR Style Workflow}}.
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
 #' @export
 #' @family Validation
 #' @rdname validate_MicrobiomeR_format
