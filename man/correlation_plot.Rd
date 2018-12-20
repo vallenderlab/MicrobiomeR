@@ -29,6 +29,8 @@ Correlation plots help to better explain the heat tree findings.
 \examples{
 \dontrun{
 if(interactive()){
+# This example uses data that are no longer available in the MicrobiomeR package,
+# however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_analyzed_format}}.
 library(MicrobiomeR)
 correlation_plot(MicrobiomeR::analyzed_silva, primary_rank = "Class", secondary_rank = "Phylum")
  }

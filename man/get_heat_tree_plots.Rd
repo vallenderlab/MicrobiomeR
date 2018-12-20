@@ -23,6 +23,8 @@ A function for getting multiple heat_tree plots per rank.
 \examples{
 \dontrun{
 if(interactive()){
+# This example uses data that are no longer available in the MicrobiomeR package,
+# however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_analyzed_format}}.
 library(MicrobiomeR)
 h_trees <- get_heat_tree_plots(MicrobiomeR::analyzed_silva, rank_list = c("Phylum", "Class"))
 h_trees$Class
