@@ -9,7 +9,7 @@
 #' \dontrun{
 #' if(interactive()){
 #' library(MicrobiomeR)
-#' fmt <- which fmt(MicrobiomeR::analyzed_silva)
+#' fmt <- which fmt(MicrobiomeR::raw_silva)
 #' print(fmt)
 #'  }
 #' }
