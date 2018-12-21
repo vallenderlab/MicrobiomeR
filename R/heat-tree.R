@@ -41,19 +41,21 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
   }
   htrees <- list()
   # Create a metacoder object from a phyloseq/metacoder/RData file
-  metacoder_object <- object_handler(obj)
-  metacoder_object <- validate_MicrobiomeR_format(
-    obj = metacoder_object,
+  obj <- object_handler(obj)
+  obj <- validate_MicrobiomeR_format(
+    obj = obj,
     valid_formats = c("analyzed_format"),
     force_format = TRUE)
+  htrees[["metacoder_object"]] <- obj
   # Create a list of heat_tree plots for saving
   for (rank in rank_list) {
     rank_level <- rank_index[[rank]]
-    filtered_obj <- metacoder_object %>% taxa::filter_obs(data = c("statistical_data", "taxa_proportions", "taxa_abundance", "stats_tax_data"), n_supertaxa < rank_level, drop_taxa = TRUE)
+    filtered_obj <- obj %>% taxa::filter_obs(data = c("statistical_data", "taxa_proportions", "taxa_abundance", "stats_tax_data"), n_supertaxa < rank_level, drop_taxa = TRUE)
     title <- sprintf("Bacterial Abundance (%s Level)", rank)
     message(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(crayon::red(title))))
     default_heat_tree_parameters <- get_heat_tree_parameters(obj = filtered_obj, title = title, ...)
     # Filter by Taxonomy Rank and then create a heat tree.
+    #return(default_heat_tree_parameters)
     htrees[[rank]] <- do.call(what = metacoder::heat_tree, args = default_heat_tree_parameters)
     # Made plot title centered
     htrees[[rank]] <- htrees[[rank]] +
@@ -61,7 +63,6 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
         plot.title = ggplot2::element_text(hjust = 0.5),
         text = ggplot2::element_text(size = 24, family = "Arial"))
   }
-  htrees[["metacoder_object"]] <- metacoder_object
   return(htrees)
 }
 
@@ -88,21 +89,27 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
 #' @importFrom taxa n_obs taxon_names
 #' @importFrom purrr list_modify
 get_heat_tree_parameters <- function(obj, title, ...) {
-  input <- obj
-  # Create a list from the stats_tax_data table
-  stats_data <- as_list(input$data$stats_tax_data)
-  # Turn the list into global variables to use as parameters
-  list2env(stats_data, envir = .GlobalEnv)
-  default_parameters <- list(
+  # Clone the taxmap object.
+  input <- obj$clone()
+
+  # Take advantage of the taxamap internal functions to get the data
+  # Use an internal function to get data from the default parameters.
+  data_fun <- function(obj, ...) {
+    data <- obj$data_used(...)
+    return(list(data = data, params=dplyr::enquos(...)))
+  }
+
+  # Get data used in default params
+  default_parameters <-  data_fun(obj = obj,
     .input = input,
     title = title,
     # NODE
     ## The node size is relevant to the Abundance level
     ## The node color is relevant to wheather the abundance is higher in control vs stressed animals
     ## The node labels are relevant to significant taxon names.
-    node_size = taxa::n_obs(input),
+    node_size = n_obs,
     node_color = log2_mean_ratio,
-    node_label = ifelse(wilcox_p_value < 0.05, taxa::taxon_names(input), NA),
+    node_label = ifelse(wilcox_p_value < 0.05, taxon_names, NA),
     node_label_size = 1,
     ### The color red indicates higher abundance in Stressed animals
     ### The color blue indicates higher abundance in Control animals
@@ -142,20 +149,26 @@ get_heat_tree_parameters <- function(obj, title, ...) {
     overlap_avoidance = 3,
     make_edge_legend = FALSE
   )
+
+  # Take advantage of the taxamap internal functions to get the data
+  data_list <- input$data_used(...)
+  data_list <- c(data_list, default_parameters$data)
+  data_list <- data_list[!duplicated(data_list)]
+
   # Do some cringe worthy magic to dynamically parse parameters
-  params <- dplyr::enquos(...)
-  d_par <- list(params = default_parameters)
+  params <- dplyr::enquos(...) # THese are quosures
+  def_param <- list(params = default_parameters$params) # These are quosures
   # Merge lists and replace any matches to the ... args
-  param_list <- purrr::list_modify(d_par, params = params)
+  param_list <- purrr::list_modify(def_param, params = params)
   param_list <- param_list$params
+
   # Find the quosures and evaluate them
   for (item in names(param_list)) {
     if (rlang::is_quosure(param_list[[item]])) {
-      # as_data_mask inserts the variables dynamically
-      param_list[[item]] <- rlang::eval_tidy(param_list[[item]], rlang::as_data_mask(stats_data))
+      # Use the data_list to evaluae the parameter list.
+      param_list[[item]] <- rlang::eval_tidy(param_list[[item]], data = data_list)
     }
   }
-
   return(param_list)
 }
 
