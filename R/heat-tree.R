@@ -84,10 +84,14 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
 #' @seealso
 #'  \code{\link[metacoder]{heat_tree}}
 #'
-#'  \code{\link[taxa]{n_obs}},\code{\link[taxa]{taxon_names}}
+#'  \code{\link[taxa]{n_obs}},  \code{\link[taxa]{taxon_names}}
+#'
 #'  \code{\link[purrr]{list_modify}}
+#'
+#'  \code{\link[rlang]{enquos}},  \code{\link[rlang]{is_quosure}},  \code{\link[rlang]{eval_tidy}}
 #' @importFrom taxa n_obs taxon_names
 #' @importFrom purrr list_modify
+#' @importFrom rlang enquos is_quosure eval_tidy
 get_heat_tree_parameters <- function(obj, title, ...) {
   # Clone the taxmap object.
   input <- obj$clone()
