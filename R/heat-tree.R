@@ -114,8 +114,8 @@ get_heat_tree_parameters <- function(obj, title, ...) {
     node_color_range = c("#3288bd", "#f1f1f1", "#d53e4f"),
     node_color_trans = "linear",
     node_color_interval = c(-4, 4),
-    node_size_axis_label = "Size: Number of OTUs",
-    node_color_axis_label = "Color: Increased in Stressed (red) vs.\n Increased in Control (blue)\n",
+    node_size_axis_label = "Number of OTUs",
+    node_color_axis_label = "Upregulated in Stressed (red) vs.\n Downregulated in Stressed (blue)\n",
     ### The labels are only for significant (pvalue < 0.05) abundance changes
     ### The labels are green to offset the blue/red colors.
     node_label_color = wilcox_p_value,
@@ -133,8 +133,8 @@ get_heat_tree_parameters <- function(obj, title, ...) {
     edge_color_range = c("honeydew2", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50"),
     edge_color_trans = "linear",
     edge_color_interval = c(0, 1),
-    edge_size_axis_label = "Size: Number of OTUs",
-    edge_color_axis_label = "Color: Significant Changes \nAmong Treatments",
+    edge_size_axis_label = "Number of OTUs",
+    edge_color_axis_label = "Significant Changes \nAmong Treatments",
     # PLOT Options
     initial_layout = "reingold-tilford",
     layout = "davidson-harel",
