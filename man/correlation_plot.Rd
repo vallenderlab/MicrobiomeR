@@ -38,7 +38,6 @@ correlation_plot(MicrobiomeR::analyzed_silva, primary_rank = "Class", secondary_
 }
 \seealso{
 \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{agglomerate_metacoder}},  \code{\link[MicrobiomeR]{vlookup}},  \code{\link[MicrobiomeR]{get_plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
-<<<<<<< HEAD
 
 \code{\link[dplyr]{tidyeval}},  \code{\link[dplyr]{mutate}},  \code{\link[dplyr]{filter}},  \code{\link[dplyr]{arrange}}
 
@@ -46,11 +45,6 @@ correlation_plot(MicrobiomeR::analyzed_silva, primary_rank = "Class", secondary_
 
 \code{\link[ggrepel:geom_text_repel]{geom_label_repel}}
 
-=======
-\code{\link[dplyr]{tidyeval}},  \code{\link[dplyr]{mutate}},  \code{\link[dplyr]{filter}},  \code{\link[dplyr]{arrange}}
-\code{\link[ggplot2]{ggplot}},  \code{\link[ggplot2]{aes}},  \code{\link[ggplot2]{geom_polygon}},  \code{\link[ggplot2]{geom_point}},  \code{\link[ggplot2]{labs}},  \code{\link[ggplot2]{scale_continuous}},  \code{\link[ggplot2]{scale_manual}},  \code{\link[ggplot2]{guide_legend}},  \code{\link[ggplot2]{geom_abline}}
-\code{\link[ggrepel]{geom_label_repel}}
->>>>>>> barplot-functions
 \code{\link[forcats]{fct_reorder}}
 
 Other Visualizations: \code{\link{get_correlation_plots}},
@@ -58,6 +52,7 @@ Other Visualizations: \code{\link{get_correlation_plots}},
   \code{\link{get_heat_tree_plots}},
   \code{\link{get_plot_limits}},
   \code{\link{save_correlation_plots}},
-  \code{\link{save_heat_tree_plots}}
+  \code{\link{save_heat_tree_plots}},
+  \code{\link{stacked_barplot}}
 }
 \concept{Visualizations}

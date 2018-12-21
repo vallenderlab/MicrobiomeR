@@ -4,14 +4,24 @@
 \alias{get_alpha_diversity}
 \title{Get Alpha Diversity}
 \usage{
-get_alpha_diversity(phyloseq_object)
+get_alpha_diversity(obj)
 }
 \arguments{
-\item{phyloseq_object}{A preprocessed phyloseq object.}
+\item{obj}{A phyloseq or metacoder object.}
 }
 \value{
-Returns a list object of alpha diversity measurements.
+Returns a list an alpha diversity object.
 }
 \description{
 This function generates various alpha diversity measures include Shannon, Fisher, Coverage, Gini Simpson, and Inverse Simpson.
+}
+\examples{
+\dontrun{
+if (interactive()) {
+  # EXAMPLE1
+}
+}
+}
+\seealso{
+\code{\link[microbiome]{diversities}},\code{\link[microbiome]{meta}}
 }

@@ -7,10 +7,17 @@
 save_barplot(plot, filename)
 }
 \arguments{
-\item{plot}{The stacked barplot object.}
+\item{plot}{The plot object.}
 
-\item{filename}{The filename of the plot. (It will be saved as .tiff)}
+\item{filename}{The name of the file. (an extension should not be included)}
 }
 \description{
 Save a stacked barplot.
+}
+\examples{
+\dontrun{
+if (interactive()) {
+  # EXAMPLE1
+}
+}
 }

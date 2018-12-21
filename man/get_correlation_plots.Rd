@@ -31,7 +31,6 @@ This function makes it easier to generate multiple correlation plots at once.
 \examples{
 \dontrun{
 if(interactive()){
-<<<<<<< HEAD
 # This example uses data that are no longer available in the MicrobiomeR package,
 # however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_analyzed_format}}.
 library(MicrobiomeR)
@@ -39,9 +38,6 @@ corr_plots <- get_correlation_plots(MicrobiomeR::analyzed_silva, primary_ranks =
                       secondary_ranks = c("Phylum", "Class", "Order", "Family", "Genus"), pairwise = TRUE)
 # Show a plot
 corr_plots$Class$Phylum
-=======
- #EXAMPLE1
->>>>>>> barplot-functions
  }
 }
 }
@@ -51,6 +47,7 @@ Other Visualizations: \code{\link{correlation_plot}},
   \code{\link{get_heat_tree_plots}},
   \code{\link{get_plot_limits}},
   \code{\link{save_correlation_plots}},
-  \code{\link{save_heat_tree_plots}}
+  \code{\link{save_heat_tree_plots}},
+  \code{\link{stacked_barplot}}
 }
 \concept{Visualizations}

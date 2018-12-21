@@ -31,25 +31,18 @@ plots.
 \examples{
 \dontrun{
 if(interactive()){
-<<<<<<< HEAD
 # This example uses data that are no longer available in the MicrobiomeR package,
 # however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_analyzed_silva}}.
 library(MicrobiomeR)
 corr_plot <- correlation_plot(MicrobiomeR::analyzed_silva, primary_rank = "Class", secondary_rank = "Phylum")
 # Save to \\emph{./output/corr_plot} folder.
 save_correlation_plots(corr_plot)
-=======
- #EXAMPLE1
->>>>>>> barplot-functions
  }
 }
 }
 \seealso{
 \code{\link[MicrobiomeR]{get_output_dir}}
-<<<<<<< HEAD
 
-=======
->>>>>>> barplot-functions
 \code{\link[ggplot2]{ggsave}}
 
 Other Visualizations: \code{\link{correlation_plot}},
@@ -57,6 +50,7 @@ Other Visualizations: \code{\link{correlation_plot}},
   \code{\link{get_heat_tree_parameters}},
   \code{\link{get_heat_tree_plots}},
   \code{\link{get_plot_limits}},
-  \code{\link{save_heat_tree_plots}}
+  \code{\link{save_heat_tree_plots}},
+  \code{\link{stacked_barplot}}
 }
 \concept{Visualizations}

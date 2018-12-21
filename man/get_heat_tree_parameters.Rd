@@ -21,16 +21,6 @@ A list used with do.call and the metacoder::heat_tree function.
 \description{
 This function get's the parameters used for the get_heat_tree_plots function.
 }
-<<<<<<< HEAD
-=======
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
->>>>>>> barplot-functions
 \seealso{
 \code{\link[metacoder]{heat_tree}}
 
@@ -42,6 +32,7 @@ Other Visualizations: \code{\link{correlation_plot}},
   \code{\link{get_heat_tree_plots}},
   \code{\link{get_plot_limits}},
   \code{\link{save_correlation_plots}},
-  \code{\link{save_heat_tree_plots}}
+  \code{\link{save_heat_tree_plots}},
+  \code{\link{stacked_barplot}}
 }
 \concept{Visualizations}

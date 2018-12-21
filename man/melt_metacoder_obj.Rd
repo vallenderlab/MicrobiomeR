@@ -7,11 +7,11 @@
 melt_metacoder_obj(obj)
 }
 \arguments{
-\item{obj}{DESCRIPTION.}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
 }
 \value{
-RETURN_DESCRIPTION
+Returns a melted dataframe.
 }
 \description{
-Melt the metacoder tables into a dataframe.
+Melt the metacoder or phyloseq tables into a dataframe.
 }
