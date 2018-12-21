@@ -3,7 +3,8 @@
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @param rank_list A vector of ranks used to generate heat_trees.  Default: NULL
 #' @param ... Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
-#' output is displayed.
+#' output is displayed.  Please see the \code{\link[MicrobiomeR]{get_heat_tree_parameters}} documentation
+#' for further explanation.
 #' @return A list of heat_tree plots.
 #' @pretty_print TRUE
 #' @examples
@@ -72,7 +73,9 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
 #' @param title The title used in the heat_tree plot.
 #' @param ... Any of the heat tree parameters list below can be used to change the way the heat_tree
 #' output is displayed.  However, this function acts as a default list of parameters.  The memebers
-#' of the default list will be overridden by the dot parameters.
+#' of the default list will be overridden by the dot parameters.  Any variable in obj$data$stats_tax_data
+#' can be used to manipulate the heat tree parameters.  Function calls from the taxa package must
+#' be done explicitely on the metacoder object.
 #' @return A list used with do.call and the metacoder::heat_tree function.
 #' @pretty_print TRUE
 #' @export
@@ -87,8 +90,10 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
 #' @importFrom purrr list_modify
 get_heat_tree_parameters <- function(obj, title, ...) {
   input <- obj
-  log2_mean_ratio <- input$data$statistical_data$log2_mean_ratio
-  wilcox_p_value <- input$data$statistical_data$wilcox_p_value
+  # Create a list from the stats_tax_data table
+  stats_data <- as_list(input$data$stats_tax_data)
+  # Turn the list into global variables to use as parameters
+  list2env(stats_data, envir = .GlobalEnv)
   default_parameters <- list(
     .input = input,
     title = title,
@@ -138,9 +143,21 @@ get_heat_tree_parameters <- function(obj, title, ...) {
     overlap_avoidance = 3,
     make_edge_legend = FALSE
   )
-  param_list <-list(params = default_parameters)
-  param_list <- purrr::list_modify(param_list, ...)
-  return(param_list$params)
+  # Do some cringe worthy magic to dynamically parse parameters
+  params <- dplyr::enquos(...)
+  d_par <- list(params = default_parameters)
+  # Merge lists and replace any matches to the ... args
+  param_list <- purrr::list_modify(d_par, params = params)
+  param_list <- param_list$params
+  # Find the quosures and evaluate them
+  for (item in names(param_list)) {
+    if (rlang::is_quosure(param_list[[item]])) {
+      # as_data_mask inserts the variables dynamically
+      param_list[[item]] <- rlang::eval_tidy(param_list[[item]], rlang::as_data_mask(stats_data))
+    }
+  }
+
+  return(param_list)
 }
 
 
