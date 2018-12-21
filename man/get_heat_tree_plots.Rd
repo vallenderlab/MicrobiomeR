@@ -11,7 +11,11 @@ get_heat_tree_plots(obj, rank_list = NULL, ...)
 
 \item{rank_list}{A vector of ranks used to generate heat_trees.  Default: NULL}
 
+<<<<<<< HEAD
 \item{...}{Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
+=======
+\item{...}{Any of the heat tree parameters list below can be used to change the way the heat_tree
+>>>>>>> barplot-functions
 output is displayed.}
 }
 \value{
@@ -23,11 +27,15 @@ A function for getting multiple heat_tree plots per rank.
 \examples{
 \dontrun{
 if(interactive()){
+<<<<<<< HEAD
 # This example uses data that are no longer available in the MicrobiomeR package,
 # however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_analyzed_format}}.
 library(MicrobiomeR)
 h_trees <- get_heat_tree_plots(MicrobiomeR::analyzed_silva, rank_list = c("Phylum", "Class"))
 h_trees$Class
+=======
+ #EXAMPLE1
+>>>>>>> barplot-functions
  }
 }
 }
@@ -35,12 +43,18 @@ h_trees$Class
 \code{\link[metacoder]{heat_tree}}
 
 \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{get_heat_tree_parameters}}
+<<<<<<< HEAD
 
 \code{\link[taxa]{filter_obs}}
 
 \code{\link[crayon]{crayon}}
 
 \code{\link[ggplot2]{theme}},  \code{\link[ggplot2:element]{margin}},  \code{\link[ggplot2]{labs}}
+=======
+\code{\link[taxa]{filter_obs}}
+\code{\link[crayon]{crayon}}
+\code{\link[ggplot2]{theme}},  \code{\link[ggplot2]{margin}},  \code{\link[ggplot2]{labs}}
+>>>>>>> barplot-functions
 
 Other Visualizations: \code{\link{correlation_plot}},
   \code{\link{get_correlation_plots}},

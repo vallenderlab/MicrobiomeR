@@ -8,8 +8,12 @@ get_color_palette(pal_func = viridis_magma_palette, color_no = 20,
   display = TRUE, ...)
 }
 \arguments{
+<<<<<<< HEAD
 \item{pal_func}{A function that \emph{returns the output function} from \code{\link[grDevices]{colorRamp}} or
 a \emph{the output of the output function} from \code{\link[grDevices]{colorRamp}}.  Default: viridis_magma_palette}
+=======
+\item{pal_func}{A function that returns the output from grDevoces::colorRampPalette. Default: viridis_magma_palette}
+>>>>>>> barplot-functions
 
 \item{color_no}{The number of colors in the palette.  Default: 20}
 
