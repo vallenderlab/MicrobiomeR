@@ -1,16 +1,23 @@
-#' @title Get Color palette
+#' @title Get a Color Palette
 #' @description Get a color palette with a specific number of colors.
-#' @param pal_func A function that returns the output from grDevoces::colorRampPalette. Default: viridis_magma_palette
-#' @param color_no The number of colors in the palette. Default: 20
-#' @param display Boolean for displaying a pie chart of the palette. Default: TRUE
-#' @param ... Parameters for the pal_func.
+#' @param pal_func A function that \emph{returns the output function} from \code{\link[grDevices]{colorRamp}} or
+#' a \emph{the output of the output function} from \code{\link[grDevices]{colorRamp}}.  Default: viridis_magma_palette
+#' @param color_no The number of colors in the palette.  Default: 20
+#' @param display A logical for displaying a pie chart of the palette. Default: TRUE
+#' @param ... Parameters for the \emph{pal_func}.
 #' @return Returns a color palette in the form of a character vector.
 #' @pretty_print TRUE
-#' @details This function is meant to be a plugin style function for user created palettes.
+#' @details This function is meant to be a plugin style function for users to created palettes.
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' # This example uses data that are no longer available in the MicrobiomeR package,
+#' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
+#'  library(MicrobiomeR)
+#'  data <- MicrobiomeR::analyzed_silva$data$stats_tax_data$Phylum
+#'  data_len <- length(unique(data))
+#'  custom_pal <- get_color_palette(color_no=data_len)
+#'  print(custom_pal)
 #'  }
 #' }
 #' @export
@@ -44,7 +51,9 @@ get_color_palette <- function(pal_func=viridis_magma_palette, color_no=20, displ
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(Microbiome)
+#' basic_pal <- scico_palette(scico_palette="hawaii")(25)
+#' better_pal <- get_color_palette(pal_func = scico_palette, color_no = 25)
 #'  }
 #' }
 #' @export
@@ -64,7 +73,7 @@ scico_palette <- function(scico_palette="batlow", scico_number=800, scico_range=
 
 #' @title Viridis Palette Function
 #' @description A function that returns a color palette function based off of the viridis package.
-#' @param viridis_palette The viridis palette to use.  Default: 'batlow'
+#' @param viridis_palette The viridis palette to use.  Default: 'viridis'
 #' @param viridis_number The number of colors to use in the viridis palette.  Default: 800
 #' @param viridis_range The range in the color palette to use.  Default: c(0, viridis_number)
 #' @return The output of this function is another function (grDevoces::colorRampPalette), which takes
@@ -75,7 +84,9 @@ scico_palette <- function(scico_palette="batlow", scico_number=800, scico_range=
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' library(Microbiome)
+#' basic_pal <- viridis(viridis_palette="magma")(25)
+#' better_pal <- get_color_palette(pal_func = viridis_palette, color_no = 25)
 #'  }
 #' }
 #' @export
@@ -83,6 +94,7 @@ scico_palette <- function(scico_palette="batlow", scico_number=800, scico_range=
 #' @rdname viridis_palette
 #' @seealso
 #'  \code{\link[grDevices]{colorRamp}}
+#'
 #'  \code{\link[viridis:reexports]{viridis}}
 #' @importFrom grDevices colorRampPalette
 #' @importFrom viridis viridis
@@ -115,7 +127,30 @@ viridis_palette <- function(viridis_palette="viridis", viridis_number=800, virid
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' # Below is the code for the viridis_magma_palette function.
+#' # It's a good example of how to use the combination_palette function.
+#' viridis_magma_palette <- function(viridis_number = 800, viridis_range = 300:viridis_number, viridis_rev = TRUE,
+#'                                    magma_number = 500, magma_range = 0:magma_number, magma_rev = FALSE, ...) {
+#'     if (!missing(...)){
+#'         v_args = list(n=viridis_number, ...)
+#'         m_args = list(n=magma_number, ...)
+#'     } else {
+#'         v_args = list(n=viridis_number)
+#'         m_args = list(n=magma_number)
+#'         }
+#'    crp <- combination_palette(viridis =
+#'                                 list(palette = viridis::viridis,
+#'                                       args = v_args,
+#'                                       range = viridis_range,
+#'                                       rev = viridis_rev),
+#'                                magma =
+#'                                  list(palette = viridis::magma,
+#'                                       args = m_args,
+#'                                       range = magma_range,
+#'                                       rev = magma_rev)
+#'                                )
+#'  return(crp)
+#' }
 #'  }
 #' }
 #' @export
@@ -197,7 +232,9 @@ combination_palette <- function(...) {
 #' @rdname viridis_magma_palette
 #' @seealso
 #'  \code{\link[MicrobiomeR]{combination_palette}}
+#'
 #'  \code{\link[viridis:reexports]{viridis}},  \code{\link[viridis:reexports]{magma}}
+#'
 #'  \code{\link[grDevices]{colorRamp}}
 #' @importFrom viridis viridis magma
 viridis_magma_palette <- function(viridis_number = 800, viridis_range = 300:viridis_number, viridis_rev = TRUE,

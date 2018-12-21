@@ -16,13 +16,15 @@ If the format is verified it returns a character string denoting the identified 
 A function for looking at a metacoder object and returning the identified MicrobiomeR format.
 }
 \details{
-This function is used to get basic infomration about the format of the taxmap object
+This function is used to get basic information about the format of the taxmap object
 that is supplied by the user.
 }
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+library(MicrobiomeR)
+fmt <- which fmt(MicrobiomeR::raw_silva)
+print(fmt)
  }
 }
 }

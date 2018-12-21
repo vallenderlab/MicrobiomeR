@@ -1,16 +1,16 @@
 Package: MicrobiomeR
 Title: Analyze Microbiome Data
-Version: 0.0.9
+Version: 0.0.9.1
 Authors@R: c(
     person("Robert", "Gilmore", email = "rgilmore@umc.edu", role = "cre"),
     person("Shaurita", "Hutchins", email = "shutchins2@umc.edu", role = "aut"))
-License: MIT
+License: MIT + file LICENSE
 biocViews: Metagenomics, Microbiome, Sequencing, SystemsBiology
 Description: An R package for microbiome analysis combining functions from phyloseq, metacodeR, 
     and microbiome into an easy to use and full featured microbiome analysis package.
 Roxygen: list(markdown = TRUE)
 Depends:
-    R (>= 3.5.0)
+    R (>= 3.3.0)
 Remotes: 
     github::ropensci/taxa,
     github::grunwaldlab/metacoder,
@@ -40,13 +40,9 @@ Imports:
     rstudioapi,
     magrittr,
     ggpubr,
-    tibble,
-    dplyr,
-    data.table,
     ggthemes,
     crayon,
     biomformat,
-    phyloseq,
     microbiome,
     forcats,
     ggrepel

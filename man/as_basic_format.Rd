@@ -22,15 +22,9 @@ Converts a metacoder object to the basic_format.
 \details{
 See the \link{MicrobiomeR_Formats} documentation.
 }
-\examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- }
-}
-}
 \seealso{
 \code{\link[MicrobiomeR]{is_phyloseq_format}},  \code{\link[MicrobiomeR]{is_raw_format}},  \code{\link[MicrobiomeR]{is_basic_format}}, \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
+
 \code{\link[metacoder]{calc_taxon_abund}}, \code{\link[metacoder]{calc_obs_props}}
 
 Other Formatting: \code{\link{as_MicrobiomeR_format}},

@@ -29,7 +29,16 @@ plots.
 \examples{
 \dontrun{
 if(interactive()){
+<<<<<<< HEAD
+# This example uses data that are no longer available in the MicrobiomeR package,
+# however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_analyzed_format}}.
+library(MicrobiomeR)
+h_trees <- get_heat_tree_plots(MicrobiomeR::analyzed_silva, rank_list = c("Phylum", "Class"))
+# Save to \\emph{./output/heat_trees} folder.
+save_heat_tree_plots(h_trees)
+=======
  #EXAMPLE1
+>>>>>>> barplot-functions
  }
 }
 }

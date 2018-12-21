@@ -28,7 +28,12 @@ and the taxmap object.
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+# This example uses data that are no longer available in the MicrobiomeR package,
+# however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_basic_format}}.
+library(MicrobiomeR)
+phylum_obj <- agglomerate_metacoder(obj = MicrobiomeR::basic_silva, rank = "Phylum")
+class_obj <- agglomerate_metacoder(obj = MicrobiomeR::basic_silva, rank = "Class")
+order_obj <- agglomerate_metacoder(obj = MicrobiomeR::basic_silva, rank = "Order")
  }
 }
 }

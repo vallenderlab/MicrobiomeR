@@ -8,9 +8,9 @@ transposer(.data, ids = NULL, header_name, preserved_categories = TRUE,
   separated_categories = NULL)
 }
 \arguments{
-\item{.data}{A matrix/data_frame/tibble for transposing}
+\item{.data}{A matrix/data_frame/tibble for transposing.}
 
-\item{ids}{The column to transpose by. Default: The first column.}
+\item{ids}{The column to transpose by.  Default: The first column.}
 
 \item{header_name}{A name for the numeric data that will be transposed.}
 
@@ -35,14 +35,24 @@ Transposing can help with preforming operations on the rows of your tibbles.
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+# This example uses data that are no longer available in the MicrobiomeR package,
+# however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_basic_format}}.
+ library(MicrobiomeR)
+ data <- MicrobiomeR::basic_silva$data$taxa_abundance
+ trans_data <- data \%>\%
+   transposer(ids = "taxon_id", header_name = "samples")
+ retrans_data <- trans_data \%>\%
+   transposer(ids="samples", header_name="taxon_id")
  }
 }
 }
 \seealso{
 \code{\link[tibble]{is_tibble}}
-\code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}},  \code{\link[dplyr]{reexports}},  \code{\link[dplyr]{sym}},  \code{\link[dplyr]{one_of}}
+
+\code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}},  \code{\link[dplyr]{reexports}},  \code{\link[dplyr:tidyeval]{sym}},  \code{\link[dplyr:reexports]{one_of}}
+
 \code{\link[tidyr]{gather}},  \code{\link[tidyr]{unite}},  \code{\link[tidyr]{spread}},  \code{\link[tidyr]{separate}}
+
 \code{\link[stringr]{str_detect}},  \code{\link[stringr]{str_count}}
 }
 \concept{Data Manipulation}

@@ -21,7 +21,14 @@ The "phyloseq_format" is Level 0. in the \link{MicrobiomeR_Formats} hierarchy.
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+library(MicrobiomeR)
+if(is_analyzed_format(MicrobiomeR::raw_silva)){
+    print("It's phyloseq format!")
+} else {
+    fmt <- which_format(MicrobiomeR::raw_silva)
+    print("It's not phyloseq fomrat!")
+    print(sprintf("It's \%s!", fmt))
+}
  }
 }
 }

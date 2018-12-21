@@ -54,7 +54,12 @@ if(interactive()){
 }
 \seealso{
 \code{\link[MicrobiomeR]{combination_palette}}
+<<<<<<< HEAD:man/viridis_magma_palette.Rd
+
+=======
+>>>>>>> barplot-functions:man/viridis_magma_palette.Rd
 \code{\link[viridis:reexports]{viridis}},  \code{\link[viridis:reexports]{magma}}
+
 \code{\link[grDevices]{colorRamp}}
 
 Other Color Palettes: \code{\link{combination_palette}},

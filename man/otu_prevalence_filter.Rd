@@ -2,7 +2,7 @@
 % Please edit documentation in R/metacoder.R
 \name{otu_prevalence_filter}
 \alias{otu_prevalence_filter}
-\title{OTU Prevalence Filter (Metacoder)}
+\title{OTU Prevalence Filter}
 \usage{
 otu_prevalence_filter(obj, minimum_abundance = 5,
   rel_sample_percentage = 0.5, validated = FALSE)
@@ -30,14 +30,46 @@ This filtering method is considered unsupervised, because it soley relies on the
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+library(MicrobiomeR)
+library(metacoder)
+library(taxa)
+
+# Convert Phyloseq object to metacoder object
+metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
+
+# Remove Archaea from the metacoder object
+metacoder_obj <- filter_taxa(
+  obj = metacoder_obj,
+  taxon_names == "Archaea",
+  subtaxa = TRUE,
+  invert = TRUE)
+
+# Ambiguous Annotation Filter - Remove taxonomies with ambiguous names
+metacoder_obj <- filter_ambiguous_taxa(metacoder_obj, subtaxa = TRUE)
+
+# Low Sample Filter - Remove the low samples
+metacoder_obj <- sample_filter(obj          = metacoder_obj,
+                               .f_filter    = ~sum(.),
+                               .f_condition = ~.>= 20, validated = TRUE)
+
+# Master Threshold Filter - Add the otu_proportions table and then filter OTUs based on min \%
+metacoder_obj <- otu_proportion_filter(
+    obj = metacoder_obj,
+    otu_percentage = 0.00001
+    )
+
+# OTU prevalence filter
+metacoder_obj <- otu_prevalence_filter(obj = metacoder_obj, validated = TRUE)
  }
 }
 }
 \seealso{
 \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
+
 \code{\link[metacoder]{calc_prop_samples}}
+
 \code{\link[dplyr]{filter}}
+
 \code{\link[taxa]{filter_taxa}}
 
 Other Metacoder Filters: \code{\link{agglomerate_metacoder}},

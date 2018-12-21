@@ -2,19 +2,24 @@
 % Please edit documentation in R/palettes.R
 \name{get_color_palette}
 \alias{get_color_palette}
-\title{Get Color palette}
+\title{Get a Color Palette}
 \usage{
 get_color_palette(pal_func = viridis_magma_palette, color_no = 20,
   display = TRUE, ...)
 }
 \arguments{
+<<<<<<< HEAD
+\item{pal_func}{A function that \emph{returns the output function} from \code{\link[grDevices]{colorRamp}} or
+a \emph{the output of the output function} from \code{\link[grDevices]{colorRamp}}.  Default: viridis_magma_palette}
+=======
 \item{pal_func}{A function that returns the output from grDevoces::colorRampPalette. Default: viridis_magma_palette}
+>>>>>>> barplot-functions
 
-\item{color_no}{The number of colors in the palette. Default: 20}
+\item{color_no}{The number of colors in the palette.  Default: 20}
 
-\item{display}{Boolean for displaying a pie chart of the palette. Default: TRUE}
+\item{display}{A logical for displaying a pie chart of the palette. Default: TRUE}
 
-\item{...}{Parameters for the pal_func.}
+\item{...}{Parameters for the \emph{pal_func}.}
 }
 \value{
 Returns a color palette in the form of a character vector.
@@ -23,12 +28,18 @@ Returns a color palette in the form of a character vector.
 Get a color palette with a specific number of colors.
 }
 \details{
-This function is meant to be a plugin style function for user created palettes.
+This function is meant to be a plugin style function for users to created palettes.
 }
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+# This example uses data that are no longer available in the MicrobiomeR package,
+# however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_analyzed_format}}.
+ library(MicrobiomeR)
+ data <- MicrobiomeR::analyzed_silva$data$stats_tax_data$Phylum
+ data_len <- length(unique(data))
+ custom_pal <- get_color_palette(color_no=data_len)
+ print(custom_pal)
  }
 }
 }
