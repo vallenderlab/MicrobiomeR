@@ -275,7 +275,7 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #' @importFrom taxa filter_taxa taxon_ranks
 agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
   mo_clone <- obj$clone()
-  mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
+  mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format", "analyzed_format"),
                                           force_format = TRUE, validated = validated, min_or_max = min)
   # Agglomerate
   mo_clone <- taxa::filter_taxa(mo_clone, taxon_ranks == rank,
