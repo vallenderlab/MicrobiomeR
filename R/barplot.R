@@ -1,10 +1,7 @@
 #' @title Melt Metacoder Object
-#'
 #' @description Melt the metacoder or phyloseq tables into a dataframe.
-#'
-#' @param obj A metacoder or phyloseq object.
-#'
-#' @importFrom dplyr right_join rename gather_ setdiff
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @importFrom dplyr right_join rename setdiff
 #'
 #' @return Returns a melted dataframe.
 melt_metacoder_obj <- function(obj) {
@@ -23,10 +20,11 @@ melt_metacoder_obj <- function(obj) {
 #'
 #' @description Transform the dataframe abundance values to percent 100.
 #'
-#' @param melted_df DESCRIPTION.
-#' @param tax_level DESCRIPTION.
+#' @param melted_df A "melted" dataframe from the metacoder object's data.
+#' @param tax_level The taxonomic level.
 #'
-#' @import dplyr
+#' @importFrom dplyr filter group_by summarize mutate
+#' @importFrom stats na.omit
 #'
 #' @return Returns a transformed dataframe.
 transform_metacoder_df <- function(melted_df, tax_level) {
@@ -35,49 +33,58 @@ transform_metacoder_df <- function(melted_df, tax_level) {
   tax_level.abund <- paste0(quo_name(t), ".Abundance")
 
   melted_df %>%
-    group_by(SampleID, !!sym(tax_level)) %>%
-    filter(Abundance > 0) %>%
-    summarize(!!tax_level.abund := sum(as.numeric(Abundance)), TreatmentGroup = first(TreatmentGroup)) %>%
-    na.omit() %>%
-    mutate(Relative.Abundance = 100 * !!sym(tax_level.abund) / sum(!!sym(tax_level.abund)))
+    dplyr::group_by(SampleID, !!sym(tax_level)) %>%
+    dplyr::filter(Abundance > 0) %>%
+    dplyr::summarize(!!tax_level.abund := sum(as.numeric(Abundance)), TreatmentGroup = first(TreatmentGroup)) %>%
+    stats::na.omit() %>%
+    dplyr::mutate(Relative.Abundance = 100 * !!sym(tax_level.abund) / sum(!!sym(tax_level.abund)))
 }
-
-
 
 #' @title Stacked Barplot
 #'
 #' @description FUNCTION_DESCRIPTION
 #'
-#' @param obj A metacoder or phyloseq object.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @param tax_level DESCRIPTION.
 #' @param fill DESCRIPTION.
 #' @param xlabel DESCRIPTION.
-#' @param title DESCRIPTION.
+#' @param title The title or name of the plot.
 #' @param palette_values DESCRIPTION.
 #'
 #' @importFrom ggplot2 ggplot aes annotate geom_bar
 #' @importFrom magrittr %>%
+#' @importFrom dplyr mutate
 #'
 #' @inheritParams transform_metacoder_obj
-#'
+#' @family Visualizations
 #' @return Returns a stacked barplot.
 #' @export
 stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel = "Samples", title = NULL, palette_values) {
 
-  # TODO: Add data wrangling step here or object validation.
-  # TODO: Add default palette values.
+  #
+  metacoder_object <- object_handler(obj)
+  metacoder_object <- validate_MicrobiomeR_format(
+    obj = metacoder_object,
+    valid_formats = c("analyzed_format")
+  )
 
   # Start by melting the data in the "standard" way using psmelt.
   # Also, transform the abundance data to relative abundance
-  mdf <- transform_metacoder_df(melt_metacoder_obj(obj), tax_level)
-  mdf <- mutate(mdf, !!sym(tax_level) := factor(!!sym(tax_level), levels = unique(mdf[[tax_level]])))
+  mdf <- transform_metacoder_df(melt_metacoder_obj(metacoder_object), tax_level)
+  mdf <- dplyr::mutate(mdf, !!sym(tax_level) := factor(!!sym(tax_level), levels = unique(mdf[[tax_level]])))
 
   # Build the plot data structure
   p <- ggplot2::ggplot(mdf, aes(x = SampleID, y = Relative.Abundance, fill = !!sym(fill)), fill = fill)
 
   # Add the bar geometric object. Creates a basic graphic. Basis for the rest.
   # Test weather additional
-  p <- p + geom_bar(stat = "identity", position = "stack")
+  p <- p + ggplot2::geom_bar(stat = "identity", position = "stack")
+
+  # Add a title, if given
+  if (!is.null(palette_values)) {
+    # Dynamically change palette colors based on number of taxa being input.
+    palette_values <- MicrobiomeR::get_color_palette()
+  }
 
   # Create the theme
   p <- p + ylab("Relative Abundance (% 100)") + scale_fill_manual(values = palette_values) + theme(
@@ -85,8 +92,8 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
     axis.text.x = element_blank(), axis.ticks = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
     strip.background = element_rect(fill = "white"), strip.text = element_text(colour = "black"), panel.background = element_blank()
   ) +
-    xlab(xlabel) +
-    annotate("segment", x = Inf, xend = -Inf, y = Inf, yend = Inf, color = "black", lwd = 1) +
+    ggplot2::xlab(xlabel) +
+    ggplot2::annotate("segment", x = Inf, xend = -Inf, y = Inf, yend = Inf, color = "black", lwd = 1) +
     scale_y_continuous(breaks = scales::pretty_breaks(n = 4))
 
   # Add faceting
@@ -100,17 +107,15 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
   return(p)
 }
 
-
 #' @title Save Barplot
 #' @description Save a stacked barplot.
 #' @param plot The plot object.
-#' @param filename The name of the file. (an extension should not be included.)
-#' @return OUTPUT_DESCRIPTION
+#' @param filename The name of the file. (an extension should not be included)
 #' @examples
 #' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
+#' if (interactive()) {
+#'   # EXAMPLE1
+#' }
 #' }
 #' @export
 #' @rdname save_barplot
