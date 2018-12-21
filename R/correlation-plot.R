@@ -98,7 +98,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
   background_limits <- data.frame(id = c("1", "1", "1", "2", "2", "2"), x = c(0, Inf, 0, 0, Inf, Inf), y = c(0, Inf, Inf, 0, 0, Inf))
   # Get a color palette
   secondary_taxa <- length(unique(primary_data[[(secondary_rank)]]))
-  myPal <- get_color_palette(color_no = secondary_taxa)
+  myPal <- get_color_palette(color_no = secondary_taxa, display = FALSE)
 
   # Start ggplot2 workflow
   corr <- ggplot2::ggplot(primary_data, ggplot2::aes(x = mean_treat1, y = mean_treat2)) +

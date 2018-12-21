@@ -12,7 +12,8 @@ get_heat_tree_plots(obj, rank_list = NULL, ...)
 \item{rank_list}{A vector of ranks used to generate heat_trees.  Default: NULL}
 
 \item{...}{Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
-output is displayed.}
+output is displayed.  Please see the \code{\link[MicrobiomeR]{get_heat_tree_parameters}} documentation
+for further explanation.}
 }
 \value{
 A list of heat_tree plots.

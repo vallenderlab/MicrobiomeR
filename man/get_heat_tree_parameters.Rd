@@ -13,7 +13,9 @@ get_heat_tree_parameters(obj, title, ...)
 
 \item{...}{Any of the heat tree parameters list below can be used to change the way the heat_tree
 output is displayed.  However, this function acts as a default list of parameters.  The memebers
-of the default list will be overridden by the dot parameters.}
+of the default list will be overridden by the dot parameters.  Any variable in obj$data$stats_tax_data
+can be used to manipulate the heat tree parameters.  Function calls from the taxa package must
+be done explicitely on the metacoder object.}
 }
 \value{
 A list used with do.call and the metacoder::heat_tree function.
@@ -24,8 +26,11 @@ This function get's the parameters used for the get_heat_tree_plots function.
 \seealso{
 \code{\link[metacoder]{heat_tree}}
 
-\code{\link[taxa]{n_obs}},\code{\link[taxa]{taxon_names}}
+\code{\link[taxa]{n_obs}},  \code{\link[taxa]{taxon_names}}
+
 \code{\link[purrr]{list_modify}}
+
+\code{\link[rlang]{enquos}},  \code{\link[rlang]{is_quosure}},  \code{\link[rlang]{eval_tidy}}
 
 Other Visualizations: \code{\link{correlation_plot}},
   \code{\link{get_correlation_plots}},
