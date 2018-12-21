@@ -70,10 +70,8 @@ transform_metacoder_df <- function(melted_df, tax_level) {
 #' @export
 stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel = "Samples", title = NULL, palette_values) {
 
-  #
-  metacoder_object <- object_handler(obj)
   metacoder_object <- validate_MicrobiomeR_format(
-    obj = metacoder_object,
+    obj = object_handler(obj),
     valid_formats = c("analyzed_format")
   )
 
