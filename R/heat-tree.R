@@ -59,8 +59,7 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
     htrees[[rank]] <- htrees[[rank]] +
       ggplot2::theme(
         plot.title = ggplot2::element_text(hjust = 0.5),
-        text = ggplot2::element_text(size = 24, family = "Arial")) +
-      ggplot2::ggtitle(title)
+        text = ggplot2::element_text(size = 24, family = "Arial"))
   }
   htrees[["metacoder_object"]] <- metacoder_object
   return(htrees)
