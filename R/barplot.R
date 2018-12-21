@@ -1,32 +1,41 @@
 #' @title Melt Metacoder Object
 #' @description Melt the metacoder or phyloseq tables into a dataframe.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
-#' @importFrom dplyr right_join rename setdiff
-#'
 #' @return Returns a melted dataframe.
+#' @details DETAILS
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @rdname melt_metacoder_obj
+#' @importFrom  dplyr right_join setdiff
 melt_metacoder_obj <- function(obj) {
   sd <- data.frame(obj$data$sample_data)
   TT <- data.frame(obj$data$otu_annotations, stringsAsFactors = FALSE)
   otu.table <- data.frame(obj$data$otu_proportions, check.names = FALSE, stringsAsFactors = FALSE)
   otu.table %>%
-    right_join(TT) %>%
-    gather_("X.SampleID", "Abundance", setdiff(colnames(otu.table), "otu_id")) %>%
-    right_join(sd) %>%
+    dplyr::right_join(TT) %>%
+    dplyr::gather_("X.SampleID", "Abundance", dplyr::setdiff(colnames(otu.table), "otu_id")) %>%
+    dplyr::right_join(sd) %>%
     rename(SampleID = `X.SampleID`) %>%
     rename(OTU = `otu_id`)
 }
 
 #' @title Transform Metacoder Dataframe
-#'
 #' @description Transform the dataframe abundance values to percent 100.
-#'
 #' @param melted_df A "melted" dataframe from the metacoder object's data.
 #' @param tax_level The taxonomic level.
-#'
+#' @return Returns a transformed dataframe.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
 #' @importFrom dplyr filter group_by summarize mutate
 #' @importFrom stats na.omit
-#'
-#' @return Returns a transformed dataframe.
 transform_metacoder_df <- function(melted_df, tax_level) {
   # TODO: Add data wrangling step here or object validation.
   t <- enquo(tax_level)
@@ -83,7 +92,7 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
   # Add a title, if given
   if (!is.null(palette_values)) {
     # Dynamically change palette colors based on number of taxa being input.
-    palette_values <- MicrobiomeR::get_color_palette()
+    palette_values <- MicrobiomeR::get_color_palette(display = FALSE)
   }
 
   # Create the theme
@@ -121,7 +130,7 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
 #' @rdname save_barplot
 #' @seealso
 #'
-#' @import ggplot2
+#' @importFrom ggplot2 ggsave
 save_barplot <- function(plot, filename) {
   if (is.null(filename)) {
     filename <- plot
