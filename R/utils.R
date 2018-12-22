@@ -230,7 +230,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
       tidyr::spread(!!dplyr::sym(ids), "_data")
   }
   # Look for previously transformed tibbles and separate any united colums
-  if (all(stringr::str_detect(trans_data[header_name], "\\<\\_\\>"))) {
+  if (all(suppressWarnings({stringr::str_detect(trans_data[header_name], "\\<\\_\\>")}))) {
     if (!is.null(separated_categories)) {
       trans_data <- trans_data %>% tidyr::separate(col = header_name, into = separated_categories, sep = "<_>")
     } else {

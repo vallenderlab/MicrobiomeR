@@ -267,21 +267,27 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
   }
   if (is_raw_format(mo_clone)) {
     # Create a taxonomy abundance table from the OTU abundance table
-    mo_clone$data$taxa_abundance <- metacoder::calc_taxon_abund(obj  = mo_clone,
-                                                     data = "otu_abundance",
-                                                     cols = cols,
-                                                     out_names = out_names)
+    suppressMessages({
+      mo_clone$data$taxa_abundance <- metacoder::calc_taxon_abund(obj  = mo_clone,
+                                                       data = "otu_abundance",
+                                                       cols = cols,
+                                                       out_names = out_names)
+    })
     # Create an OTU proportions table from the OTU abundance table
-    mo_clone$data$otu_proportions <- metacoder::calc_obs_props(obj        = mo_clone,
-                                                    data       = "otu_abundance",
-                                                    cols       = cols,
-                                                    other_cols = TRUE,
-                                                    out_names = out_names)
+    suppressMessages({
+      mo_clone$data$otu_proportions <- metacoder::calc_obs_props(obj        = mo_clone,
+                                                      data       = "otu_abundance",
+                                                      cols       = cols,
+                                                      other_cols = TRUE,
+                                                      out_names = out_names)
+    })
     # Create a taxonomy proportions table from the OTU proportions table
+    suppressMessages({
     mo_clone$data$taxa_proportions <- metacoder::calc_taxon_abund(obj  = mo_clone,
                                                        data = "otu_proportions",
                                                        cols = cols,
                                                        out_names = out_names)
+    })
   } else if (is_basic_format(mo_clone)) {
     warning("The object is already in the basic format.")
   } else {
@@ -335,13 +341,15 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
   # Continue with conversion to analyzed_format
   if (is_basic_format(mo_clone)) {
     # Compare groups of samples for statistical analysis
-    mo_clone$data$statistical_data <- metacoder::compare_groups(obj = mo_clone,
-                                                     data        = "taxa_proportions",
-                                                     cols        = cols,
-                                                     groups      = groups,
-                                                     func        = comp_func,
-                                                     other_cols  = TRUE,
-                                                     combinations = combinations)
+    suppressMessages({
+      mo_clone$data$statistical_data <- metacoder::compare_groups(obj = mo_clone,
+                                                       data        = "taxa_proportions",
+                                                       cols        = cols,
+                                                       groups      = groups,
+                                                       func        = comp_func,
+                                                       other_cols  = TRUE,
+                                                       combinations = combinations)
+    })
     # Create a table with taxonomy data and stats data for downstream analysis
     tax_table <- obj$taxonomy_table(subset = taxon_ids, add_id_col = TRUE)
     if ("taxon_ids" %in% names(tax_table)) {

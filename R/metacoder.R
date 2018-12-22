@@ -236,7 +236,9 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
     otu_table_list <- pkg.private$format_table_list$otu_tables
     otu_table_list <- otu_table_list[otu_table_list %in% names(mo_clone$data)]
     # Update the observation data tables and the taxmap object
-    mo_clone <- taxa::filter_obs(mo_clone, otu_table_list, otu_id %in% otu_ids_to_keep, drop_taxa = TRUE)
+    suppressWarnings({
+      mo_clone <- taxa::filter_obs(mo_clone, otu_table_list, otu_id %in% otu_ids_to_keep, drop_taxa = TRUE)
+    })
     return(mo_clone)
   } else {
     stop("You have to supply a filter formula AND a condition formula.")
@@ -405,8 +407,10 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("basic_format"),
                                           force_format = TRUE, validated = validated, min_or_max = min)
   # Calculate the ids that need to be removed
-  ids_to_remove <- metacoder::calc_prop_samples(mo_clone, "taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
+  suppressMessages({
+    ids_to_remove <- metacoder::calc_prop_samples(mo_clone, "taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
     dplyr::filter(n_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
+  })
   # Prevalence Filtering
   mo_clone <- taxa::filter_taxa(mo_clone, !taxon_ids %in% ids_to_remove$taxon_id, reassign_obs = FALSE)
   return(mo_clone)
@@ -489,9 +493,11 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, force_format = TRUE, validated = validated,
                                           min_or_max = min, valid_formats = c("basic_format"))
   # Calculate the ids that need to be removed based on taxonomic rank
-  ids_to_remove <- agglomerate_metacoder(obj = mo_clone, rank = rank, validated = TRUE) %>% # Agglomeration
+  suppressMessages({
+    ids_to_remove <- agglomerate_metacoder(obj = mo_clone, rank = rank, validated = TRUE) %>% # Agglomeration
     metacoder::calc_prop_samples("taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
     dplyr::filter(n_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
+  })
   # Taxonomic Prevalence Filtering
   mo_clone <- taxa::filter_taxa(mo_clone, !taxon_ids %in% ids_to_remove$taxon_id, reassign_obs = FALSE)
   return(mo_clone)
