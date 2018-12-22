@@ -2,10 +2,10 @@
 #' @description Melt the metacoder or phyloseq tables into a dataframe.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @return Returns a melted dataframe.
-#' @rdname melt_metacoder_obj
+#' @rdname melt_metacoder
 #' @importFrom  dplyr right_join setdiff
 #' @importFrom  tidyr gather_
-melt_metacoder_obj <- function(obj) {
+melt_metacoder <- function(obj) {
   sd <- data.frame(obj$data$sample_data)
   TT <- data.frame(obj$data$otu_annotations, stringsAsFactors = FALSE)
   otu.table <- data.frame(obj$data$otu_proportions, check.names = FALSE, stringsAsFactors = FALSE)
@@ -24,8 +24,7 @@ melt_metacoder_obj <- function(obj) {
 #' @return Returns a transformed dataframe.
 #' @importFrom dplyr filter group_by summarize mutate enquo quo_name
 #' @importFrom stats na.omit
-transform_metacoder_df <- function(melted_df, tax_level) {
-  # TODO: Add data wrangling step here or object validation.
+transform_metacoder <- function(melted_df, tax_level) {
   t <- dplyr::enquo(tax_level)
   tax_level.abund <- paste0(dplyr::quo_name(t), ".Abundance")
 
@@ -47,24 +46,27 @@ transform_metacoder_df <- function(melted_df, tax_level) {
 #' @param title The title or name of the plot.
 #' @param palette_values A list of the colors to input to be mapped to the plot palette.
 #' @examples
-#'  # An example stacked bar plot
-#'  library(MicrobiomeR)
-#'  data <- analyzed_silva
-#'  palette <- get_color_palette(color_no = 12)
-#'  plot <- stacked_barplot(obj = data, palette_values = palette)
-#'  plot
+#' \dontrun{
+#' if (interactive()) {
+#'   # An example stacked bar plot
+#'   library(MicrobiomeR)
+#'   data <- analyzed_silva
+#'   palette <- get_color_palette(color_no = 12)
+#'   plot <- stacked_barplot(obj = data, palette_values = palette)
+#'   plot
+#' }
+#' }
 #' @importFrom ggplot2 ggplot aes annotate geom_bar ylab element_blank element_rect xlab annotate
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
 #' @import scales
 #' @import vegan
 #'
-#' @inheritParams transform_metacoder_df
+#' @inheritParams transform_metacoder
 #' @family Visualizations
 #' @return Returns a stacked barplot.
 #' @export
 stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel = "Samples", faceted = FALSE, title = NULL, palette_values) {
-
   metacoder_object <- validate_MicrobiomeR_format(
     obj = object_handler(obj),
     valid_formats = c("analyzed_format")
@@ -72,7 +74,7 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
 
   # Start by melting the data in the "standard" way using psmelt.
   # Also, transform the abundance data to relative abundance
-  mdf <- transform_metacoder_df(melt_metacoder_obj(metacoder_object), tax_level)
+  mdf <- transform_metacoder(melt_metacoder(metacoder_object), tax_level)
   mdf <- dplyr::mutate(mdf, !!sym(tax_level) := factor(!!sym(tax_level), levels = unique(mdf[[tax_level]])))
 
   # Build the plot data structure
@@ -101,7 +103,7 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
   # Add faceting, if true
   if (faceted) {
     stop("Faceted plots have not been fully integrated yet.")
-    #p <- p + ggplot2::facet_grid(~TreatmentGroup, scales = "free_x", space = "free")
+    # p <- p + ggplot2::facet_grid(~TreatmentGroup, scales = "free_x", space = "free")
   }
 
   # Add a title, if given
