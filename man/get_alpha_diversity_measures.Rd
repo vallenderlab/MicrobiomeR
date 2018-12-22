@@ -4,10 +4,12 @@
 \alias{get_alpha_diversity_measures}
 \title{Get Alpha Diversity}
 \usage{
-get_alpha_diversity_measures(obj)
+get_alpha_diversity_measures(obj, group = "TreatmentGroup")
 }
 \arguments{
 \item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
+
+\item{group}{The "TreatmentGroup" or similar grouping from your metadata to denote sample groups, Default: 'TreatmentGroup'}
 }
 \value{
 Returns a list of alpha diversity measures with metadata.
@@ -20,7 +22,7 @@ This function generates various alpha diversity measures include Shannon, Fisher
 if (interactive()) {
   library(MicrobiomeR)
   data <- analyzed_silva
-  measures <- get_alpha_diversity(data)
+  measures <- get_alpha_diversity_measures(data)
   measures$Shannon
 }
 }

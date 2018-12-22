@@ -29,12 +29,16 @@ Returns a stacked barplot.
 Create a stacked barplot to show relative abundance of taxa.
 }
 \examples{
- # An example stacked bar plot
- library(MicrobiomeR)
- data <- analyzed_silva
- palette <- get_color_palette(color_no = 12)
- plot <- stacked_barplot(obj = data, palette_values = palette)
- plot
+\dontrun{
+if (interactive()) {
+  # An example stacked bar plot
+  library(MicrobiomeR)
+  data <- analyzed_silva
+  palette <- get_color_palette(color_no = 12)
+  plot <- stacked_barplot(obj = data, palette_values = palette)
+  plot
+}
+}
 }
 \seealso{
 Other Visualizations: \code{\link{alpha_diversity_plot}},
