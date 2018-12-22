@@ -6,7 +6,7 @@
 
 * Fixes to heat tree plots
 
-# MicrobiomeR 0.0.9.3
+ # MicrobiomeR 0.1.0
  
 * Changed to a semantic versioning scheme.
 * Added `barplot.R` file of stacked barplot functions.
