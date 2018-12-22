@@ -48,13 +48,13 @@ column in your metadata file.
 \examples{
 \dontrun{
 if(interactive()){
-library(Microbiome)
+library(MicrobiomeR)
 # Get the datafiles from the package
 biom_file <- system.file("extdata", "silva_OTU.biom", package = "MicrobiomeR")
 tree_file <- system.file("extdata", "silva.tre", package = "MicrobiomeR")
 md_file <- system.file("extdata", "nephele_metadata.txt", package = "MicrobiomeR")
 }
-# Create a phylose object from the data files.
+# Create a phyloseq object from the data files.
 phy_obj <- get_phyloseq_obj(biom_file = biome_file, tree_file = tree_file, metadata_file = md_file)
 }
 }

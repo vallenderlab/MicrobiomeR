@@ -42,11 +42,13 @@ save_heat_tree_plots(h_trees)
 \code{\link[MicrobiomeR]{get_output_dir}}
 \code{\link[ggplot2]{ggsave}}
 
-Other Visualizations: \code{\link{correlation_plot}},
+Other Visualizations: \code{\link{alpha_diversity_plot}},
+  \code{\link{correlation_plot}},
   \code{\link{get_correlation_plots}},
   \code{\link{get_heat_tree_parameters}},
   \code{\link{get_heat_tree_plots}},
   \code{\link{get_plot_limits}},
-  \code{\link{save_correlation_plots}}
+  \code{\link{save_correlation_plots}},
+  \code{\link{stacked_barplot}}
 }
 \concept{Visualizations}

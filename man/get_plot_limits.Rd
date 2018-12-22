@@ -18,11 +18,13 @@ A vector that supplies the overarching x and y limits.
 Get the limits of the plot using data values.
 }
 \seealso{
-Other Visualizations: \code{\link{correlation_plot}},
+Other Visualizations: \code{\link{alpha_diversity_plot}},
+  \code{\link{correlation_plot}},
   \code{\link{get_correlation_plots}},
   \code{\link{get_heat_tree_parameters}},
   \code{\link{get_heat_tree_plots}},
   \code{\link{save_correlation_plots}},
-  \code{\link{save_heat_tree_plots}}
+  \code{\link{save_heat_tree_plots}},
+  \code{\link{stacked_barplot}}
 }
 \concept{Visualizations}
