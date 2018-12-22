@@ -3,7 +3,8 @@
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @param rank_list A vector of ranks used to generate heat_trees.  Default: NULL
 #' @param ... Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
-#' output is displayed.
+#' output is displayed.  Please see the \code{\link[MicrobiomeR]{get_heat_tree_parameters}} documentation
+#' for further explanation.
 #' @return A list of heat_tree plots.
 #' @pretty_print TRUE
 #' @examples
@@ -38,31 +39,38 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
   if (is.null(rank_list)) {
     rank_list <- unlist(pkg.private$ranks)
   }
+  ret_data <- list()
   htrees <- list()
+  tbls <- list()
   # Create a metacoder object from a phyloseq/metacoder/RData file
-  metacoder_object <- object_handler(obj)
-  metacoder_object <- validate_MicrobiomeR_format(
-    obj = metacoder_object,
+  obj <- object_handler(obj)
+  obj <- validate_MicrobiomeR_format(
+    obj = obj,
     valid_formats = c("analyzed_format"),
     force_format = TRUE)
+  ret_data[["metacoder_object"]] <- obj
   # Create a list of heat_tree plots for saving
   for (rank in rank_list) {
     rank_level <- rank_index[[rank]]
-    filtered_obj <- metacoder_object %>% taxa::filter_obs(data = c("statistical_data", "taxa_proportions", "taxa_abundance", "stats_tax_data"), n_supertaxa < rank_level, drop_taxa = TRUE)
+    filtered_obj <- obj %>% taxa::filter_taxa(n_supertaxa < rank_level,
+                                              supertaxa = TRUE,
+                                              reassign_obs = FALSE)
+    tbls[[rank]] <- filtered_obj
     title <- sprintf("Bacterial Abundance (%s Level)", rank)
     message(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(crayon::red(title))))
     default_heat_tree_parameters <- get_heat_tree_parameters(obj = filtered_obj, title = title, ...)
     # Filter by Taxonomy Rank and then create a heat tree.
+    #return(default_heat_tree_parameters)
     htrees[[rank]] <- do.call(what = metacoder::heat_tree, args = default_heat_tree_parameters)
     # Made plot title centered
     htrees[[rank]] <- htrees[[rank]] +
       ggplot2::theme(
         plot.title = ggplot2::element_text(hjust = 0.5),
-        text = ggplot2::element_text(size = 24, family = "Arial")) +
-      ggplot2::ggtitle(title)
+        text = ggplot2::element_text(size = 24, family = "Arial"))
   }
-  htrees[["metacoder_object"]] <- metacoder_object
-  return(htrees)
+  ret_data[["heat_trees"]] <- htrees
+  ret_data[["taxmaps"]] <- tbls
+  return(ret_data)
 }
 
 
@@ -72,7 +80,9 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
 #' @param title The title used in the heat_tree plot.
 #' @param ... Any of the heat tree parameters list below can be used to change the way the heat_tree
 #' output is displayed.  However, this function acts as a default list of parameters.  The memebers
-#' of the default list will be overridden by the dot parameters.
+#' of the default list will be overridden by the dot parameters.  Any variable in obj$data$stats_tax_data
+#' can be used to manipulate the heat tree parameters.  Function calls from the taxa package must
+#' be done explicitely on the metacoder object.
 #' @return A list used with do.call and the metacoder::heat_tree function.
 #' @pretty_print TRUE
 #' @export
@@ -81,24 +91,36 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
 #' @seealso
 #'  \code{\link[metacoder]{heat_tree}}
 #'
-#'  \code{\link[taxa]{n_obs}},\code{\link[taxa]{taxon_names}}
+#'  \code{\link[taxa]{n_obs}},  \code{\link[taxa]{taxon_names}}
+#'
 #'  \code{\link[purrr]{list_modify}}
+#'
+#'  \code{\link[rlang]{enquos}},  \code{\link[rlang]{is_quosure}},  \code{\link[rlang]{eval_tidy}}
 #' @importFrom taxa n_obs taxon_names
 #' @importFrom purrr list_modify
+#' @importFrom rlang enquos is_quosure eval_tidy
 get_heat_tree_parameters <- function(obj, title, ...) {
-  input <- obj
-  log2_mean_ratio <- input$data$statistical_data$log2_mean_ratio
-  wilcox_p_value <- input$data$statistical_data$wilcox_p_value
-  default_parameters <- list(
+  # Clone the taxmap object.
+  input <- obj$clone()
+
+  # Take advantage of the taxamap internal functions to get the data
+  # Use an internal function to get data from the default parameters.
+  data_fun <- function(obj, ...) {
+    data <- obj$data_used(...)
+    return(list(data = data, params=dplyr::enquos(...)))
+  }
+
+  # Get data used in default params
+  default_parameters <-  data_fun(obj = obj,
     .input = input,
     title = title,
     # NODE
     ## The node size is relevant to the Abundance level
     ## The node color is relevant to wheather the abundance is higher in control vs stressed animals
     ## The node labels are relevant to significant taxon names.
-    node_size = taxa::n_obs(input),
+    node_size = n_obs,
     node_color = log2_mean_ratio,
-    node_label = ifelse(wilcox_p_value < 0.05, taxa::taxon_names(input), NA),
+    node_label = ifelse(wilcox_p_value < 0.05, taxon_names, NA),
     node_label_size = 1,
     ### The color red indicates higher abundance in Stressed animals
     ### The color blue indicates higher abundance in Control animals
@@ -109,8 +131,8 @@ get_heat_tree_parameters <- function(obj, title, ...) {
     node_color_range = c("#3288bd", "#f1f1f1", "#d53e4f"),
     node_color_trans = "linear",
     node_color_interval = c(-4, 4),
-    node_size_axis_label = "Size: Number of OTUs",
-    node_color_axis_label = "Color: Increased in Stressed (red) vs.\n Increased in Control (blue)\n",
+    node_size_axis_label = "Number of OTUs",
+    node_color_axis_label = "Upregulated in Stressed (red) vs.\n Downregulated in Stressed (blue)\n",
     ### The labels are only for significant (pvalue < 0.05) abundance changes
     ### The labels are green to offset the blue/red colors.
     node_label_color = wilcox_p_value,
@@ -128,8 +150,8 @@ get_heat_tree_parameters <- function(obj, title, ...) {
     edge_color_range = c("honeydew2", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50", "grey50"),
     edge_color_trans = "linear",
     edge_color_interval = c(0, 1),
-    edge_size_axis_label = "Size: Number of OTUs",
-    edge_color_axis_label = "Color: Significant Changes \nAmong Treatments",
+    edge_size_axis_label = "Number of OTUs",
+    edge_color_axis_label = "Significant Changes \nAmong Treatments",
     # PLOT Options
     initial_layout = "reingold-tilford",
     layout = "davidson-harel",
@@ -138,9 +160,27 @@ get_heat_tree_parameters <- function(obj, title, ...) {
     overlap_avoidance = 3,
     make_edge_legend = FALSE
   )
-  param_list <-list(params = default_parameters)
-  param_list <- purrr::list_modify(param_list, ...)
-  return(param_list$params)
+
+  # Take advantage of the taxamap internal functions to get the data
+  data_list <- input$data_used(...)
+  data_list <- c(data_list, default_parameters$data)
+  data_list <- data_list[!duplicated(data_list)]
+
+  # Do some cringe worthy magic to dynamically parse parameters
+  params <- dplyr::enquos(...) # THese are quosures
+  def_param <- list(params = default_parameters$params) # These are quosures
+  # Merge lists and replace any matches to the ... args
+  param_list <- purrr::list_modify(def_param, params = params)
+  param_list <- param_list$params
+
+  # Find the quosures and evaluate them
+  for (item in names(param_list)) {
+    if (rlang::is_quosure(param_list[[item]])) {
+      # Use the data_list to evaluae the parameter list.
+      param_list[[item]] <- rlang::eval_tidy(param_list[[item]], data = data_list)
+    }
+  }
+  return(param_list)
 }
 
 
