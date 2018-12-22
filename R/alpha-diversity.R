@@ -10,7 +10,6 @@
 #'   data <- analyzed_silva
 #'   measures <- get_alpha_diversity(data)
 #'   measures$Shannon
-#'
 #' }
 #' }
 #' @export
@@ -70,7 +69,6 @@ get_alpha_diversity_measures <- function(obj) {
 #' @rdname alpha_diversity_plot
 #' @seealso
 #' @family Visualizations
-#' @importFrom vegan diversity
 #' @importFrom ggplot2 xlab ylab
 #' @importFrom ggpubr stat_compare_means ggviolin
 #' @importFrom ggthemes theme_pander

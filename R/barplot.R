@@ -56,7 +56,6 @@ transform_metacoder_df <- function(melted_df, tax_level) {
 #' @importFrom ggplot2 ggplot aes annotate geom_bar ylab element_blank element_rect xlab annotate
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
-#' @importFrom scales pretty_breaks
 #'
 #' @inheritParams transform_metacoder_df
 #' @family Visualizations
