@@ -22,7 +22,6 @@ if (interactive()) {
   data <- analyzed_silva
   measures <- get_alpha_diversity(data)
   measures$Shannon
-
 }
 }
 }
