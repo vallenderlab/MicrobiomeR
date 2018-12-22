@@ -47,7 +47,8 @@ Imports:
     forcats,
     ggrepel
 Suggests:
-    knitr
+    knitr,
+    testthat
 Additional_repositories:
     http://bioconductor.org/packages/release/bioc/,
     http://bioconductor.org/packages/release/data/annotation,
