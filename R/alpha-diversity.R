@@ -1,6 +1,7 @@
 #' @title Get Alpha Diversity
 #' @description This function generates various alpha diversity measures include Shannon, Fisher, Coverage, Gini Simpson, and Inverse Simpson.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @param group The "TreatmentGroup" or similar grouping from your metadata to denote sample groups, Default: 'TreatmentGroup'
 #' @return Returns a list of alpha diversity measures with metadata.
 #' @pretty_print TRUE
 #' @examples
@@ -8,7 +9,7 @@
 #' if (interactive()) {
 #'   library(MicrobiomeR)
 #'   data <- analyzed_silva
-#'   measures <- get_alpha_diversity(data)
+#'   measures <- get_alpha_diversity_measures(data)
 #'   measures$Shannon
 #' }
 #' }
@@ -19,7 +20,7 @@
 #' @importFrom microbiome diversities meta
 #' @importFrom metacoder as_phyloseq
 #' @importFrom utils combn
-get_alpha_diversity_measures <- function(obj) {
+get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
   metacoder_object <- validate_MicrobiomeR_format(
     obj = object_handler(obj),
     valid_formats = c("analyzed_format")
@@ -38,7 +39,7 @@ get_alpha_diversity_measures <- function(obj) {
   phyloseq_object.meta$Coverage <- divs$coverage
 
   # create a list of pairwise comaprisons
-  groups <- levels(as.factor(phyloseq_object.meta$TreatmentGroup)) # get the variables
+  groups <- levels(as.factor(phyloseq_object.meta[[group]])) # get the variables
 
   # make a pairwise list that we want to compare.
   group.pairs <- utils::combn(seq_along(groups), 2, simplify = FALSE, FUN = function(i) groups[i])
