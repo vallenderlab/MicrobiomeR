@@ -42,7 +42,8 @@ corr_plots$Class$Phylum
 }
 }
 \seealso{
-Other Visualizations: \code{\link{correlation_plot}},
+Other Visualizations: \code{\link{alpha_diversity_plot}},
+  \code{\link{correlation_plot}},
   \code{\link{get_heat_tree_parameters}},
   \code{\link{get_heat_tree_plots}},
   \code{\link{get_plot_limits}},

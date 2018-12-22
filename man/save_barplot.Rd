@@ -17,7 +17,8 @@ Save a stacked barplot.
 \examples{
 \dontrun{
 if (interactive()) {
-  # EXAMPLE1
+  library(MicrobiomeR)
+  save_barplot(plot = plot, filename = "stacked_bar_phylum")
 }
 }
 }

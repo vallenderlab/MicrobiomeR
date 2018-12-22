@@ -27,7 +27,8 @@ This function get's the parameters used for the get_heat_tree_plots function.
 \code{\link[taxa]{n_obs}},\code{\link[taxa]{taxon_names}}
 \code{\link[purrr]{list_modify}}
 
-Other Visualizations: \code{\link{correlation_plot}},
+Other Visualizations: \code{\link{alpha_diversity_plot}},
+  \code{\link{correlation_plot}},
   \code{\link{get_correlation_plots}},
   \code{\link{get_heat_tree_plots}},
   \code{\link{get_plot_limits}},

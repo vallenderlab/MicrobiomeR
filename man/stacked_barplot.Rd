@@ -5,29 +5,40 @@
 \title{Stacked Barplot}
 \usage{
 stacked_barplot(obj, tax_level = "Phylum", fill = "Phylum",
-  xlabel = "Samples", title = NULL, palette_values)
+  xlabel = "Samples", faceted = FALSE, title = NULL, palette_values)
 }
 \arguments{
 \item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
 
-\item{tax_level}{DESCRIPTION.}
+\item{tax_level}{The taxonomic level, Default: 'Phylum'}
 
-\item{fill}{DESCRIPTION.}
+\item{fill}{The taxonomic level by which the bars are filled, Default: 'Phylum'}
 
-\item{xlabel}{DESCRIPTION.}
+\item{xlabel}{The label of the x axis, Default: 'Samples'}
+
+\item{faceted}{A boolean to determine if the barplot should be faceted by TreatmentGroup}
 
 \item{title}{The title or name of the plot.}
 
-\item{palette_values}{DESCRIPTION.}
+\item{palette_values}{A list of the colors to input to be mapped to the plot palette.}
 }
 \value{
 Returns a stacked barplot.
 }
 \description{
-FUNCTION_DESCRIPTION
+Create a stacked barplot to show relative abundance of taxa.
+}
+\examples{
+ # An example stacked bar plot
+ library(MicrobiomeR)
+ data <- analyzed_silva
+ palette <- get_color_palette(color_no = 12)
+ plot <- stacked_barplot(obj = data, palette_values = palette)
+ plot
 }
 \seealso{
-Other Visualizations: \code{\link{correlation_plot}},
+Other Visualizations: \code{\link{alpha_diversity_plot}},
+  \code{\link{correlation_plot}},
   \code{\link{get_correlation_plots}},
   \code{\link{get_heat_tree_parameters}},
   \code{\link{get_heat_tree_plots}},
