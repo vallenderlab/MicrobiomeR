@@ -59,12 +59,12 @@ get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' @details Alpha diversity helps to determine the species richness (the number of different species in a sample) or evenness (similar abundance level).
 #' @examples
 #' \dontrun{
-#' if(interactive()){
-#'  library(MicrobiomeR)
-#'  data <- analyzed_silva
-#'  plot <- alpha_diversity_plot(obj = data, measure = "shannon", select_otu_table = "otu_proportions", save = FALSE)
-#'  plot
-#'  }
+#' if (interactive()) {
+#'   library(MicrobiomeR)
+#'   data <- analyzed_silva
+#'   plot <- alpha_diversity_plot(obj = data, measure = "shannon", select_otu_table = "otu_proportions", save = FALSE)
+#'   plot
+#' }
 #' }
 #' @export
 #' @rdname alpha_diversity_plot
