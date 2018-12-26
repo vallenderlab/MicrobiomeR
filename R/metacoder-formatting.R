@@ -206,6 +206,7 @@ order_metacoder_data <- function(obj) {
   other_names <- names(mo_clone$data)[!names(mo_clone$data) %in% c(expected_names)]
   table_order <- c(table_order, other_names)
   mo_clone$data <- mo_clone$data[table_order]
+  message(crayon::green("Ordered Data."))
   return(mo_clone)
 }
 
