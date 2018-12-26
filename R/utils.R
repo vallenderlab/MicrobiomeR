@@ -30,7 +30,7 @@
 #' @importFrom tools file_ext
 object_handler <- function(obj) {
   if (is.null(obj)) {
-    stop("Please use a metacoder/phyloseq object or an rdata file.")
+    stop(crayon::red("Please use a metacoder/phyloseq object or an rdata file."))
   } else {
     if (inherits(obj, "phyloseq")) {
       metacoder_object <- metacoder::parse_phyloseq(obj)
@@ -40,7 +40,7 @@ object_handler <- function(obj) {
       if (tools::file_ext(obj) %in% c("RData", ".rda")) {
         load(file = obj)
         if (!"metacoder_object" %in% ls()) {
-          stop("Please provide a loadable .RData/.rda file that contains an object called \"metacoder_object\".")
+          stop(crayon::red("Please provide a loadable .RData/.rda file that contains an object called \"metacoder_object\"."))
         }
       }
     }
