@@ -288,7 +288,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
 #' @importFrom purrr modify_at
 transformer <- function(.data, func, by = "column", ids = NULL, header_name = NULL, preserved_categories = TRUE, separated_categories = NULL, ...) {
   if (!(is.matrix(.data) | is.data.frame(.data) | tibble::is.tibble(.data))) {
-    stop("input not transposable")
+    stop(crayon::red("Data not transformable."))
   }
   input <- .data
   if (by == "row") {
@@ -305,6 +305,7 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
     # Retranspose the table and separate the categorical data for row based transformations
     trans_data <- trans_data %>% transposer(ids = header_name, header_name = ids, separated_categories = separated_categories, preserved_categories = FALSE)
   }
+  message(crayon::green("Transformed Data."))
   return(trans_data)
 }
 
