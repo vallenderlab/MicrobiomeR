@@ -347,6 +347,7 @@ otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FAL
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
                                                        force_format = TRUE, validated = validated, min_or_max = min)
   mo_clone <- otu_id_filter(obj = mo_clone, .f_transform = ~./sum(.), .f_filter = ~mean(.), .f_condition = ~.> otu_percentage)
+  message(crayon::green(glue::glue("Filtering OTUs with less than ", crayon::bgWhite("{otu_percentage*100}%"), " across samples.")))
   return(mo_clone)
 }
 
