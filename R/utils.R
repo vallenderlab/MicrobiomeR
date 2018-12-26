@@ -203,20 +203,20 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
 transposer <- function(.data, ids = NULL, header_name, preserved_categories = TRUE, separated_categories = NULL) {
   # Verify format
   if (!(is.matrix(.data) | is.data.frame(.data) | tibble::is.tibble(.data))) {
-    stop("input not transposable")
+    stop(crayon::red("Data not transposable."))
   }
   input <- .data
   # Get ids if none are given, defaults to the first column
   if (is.null(ids)) {
     ids <- input[1] %>% colnames()
-    warning(sprintf("There were no ids given.  Defaulting to the first column: %s", ids))
+    message(crayon::yellow(sprintf("There were no ids given.  Defaulting to the first column: %s", ids)))
   }
   # Get numeric data (columns)
   num_cols <- input %>% dplyr::select_if(is.numeric) %>% dplyr::select_if(!names(.) %in% ids) %>% colnames()
 
   # Transform
   if (preserved_categories == TRUE) { # All categorical data is preserved
-    warning("Categorical data will be united as a string, which can be tidyr::separated after re-transposing.")
+    message(crayon::yellow("Categorical data will be united as a string, which can be tidyr::separated after re-transposing."))
     preserved_categories <- input %>% dplyr::select(-dplyr::one_of(c(num_cols))) %>% colnames()
     trans_data <- input %>%
       dplyr::as_tibble() %>%
@@ -234,11 +234,12 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
     if (!is.null(separated_categories)) {
       trans_data <- trans_data %>% tidyr::separate(col = header_name, into = separated_categories, sep = "<_>")
     } else {
-      warning("Separated categories has not been supplied.  Columns will be named as \"category_#\".")
+      messsage(crayon::yellow("Separated categories has not been supplied.  Columns will be named as \"category_#\"."))
       n_cats <- stringr::str_count(trans_data[[header_name]][1], pattern = "<_>") + 1
       trans_data <- trans_data %>% tidyr::separate(col = header_name, into = paste("category", seq(1:n_cats), sep = "_"), sep = "<_>")
     }
   }
+  message(crayon::green("Transposed Data."))
   return(trans_data)
 }
 
