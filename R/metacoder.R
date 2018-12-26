@@ -342,6 +342,8 @@ agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
 #' @rdname otu_proportion_filter
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},\code{\link[MicrobiomeR]{otu_id_filter}}
+#' @importFrom glue glue
+#' @importFrom crayon green
 otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FALSE) {
   mo_clone <- obj$clone()
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
@@ -423,6 +425,8 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
   })
   # Prevalence Filtering
   mo_clone <- taxa::filter_taxa(mo_clone, !taxon_ids %in% ids_to_remove$taxon_id, reassign_obs = FALSE)
+  message(crayon::green(glue::glue("Filtering OTUs with an abundance less than ", crayon::bgWhite({minimum_abundance}),
+                                   " in a certain percentage of samples ", crayon::bgWhite("({rel_sample_percentage}%)"), ".")))
   return(mo_clone)
 }
 
