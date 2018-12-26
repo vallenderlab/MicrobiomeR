@@ -135,6 +135,8 @@ sample_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #' @importFrom taxa get_dataset filter_taxa
 #' @importFrom dplyr select_if
 #' @importFrom purrr map keep
+#' @importFrom glue glue
+#' @importFrom crayon red
 taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condition = NULL, validated = FALSE, ...) {
   mo_clone <- obj$clone()
   # Make sure the required functions are provided.
@@ -164,7 +166,7 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
     mo_clone <- taxa::filter_taxa(mo_clone, taxon_ids %in% taxon_ids_to_keep, reassign_obs = FALSE)
     return(mo_clone)
   } else {
-    stop("You have to supply a filter formula AND a condition formula.")
+    stop(glue::glue(crayon::red("You have to supply a filter formula ", crayon::bold("AND")," a condition formula.")))
   }
 }
 
