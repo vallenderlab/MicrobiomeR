@@ -33,12 +33,12 @@ which_format <- function(obj) {
   if (phyloseq_flag) {
     other_flag <- any(c(raw_flag, basic_flag, analyzed_flag))
     if (!other_flag) {
-      warning("Your object is in the phyloseq format!")
-      warning("Please format your metacoder object to continue analysis.")
+      warning(crayon::red("Your object is in the phyloseq format!"))
+      warning(crayon::red("Please format your metacoder object to continue analysis."))
       return("phyloseq_format")
     } else {
-      warning(sprintf("The table names in the metacoder object are: %s", paste(table_names, collapse = ", ")))
-      warning("You have a mix between phyloseq format and other format.")
+      warning(crayon::red(sprintf("The table names in the metacoder object are: %s", paste(table_names, collapse = ", "))))
+      warning(crayon::red("You have a mix between phyloseq format and other format."))
       return("mixed_format")
     }
   } else
@@ -50,8 +50,8 @@ which_format <- function(obj) {
     } else if (raw_flag) {
       return("raw_format")
     } else  {
-      warning(sprintf("The table names in the metacoder object are: %s", paste(table_names, collapse = ", ")))
-      warning("The object is not in a recognized format.")
+      warning(crayon::red(sprintf("The table names in the metacoder object are: %s", paste(table_names, collapse = ", "))))
+      warning(crayon::red("The object is not in a recognized format."))
       return("unknown_format")
     }
 }
