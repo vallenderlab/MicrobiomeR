@@ -403,10 +403,12 @@ as_MicrobiomeR_format <- function(obj, format, ...) {
     } else if (format == "phyloseq_format") {
       mo_clone <- as_phyloseq_format(obj = mo_clone, ...)
     } else {
-      stop("The format is not recognized.")
+      stop(crayon::red("The format is not recognized."))
     }
+  } else if (format == current_format) {
+    message(glue::glue("Your object is already in the proper format:", crayon::bgGreen({format})))
   } else {
-    warning(glue::glue("Your object is already in the proper format:", crayon::bgWhite(crayon::bgGreen({format}))))
+    message(glue::glue("Converted to the ", crayon::green({format}), "."))
   }
   mo_clone <- order_metacoder_data(obj = mo_clone)
   return(mo_clone)
