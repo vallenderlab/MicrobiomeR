@@ -289,11 +289,12 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
         })
       })
   } else if (is_basic_format(mo_clone)) {
-    warning("The object is already in the basic format.")
+    message(crayon::silver("Converting to the basic format:  The object is already in the basic format."))
   } else {
-    stop("To convert to basic format you have to start in the phyloseq or raw formats.")
+    stop(crayon::red(crayon::bgBlack("Converting to the basic format:  You have to start in the phyloseq or raw format.")))
   }
   mo_clone <- order_metacoder_data(obj = mo_clone)
+  message(crayon::green("Converted to the basic format."))
   return(mo_clone)
 }
 
