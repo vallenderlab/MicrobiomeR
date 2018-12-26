@@ -159,6 +159,8 @@ viridis_palette <- function(viridis_palette="viridis", viridis_number=800, virid
 #' @seealso
 #'  \code{\link[grDevices]{colorRamp}}
 #' @importFrom grDevices colorRampPalette
+#' @importFrom crayon red green italics
+#' @importFrom glue glue
 combination_palette <- function(...) {
   # Set up parameters and variables for the palette functions
   params <- list(...)

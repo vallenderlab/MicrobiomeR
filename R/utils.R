@@ -28,6 +28,7 @@
 #'  \code{\link[tools]{fileutils}}
 #' @importFrom metacoder parse_phyloseq
 #' @importFrom tools file_ext
+#' @importFrom crayon red
 object_handler <- function(obj) {
   if (is.null(obj)) {
     stop(crayon::red("Please use a metacoder/phyloseq object or an rdata file."))
@@ -88,6 +89,7 @@ object_handler <- function(obj) {
 #'  \code{\link[stringr]{case}}
 #' @importFrom glue glue
 #' @importFrom stringr str_to_lower
+#' @importFrom crayon yellow blue red green
 get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end_path=NULL, root_path=NULL,
                            custom_path = NULL, overwrite=FALSE, mkdir=TRUE) {
   # Create the relative path to the plots.  By default the full_path will be <root_path>/output
@@ -200,6 +202,7 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
 #' @importFrom dplyr select_if select as_tibble sym one_of
 #' @importFrom tidyr gather unite spread separate
 #' @importFrom stringr str_detect str_count
+#' @importFrom crayon red yellow green
 transposer <- function(.data, ids = NULL, header_name, preserved_categories = TRUE, separated_categories = NULL) {
   # Verify format
   if (!(is.matrix(.data) | is.data.frame(.data) | tibble::is.tibble(.data))) {
@@ -286,6 +289,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
 #'  \code{\link[purrr]{modify}}
 #' @importFrom dplyr select_if select
 #' @importFrom purrr modify_at
+#' @importFrom red green
 transformer <- function(.data, func, by = "column", ids = NULL, header_name = NULL, preserved_categories = TRUE, separated_categories = NULL, ...) {
   if (!(is.matrix(.data) | is.data.frame(.data) | tibble::is.tibble(.data))) {
     stop(crayon::red("Data not transformable."))
