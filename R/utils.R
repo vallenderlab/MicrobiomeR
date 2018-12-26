@@ -135,22 +135,22 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
     if (dir.exists(full_path) && overwrite == FALSE) {
       stop(glue::glue("The directory {full_path} already exists. And you don't want to overwrite the directory."))
     } else if (dir.exists(full_path) && overwrite == TRUE) {
-      warning(glue::glue("You have chosen to overwrite the directory: {full_path}."))
+      message(glue::glue(crayon::yellow("You have chosen to overwrite the directory: {full_path}.")))
       while (answer_flag == FALSE) {
-        answer <- readline(prompt = "Are you sure? (Y/N)")
+        answer <- readline(prompt = crayon::blue("Are you sure? (Y/N)"))
         if (stringr::str_to_lower(answer) == "y") {
           dir.create(full_path, recursive = TRUE)
           answer_flag <- TRUE
         } else if (stringr::str_to_lower(answer) == "n") {
-          warning(glue::glue("Please set overwrite to FALSE and change the path ({full_path}) with experiment and/or other_path."))
-          stop("The files haven't been saved.  You have chosen not to overwrite you files.")
+          warning(glue::glue(crayon::red("Please set overwrite to FALSE and change the path ({full_path}) with experiment and/or other_path.")))
+          stop(crayon::red("The files haven't been saved.  You have chosen not to overwrite you files."))
         } else {
-          warning("Please enter Y for YES or N for NO.  This is not case sensitive.")
+          message(crayon::yellow("Please enter Y for YES or N for NO.  This is not case sensitive."))
           answer_flag <- FALSE
         }
       }
     } else if (!dir.exists(full_path)) {
-      warning(glue::glue("Creating a new directory: {full_path}"))
+      warning(glue::glue(crayon::green("Creating a new directory: {full_path}")))
       dir.create(full_path, recursive = TRUE)
     }
   }
