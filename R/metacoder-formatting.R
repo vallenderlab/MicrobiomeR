@@ -33,8 +33,8 @@ which_format <- function(obj) {
   if (phyloseq_flag) {
     other_flag <- any(c(raw_flag, basic_flag, analyzed_flag))
     if (!other_flag) {
-      warning(crayon::red("Your object is in the phyloseq format!"))
-      warning(crayon::red("Please format your metacoder object to continue analysis."))
+      message(crayon::red("Your object is in the phyloseq format!"))
+      message(crayon::red("Please format your metacoder object to continue analysis."))
       return("phyloseq_format")
     } else {
       warning(crayon::red(sprintf("The table names in the metacoder object are: %s", paste(table_names, collapse = ", "))))
@@ -229,13 +229,13 @@ as_raw_format <- function(obj) {
     mo_clone$data$otu_table <- NULL
     mo_clone$data$otu_annotations <- mo_clone$data$tax_data
     mo_clone$data$tax_data <- NULL
-    return(mo_clone)
   } else if (is_raw_format(mo_clone)) {
-    warning("The object is already in the raw format.")
+    message(crayon::silver("Converting to the raw format:  The object is already in the raw format."))
   } else {
-    stop("To convert to raw format you have to start in the phyloseq format.")
+    stop(crayon::red(crayon::bgBlack("Converting to the raw format:  You have to start in the phyloseq format.")))
   }
   mo_clone <- order_metacoder_data(obj = mo_clone)
+  message(crayon::green("Converted to the raw format."))
   return(mo_clone)
 }
 
