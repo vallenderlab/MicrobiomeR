@@ -52,6 +52,8 @@
 #' @importFrom taxa get_dataset
 #' @importFrom dplyr select_if select filter
 #' @importFrom purrr map keep
+#' @importFrom glue glue
+#' @importFrom crayon red
 sample_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condition = NULL, validated = FALSE, ...) {
   mo_clone <- obj$clone()
   # Make sure the required functions are provided.
@@ -80,7 +82,7 @@ sample_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
     mo_clone$data$sample_data <- mo_clone$data$sample_data %>% dplyr::filter(sample_id %in% samples_to_keep)
     return(mo_clone)
   } else {
-    stop("You have to supply a filter formula AND a condition formula.")
+    stop(glue::glue(crayon::red("You have to supply a filter formula ", crayon::bold("AND")," a condition formula.")))
   }
 }
 
