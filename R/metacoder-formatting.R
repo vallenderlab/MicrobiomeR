@@ -494,11 +494,11 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
     # Throw errors for bad table names
     if (length(bad_table_names != 0)) {
       if (length(bad_table_names) == length(change_name_list)) {
-        stop(glue::glue("None of the parameters that you've given are in your observation data:
-             {bad_table_names}"))
+        stop(glue::glue(crayon::red("None of the parameters that you've given are in your observation data:
+             {bad_table_names}")))
       } else {
-        stop(glue::glue("You have given some bad table names that aren't in you metacoder object:
-                       {bad_table_names}"))
+        stop(glue::glue(crayon::red("You have given some bad table names that aren't in you metacoder object:
+                       {bad_table_names}")))
       }
     }
     # Change the table names
@@ -522,9 +522,9 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
     if (sign(format_level_list[[fmt]]) == 1) {
       mo_clone <- as_MicrobiomeR_format(obj = mo_clone, format = format, ...)
     } else { # Throw an error if the level is negative (unknown or mixed format)
-      warning(glue::glue("Here is a list of your observation data:
-                           {changed_obs_tables}"))
-      stop("Your data is in an unknown or mixed format.")
+      warning(glue::glue(crayon::red("Here is a list of your observation data:
+                           {changed_obs_tables}")))
+      stop(crayon::red("Your data is in an unknown or mixed format."))
     }
   }
   mo_clone <- order_metacoder_data(obj = mo_clone)
