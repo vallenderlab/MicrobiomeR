@@ -213,6 +213,8 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
 #' @importFrom taxa get_dataset filter_taxa
 #' @importFrom dplyr select_if
 #' @importFrom purrr map keep
+#' @importFrom glue glue
+#' @importFrom crayon red
 otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condition = NULL, validated = FALSE, ...) {
   mo_clone <- obj$clone()
   # Make sure the required functions are provided.
@@ -245,7 +247,7 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
     })
     return(mo_clone)
   } else {
-    stop("You have to supply a filter formula AND a condition formula.")
+    stop(glue::glue(crayon::red("You have to supply a filter formula ", crayon::bold("AND")," a condition formula.")))
   }
 }
 
