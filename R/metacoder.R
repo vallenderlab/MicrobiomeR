@@ -497,9 +497,9 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
     ids_to_remove <- agglomerate_metacoder(obj = mo_clone, rank = rank, validated = TRUE) %>% # Agglomeration
     metacoder::calc_prop_samples("taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
     dplyr::filter(n_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
-  })
   # Taxonomic Prevalence Filtering
   mo_clone <- taxa::filter_taxa(mo_clone, !taxon_ids %in% ids_to_remove$taxon_id, reassign_obs = FALSE)
+  })
   return(mo_clone)
 }
 
