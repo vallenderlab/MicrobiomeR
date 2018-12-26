@@ -183,12 +183,11 @@ combination_palette <- function(...) {
         pal <- rev(pal)
       }
     } else {
-      stop("Each parameter you provide must be a \"list\" with 3 variables: \n
-
-           palette:  a function that creates a palette as a vector of colors.
-           args:  a list used with the palette function.
-           range (optional):  a ranged used with '[]' to subset the color palette character vector.\n
-           rev (optional):  a logical indicating weather or not to reverse the color palette")
+      stop(glue::glue(crayon::red("Each parameter you provide must be a \"list\" with 3 variables: \n\r\t"),
+           crayon::green("palette"), ":  a function that creates a palette as a vector of colors.\n\r\t",
+           crayon::green("args"), ":  a list used with the palette function.\n\r\t",
+           crayon::green("range"), crayon::italic("(optional)"), ":  a ranged used with '[]' to subset the color palette character vector.\n\r\t",
+           crayon::green("rev"), crayon::italic("(optional)"), ":  a logical indicating weather or not to reverse the color palette."))
     }
     pal_build <- c(pal_build, pal)
   }
