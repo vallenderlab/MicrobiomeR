@@ -36,41 +36,43 @@
 #' @importFrom ggplot2 theme element_text ggtitle
 #' @importFrom crayon green bgWhite
 get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
-  rank_index <- pkg.private$rank_index
-  if (is.null(rank_list)) {
-    rank_list <- unlist(pkg.private$ranks)
-  }
-  ret_data <- list()
-  htrees <- list()
-  tbls <- list()
-  # Create a metacoder object from a phyloseq/metacoder/RData file
-  obj <- object_handler(obj)
-  obj <- validate_MicrobiomeR_format(
-    obj = obj,
-    valid_formats = c("analyzed_format"),
-    force_format = TRUE)
-  ret_data[["metacoder_object"]] <- obj
-  # Create a list of heat_tree plots for saving
-  for (rank in rank_list) {
-    rank_level <- rank_index[[rank]]
-    filtered_obj <- obj %>% taxa::filter_taxa(n_supertaxa < rank_level,
-                                              supertaxa = TRUE,
-                                              reassign_obs = FALSE)
-    tbls[[rank]] <- filtered_obj
-    title <- sprintf("Bacterial Abundance (%s Level)", rank)
-    message(crayon::green(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(title))))
-    default_heat_tree_parameters <- get_heat_tree_parameters(obj = filtered_obj, title = title, ...)
-    # Filter by Taxonomy Rank and then create a heat tree.
-    #return(default_heat_tree_parameters)
-    htrees[[rank]] <- do.call(what = metacoder::heat_tree, args = default_heat_tree_parameters)
-    # Made plot title centered
-    htrees[[rank]] <- htrees[[rank]] +
-      ggplot2::theme(
-        plot.title = ggplot2::element_text(hjust = 0.5),
-        text = ggplot2::element_text(size = 24, family = "Arial"))
-  }
-  ret_data[["heat_trees"]] <- htrees
-  ret_data[["taxmaps"]] <- tbls
+  suppressWarnings({
+    rank_index <- pkg.private$rank_index
+    if (is.null(rank_list)) {
+      rank_list <- unlist(pkg.private$ranks)
+    }
+    ret_data <- list()
+    htrees <- list()
+    tbls <- list()
+    # Create a metacoder object from a phyloseq/metacoder/RData file
+    obj <- object_handler(obj)
+    obj <- validate_MicrobiomeR_format(
+      obj = obj,
+      valid_formats = c("analyzed_format"),
+      force_format = TRUE)
+    ret_data[["metacoder_object"]] <- obj
+    # Create a list of heat_tree plots for saving
+    for (rank in rank_list) {
+      rank_level <- rank_index[[rank]]
+      filtered_obj <- obj %>% taxa::filter_taxa(n_supertaxa < rank_level,
+                                                supertaxa = TRUE,
+                                                reassign_obs = FALSE)
+      tbls[[rank]] <- filtered_obj
+      title <- sprintf("Bacterial Abundance (%s Level)", rank)
+      message(crayon::green(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(title))))
+      default_heat_tree_parameters <- get_heat_tree_parameters(obj = filtered_obj, title = title, ...)
+      # Filter by Taxonomy Rank and then create a heat tree.
+      #return(default_heat_tree_parameters)
+      htrees[[rank]] <- do.call(what = metacoder::heat_tree, args = default_heat_tree_parameters)
+      # Made plot title centered
+      htrees[[rank]] <- htrees[[rank]] +
+        ggplot2::theme(
+          plot.title = ggplot2::element_text(hjust = 0.5),
+          text = ggplot2::element_text(size = 24, family = "Arial"))
+    }
+    ret_data[["heat_trees"]] <- htrees
+    ret_data[["taxmaps"]] <- tbls
+  })
   return(ret_data)
 }
 
