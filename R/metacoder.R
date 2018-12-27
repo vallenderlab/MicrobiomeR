@@ -503,6 +503,8 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
 #' @importFrom metacoder calc_prop_samples
 #' @importFrom dplyr filter
 #' @importFrom taxa filter_taxa
+#' @importFrom glue glue
+#' @importFrom crayon green bgWhite
 taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_percentage = 0.5,
                                    validated = FALSE) {
   mo_clone <- obj$clone()
@@ -516,6 +518,8 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
   # Taxonomic Prevalence Filtering
   mo_clone <- taxa::filter_taxa(mo_clone, !taxon_ids %in% ids_to_remove$taxon_id, reassign_obs = FALSE)
   })
+  message(crayon::green(glue::glue("Filtering OTUs at the ", crayon::bgWhite({rank}), " level with an abundance less than ", crayon::bgWhite({minimum_abundance}),
+                                   " in a certain percentage of samples ", crayon::bgWhite("({rel_sample_percentage}%)"), ".")))
   return(mo_clone)
 }
 
@@ -592,6 +596,8 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
 #'  \code{\link[dplyr:summarise_all]{summarise_if}}
 #' @importFrom dplyr summarise_if
 #' @importFrom stats sd
+#' @importFrom glue glue
+#' @importFrom crayon green bgWhite
 cov_filter <- function(obj, coefficient_of_variation, validated = FALSE) {
   mo_clone <- obj$clone()
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
@@ -604,6 +610,7 @@ cov_filter <- function(obj, coefficient_of_variation, validated = FALSE) {
   standf <- function(x, t = total) round(t * (x / sum(x)))
   # Filter OTUs that don't pass the maximum coefficient of variation.
   mo_clone <- otu_id_filter(obj = mo_clone, .f_transform = standf, .f_filter = ~sd(.)/mean(.), .f_condition = ~.<coefficient_of_variation)
+  message(crayon::green(glue::glue("Filtering OTUs that have a coefficient of variation that is more than ", crayon::bgWhite({coefficient_of_variation}), ".")))
   return(mo_clone)
 }
 
