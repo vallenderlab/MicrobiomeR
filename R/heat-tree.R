@@ -34,6 +34,7 @@
 #' @importFrom crayon bgWhite red
 #' @importFrom metacoder heat_tree
 #' @importFrom ggplot2 theme element_text ggtitle
+#' @importFrom crayon green bgWhite
 get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
   rank_index <- pkg.private$rank_index
   if (is.null(rank_list)) {
@@ -57,7 +58,7 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
                                               reassign_obs = FALSE)
     tbls[[rank]] <- filtered_obj
     title <- sprintf("Bacterial Abundance (%s Level)", rank)
-    message(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(crayon::red(title))))
+    message(crayon::green(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(title))))
     default_heat_tree_parameters <- get_heat_tree_parameters(obj = filtered_obj, title = title, ...)
     # Filter by Taxonomy Rank and then create a heat tree.
     #return(default_heat_tree_parameters)
@@ -212,13 +213,17 @@ get_heat_tree_parameters <- function(obj, title, ...) {
 #'  \code{\link[MicrobiomeR]{get_output_dir}}
 #'  \code{\link[ggplot2]{ggsave}}
 #' @importFrom ggplot2 ggsave
+#' @importFrom crayon yellow green
+#' @importFrom glue glue
 save_heat_tree_plots <- function (htrees, format="tiff", start_path = "output", ...) {
   # Create the relative path to the heat_tree plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
   # With the parameters set the full path will be <pwd>/output/<experiment>/heat_trees/<extra_path>.
   full_path <- get_output_dir(start_path = start_path, plot_type = "heat_trees", ...)
+  message(glue::glue(crayon::yellow("Saving Heat Trees to the following directory: \n", "\r\t{full_path}")))
   # Iterate the heat_tree plot list and save them in the proper directory
   for (rank in names(htrees)) {
     if (rank != "metacoder_object"){
+      message(crayon::green("Saving the {rank} Heat Tree."))
       ggplot2::ggsave(filename = sprintf("%s.heat_tree.%s", rank, format), plot = htrees[[rank]], device = format, path = full_path, dpi = 500)
     }
   }
