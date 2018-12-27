@@ -16,6 +16,7 @@
 #' @export
 #' @family Validation
 #' @rdname which_format
+#' @importFrom crayon yellow red
 which_format <- function(obj) {
   mo_clone <- obj$clone()
   # Table names
@@ -33,12 +34,12 @@ which_format <- function(obj) {
   if (phyloseq_flag) {
     other_flag <- any(c(raw_flag, basic_flag, analyzed_flag))
     if (!other_flag) {
-      warning("Your object is in the phyloseq format!")
-      warning("Please format your metacoder object to continue analysis.")
+      message(crayon::yellow("Your object is in the phyloseq format!"))
+      message(crayon::yellow("Please format your metacoder object to continue analysis."))
       return("phyloseq_format")
     } else {
-      warning(sprintf("The table names in the metacoder object are: %s", paste(table_names, collapse = ", ")))
-      warning("You have a mix between phyloseq format and other format.")
+      message(crayon::yellow(sprintf("The table names in the metacoder object are: %s", paste(table_names, collapse = ", "))))
+      message(crayon::yellow("You have a mix between phyloseq format and other format."))
       return("mixed_format")
     }
   } else
@@ -50,8 +51,8 @@ which_format <- function(obj) {
     } else if (raw_flag) {
       return("raw_format")
     } else  {
-      warning(sprintf("The table names in the metacoder object are: %s", paste(table_names, collapse = ", ")))
-      warning("The object is not in a recognized format.")
+      warning(crayon::red(sprintf("The table names in the metacoder object are: %s", paste(table_names, collapse = ", "))))
+      warning(crayon::red("The object is not in a recognized format."))
       return("unknown_format")
     }
 }
@@ -194,6 +195,7 @@ is_phyloseq_format <- function(obj) {
 #' @export
 #' @family Validation
 #' @rdname order_metacoder_data
+#' @importFrom crayon silver
 order_metacoder_data <- function(obj) {
   obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
@@ -206,6 +208,7 @@ order_metacoder_data <- function(obj) {
   other_names <- names(mo_clone$data)[!names(mo_clone$data) %in% c(expected_names)]
   table_order <- c(table_order, other_names)
   mo_clone$data <- mo_clone$data[table_order]
+  message(crayon::silver("Ordered Data."))
   return(mo_clone)
 }
 
@@ -220,6 +223,7 @@ order_metacoder_data <- function(obj) {
 #' @rdname as_raw_format
 #' @seealso
 #'  \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{is_raw_format}}, \code{\link[MicrobiomeR]{order_metacoder_data}}
+#'  @importFrom crayon silver red greem
 as_raw_format <- function(obj) {
   obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
@@ -228,13 +232,13 @@ as_raw_format <- function(obj) {
     mo_clone$data$otu_table <- NULL
     mo_clone$data$otu_annotations <- mo_clone$data$tax_data
     mo_clone$data$tax_data <- NULL
-    return(mo_clone)
   } else if (is_raw_format(mo_clone)) {
-    warning("The object is already in the raw format.")
+    message(crayon::silver("Converting to the raw format:  The object is already in the raw format."))
   } else {
-    stop("To convert to raw format you have to start in the phyloseq format.")
+    stop(crayon::red("Converting to the raw format:  You have to start in the phyloseq format."))
   }
   mo_clone <- order_metacoder_data(obj = mo_clone)
+  message(crayon::green("Converted to the raw format."))
   return(mo_clone)
 }
 
@@ -254,6 +258,7 @@ as_raw_format <- function(obj) {
 #'
 #'  \code{\link[metacoder]{calc_taxon_abund}}, \code{\link[metacoder]{calc_obs_props}}
 #' @importFrom metacoder calc_taxon_abund calc_obs_props
+#' @importFrom crayon red green silver
 as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
   obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
@@ -266,28 +271,34 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
     cols <- mo_clone$data$sample_data$sample_id
   }
   if (is_raw_format(mo_clone)) {
-    # Create a taxonomy abundance table from the OTU abundance table
-    mo_clone$data$taxa_abundance <- metacoder::calc_taxon_abund(obj  = mo_clone,
-                                                     data = "otu_abundance",
-                                                     cols = cols,
-                                                     out_names = out_names)
-    # Create an OTU proportions table from the OTU abundance table
-    mo_clone$data$otu_proportions <- metacoder::calc_obs_props(obj        = mo_clone,
-                                                    data       = "otu_abundance",
-                                                    cols       = cols,
-                                                    other_cols = TRUE,
-                                                    out_names = out_names)
-    # Create a taxonomy proportions table from the OTU proportions table
-    mo_clone$data$taxa_proportions <- metacoder::calc_taxon_abund(obj  = mo_clone,
-                                                       data = "otu_proportions",
-                                                       cols = cols,
-                                                       out_names = out_names)
+
+    suppressMessages({
+      suppressWarnings({
+        # Create a taxonomy abundance table from the OTU abundance table
+        mo_clone$data$taxa_abundance <- metacoder::calc_taxon_abund(obj  = mo_clone,
+                                                         data = "otu_abundance",
+                                                         cols = cols,
+                                                         out_names = out_names)
+        # Create an OTU proportions table from the OTU abundance table
+        mo_clone$data$otu_proportions <- metacoder::calc_obs_props(obj        = mo_clone,
+                                                        data       = "otu_abundance",
+                                                        cols       = cols,
+                                                        other_cols = TRUE,
+                                                        out_names = out_names)
+        # Create a taxonomy proportions table from the OTU proportions table
+        mo_clone$data$taxa_proportions <- metacoder::calc_taxon_abund(obj  = mo_clone,
+                                                           data = "otu_proportions",
+                                                           cols = cols,
+                                                           out_names = out_names)
+        })
+      })
   } else if (is_basic_format(mo_clone)) {
-    warning("The object is already in the basic format.")
+    message(crayon::silver("Converting to the basic format:  The object is already in the basic format."))
   } else {
-    stop("To convert to basic format you have to start in the phyloseq or raw formats.")
+    stop(crayon::red("Converting to the basic format:  You have to start in the phyloseq or raw formats."))
   }
   mo_clone <- order_metacoder_data(obj = mo_clone)
+  message(crayon::green("Converted to the basic format."))
   return(mo_clone)
 }
 
@@ -315,6 +326,7 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
 #' @importFrom metacoder compare_groups
 #' @importFrom taxa taxonomy_table taxon_ids
 #' @importFrom dplyr rename right_join
+#' @importFrom crayon silver red green
 as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = NULL, out_names = NULL, comp_func = metacoder_comp_func_1) {
   obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
@@ -335,13 +347,17 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
   # Continue with conversion to analyzed_format
   if (is_basic_format(mo_clone)) {
     # Compare groups of samples for statistical analysis
-    mo_clone$data$statistical_data <- metacoder::compare_groups(obj = mo_clone,
-                                                     data        = "taxa_proportions",
-                                                     cols        = cols,
-                                                     groups      = groups,
-                                                     func        = comp_func,
-                                                     other_cols  = TRUE,
-                                                     combinations = combinations)
+    suppressMessages({
+      suppressWarnings({
+        mo_clone$data$statistical_data <- metacoder::compare_groups(obj = mo_clone,
+                                                         data        = "taxa_proportions",
+                                                         cols        = cols,
+                                                         groups      = groups,
+                                                         func        = comp_func,
+                                                         other_cols  = TRUE,
+                                                         combinations = combinations)
+        })
+      })
     # Create a table with taxonomy data and stats data for downstream analysis
     tax_table <- obj$taxonomy_table(subset = taxon_ids, add_id_col = TRUE)
     if ("taxon_ids" %in% names(tax_table)) {
@@ -351,13 +367,14 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
     mo_clone$data$stats_tax_data <- dplyr::right_join(x  = tax_table,
                                                       y  = stats_table,
                                                       by = "taxon_id")
-  } else if (is_analyzed_format(mo_clone)) {
-    warning("The object is already in the analyzed format.")
+  } else if (is_basic_format(mo_clone)) {
+    message(crayon::silver("Converting to the analyzed format:  The object is already in the analyzed format."))
   } else {
-    stop("To convert to analyzed format you have to start in the phyloseq, basic, or raw formats.")
+    stop(crayon::red("Converting to the analyzed format:  You have to start in the phyloseq, raw, or basic formats."))
   }
   # Put data tables in the proper order
   mo_clone <- order_metacoder_data(obj = mo_clone)
+  message(crayon::green("Converted to the analyzed format."))
   return(mo_clone)
 }
 
@@ -377,6 +394,7 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
 #' @seealso
 #'  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
 #' @importFrom glue glue
+#' @importFrom crayon silver green red
 as_MicrobiomeR_format <- function(obj, format, ...) {
   obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
@@ -391,10 +409,12 @@ as_MicrobiomeR_format <- function(obj, format, ...) {
     } else if (format == "phyloseq_format") {
       mo_clone <- as_phyloseq_format(obj = mo_clone, ...)
     } else {
-      stop("The format is not recognized.")
+      stop(crayon::red("The format is not recognized."))
     }
+  } else if (format == current_format) {
+    message(crayon::silver(glue::glue("Your object is already in the proper format: {format}")))
   } else {
-    warning(glue::glue("Your object is already in the proper format: {format}"))
+    message(glue::glue("Converted to the ", crayon::green({format}), "."))
   }
   mo_clone <- order_metacoder_data(obj = mo_clone)
   return(mo_clone)
@@ -455,6 +475,7 @@ as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_ann
 #' @seealso
 #'  \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
 #' @importFrom glue glue
+#' @importFrom crayon red
 format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
 
   # Metacoder Objects
@@ -480,11 +501,11 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
     # Throw errors for bad table names
     if (length(bad_table_names != 0)) {
       if (length(bad_table_names) == length(change_name_list)) {
-        stop(glue::glue("None of the parameters that you've given are in your observation data:
-             {bad_table_names}"))
+        stop(glue::glue(crayon::red("None of the parameters that you've given are in your observation data:
+             {bad_table_names}")))
       } else {
-        stop(glue::glue("You have given some bad table names that aren't in you metacoder object:
-                       {bad_table_names}"))
+        stop(glue::glue(crayon::red("You have given some bad table names that aren't in you metacoder object:
+                       {bad_table_names}")))
       }
     }
     # Change the table names
@@ -508,9 +529,9 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
     if (sign(format_level_list[[fmt]]) == 1) {
       mo_clone <- as_MicrobiomeR_format(obj = mo_clone, format = format, ...)
     } else { # Throw an error if the level is negative (unknown or mixed format)
-      warning(glue::glue("Here is a list of your observation data:
-                           {changed_obs_tables}"))
-      stop("Your data is in an unknown or mixed format.")
+      warning(glue::glue(crayon::red("Here is a list of your observation data:
+                           {changed_obs_tables}")))
+      stop(crayon::red("Your data is in an unknown or mixed format."))
     }
   }
   mo_clone <- order_metacoder_data(obj = mo_clone)
@@ -536,6 +557,7 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
 #' @seealso
 #'  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
 #' @importFrom glue glue
+#' @importFrom crayon bgWhite green yellow red
 validate_MicrobiomeR_format <- function(obj, validated = FALSE, valid_formats, force_format = FALSE, min_or_max = base::max, ...) {
   mo_clone <- obj$clone()
   format_list <- pkg.private$format_level_list
@@ -552,7 +574,8 @@ validate_MicrobiomeR_format <- function(obj, validated = FALSE, valid_formats, f
       rank_list <- c(rank_list, format_list[[v_fmt]])
       high_rank <- ifelse(format_list[[v_fmt]] >= min_or_max(rank_list), v_fmt, high_rank)
     }
-    warning(glue::glue("Forcing the metacoder object from the {fmt} to the {high_rank}."))
+    message(crayon::yellow(glue::glue("Forcing the metacoder object from the ", crayon::bgWhite(crayon::red({fmt})), " to the ",
+                       crayon::bgWhite(crayon::green({high_rank})),".")))
     mo_clone <- as_MicrobiomeR_format(obj = mo_clone, format = high_rank, ...)
     return(mo_clone)
   } else {
