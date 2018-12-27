@@ -16,6 +16,7 @@
 #' @export
 #' @family Validation
 #' @rdname which_format
+#' @importFrom crayon yellow red
 which_format <- function(obj) {
   mo_clone <- obj$clone()
   # Table names
@@ -33,12 +34,12 @@ which_format <- function(obj) {
   if (phyloseq_flag) {
     other_flag <- any(c(raw_flag, basic_flag, analyzed_flag))
     if (!other_flag) {
-      message(crayon::red("Your object is in the phyloseq format!"))
-      message(crayon::red("Please format your metacoder object to continue analysis."))
+      message(crayon::yellow("Your object is in the phyloseq format!"))
+      message(crayon::yellow("Please format your metacoder object to continue analysis."))
       return("phyloseq_format")
     } else {
-      warning(crayon::red(sprintf("The table names in the metacoder object are: %s", paste(table_names, collapse = ", "))))
-      warning(crayon::red("You have a mix between phyloseq format and other format."))
+      message(crayon::yellow(sprintf("The table names in the metacoder object are: %s", paste(table_names, collapse = ", "))))
+      message(crayon::yellow("You have a mix between phyloseq format and other format."))
       return("mixed_format")
     }
   } else
