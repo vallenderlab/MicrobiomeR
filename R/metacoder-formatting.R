@@ -195,6 +195,7 @@ is_phyloseq_format <- function(obj) {
 #' @export
 #' @family Validation
 #' @rdname order_metacoder_data
+#' @importFrom crayon green
 order_metacoder_data <- function(obj) {
   obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
@@ -222,6 +223,7 @@ order_metacoder_data <- function(obj) {
 #' @rdname as_raw_format
 #' @seealso
 #'  \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{is_raw_format}}, \code{\link[MicrobiomeR]{order_metacoder_data}}
+#'  @importFrom crayon silver red greem
 as_raw_format <- function(obj) {
   obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
@@ -233,7 +235,7 @@ as_raw_format <- function(obj) {
   } else if (is_raw_format(mo_clone)) {
     message(crayon::silver("Converting to the raw format:  The object is already in the raw format."))
   } else {
-    stop(crayon::red(crayon::bgBlack("Converting to the raw format:  You have to start in the phyloseq format.")))
+    stop(crayon::red("Converting to the raw format:  You have to start in the phyloseq format."))
   }
   mo_clone <- order_metacoder_data(obj = mo_clone)
   message(crayon::green("Converted to the raw format."))
@@ -256,6 +258,7 @@ as_raw_format <- function(obj) {
 #'
 #'  \code{\link[metacoder]{calc_taxon_abund}}, \code{\link[metacoder]{calc_obs_props}}
 #' @importFrom metacoder calc_taxon_abund calc_obs_props
+#' @importFrom crayon red green silver
 as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
   obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
@@ -292,7 +295,7 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
   } else if (is_basic_format(mo_clone)) {
     message(crayon::silver("Converting to the basic format:  The object is already in the basic format."))
   } else {
-    stop(crayon::red(crayon::bgBlack("Converting to the basic format:  You have to start in the phyloseq or raw formats.")))
+    stop(crayon::red("Converting to the basic format:  You have to start in the phyloseq or raw formats."))
   }
   mo_clone <- order_metacoder_data(obj = mo_clone)
   message(crayon::green("Converted to the basic format."))
@@ -323,6 +326,7 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
 #' @importFrom metacoder compare_groups
 #' @importFrom taxa taxonomy_table taxon_ids
 #' @importFrom dplyr rename right_join
+#' @importFrom crayon silver red green
 as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = NULL, out_names = NULL, comp_func = metacoder_comp_func_1) {
   obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
@@ -366,7 +370,7 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
   } else if (is_basic_format(mo_clone)) {
     message(crayon::silver("Converting to the analyzed format:  The object is already in the analyzed format."))
   } else {
-    stop(crayon::red(crayon::bgBlack("Converting to the analyzed format:  You have to start in the phyloseq, raw, or basic formats.")))
+    stop(crayon::red("Converting to the analyzed format:  You have to start in the phyloseq, raw, or basic formats."))
   }
   # Put data tables in the proper order
   mo_clone <- order_metacoder_data(obj = mo_clone)
@@ -390,6 +394,7 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
 #' @seealso
 #'  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
 #' @importFrom glue glue
+#' @importFrom crayon silver green red
 as_MicrobiomeR_format <- function(obj, format, ...) {
   obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
@@ -407,7 +412,7 @@ as_MicrobiomeR_format <- function(obj, format, ...) {
       stop(crayon::red("The format is not recognized."))
     }
   } else if (format == current_format) {
-    message(glue::glue("Your object is already in the proper format:", crayon::bgGreen({format})))
+    message(crayon::silver(glue::glue("Your object is already in the proper format: {format}")))
   } else {
     message(glue::glue("Converted to the ", crayon::green({format}), "."))
   }
@@ -470,6 +475,7 @@ as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_ann
 #' @seealso
 #'  \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
 #' @importFrom glue glue
+#' @importFrom crayon red
 format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
 
   # Metacoder Objects
