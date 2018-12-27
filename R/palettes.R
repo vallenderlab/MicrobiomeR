@@ -51,7 +51,7 @@ get_color_palette <- function(pal_func=viridis_magma_palette, color_no=20, displ
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#' library(Microbiome)
+#' library(MicrobiomeR)
 #' basic_pal <- scico_palette(scico_palette="hawaii")(25)
 #' better_pal <- get_color_palette(pal_func = scico_palette, color_no = 25)
 #'  }
@@ -84,7 +84,7 @@ scico_palette <- function(scico_palette="batlow", scico_number=800, scico_range=
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#' library(Microbiome)
+#' library(MicrobiomeR)
 #' basic_pal <- viridis(viridis_palette="magma")(25)
 #' better_pal <- get_color_palette(pal_func = viridis_palette, color_no = 25)
 #'  }

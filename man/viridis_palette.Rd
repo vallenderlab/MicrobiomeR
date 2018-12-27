@@ -28,7 +28,7 @@ get_color_palette function.
 \examples{
 \dontrun{
 if(interactive()){
-library(Microbiome)
+library(MicrobiomeR)
 basic_pal <- viridis(viridis_palette="magma")(25)
 better_pal <- get_color_palette(pal_func = viridis_palette, color_no = 25)
  }

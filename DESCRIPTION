@@ -46,9 +46,12 @@ Imports:
     biomformat,
     microbiome,
     forcats,
-    ggrepel
+    ggrepel,
+    scales,
+    vegan
 Suggests:
-    knitr
+    knitr,
+    testthat
 Additional_repositories:
     http://bioconductor.org/packages/release/bioc/,
     http://bioconductor.org/packages/release/data/annotation,
