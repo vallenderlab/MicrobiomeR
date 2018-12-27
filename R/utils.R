@@ -152,7 +152,7 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
         }
       }
     } else if (!dir.exists(full_path)) {
-      warning(glue::glue(crayon::green("Creating a new directory: {full_path}")))
+      message(glue::glue(crayon::green("Creating a new directory: {full_path}")))
       dir.create(full_path, recursive = TRUE)
     }
   }
@@ -202,7 +202,7 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
 #' @importFrom dplyr select_if select as_tibble sym one_of
 #' @importFrom tidyr gather unite spread separate
 #' @importFrom stringr str_detect str_count
-#' @importFrom crayon red yellow green
+#' @importFrom crayon red yellow silver
 transposer <- function(.data, ids = NULL, header_name, preserved_categories = TRUE, separated_categories = NULL) {
   # Verify format
   if (!(is.matrix(.data) | is.data.frame(.data) | tibble::is.tibble(.data))) {
@@ -242,7 +242,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
       trans_data <- trans_data %>% tidyr::separate(col = header_name, into = paste("category", seq(1:n_cats), sep = "_"), sep = "<_>")
     }
   }
-  message(crayon::green("Transposed Data."))
+  message(crayon::silver("Transposed Data."))
   return(trans_data)
 }
 
@@ -289,7 +289,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
 #'  \code{\link[purrr]{modify}}
 #' @importFrom dplyr select_if select
 #' @importFrom purrr modify_at
-#' @importFrom red green
+#' @importFrom red silver
 transformer <- function(.data, func, by = "column", ids = NULL, header_name = NULL, preserved_categories = TRUE, separated_categories = NULL, ...) {
   if (!(is.matrix(.data) | is.data.frame(.data) | tibble::is.tibble(.data))) {
     stop(crayon::red("Data not transformable."))
@@ -309,7 +309,7 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
     # Retranspose the table and separate the categorical data for row based transformations
     trans_data <- trans_data %>% transposer(ids = header_name, header_name = ids, separated_categories = separated_categories, preserved_categories = FALSE)
   }
-  message(crayon::green("Transformed Data."))
+  message(crayon::silver("Transformed Data."))
   return(trans_data)
 }
 

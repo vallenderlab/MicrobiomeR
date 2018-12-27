@@ -282,7 +282,7 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
 #' @importFrom taxa filter_taxa taxon_ranks
 #' @importFrom glue glue
-#' @importFrom crayon green
+#' @importFrom crayon silver
 agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
   mo_clone <- obj$clone()
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format", "analyzed_format"),
@@ -291,7 +291,7 @@ agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
   mo_clone <- taxa::filter_taxa(mo_clone, taxon_ranks == rank,
                                 supertaxa = TRUE, reassign_obs = FALSE
   )
-  message(glue::glue(crayon::green("Agglomerated to {rank}.")))
+  message(glue::glue(crayon::silver("Agglomerated to {rank}.")))
   return(mo_clone)
 }
 

@@ -195,7 +195,7 @@ is_phyloseq_format <- function(obj) {
 #' @export
 #' @family Validation
 #' @rdname order_metacoder_data
-#' @importFrom crayon green
+#' @importFrom crayon silver
 order_metacoder_data <- function(obj) {
   obj <- object_handler(obj = obj)
   mo_clone <- obj$clone()
@@ -208,7 +208,7 @@ order_metacoder_data <- function(obj) {
   other_names <- names(mo_clone$data)[!names(mo_clone$data) %in% c(expected_names)]
   table_order <- c(table_order, other_names)
   mo_clone$data <- mo_clone$data[table_order]
-  message(crayon::green("Ordered Data."))
+  message(crayon::silver("Ordered Data."))
   return(mo_clone)
 }
 
