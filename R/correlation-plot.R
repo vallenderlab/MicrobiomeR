@@ -143,6 +143,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 #' @export
 #' @family Visualizations
 #' @rdname get_correlation_plots
+#' @importFrom crayon green bgWhite
 get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, pairwise = FALSE, ...) {
   corr <- list()
   params <- list(...)
@@ -174,7 +175,7 @@ get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, pa
         if (rank_index[[pr]] < rank_index[[sr]]) {
           next()
         }
-        message(paste0("Comparing ", crayon::bgWhite(crayon::red(pr)), " to ", crayon::bgWhite(crayon::red(sr)), "."))
+        message(paste0(crayon::green("Generating a Correlation Plot comparing ", crayon::bgWhite(pr), " with ", crayon::bgWhite(sr), ".")))
         corr[[pr]][[sr]] <- do.call(correlation_plot, c(list(obj = obj, primary_rank = pr, secondary_rank = sr), params))
       }
     }
@@ -222,6 +223,7 @@ save_correlation_plots <- function(corr, pairwise = FALSE, format = "tiff", star
   # Create the relative path to the heat_tree plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
   # With the parameters set the full path will be <pwd>/output/<experiment>/heat_trees/<extra_path>.
   full_path <- get_output_dir(start_path = start_path, plot_type = "corr_plot", ...)
+  message(glue::glue(crayon::yellow("Saving Correlation Plots to the following directory: \n", "\r\t{full_path}")))
   # Iterate the heat_tree plot list and save them in the proper directory
   if (pairwise == FALSE) {
     for (rank in names(corr)) {
@@ -231,7 +233,7 @@ save_correlation_plots <- function(corr, pairwise = FALSE, format = "tiff", star
   } else if (pairwise == TRUE) {
     for (pr_name in names(corr)) {
       for (sr_name in names(corr[[pr_name]])) {
-        message(paste0("Saving ", pr_name, " correlation plot."))
+        message(crayon::green("Saving the {pr_name} X {sr_name} Correlation Plot."))
         ggplot2::ggsave(filename = sprintf("%s_%s.corr_plot.tiff", pr_name, sr_name), plot = corr[[pr_name]][[sr_name]], device = format, path = full_path, dpi = 500, width = 500, height = 250, units = "mm")
       }
     }
