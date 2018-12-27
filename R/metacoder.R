@@ -413,6 +413,8 @@ otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FAL
 #' @importFrom metacoder calc_prop_samples
 #' @importFrom dplyr filter
 #' @importFrom taxa filter_taxa
+#' @importFrom glue glue
+#' @importFrom crayon green bgWhite
 otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percentage = 0.5,
                                   validated = FALSE) {
   mo_clone <- obj$clone()

@@ -550,6 +550,7 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
 #' @seealso
 #'  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
 #' @importFrom glue glue
+#' @importFrom crayon bgWhite green yellow red
 validate_MicrobiomeR_format <- function(obj, validated = FALSE, valid_formats, force_format = FALSE, min_or_max = base::max, ...) {
   mo_clone <- obj$clone()
   format_list <- pkg.private$format_level_list
@@ -566,8 +567,8 @@ validate_MicrobiomeR_format <- function(obj, validated = FALSE, valid_formats, f
       rank_list <- c(rank_list, format_list[[v_fmt]])
       high_rank <- ifelse(format_list[[v_fmt]] >= min_or_max(rank_list), v_fmt, high_rank)
     }
-    message(glue::glue("Forcing the metacoder object from the ", crayon::bgWhite(crayon::red({fmt})), " to the ",
-                       crayon::bgWhite(crayon::green({high_rank})),"."))
+    message(crayon::yellow(glue::glue("Forcing the metacoder object from the ", crayon::bgWhite(crayon::red({fmt})), " to the ",
+                       crayon::bgWhite(crayon::green({high_rank})),".")))
     mo_clone <- as_MicrobiomeR_format(obj = mo_clone, format = high_rank, ...)
     return(mo_clone)
   } else {
