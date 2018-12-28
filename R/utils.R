@@ -28,9 +28,10 @@
 #'  \code{\link[tools]{fileutils}}
 #' @importFrom metacoder parse_phyloseq
 #' @importFrom tools file_ext
+#' @importFrom crayon red
 object_handler <- function(obj) {
   if (is.null(obj)) {
-    stop("Please use a metacoder/phyloseq object or an rdata file.")
+    stop(crayon::red("Please use a metacoder/phyloseq object or an rdata file."))
   } else {
     if (inherits(obj, "phyloseq")) {
       metacoder_object <- metacoder::parse_phyloseq(obj)
@@ -40,7 +41,7 @@ object_handler <- function(obj) {
       if (tools::file_ext(obj) %in% c("RData", ".rda")) {
         load(file = obj)
         if (!"metacoder_object" %in% ls()) {
-          stop("Please provide a loadable .RData/.rda file that contains an object called \"metacoder_object\".")
+          stop(crayon::red("Please provide a loadable .RData/.rda file that contains an object called \"metacoder_object\"."))
         }
       }
     }
@@ -88,6 +89,7 @@ object_handler <- function(obj) {
 #'  \code{\link[stringr]{case}}
 #' @importFrom glue glue
 #' @importFrom stringr str_to_lower
+#' @importFrom crayon yellow blue red green
 get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end_path=NULL, root_path=NULL,
                            custom_path = NULL, overwrite=FALSE, mkdir=TRUE) {
   # Create the relative path to the plots.  By default the full_path will be <root_path>/output
@@ -135,22 +137,22 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
     if (dir.exists(full_path) && overwrite == FALSE) {
       stop(glue::glue("The directory {full_path} already exists. And you don't want to overwrite the directory."))
     } else if (dir.exists(full_path) && overwrite == TRUE) {
-      warning(glue::glue("You have chosen to overwrite the directory: {full_path}."))
+      message(glue::glue(crayon::yellow("You have chosen to overwrite the directory: {full_path}.")))
       while (answer_flag == FALSE) {
-        answer <- readline(prompt = "Are you sure? (Y/N)")
+        answer <- readline(prompt = crayon::blue("Are you sure? (Y/N)"))
         if (stringr::str_to_lower(answer) == "y") {
           dir.create(full_path, recursive = TRUE)
           answer_flag <- TRUE
         } else if (stringr::str_to_lower(answer) == "n") {
-          warning(glue::glue("Please set overwrite to FALSE and change the path ({full_path}) with experiment and/or other_path."))
-          stop("The files haven't been saved.  You have chosen not to overwrite you files.")
+          warning(glue::glue(crayon::red("Please set overwrite to FALSE and change the path ({full_path}) with experiment and/or other_path.")))
+          stop(crayon::red("The files haven't been saved.  You have chosen not to overwrite you files."))
         } else {
-          warning("Please enter Y for YES or N for NO.  This is not case sensitive.")
+          message(crayon::yellow("Please enter Y for YES or N for NO.  This is not case sensitive."))
           answer_flag <- FALSE
         }
       }
     } else if (!dir.exists(full_path)) {
-      warning(glue::glue("Creating a new directory: {full_path}"))
+      message(glue::glue(crayon::green("Creating a new directory: {full_path}")))
       dir.create(full_path, recursive = TRUE)
     }
   }
@@ -200,23 +202,24 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
 #' @importFrom dplyr select_if select as_tibble sym one_of
 #' @importFrom tidyr gather unite spread separate
 #' @importFrom stringr str_detect str_count
+#' @importFrom crayon red yellow silver
 transposer <- function(.data, ids = NULL, header_name, preserved_categories = TRUE, separated_categories = NULL) {
   # Verify format
   if (!(is.matrix(.data) | is.data.frame(.data) | tibble::is.tibble(.data))) {
-    stop("input not transposable")
+    stop(crayon::red("Data not transposable."))
   }
   input <- .data
   # Get ids if none are given, defaults to the first column
   if (is.null(ids)) {
     ids <- input[1] %>% colnames()
-    warning(sprintf("There were no ids given.  Defaulting to the first column: %s", ids))
+    message(crayon::yellow(sprintf("There were no ids given.  Defaulting to the first column: %s", ids)))
   }
   # Get numeric data (columns)
   num_cols <- input %>% dplyr::select_if(is.numeric) %>% dplyr::select_if(!names(.) %in% ids) %>% colnames()
 
   # Transform
   if (preserved_categories == TRUE) { # All categorical data is preserved
-    warning("Categorical data will be united as a string, which can be tidyr::separated after re-transposing.")
+    message(crayon::yellow("Categorical data will be united as a string, which can be tidyr::separated after re-transposing."))
     preserved_categories <- input %>% dplyr::select(-dplyr::one_of(c(num_cols))) %>% colnames()
     trans_data <- input %>%
       dplyr::as_tibble() %>%
@@ -230,15 +233,16 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
       tidyr::spread(!!dplyr::sym(ids), "_data")
   }
   # Look for previously transformed tibbles and separate any united colums
-  if (all(stringr::str_detect(trans_data[header_name], "\\<\\_\\>"))) {
+  if (all(suppressWarnings({stringr::str_detect(trans_data[header_name], "\\<\\_\\>")}))) {
     if (!is.null(separated_categories)) {
       trans_data <- trans_data %>% tidyr::separate(col = header_name, into = separated_categories, sep = "<_>")
     } else {
-      warning("Separated categories has not been supplied.  Columns will be named as \"category_#\".")
+      messsage(crayon::yellow("Separated categories have not been supplied.  Columns will be named as \"category_#\"."))
       n_cats <- stringr::str_count(trans_data[[header_name]][1], pattern = "<_>") + 1
       trans_data <- trans_data %>% tidyr::separate(col = header_name, into = paste("category", seq(1:n_cats), sep = "_"), sep = "<_>")
     }
   }
+  message(crayon::silver("Transposed Data."))
   return(trans_data)
 }
 
@@ -285,9 +289,10 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
 #'  \code{\link[purrr]{modify}}
 #' @importFrom dplyr select_if select
 #' @importFrom purrr modify_at
+#' @importFrom red silver
 transformer <- function(.data, func, by = "column", ids = NULL, header_name = NULL, preserved_categories = TRUE, separated_categories = NULL, ...) {
   if (!(is.matrix(.data) | is.data.frame(.data) | tibble::is.tibble(.data))) {
-    stop("input not transposable")
+    stop(crayon::red("Data not transformable."))
   }
   input <- .data
   if (by == "row") {
@@ -304,6 +309,7 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
     # Retranspose the table and separate the categorical data for row based transformations
     trans_data <- trans_data %>% transposer(ids = header_name, header_name = ids, separated_categories = separated_categories, preserved_categories = FALSE)
   }
+  message(crayon::silver("Transformed Data."))
   return(trans_data)
 }
 

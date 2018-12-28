@@ -52,6 +52,8 @@
 #' @importFrom taxa get_dataset
 #' @importFrom dplyr select_if select filter
 #' @importFrom purrr map keep
+#' @importFrom glue glue
+#' @importFrom crayon red
 sample_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condition = NULL, validated = FALSE, ...) {
   mo_clone <- obj$clone()
   # Make sure the required functions are provided.
@@ -80,7 +82,7 @@ sample_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
     mo_clone$data$sample_data <- mo_clone$data$sample_data %>% dplyr::filter(sample_id %in% samples_to_keep)
     return(mo_clone)
   } else {
-    stop("You have to supply a filter formula AND a condition formula.")
+    stop(glue::glue(crayon::red("You have to supply a filter formula ", crayon::bold("AND")," a condition formula.")))
   }
 }
 
@@ -133,6 +135,8 @@ sample_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #' @importFrom taxa get_dataset filter_taxa
 #' @importFrom dplyr select_if
 #' @importFrom purrr map keep
+#' @importFrom glue glue
+#' @importFrom crayon red
 taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condition = NULL, validated = FALSE, ...) {
   mo_clone <- obj$clone()
   # Make sure the required functions are provided.
@@ -162,7 +166,7 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
     mo_clone <- taxa::filter_taxa(mo_clone, taxon_ids %in% taxon_ids_to_keep, reassign_obs = FALSE)
     return(mo_clone)
   } else {
-    stop("You have to supply a filter formula AND a condition formula.")
+    stop(glue::glue(crayon::red("You have to supply a filter formula ", crayon::bold("AND")," a condition formula.")))
   }
 }
 
@@ -209,6 +213,8 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
 #' @importFrom taxa get_dataset filter_taxa
 #' @importFrom dplyr select_if
 #' @importFrom purrr map keep
+#' @importFrom glue glue
+#' @importFrom crayon red
 otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condition = NULL, validated = FALSE, ...) {
   mo_clone <- obj$clone()
   # Make sure the required functions are provided.
@@ -236,10 +242,12 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
     otu_table_list <- pkg.private$format_table_list$otu_tables
     otu_table_list <- otu_table_list[otu_table_list %in% names(mo_clone$data)]
     # Update the observation data tables and the taxmap object
-    mo_clone <- taxa::filter_obs(mo_clone, otu_table_list, otu_id %in% otu_ids_to_keep, drop_taxa = TRUE)
+    suppressWarnings({
+      mo_clone <- taxa::filter_obs(mo_clone, otu_table_list, otu_id %in% otu_ids_to_keep, drop_taxa = TRUE)
+    })
     return(mo_clone)
   } else {
-    stop("You have to supply a filter formula AND a condition formula.")
+    stop(glue::glue(crayon::red("You have to supply a filter formula ", crayon::bold("AND")," a condition formula.")))
   }
 }
 
@@ -273,6 +281,8 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #'
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
 #' @importFrom taxa filter_taxa taxon_ranks
+#' @importFrom glue glue
+#' @importFrom crayon silver
 agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
   mo_clone <- obj$clone()
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format", "analyzed_format"),
@@ -281,6 +291,7 @@ agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
   mo_clone <- taxa::filter_taxa(mo_clone, taxon_ranks == rank,
                                 supertaxa = TRUE, reassign_obs = FALSE
   )
+  message(glue::glue(crayon::silver("Agglomerated to {rank}.")))
   return(mo_clone)
 }
 
@@ -331,11 +342,14 @@ agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
 #' @rdname otu_proportion_filter
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},\code{\link[MicrobiomeR]{otu_id_filter}}
+#' @importFrom glue glue
+#' @importFrom crayon green
 otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FALSE) {
   mo_clone <- obj$clone()
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
                                                        force_format = TRUE, validated = validated, min_or_max = min)
   mo_clone <- otu_id_filter(obj = mo_clone, .f_transform = ~./sum(.), .f_filter = ~mean(.), .f_condition = ~.> otu_percentage)
+  message(crayon::green(glue::glue("Filtering OTUs with less than ", crayon::bgWhite("{otu_percentage*100}%"), " across samples.")))
   return(mo_clone)
 }
 
@@ -399,16 +413,22 @@ otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FAL
 #' @importFrom metacoder calc_prop_samples
 #' @importFrom dplyr filter
 #' @importFrom taxa filter_taxa
+#' @importFrom glue glue
+#' @importFrom crayon green bgWhite
 otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percentage = 0.5,
                                   validated = FALSE) {
   mo_clone <- obj$clone()
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("basic_format"),
                                           force_format = TRUE, validated = validated, min_or_max = min)
   # Calculate the ids that need to be removed
-  ids_to_remove <- metacoder::calc_prop_samples(mo_clone, "taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
+  suppressMessages({
+    ids_to_remove <- metacoder::calc_prop_samples(mo_clone, "taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
     dplyr::filter(n_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
+  })
   # Prevalence Filtering
   mo_clone <- taxa::filter_taxa(mo_clone, !taxon_ids %in% ids_to_remove$taxon_id, reassign_obs = FALSE)
+  message(crayon::green(glue::glue("Filtering OTUs with an abundance less than ", crayon::bgWhite({minimum_abundance}),
+                                   " in a certain percentage of samples ", crayon::bgWhite("({rel_sample_percentage}%)"), ".")))
   return(mo_clone)
 }
 
@@ -483,17 +503,23 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
 #' @importFrom metacoder calc_prop_samples
 #' @importFrom dplyr filter
 #' @importFrom taxa filter_taxa
+#' @importFrom glue glue
+#' @importFrom crayon green bgWhite
 taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_percentage = 0.5,
                                    validated = FALSE) {
   mo_clone <- obj$clone()
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, force_format = TRUE, validated = validated,
                                           min_or_max = min, valid_formats = c("basic_format"))
   # Calculate the ids that need to be removed based on taxonomic rank
-  ids_to_remove <- agglomerate_metacoder(obj = mo_clone, rank = rank, validated = TRUE) %>% # Agglomeration
+  suppressMessages({
+    ids_to_remove <- agglomerate_metacoder(obj = mo_clone, rank = rank, validated = TRUE) %>% # Agglomeration
     metacoder::calc_prop_samples("taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
     dplyr::filter(n_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
   # Taxonomic Prevalence Filtering
   mo_clone <- taxa::filter_taxa(mo_clone, !taxon_ids %in% ids_to_remove$taxon_id, reassign_obs = FALSE)
+  })
+  message(crayon::green(glue::glue("Filtering OTUs at the ", crayon::bgWhite({rank}), " level with an abundance less than ", crayon::bgWhite({minimum_abundance}),
+                                   " in a certain percentage of samples ", crayon::bgWhite("({rel_sample_percentage}%)"), ".")))
   return(mo_clone)
 }
 
@@ -570,6 +596,8 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
 #'  \code{\link[dplyr:summarise_all]{summarise_if}}
 #' @importFrom dplyr summarise_if
 #' @importFrom stats sd
+#' @importFrom glue glue
+#' @importFrom crayon green bgWhite
 cov_filter <- function(obj, coefficient_of_variation, validated = FALSE) {
   mo_clone <- obj$clone()
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
@@ -582,6 +610,7 @@ cov_filter <- function(obj, coefficient_of_variation, validated = FALSE) {
   standf <- function(x, t = total) round(t * (x / sum(x)))
   # Filter OTUs that don't pass the maximum coefficient of variation.
   mo_clone <- otu_id_filter(obj = mo_clone, .f_transform = standf, .f_filter = ~sd(.)/mean(.), .f_condition = ~.<coefficient_of_variation)
+  message(crayon::green(glue::glue("Filtering OTUs that have a coefficient of variation that is more than ", crayon::bgWhite({coefficient_of_variation}), ".")))
   return(mo_clone)
 }
 
