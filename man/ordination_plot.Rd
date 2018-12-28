@@ -5,7 +5,8 @@
 \title{Ordination Plot}
 \usage{
 ordination_plot(obj, method = "PCoA", distance = "wunifrac",
-  title = NULL, save = FALSE, only_data = FALSE)
+  color = "TreatmentGroup", title = NULL, save = FALSE,
+  only_data = FALSE)
 }
 \arguments{
 \item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
@@ -13,6 +14,8 @@ ordination_plot(obj, method = "PCoA", distance = "wunifrac",
 \item{method}{Choose an ordination method from 'PCoA', 'CCA', 'NMDS' or 'DPCoA', Default: 'PCoA'}
 
 \item{distance}{Choose a distance method from 'bray', 'unifrac' or 'wunifrac', Default: 'wunifrac'}
+
+\item{color}{Choose the group or factor of which colors will be mapped to, Default: 'TreatmentGroup'}
 
 \item{title}{The title of the plot, Default: NULL}
 
