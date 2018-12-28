@@ -22,4 +22,31 @@ MicrobiomeR is a microbiome workflow package that uses phyloseq for data import,
 object called a Taxmap, metacoder for data analysis, and a combination of packages for data visualization 
 including ggplot2.
 
+The goal of this package is to enhance the use of the [metacoder](https://grunwaldlab.github.io/metacoder_documentation/)
+package by providing tools that mimic the functionality of the [phyloseq](http://joey711.github.io/phyloseq/) 
+package.  The only difference being that the main data object is a [taxa::taxmap object](https://github.com/ropensci/taxa#the-taxmap-class) 
+instead of a [phyloseq::phyloseq object](http://joey711.github.io/phyloseq/import-data.html#import_biom).
 
+# MicrobiomeR Formats
+In order to make metacoder and phyloseq's data objects more understandable, MicrobiomeR uses it's 
+own "formatted" taxmap object.  This is simply a taxmap object with observation data `{r} names(tmap$data)`
+that contains a specific naming convention.  MicrobiomeR's naming convention format is not only 
+intuitive, but it also gives the MicrobiomeR package the ability to validate data before it is
+analyzed or visualized.
+
+The formats are listed in order from lowest to highest level. To get a taxmap object into the higher 
+formats they must be in one of the lower formats. It is also inherently important to understand the 
+MicrobiomeR_Workflow, which describes some of the important dependencies used to create the MicrobiomeR 
+formats listed below:
+
+## Phyloseq Format
+**_Level 0._** - The "phyloseq_format" is the format given to a taxmap object that has just been converted from a phyloseq object using metacoder via get_phyloseq_obj. A taxmap object identified by MicrobiomeR to be in this format will contain "otu_table", "tax_data", "sample_data" and "phy_tree" data in the observation tables (metacoder_obj$data), which represents the matching phyloseq::otu_table, phyloseq::tax_table, phyloseq::sample_data, and phyloseq::phy_tree data in the original phyloseq object.
+
+## Raw Format
+**_Level 1._** - The "raw_format" is the format given to a taxmap object that has been processed with as_raw_format. It contains the "otu_abundance" and "otu_annotations" data in the observation tables, which are just name conversions of the otu_table and tax_data table from the "phyloseq_format".
+
+## Basic Format
+**_Level 2._** - The "basic_format" is the format given to a taxmap object that has been processed with as_basic_format. It contains the tables available in the "raw_format" along with "taxa_abundance", "otu_proportions", and "taxa_proportions" tables.
+
+## Analyzed Format
+**_Level 3._** - The "analyzed_format" is the format given to a taxmap object that has been processed with as_analyzed_format. It contains the tables available in the "basic_format" along with "statistical_data" and "stats_tax_data" tables.
