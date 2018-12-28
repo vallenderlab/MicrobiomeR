@@ -1,0 +1,25 @@
+---
+title: "MicrobiomeR: Introduction"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+MicrobiomeR is a microbiome workflow package that uses phyloseq for data import, taxa for the primary R
+object called a Taxmap, metacoder for data analysis, and a combination of packages for data visualization 
+including ggplot2.
+
+
