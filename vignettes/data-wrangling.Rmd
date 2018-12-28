@@ -11,15 +11,21 @@ vignette: >
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-	echo = TRUE,
-	collapse = TRUE,
-	comment = "#>"
+  collapse = TRUE,
+  comment = "#>"
 )
 library(MicrobiomeR)
 pkg.var <- MicrobiomeR:::pkg.private
+
+```
+
+# Import
+Importing data is done via phyloseq.
+
+# Visualization
+```{r message=FALSE, warning=FALSE}
 mc_obj <- as_analyzed_format(obj = raw_silva)
 hts <- get_heat_tree_plots(mc_obj, rank_list = c("Class"))
 hts$heat_trees$Class
 ```
-
 
