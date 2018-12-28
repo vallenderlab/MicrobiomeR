@@ -11,6 +11,10 @@ test_that("basic ordination plot works", {
   expect_true(!is.null(ordination_plot(obj = data)))
 })
 
+test_that("basic ordination data return works", {
+  expect_true(!is.null(ordination_plot(obj = data, only_data = TRUE)))
+})
+
 # Remove file created by test
 if (file.exists("Rplots.pdf")) {
   file.remove("Rplots.pdf")
