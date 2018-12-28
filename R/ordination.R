@@ -42,11 +42,18 @@ ordination_plot <- function(obj, method = "PCoA", distance = "wunifrac", color =
       axis.text.y = ggplot2::element_text(margin = ggplot2::unit(c(0.5, 0.5, 0.5, 0.5), "cm")),
       axis.text.x = ggplot2::element_text(margin = ggplot2::unit(c(0.5, 0.5, 0.5, 0.5), "cm")), panel.grid.major = ggplot2::element_blank(), panel.grid.minor = element_blank(),
       axis.ticks.length = ggplot2::unit(-0.25, "cm"),
-      strip.background = ggplot2::element_rect(fill = "white"), strip.text = ggplot2::element_text(colour = "black"), panel.background = element_blank(),
+      strip.background = ggplot2::element_rect(fill = "white"),
+      strip.text = ggplot2::element_text(colour = "black"),
+      panel.background = element_blank(),
       axis.line = ggplot2::element_line(colour = "black"),
       panel.border = element_rect(colour = "black", fill = NA, size = 1)
-    ) + ggplot2::stat_ellipse(geom = "polygon", alpha = .2, ggplot2::aes(fill = !!sym(color)), show.legend = FALSE)
-      + ggplot2::scale_fill_manual(values = c("#3288bd", "#d53e4f")) # TODO: Use a palette here instead.
+    ) + ggplot2::stat_ellipse(
+      geom = "polygon", alpha = .2,
+      ggplot2::aes(fill = !!sym(color)),
+      show.legend = FALSE
+    ) +
+    # TODO: Use a palette here instead.
+    ggplot2::scale_fill_manual(values = c("#3288bd", "#d53e4f")) # TODO: Use a palette here instead.
 
   # TODO: Add the ability to change variables here or use multiple variables. Could be better to remove this altogether.
   plot <- plot + ggplot2::labs(color = color) + ggplot2::scale_color_manual(values = c("Control" = "#3288bd", "Stressed" = "#d53e4f"))
