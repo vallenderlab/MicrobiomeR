@@ -51,7 +51,8 @@ Imports:
     vegan
 Suggests:
     knitr,
-    testthat
+    testthat,
+    rmarkdown
 Additional_repositories:
     http://bioconductor.org/packages/release/bioc/,
     http://bioconductor.org/packages/release/data/annotation,
@@ -62,3 +63,4 @@ LazyData: true
 RoxygenNote: 6.1.1
 URL: https://github.com/vallenderlab/MicrobiomeR
 BugReports: https://github.com/vallenderlab/MicrobiomeR/issues
+VignetteBuilder: knitr
