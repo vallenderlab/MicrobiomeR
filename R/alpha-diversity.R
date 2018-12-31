@@ -74,7 +74,7 @@ get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' @importFrom ggpubr stat_compare_means ggviolin
 #' @importFrom ggthemes theme_pander
 #' @importFrom utils combn
-alpha_diversity_plot <- function(obj, measure = "shannon", select_otu_table = "otu_proportions", save = FALSE) {
+alpha_diversity_plot <- function(obj, measure = "shannon", select_otu_table = "otu_proportions") {
   # Validate data format
   metacoder_object <- validate_MicrobiomeR_format(
     obj = object_handler(obj),
