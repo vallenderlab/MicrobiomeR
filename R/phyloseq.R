@@ -47,49 +47,77 @@
 #' @importFrom phyloseq import_biom sample_data phy_tree import_qiime_sample_data merge_phyloseq
 #' @importFrom ape is.rooted write.tree read.tree
 #' @importFrom tools file_path_as_absolute
-get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file = NULL, treatment_group = NULL, parse_func = NULL, rdata_file = NULL, path = NULL) {
+get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file = NULL,
+                             treatment_group = NULL, parse_func = NULL, rdata_file = NULL,
+                             save_rooted_tree = FALSE, recursive_save = FALSE) {
   if (!is.null(rdata_file)) {
     load(rdata_file)
-    phyloseq_obj <- get("phyloseq_obj")
-    return(phyloseq_obj)
+    phyloseq_object <- get("phyloseq_object")
+    return(phyloseq_object)
   } else {
     # Load the biom file data amd qiime metadata separately, and then merge them into a phyloseq object
     phyloseq_biom <- phyloseq::import_biom(BIOMfilename = biom_file, parseFunction = parse_func, treefilename = tree_file)
     phyloseq_metadata <- phyloseq::import_qiime_sample_data(metadata_file)
-    phyloseq_obj <- phyloseq::merge_phyloseq(phyloseq_biom, phyloseq_metadata)
+    phyloseq_object <- phyloseq::merge_phyloseq(phyloseq_biom, phyloseq_metadata)
 
     # Create the "X.TreatmentGroup" variable for the metadata
     # This step gives other functions a standard treatment group variable to work with
     if (!is.null(treatment_group)){
       if (is.numeric(treatment_group) || is.character(treatment_group)){
-        phyloseq::sample_data(phyloseq_obj)[["X.TreatmentGroup"]] <- phyloseq::sample_data(phyloseq_obj)[[treatment_group]]
+        phyloseq::sample_data(phyloseq_object)[["X.TreatmentGroup"]] <- phyloseq::sample_data(phyloseq_object)[[treatment_group]]
       } else {
         warning("The treatment_group parameter must be numeric or a character string.")
         warning("The data might not be appropriate for other MicrobiomeR functions.  Please try again.")
         stop()
       }
     }
-    # Write to a tree file that subsets our data and update the phyloseq object
-    if (!is.null(tree_file) && !ape::is.rooted(ape::read.tree(tree_file))) {
-      # Root the tree
-      phyloseq_tree <- phyloseq::phy_tree(phyloseq_biom)
-      ape_tree <- root_by_longest_edge(phyloseq_tree)
-      # Write the tree file
-      tf <- basename(tree_file)
-      tp <- dirname(tools::file_path_as_absolute(tree_file))
-      new_tree_file <- sprintf("%s/rooted_%s", tp, tf)
-      if (!file.exists(new_tree_file)) {
-        ape::write.tree(ape_tree, new_tree_file)
-      }
-      # Update and return the phyloseq object
-      phyloseq::phy_tree(phyloseq_obj) <- ape_tree
-      return(phyloseq_obj)
-    } else {
-      return(phyloseq_obj)
-    }
+    phyloseq_object <- root_phyloseq_tree(phyloseq_object = phyloseq_object, tree_path = tree_file,
+                                          save_rooted_tree = save_rooted_tree,
+                                          recursive = recursive_save)
+    return(phyloseq_object)
   }
 }
 
+root_phyloseq_tree <- function(phyloseq_object, tree_path, save_rooted_tree, recursive = TRUE) {
+  # Write to a tree file that subsets our data and update the phyloseq object
+  if (!is.null(tree_path) && !ape::is.rooted(ape::read.tree(tree_path))) {
+    # Root the tree
+    phyloseq_tree <- phyloseq::phy_tree(phyloseq_object)
+    ape_tree <- root_by_longest_edge(phyloseq_tree)
+    # Write the tree file
+    file_isdir <- file.info(tree_path)[1, "isdir"]
+    tp <- dirname(tools::file_path_as_absolute(tree_path))
+    if (file_isdir == TRUE) { # Is existing directory
+      tf <- "rooted_tree.tre"
+    } else if (file_isdir == FALSE) { # Is existing file
+      tf <- basename(tree_path)
+    } else if (is.na(file_isdir)) { # Does not exist
+      if (tools::file_ext() == "") { # Is it a directory string?
+        if (!dir.create(tree_path, recursive = recursive) == TRUE) {
+          stop("Unable to create directory.  Please check the path to your tree file.")
+        }
+      }
+    } else { # It's a file string.
+        tf <- basename(tree_path)
+        if (!dir.exists(tp)) {
+          if (!dir.create(tree_path, recursive = recursive) == TRUE) {
+            stop("Unable to create directory.  Please check the path to your tree file.")
+          }
+        }
+      }
+    new_tree_path <- sprintf("%s/rooted_%s", tp, tf)
+    if (!file.exists(new_tree_path)) {
+      if (save_rooted_tree == TRUE) {
+        ape::write.tree(ape_tree, new_tree_path)
+        }
+    }
+    # Update and return the phyloseq object
+    phyloseq::phy_tree(phyloseq_object) <- ape_tree
+    return(phyloseq_object)
+  } else {
+    return(phyloseq_object)
+  }
+}
 
 #' @title Pick Outgroup for Tree
 #' @description Pick an outgroup for rooting a phylogenetic tree.
