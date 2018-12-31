@@ -14,7 +14,10 @@
 #' @param parse_func The parse function used to parse taxonomy strings from
 #'  Greengenes or SILVA database.  Default: NULL
 #' @param rdata_file A .Rdata file.  Default: NULL
-#' @param path A path for the output tree file.  Default: NULL
+#' @param save_rooted_tree A logical that determines weather or not the rooted tree
+#' is saved.  Default: FALSE
+#' @param recursive_save If the directory doesn't exists create the parent directories
+#' that don't exist as well.  Default: FALSE
 #' @return A phyloseq object, and a phylogenetic tree file if one does not already exist.
 #' @pretty_print TRUE
 #' @details This function heavily relys on the phyloseq package to import data into R.
