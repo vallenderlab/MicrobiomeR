@@ -33,29 +33,31 @@ phy_obj <- get_phyloseq_obj(biom_file = biom_file,
                                     tree_file = tree_file, 
                                     metadata_file = metadata_file,
                                     parse_func = parse_func)
+
 # Get the taxmap object in the raw format
 raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
 ```
 
 # Metacoder
+
 Metacoder is a highly useful package that comes with tons of features right out of the box.  Functions
 such as `metacoder::filter_ambiguous_taxa()`, `taxa::filter_taxa()`, and `taxa::filter_obs()` for instance
 can almost always be used in your workflow.  
 
 ```{r message=FALSE, warning=FALSE}
 # Remove Archaea from the metacoder object
-metacoder_obj <- taxa::filter_taxa(
-  obj = raw_metacoder,
-  taxon_names == "Archaea",
-  subtaxa = TRUE,
-  invert = TRUE
-)
+metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
+                                   taxon_names == "Archaea",
+                                   subtaxa = TRUE,
+                                   invert = TRUE)
 
 # Ambiguous Annotation Filter - Remove taxonomies with ambiguous names
-metacoder_obj <- metacoder::filter_ambiguous_taxa(metacoder_obj, subtaxa = TRUE)
+metacoder_obj <- metacoder::filter_ambiguous_taxa(metacoder_obj, 
+                                                  subtaxa = TRUE)
 ```
 
 # Basic Filtering
+
 Three functions are provided by MicrobiomeR that do some basic filtering:
 
 * `sample_id_filter()` for filtering samples.
@@ -72,4 +74,52 @@ metacoder_obj <- sample_filter(obj = metacoder_obj,
                                .f_filter = ~sum(.),
                                .f_condition = ~.>= 20, 
                                validated = TRUE)
+```
+
+# Advanced Filtering
+
+The advanced filtering functions do several things.  They wrap the basic filtering functions mentioned above,
+they wrap common metacoder and taxa functions, and they mimic the tools found in the phyloseq package.
+Below I've mentioned some of them and how they relate to the phyloseq package:
+
+* `agglomerate_metacoder()` as `phyloseq::tax_glom()`.
+* `otu_proportion_filter()` as seen in the first step in phyloseq's [preprocessing](http://joey711.github.io/phyloseq/preprocess.html#preprocessing) vignette.
+* `prevalence filtering`  functions filter observations by thier prevelance across samples.
+    * (Unsupervised) `otu_prevelance_filter()` as seen in phyloseq's [prevalence
+    filtering](http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#prevalence_filtering) vignette.
+    * (Supervised) `taxa_prevalence_filter()` as seen in phyloseq's [taxonomic filtering](http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#taxonomic_filtering) vignette.
+* `cov_filter()` as seen in the nineth step in phyloseq's [preprocessing](http://joey711.github.io/phyloseq/preprocess.html#preprocessing) vignette.
+
+```{r message=FALSE, warning=FALSE}
+# Master Threshold Filter - Add the otu_proportions table and then filter OTUs based on min %
+metacoder_obj <- otu_proportion_filter(obj = metacoder_obj,
+                                       otu_percentage = 0.00001)
+
+# Taxon Prevalence Filter - Add taxa_abundance and taxa_proportions and then filter OTUs that do not
+# appear more than a certian amount of times in a certain percentage of samples at the specified
+# agglomerated rank.  This is considered a supervised method, because it relies on intermediate
+# taxonomies to filter the data.
+# The default minimum abundance is 5 and the sample percentage is 0.5 (5%).
+# Phylum
+metacoder_obj <- taxa_prevalence_filter(obj = metacoder_obj,
+                                        rank = "Phylum")
+# Class
+metacoder_obj <- taxa_prevalence_filter(obj = metacoder_obj,
+                                        rank = "Class", 
+                                        validated = TRUE)
+# Order
+metacoder_obj <- taxa_prevalence_filter(obj = metacoder_obj,
+                                        rank = "Order", 
+                                        validated = TRUE)
+
+# OTU Prevalence Filter - Filter OTUs that do not appear more than a certian amount of times in a
+# certain percentage of samples.  This is considered an unsupervised method, because it relies only
+# on the leaf OTU ids to filter the data.
+metacoder_obj <- otu_prevalence_filter(obj = metacoder_obj, 
+                                       validated = TRUE)
+
+# Coefficient of Variation Filter - Filter OTUs based on the coefficient of variation
+metacoder_obj <- cov_filter(obj = metacoder_obj,
+                            coefficient_of_variation = 3, 
+                            validated = TRUE)
 ```
