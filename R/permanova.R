@@ -65,8 +65,8 @@ permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
 #' }
 #' }
 #' @export
-#' @rdname topcoef_barplot
-topcoef_barplot <- function(top_coefficients, title = NULL) {
+#' @rdname top_coefficients_barplot
+top_coefficients_barplot <- function(top_coefficients, title = NULL) {
   # Set graphical parameters
   par(mar = c(3, 16, 2, 2))
 
