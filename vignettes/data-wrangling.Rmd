@@ -70,9 +70,13 @@ observation data (e.g. `names(MicrobiomeR_obj$data)`).
 ```{r message=FALSE, warning=FALSE}
 # Show the difference in MicrobiomeR formats
 print(names(phy_format$data))
+
 print(names(raw_format$data))
+
 print(names(basic_format$data))
+
 print(names(analyzed_format$data))
+
 ```
 
 MicrobiomeR provides a group of helpful functions that can be used to format taxmap objects including:
@@ -84,10 +88,15 @@ MicrobiomeR provides a group of helpful functions that can be used to format tax
 * `validate_MicrobiomeR_fomrat()` for validating that the taxmap object is in a specific format.
 
 ```{r message=FALSE, warning=FALSE}
+# Determine format
 which_format(analyzed_format)
+
 is_analyzed_format(analyzed_format)
+
+# Forcing validation
 low_level_format <- validate_MicrobiomeR_format(obj = raw_format, valid_formats = c("analyzed_format", "basic_format"), force_format = TRUE, min_or_max = min)
 which_format(low_level_format)
+
 high_level_format <- validate_MicrobiomeR_format(obj = raw_format, valid_formats = c("analyzed_format", "basic_format"), force_format = TRUE, min_or_max = max)
 which_format(high_level_format)
 ```
