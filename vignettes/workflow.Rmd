@@ -18,3 +18,40 @@ library(MicrobiomeR)
 pkg.data <- MicrobiomeR:::pkg.private
 ```
 
+# Data Wrangling
+
+```{r message=FALSE, warning=FALSE}
+# Get the data files from package
+input_files <- pkg.data$input_files
+biom_file <- input_files$biom_files$silva # Path to silva biom file
+tree_file <- input_files$tree_files$silva # Path to silva tree file
+metadata_file <- input_files$metadata # Path to Nephele metadata
+parse_func <- parse_taxonomy_silva_128 # A custom phyloseq parsing function for silva annotations
+
+# Get the phyloseq object
+phy_obj <- get_phyloseq_obj(biom_file = biom_file, 
+                                    tree_file = tree_file, 
+                                    metadata_file = metadata_file,
+                                    parse_func = parse_func)
+# Get the taxmap object in the raw format
+raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
+```
+
+# Metacoder
+Metacoder is a highly useful package that comes with tons of features right out of the box.  Functions
+such as `metacoder::filter_ambiguous_taxa()`, `taxa::filter_taxa()`, and `taxa::filter_obs()` for instance
+can almost always be used in your workflow.  
+
+```{r message=FALSE, warning=FALSE}
+# Remove Archaea from the metacoder object
+metacoder_obj <- taxa::filter_taxa(
+  obj = raw_metacoder,
+  taxon_names == "Archaea",
+  subtaxa = TRUE,
+  invert = TRUE
+)
+
+# Ambiguous Annotation Filter - Remove taxonomies with ambiguous names
+metacoder_obj <- metacoder::filter_ambiguous_taxa(metacoder_obj, subtaxa = TRUE)
+```
+
