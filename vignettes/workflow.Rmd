@@ -55,3 +55,21 @@ metacoder_obj <- taxa::filter_taxa(
 metacoder_obj <- metacoder::filter_ambiguous_taxa(metacoder_obj, subtaxa = TRUE)
 ```
 
+# Basic Filtering
+Three functions are provided by MicrobiomeR that do some basic filtering:
+
+* `sample_id_filter()` for filtering samples.
+* `taxon_id_filter()` for filtering by taxon_id, which includes intermediate taxa.
+* `otu_id_filter()` for filtering by otu_id, which only includes leaf taxa.
+
+These functions all take the same parameters, most noteably a transformation function (.f_transform),
+a filtering function (.f_filter), and a coditional function (.f_condition).
+
+```{r message=FALSE, warning=FALSE}
+# Low Sample Filter - Remove the low samples
+# The sample filter should generally be implemented first
+metacoder_obj <- sample_filter(obj = metacoder_obj,
+                               .f_filter = ~sum(.),
+                               .f_condition = ~.>= 20, 
+                               validated = TRUE)
+```
