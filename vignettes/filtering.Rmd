@@ -1,10 +1,10 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "MicrobiomeR: Filtering"
+author: "Robert Gilmore"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Filtering}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -38,7 +38,7 @@ phy_obj <- get_phyloseq_obj(biom_file = biom_file,
 raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
 ```
 
-# Metacoder
+# Metacoder Filtering
 
 Metacoder is a highly useful package that comes with tons of features right out of the box.  Functions
 such as `metacoder::filter_ambiguous_taxa()`, `taxa::filter_taxa()`, and `taxa::filter_obs()` for instance
