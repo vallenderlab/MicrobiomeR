@@ -17,7 +17,8 @@
 #' @importFrom dplyr select
 #' @importFrom microbiome abundances meta
 #' @importFrom vegan adonis vegdist betadisper
-#' @importFrom crayon red
+#' @importFrom phyloseq distance
+#' @importFrom dplyr expr sym enquo
 permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
   # Validate data format
   metacoder_object <- validate_MicrobiomeR_format(
@@ -33,10 +34,15 @@ permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
   permanova <- list()
   otu <- microbiome::abundances(phyloseq_object)
   meta <- microbiome::meta(phyloseq_object)
+
+  # Use phyloseq to generate the distance if it is wunifrac/unifrac.
   if (distance_method == "wunifrac" | distance_method == "unifrac") {
-    stop(crayon::red("Method is not integrated yet."))
+    dist <- phyloseq::distance(phyloseq_object, method = distance_method)
+    dist_formula <- as.formula(paste0("dist ~ ", group))
+    permanova[["permanova"]] <- vegan::adonis(dist_formula, data = meta, permutations = 99)
   } else {
-    permanova[["permanova"]] <- vegan::adonis(t(otu) ~ sym(group), data = meta, permutations = 99, method = distance_method)
+    dist_formula <- as.formula(paste0("t(otu) ~ ", group))
+    permanova[["permanova"]] <- vegan::adonis(dist_formula, data = meta, permutations = 99, method = distance_method)
   }
 
   # Checking the homogeneity condition
@@ -50,12 +56,16 @@ permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
   # Investigate the top factors
   # Show coefficients for the top taxa separating the groups
   permanova[["coefficients"]] <- coefficients(permanova$permanova)[paste0(group, "1"), ]
+  if (is.null(permanova$coefficients)) {
+    warning("Coefficients were not able to be generated using this distance method.")
+  } else {
   permanova[["top_coefficients"]] <- permanova$coefficients[rev(order(abs(permanova$coefficients)))[1:50]]
+  }
   return(permanova)
 }
 
 #' @title Top Coefficients Barplot
-#' @description A barplot to visualize which taxa have had the greatest on the overal gut composition.
+#' @description A barplot to visualize which taxa have had the greatest impact on the overall gut composition.
 #' @param top_coefficients PARAM_DESCRIPTION
 #' @return Returns a barplot of the top coefficients
 #' @examples
