@@ -78,6 +78,38 @@ get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file =
   }
 }
 
+#' @title Root phyloseq tree.
+#' @description A function for rooting and saving a phylogenetic tree.
+#' @param phyloseq_object A phyloseq object that contains a phylogenetic tree.
+#' @param tree_path The path to the existing or desired phylogenetic tree file.
+#' @param save_rooted_tree A logical that determines weather or not the rooted tree
+#' is saved.
+#' @param recursive If the directory doesn't exists create the parent directories
+#' that don't exist as well, Default: TRUE
+#' @return Returns a phyloseq object with a rooted tree.
+#' @pretty_print TRUE
+#' @details This function is a helper function to get a proper phyloseq object for
+#' downstream analysis.  Some analysis requre a rooted tree.  The function saves
+#' the rooted tree in the phyloseq object.  It can also save the tree as a file
+#' if desired.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Phylogenetic Tree Manipulators
+#' @rdname root_phyloseq_tree
+#' @seealso
+#'  \code{\link[ape]{root}}, \code{\link[ape]{read.tree}}, \code{\link[ape]{write.tree}}
+#'
+#'  \code{\link[phyloseq]{phy_tree}}
+#'
+#'  \code{\link[tools]{fileutils}}
+#' @importFrom ape is.rooted read.tree write.tree
+#' @importFrom phyloseq phy_tree
+#' @importFrom tools file_path_as_absolute file_ext
 root_phyloseq_tree <- function(phyloseq_object, tree_path, save_rooted_tree, recursive = TRUE) {
   # Write to a tree file that subsets our data and update the phyloseq object
   if (!is.null(tree_path) && !ape::is.rooted(ape::read.tree(tree_path))) {
