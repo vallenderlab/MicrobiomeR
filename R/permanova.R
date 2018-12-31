@@ -1,25 +1,43 @@
-#' @title PERMANOVA significance test for group-level differences
+#' @title PERMANOVA
 #' @description Evaluate whether the group(s) has a significant effect on overall gut microbiota composition.
-#' @param obj Import an unprocessed phyloseq object.
-#' @param distance_method Use the desired statistical method. The default method is "bray".
-#' @return Returns a list object of the data.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @param distance_method  Use a desired distance method, Default: 'bray'
+#' @param group The group or column in the metadata to test upon, Default: 'TreatmentGroup'
+#' @return Returns a list which includes permanova, anova, coefficients, and top coefficients.
+#' @examples
+#' \dontrun{
+#' if (interactive()) {
+#'   # EXAMPLE1
+#' }
+#' }
 #' @export
-permanova <- function(obj, distance_method = "bray") {
+#' @rdname permanova
+#' @seealso
+#'
+#' @importFrom dplyr select
+#' @importFrom microbiome abundances meta
+#' @importFrom vegan adonis vegdist betadisper
+#' @importFrom crayon red
+permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
   # Validate data format
   metacoder_object <- validate_MicrobiomeR_format(
     obj = object_handler(obj),
     valid_formats = c("analyzed_format")
   )
+  permanova <- list()
+
+  # Convert metacoder object to a phyloseq object.
+  phyloseq_object <- metacoder::as_phyloseq(metacoder_object, otu_table = "otu_abundance", phy_tree = "phy_tree")
+
   # TODO: Convert this to metacoder strictly.
-  phyloseq <- list()
+  permanova <- list()
   otu <- microbiome::abundances(phyloseq_object)
   meta <- microbiome::meta(phyloseq_object)
   if (distance_method == "wunifrac" | distance_method == "unifrac") {
-    stop("Method is not integrated yet.")
+    stop(crayon::red("Method is not integrated yet."))
   } else {
-    phyloseq[["permanova"]] <- vegan::adonis(t(otu) ~ TreatmentGroup, data = meta, permutations = 99, method = distance_method)
+    permanova[["permanova"]] <- vegan::adonis(t(otu) ~ sym(group), data = meta, permutations = 99, method = distance_method)
   }
-  phyloseq[["phyloseq"]] <- phyloseq_object
 
   # Checking the homogeneity condition
   # Note the assumption of similar multivariate spread among the groups
@@ -27,35 +45,38 @@ permanova <- function(obj, distance_method = "bray") {
   # Here the groups have signif. different spreads and
   # permanova result may be potentially explained by that.
   dist <- vegan::vegdist(t(otu))
-  phyloseq[["anova"]] <- anova(vegan::betadisper(dist, meta$TreatmentGroup))
+  permanova[["anova"]] <- anova(vegan::betadisper(dist, meta[[sym(group)]]))
 
   # Investigate the top factors
   # Show coefficients for the top taxa separating the groups
-  phyloseq[["coef"]] <- coefficients(phyloseq$permanova)["TreatmentGroup1", ]
-  phyloseq[["top.coef"]] <- phyloseq$coef[rev(order(abs(phyloseq$coef)))[1:50]]
-  return(phyloseq)
+  permanova[["coefficients"]] <- coefficients(permanova$permanova)[paste0(group, "1"), ]
+  permanova[["top_coefficients"]] <- permanova$coefficients[rev(order(abs(permanova$coefficients)))[1:50]]
+  return(permanova)
 }
 
 #' @title Top Coefficients Barplot
-#' @description FUNCTION_DESCRIPTION
+#' @description A barplot to visualize which taxa have had the greatest on the overal gut composition.
 #' @param top_coefficients PARAM_DESCRIPTION
 #' @return Returns a barplot of the top coefficients
-#' @details DETAILS
 #' @examples
 #' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
+#' if (interactive()) {
+#'   # EXAMPLE1
+#' }
 #' }
 #' @export
 #' @rdname topcoef_barplot
-topcoef_barplot <- function(top_coefficients) {
+topcoef_barplot <- function(top_coefficients, title = NULL) {
   # Set graphical parameters
   par(mar = c(3, 16, 2, 2))
 
+  if (is.null(title)) {
+    title <- "Top taxa"
+  }
+
   # Plot the top coefficients
   plot <- barplot(sort(top_coefficients),
-    horiz = T, las = 1, main = "Top taxa",
+    horiz = T, las = 1, main = title,
     col = ifelse(sort(top_coefficients) >= 0, "#3288bd", "#d53e4f")
   )
   return(plot)
