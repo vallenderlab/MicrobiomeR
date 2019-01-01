@@ -338,15 +338,23 @@ vlookup <- function(lookup_data, df, match_data, return_data) {
   df[[return_data]][m]
 }
 
-#' @title Create a table from a data frame
+#' @title Create Publication Table
 #'
 #' @description Creates an image of a table from a dataframe.
 #'
-#' @param dataframe A dataframe of data.
-#'
+#' @param dataframe A dataframe object.
 #' @return The text table as an object that can be saved to png/tiff/jpg/pdf.
-#' @importFrom ggpubr ggtexttable ttheme colnames_style tbody_style
 #' @export
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @rdname create_pub_table
+#' @seealso
+#'
+#' @importFrom ggpubr ggtexttable ttheme colnames_style tbody_style
 create_pub_table <- function(dataframe) {
   ggpubr::ggtexttable(dataframe,
                       theme = ggpubr::ttheme(
