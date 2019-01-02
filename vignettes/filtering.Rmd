@@ -133,4 +133,26 @@ filtering/manipulating your _observation_ data by hand.  Observation data can be
 the metacoder object.  Make sure you don't manipulate existing data inside of your taxmap object
 unless you're absolutely sure you know what you're doing.
 
+## Transposing
 
+```{r message=FALSE, warning=FALSE}
+# Get the abundance tables from the taxmap object
+taxa_abund <- metacoder_obj$data$taxa_abundance
+otu_abund <- metacoder_obj$data$otu_abundance
+
+# Transposing with one ID (taxon_id)
+taxa_abund %>% transposer(ids = "taxon_id", header_name = "samples")
+
+# Re-Transposing with one ID (taxon_id)
+taxa_abund %>% transposer("taxon_id", "samples") %>% transposer("samples", "taxon_id")
+
+# Transposing with two IDs (taxon_id, otu_id)
+# The column headers will be a combination of the categorical data that will
+# be parsed and split back into individual columns if retransposed.
+otu_abund %>% transposer("otu_id", "samples")
+
+# Re-Transposing with two IDs (taxon_id, otu_id)
+# When you transpose categorical data, the column headers are lost.
+# To re-transpose you have to supply these headers
+otu_abund %>% transposer("otu_id", "samples") %>% transposer("samples", "otu_id", separated_categories = c("taxon_id", "otu_id"))
+```
