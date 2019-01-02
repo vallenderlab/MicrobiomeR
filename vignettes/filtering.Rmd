@@ -127,3 +127,10 @@ metacoder_obj <- cov_filter(obj = metacoder_obj,
 
 # Other Filtering
 
+As mentioned previously taxmap filtering can be done in any way that fits your needs with the `taxa`
+and `metacoder` packages.  However, MicrobiomeR also provides some utility based function for 
+filtering/manipulating your _observation_ data by hand.  Observation data can be accessed within
+the metacoder object.  Make sure you don't manipulate existing data inside of your taxmap object
+unless you're absolutely sure you know what you're doing.
+
+
