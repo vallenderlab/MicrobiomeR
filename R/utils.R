@@ -237,7 +237,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
     if (!is.null(separated_categories)) {
       trans_data <- trans_data %>% tidyr::separate(col = header_name, into = separated_categories, sep = "<_>")
     } else {
-      messsage(crayon::yellow("Separated categories have not been supplied.  Columns will be named as \"category_#\"."))
+      message(crayon::yellow("Separated categories have not been supplied.  Columns will be named as \"category_#\"."))
       n_cats <- stringr::str_count(trans_data[[header_name]][1], pattern = "<_>") + 1
       trans_data <- trans_data %>% tidyr::separate(col = header_name, into = paste("category", seq(1:n_cats), sep = "_"), sep = "<_>")
     }
