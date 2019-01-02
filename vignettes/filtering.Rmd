@@ -156,3 +156,16 @@ otu_abund %>% transposer("otu_id", "samples")
 # To re-transpose you have to supply these headers
 otu_abund %>% transposer("otu_id", "samples") %>% transposer("samples", "otu_id", separated_categories = c("taxon_id", "otu_id"))
 ```
+
+## Transforming
+
+```{r message=FALSE, warning=FALSE}
+# Transforming to proportions/percentages by COLUMN
+taxa_abund %>% transformer(func = ~./sum(.))
+
+# Transforming by ROW is also possible
+# This function will transpose/retranspose so other information is needed
+taxa_abund %>% transformer(by = "row", ids = "taxon_id", header_name = "samples", separated_categories = c("taxon_id"))
+```
+
+
