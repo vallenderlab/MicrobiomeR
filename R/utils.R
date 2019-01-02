@@ -241,9 +241,12 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
       n_cats <- stringr::str_count(trans_data[[header_name]][1], pattern = "<_>") + 1
       trans_data <- trans_data %>% tidyr::separate(col = header_name, into = paste("category", seq(1:n_cats), sep = "_"), sep = "<_>")
     }
+    message(crayon::silver("Re-Transposed Data."))
+    return(trans_data)
+  } else {
+    message(crayon::silver("Transposed Data."))
+    return(trans_data)
   }
-  message(crayon::silver("Transposed Data."))
-  return(trans_data)
 }
 
 #' @title Transforming Tidy Data
