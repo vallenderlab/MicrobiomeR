@@ -38,7 +38,7 @@ phy_obj <- get_phyloseq_obj(biom_file = biom_file,
 raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
 ```
 
-# Metacoder Filtering
+# Taxmap Filtering
 
 Metacoder is a highly useful package that comes with tons of features right out of the box.  Functions
 such as `metacoder::filter_ambiguous_taxa()`, `taxa::filter_taxa()`, and `taxa::filter_obs()` for instance
@@ -78,17 +78,18 @@ metacoder_obj <- sample_filter(obj = metacoder_obj,
 
 # Advanced Filtering
 
-The advanced filtering functions do several things.  They wrap the basic filtering functions mentioned above,
-they wrap common metacoder and taxa functions, and they mimic the tools found in the phyloseq package.
-Below I've mentioned some of them and how they relate to the phyloseq package:
+The advanced filtering functions available with MicrobiomeR do several things.  They wrap the basic 
+filtering functions mentioned above, they wrap common metacoder and taxa functions, and they mimic 
+the tools found in the phyloseq package.  Below I've mentioned some of them and how they relate to 
+the phyloseq package:
 
-* `agglomerate_metacoder()` as `phyloseq::tax_glom()`.
-* `otu_proportion_filter()` as seen in the first step in phyloseq's [preprocessing](http://joey711.github.io/phyloseq/preprocess.html#preprocessing) vignette.
-* `prevalence filtering`  functions filter observations by thier prevelance across samples.
-    * (Unsupervised) `otu_prevelance_filter()` as seen in phyloseq's [prevalence
+* `agglomerate_metacoder()` is equivalent to `phyloseq::tax_glom()`.
+* `otu_proportion_filter()` is seen in the first step in phyloseq's [preprocessing](http://joey711.github.io/phyloseq/preprocess.html#preprocessing) vignette.
+* `Prevalence Filtering`  functions filter observations by thier prevelance across samples.
+    * (Unsupervised) `otu_prevelance_filter()` is seen in phyloseq's [prevalence
     filtering](http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#prevalence_filtering) vignette.
-    * (Supervised) `taxa_prevalence_filter()` as seen in phyloseq's [taxonomic filtering](http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#taxonomic_filtering) vignette.
-* `cov_filter()` as seen in the nineth step in phyloseq's [preprocessing](http://joey711.github.io/phyloseq/preprocess.html#preprocessing) vignette.
+    * (Supervised) `taxa_prevalence_filter()` is seen in phyloseq's [taxonomic filtering](http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#taxonomic_filtering) vignette.
+* `cov_filter()` is seen in the nineth step in phyloseq's [preprocessing](http://joey711.github.io/phyloseq/preprocess.html#preprocessing) vignette.
 
 ```{r message=FALSE, warning=FALSE}
 # Master Threshold Filter - Add the otu_proportions table and then filter OTUs based on min %
@@ -123,3 +124,6 @@ metacoder_obj <- cov_filter(obj = metacoder_obj,
                             coefficient_of_variation = 3, 
                             validated = TRUE)
 ```
+
+# Other Filtering
+
