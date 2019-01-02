@@ -16,3 +16,24 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Data Wrangling
+
+```{r message=FALSE, warning=FALSE}
+# Get the data files from package
+input_files <- pkg.data$input_files
+biom_file <- input_files$biom_files$silva # Path to silva biom file
+tree_file <- input_files$tree_files$silva # Path to silva tree file
+metadata_file <- input_files$metadata # Path to Nephele metadata
+parse_func <- parse_taxonomy_silva_128 # A custom phyloseq parsing function for silva annotations
+
+# Get the phyloseq object
+phy_obj <- get_phyloseq_obj(biom_file = biom_file, 
+                                    tree_file = tree_file, 
+                                    metadata_file = metadata_file,
+                                    parse_func = parse_func)
+
+# Get the taxmap object in the raw format
+raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
+```
+
+
