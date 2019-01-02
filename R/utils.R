@@ -104,25 +104,25 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
       full_path <- file.path(root_path)
     }
     # Add the output folder to use (generally a new folder, or pre-existing output folder)
-    if (!is.null(start_path)) {
+    if (is.character(start_path)) {
       full_path <- file.path(full_path, start_path)
       # Add a folder for the specific experiment you are conducting
-      if (!is.null(experiment)) {
+      if (is.character(experiment)) {
         full_path <- file.path(full_path, experiment)
       }
       # Add a folder for the plot_type that's being generated
-      if (!is.null(plot_type)) {
+      if (is.character(plot_type)) {
         full_path <- file.path(full_path, plot_type)
       }
       # Add a folder for any extra
-      if (!is.null(end_path)) {
-        full_path <- file.path(full_path, extra_path)
-      } else if (is.null(end_path)) {
+      if (is.null(end_path)) {
         full_path <- file.path(full_path, format(Sys.time(), "%Y-%m-%d_%s"))
+      } else if (is.character(end_path)) {
+        full_path <- file.path(full_path, end_path)
       }
     } else if (is.null(end_path)) {
       # Add a folder for the plot_type that's being generated
-      if (!is.null(plot_type)) {
+      if (is.character(plot_type)) {
         full_path <- file.path(full_path, plot_type)
       } else {
         full_path <- file.path(full_path, "output")
