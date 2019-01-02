@@ -88,3 +88,28 @@ metacoder_obj <- cov_filter(obj = metacoder_obj,
                             coefficient_of_variation = 3, 
                             validated = TRUE)
 ```
+
+# Analysis
+
+Analysis is primarily done with metacoder, MicrobiomeR, and ggplot2.  Before beginning the analysis
+it's wise to create an output directory.  Use `end_path=FALSE` to avoid the creation of a date 
+formatted directory.
+
+```{r message=FALSE, warning=FALSE}
+# Create a directory for whichever plot you want to save
+htp <- get_output_dir(end_path = FALSE, start_path = "output", plot_type = "heat_tree")
+cpp <- get_output_dir(end_path = FALSE, start_path = "output", plot_type = "correlation")
+```
+
+## Statistics
+
+Statistical analysis is primarily done with the help of metacoder style functions such as the 
+`calc_*()` group of functions, and `compare_groups()`.  The taxa function `taxonomy_table()` is also 
+useful for matching stats with the proper taxonomic annotation.  MicrobiomeR creates the proper 
+tables with `as_MicrobiomeR_format(format = "analyzed_format", ...)`.
+
+```{r message=FALSE, warning=FALSE}
+# Get the statistical observation data.
+metacoder_obj <- as_MicrobiomeR_format(obj = metacoder_obj, format = "analyzed_format")
+```
+
