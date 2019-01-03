@@ -289,7 +289,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
 #'  \code{\link[purrr]{modify}}
 #' @importFrom dplyr select_if select
 #' @importFrom purrr modify_at
-#' @importFrom red silver
+#' @importFrom crayon red silver
 transformer <- function(.data, func, by = "column", ids = NULL, header_name = NULL, preserved_categories = TRUE, separated_categories = NULL, ...) {
   if (!(is.matrix(.data) | is.data.frame(.data) | tibble::is.tibble(.data))) {
     stop(crayon::red("Data not transformable."))
