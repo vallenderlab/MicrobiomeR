@@ -1,3 +1,9 @@
+# MicrobiomeR 0.1.3
+ 
+* Added custom css for pkgdown.
+* Added more sections including authors and vignettes to _pkgdown.yml.
+* Fixed `@importFrom` sections for crayon.
+
 # MicrobiomeR 0.1.2
  
 * Added `ordination.R` for ordination plots.
