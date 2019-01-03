@@ -5,6 +5,7 @@
 #' @param secondary_rank The secondary rank used to color the points.  Can be an integer specifying
 #' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
 #' @param wp_value The Wilcoxian P-Value used to represent significant points.  Default: 0.05
+#' @param pal_func A palette function that returns grDevices::colorRampPalette.
 #' @return A 1:1 correlation plot built with ggplot2.
 #' @pretty_print TRUE
 #' @details Correlation plots help to better explain the heat tree findings.
@@ -36,7 +37,7 @@
 #' @importFrom ggrepel geom_label_repel
 #' @importFrom crayon yellow
 correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
-                             wp_value = 0.05) {
+                             wp_value = 0.05, pal_func = NULL) {
   metacoder_object <- object_handler(obj)
   metacoder_object <- validate_MicrobiomeR_format(obj = metacoder_object,
                                                   valid_formats = c("analyzed_format"))
@@ -99,7 +100,17 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
   background_limits <- data.frame(id = c("1", "1", "1", "2", "2", "2"), x = c(0, Inf, 0, 0, Inf, Inf), y = c(0, Inf, Inf, 0, 0, Inf))
   # Get a color palette
   secondary_taxa <- length(unique(primary_data[[(secondary_rank)]]))
-  myPal <- get_color_palette(color_no = secondary_taxa, display = FALSE)
+  if (is.null(pal_func)) {
+    pal_func <- combination_palette(
+      magma = list(palette = viridis::magma, args = list(n=500), range=450:500, rev=TRUE),
+      inferno = list(palette = viridis::inferno, args = list(n=500), range=100:400, rev=TRUE),
+      cividis = list(palette = viridis::cividis, args = list(n=500), range=100:200, rev=TRUE),
+      viridis = list(palette = viridis::viridis, args = list(n=500), range=100:480))
+  }
+  myPal <- get_color_palette(
+    pal_func = pal_func,
+    color_no = secondary_taxa,
+    display = FALSE)
 
   # Start ggplot2 workflow
   corr <- ggplot2::ggplot(primary_data, ggplot2::aes(x = mean_treat1, y = mean_treat2)) +
@@ -115,6 +126,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
     ggplot2::scale_fill_manual(values = c("red", "blue", myPal), guide = FALSE) +
     ggplot2::scale_color_manual(values = c(myPal), name = sprintf("%s:", c(secondary_rank)), guide = ggplot2::guide_legend(ncol = 2)) +
     ggplot2::geom_abline(slope = 1, intercept = 0, linetype = "dashed")
+  message(crayon::green(sprintf("Generating Correlation Plot for %s with color based on %s", crayon::bgWhite(primary_rank), crayon::bgWhite(secondary_rank))))
   return(corr)
 }
 
