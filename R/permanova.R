@@ -59,7 +59,7 @@ permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
   if (is.null(permanova$coefficients)) {
     warning("Coefficients were not able to be generated using this distance method.")
   } else {
-  permanova[["top_coefficients"]] <- permanova$coefficients[rev(order(abs(permanova$coefficients)))[1:50]]
+    permanova[["top_coefficients"]] <- permanova$coefficients[rev(order(abs(permanova$coefficients)))[1:50]]
   }
   return(permanova)
 }
@@ -71,7 +71,10 @@ permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   # EXAMPLE1
+#'   library(MicrobiomeR)
+#'   data <- analyzed_silva
+#'   p <- permanova(obj = data)
+#'   top_coefficients_barplot(p$top_coefficients)
 #' }
 #' }
 #' @export
