@@ -39,7 +39,8 @@ reference:
 
 - title: Alpha Diversity
   contents:
-  - get_alpha_diversity
+  - get_alpha_diversity_measures
+  - alpha_diversity_plot
 
 - title: Data Visualization
   contents:
