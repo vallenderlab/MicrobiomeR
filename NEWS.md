@@ -1,10 +1,17 @@
-# MicrobiomeR 0.0.9.1
+# MicrobiomeR 0.1.3
+ 
+* Added custom css for pkgdown.
+* Added more sections including authors and vignettes to _pkgdown.yml.
+* Fixed `@importFrom` sections for crayon.
 
-* Added `barplot.R` file of stacked barplot functions.
+# MicrobiomeR 0.1.2
+ 
+* Added `ordination.R` for ordination plots.
+* Added tests for ordination plots.
 
-# MicrobiomeR 0.0.9.2
-
-* Fixes to heat tree plots
+# MicrobiomeR 0.1.1
+ 
+* Added loggging and better warning messages.
 
 # MicrobiomeR 0.1.0
  
@@ -14,11 +21,10 @@
 * Added a `NEWS.md` file to track changes to the package.
 * Added simple tests for `stacked_barplot` and `alpha_diversity_plot`.
 
-# MicrobiomeR 0.1.1
- 
-* Added loggging and better warning messages.
+# MicrobiomeR 0.0.9.2
 
-# MicrobiomeR 0.1.2
- 
-* Added `ordination.R` for ordination plots.
-* Added tests for ordination plots.
+* Fixes to heat tree plots
+
+# MicrobiomeR 0.0.9.1
+
+* Added `barplot.R` file of stacked barplot functions.

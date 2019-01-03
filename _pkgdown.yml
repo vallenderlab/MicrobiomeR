@@ -1,26 +1,55 @@
 template:
   params:
-    bootswatch: cosmo
+    bootswatch: yeti
+
+development:
+  mode: unreleased
+
+authors:
+  Robert Gilmore:
+    href: https://github.com/grabear
+  Shaurita Hutchins:
+    href: https://www.shauritahutchins.com
+
+navbar:
+  title: MicrobiomeR
+  left:
+    - text: Home
+      href: index.html
+    - text: "Vignettes"
+      menu:
+      - text: "Get Started"
+        href: articles/get-started.html
+    - text: "Reference"
+      href: reference/index.html
+    - text: "Changelog"
+      href: news/index.html
+  right:
+    - icon: fa-github
+      href: https://github.com/vallenderlab/MicrobiomeR
+    - icon: fa-twitter
+      href: https://twitter.com/datasnakes
 
 reference:
 - title: Data Processing
   contents:
-  - get_phyloseq_obj
-  - parse_taxonomy_silva_128
-  - phyloseq_to_tibble
-  - pick_new_outgroup
-  - preprocess_phyloseq
-  - remove_ambiguous_taxa
-  - root_by_longest_edge
+  - as_MicrobiomeR_format
+  - transformer
+  - transposer
 
 - title: Alpha Diversity
   contents:
-  - get_alpha_diversity
+  - get_alpha_diversity_measures
+  - alpha_diversity_plot
+
+- title: Data Visualization
+  contents:
+  - get_color_palette
+  - get_heat_tree_plots
+  - get_correlation_plots
+  - stacked_barplot
 
 - title: Utilities
   contents:
-  - mkdir
-
-- title: Data Visualizations
-  contents:
   - create_pub_table
+  - vlookup
