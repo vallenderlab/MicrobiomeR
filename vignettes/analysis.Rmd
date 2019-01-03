@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(MicrobiomeR)
+pkg.data <- MicrobiomeR:::pkg.private
 ```
 
 # Data Wrangling
@@ -92,13 +94,13 @@ metacoder_obj <- cov_filter(obj = metacoder_obj,
 # Analysis
 
 Analysis is primarily done with metacoder, MicrobiomeR, and ggplot2.  Before beginning the analysis
-it's wise to create an output directory.  Use `end_path=FALSE` to avoid the creation of a date 
-formatted directory.
+it's wise to create an output directory.  Use `end_path=FALSE` with MicrobiomeR's `get_output_dir()`
+function to avoid the creation of a date formatted directory.
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 # Create a directory for whichever plot you want to save
-htp <- get_output_dir(end_path = FALSE, start_path = "output", plot_type = "heat_tree")
-cpp <- get_output_dir(end_path = FALSE, start_path = "output", plot_type = "correlation")
+heat_tree_path <- get_output_dir(end_path = FALSE, start_path = "output", plot_type = "heat_tree")
+corr_plot_path <- get_output_dir(end_path = FALSE, start_path = "output", plot_type = "correlation")
 ```
 
 ## Statistics
@@ -113,3 +115,41 @@ tables with `as_MicrobiomeR_format(format = "analyzed_format", ...)`.
 metacoder_obj <- as_MicrobiomeR_format(obj = metacoder_obj, format = "analyzed_format")
 ```
 
+## Visualization
+
+Visualization of taxmap objects can be done in several ways.  The metacoder package primarily 
+produces `heat_tree()`s.  MicrobiomeR does this as well, but takes care of creating default values
+that the developers enjoyed in their heat tree plots.  MicrobiomeR also uses ggplot2 to create 
+`correlation_plot()`s.
+
+```{r message=FALSE, warning=FALSE}
+# Generate heat_trees
+heat_tree_plots <- get_heat_tree_plots(metacoder_obj, 
+                                       rank_list = c("Phylum", "Class", "Order"),
+                                       node_label = ifelse(wilcox_p_value > 0.05, taxon_ids, NA),
+                                       node_label_size = 2,
+                                       node_label_color = c("darkgreen"))
+names(heat_tree_plots)
+# Generate correlation_plots
+corr_plots <- get_correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
+names(corr_plots)
+```
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+# Save plots with a custom output path
+save_heat_tree_plots(htrees = heat_tree_plots, custom_path = heat_tree_path)
+save_correlation_plots(corr = corr_plots, custom_path = corr_plot_path)
+```
+```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=8}
+# Heat Trees
+heat_trees <- heat_tree_plots$heat_trees
+heat_trees$Phylum
+heat_trees$Class
+heat_trees$Order
+```
+
+```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=5.3}
+# Correlation Plots
+corr_plots$Phylum
+corr_plots$Class
+corr_plots$Order
+```
