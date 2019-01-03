@@ -6,7 +6,7 @@
 \usage{
 viridis_magma_palette(viridis_number = 800,
   viridis_range = 300:viridis_number, viridis_rev = TRUE,
-  magma_number = 500, magma_range = 0:magma_number,
+  magma_number = 500, magma_range = 50:magma_number,
   magma_rev = FALSE, ...)
 }
 \arguments{

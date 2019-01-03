@@ -6,7 +6,8 @@
 \usage{
 get_phyloseq_obj(biom_file = NULL, tree_file = NULL,
   metadata_file = NULL, treatment_group = NULL, parse_func = NULL,
-  rdata_file = NULL, path = NULL)
+  rdata_file = NULL, save_rooted_tree = FALSE,
+  recursive_save = FALSE)
 }
 \arguments{
 \item{biom_file}{A file in the \href{http://biom-format.org/}{BIOM format}.  Default: NULL}
@@ -26,7 +27,11 @@ Greengenes or SILVA database.  Default: NULL}
 
 \item{rdata_file}{A .Rdata file.  Default: NULL}
 
-\item{path}{A path for the output tree file.  Default: NULL}
+\item{save_rooted_tree}{A logical that determines weather or not the rooted tree
+is saved.  Default: FALSE}
+
+\item{recursive_save}{If the directory doesn't exists create the parent directories
+that don't exist as well.  Default: FALSE}
 }
 \value{
 A phyloseq object, and a phylogenetic tree file if one does not already exist.

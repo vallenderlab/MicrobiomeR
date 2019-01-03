@@ -4,16 +4,16 @@
 \alias{vlookup}
 \title{Mock Excel "VlookUp" Function}
 \usage{
-vlookup(lookup_data, df, match_data, return_data)
+vlookup(lookup_vector, df, match_var, return_var)
 }
 \arguments{
-\item{lookup_data}{A vector of items to look up.}
+\item{lookup_vector}{A vector of items to look up.}
 
 \item{df}{The dataframe to search.}
 
-\item{match_data}{The column name to search in the dataframe.}
+\item{match_var}{The column name to search in the dataframe.}
 
-\item{return_data}{The column of data to return when matched.}
+\item{return_var}{The column of data to return when matched.}
 }
 \value{
 A vector that contains the items of interest.

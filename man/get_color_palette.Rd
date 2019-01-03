@@ -5,7 +5,7 @@
 \title{Get a Color Palette}
 \usage{
 get_color_palette(pal_func = viridis_magma_palette, color_no = 20,
-  display = TRUE, ...)
+  display = TRUE, rev = FALSE, ...)
 }
 \arguments{
 \item{pal_func}{A function that \emph{returns the output function} from \code{\link[grDevices]{colorRamp}} or
