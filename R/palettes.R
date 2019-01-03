@@ -24,13 +24,16 @@
 #' @family Color Palettes
 #' @rdname get_color_palette
 #' @importFrom graphics pie
-get_color_palette <- function(pal_func=viridis_magma_palette, color_no=20, display=TRUE, ...) {
+get_color_palette <- function(pal_func=viridis_magma_palette, color_no=20, display=TRUE, rev = FALSE, ...) {
   err_handle <- try({
     pal_func <- pal_func(...)
     pal <- pal_func(n=color_no, ...)
   }, silent = TRUE)
   if (inherits(err_handle, "try-error")) {
     pal <- pal_func(n=color_no, ...)
+  }
+  if (rev == TRUE) {
+    pal <- rev(pal)
   }
   if (display){
     pie(rep(1, length(pal)), col=pal)
@@ -101,7 +104,7 @@ scico_palette <- function(scico_palette="batlow", scico_number=800, scico_range=
 viridis_palette <- function(viridis_palette="viridis", viridis_number=800, viridis_range=0:viridis_number) {
   pal <- viridis::viridis(viridis_number, option = viridis_palette)[viridis_range]
   pal <- unique(pal)
-  crp <- grDevices::colorRampPalette()
+  crp <- grDevices::colorRampPalette(pal)
   return(crp)
 }
 
@@ -239,7 +242,7 @@ combination_palette <- function(...) {
 #'  \code{\link[grDevices]{colorRamp}}
 #' @importFrom viridis viridis magma
 viridis_magma_palette <- function(viridis_number = 800, viridis_range = 300:viridis_number, viridis_rev = TRUE,
-                                magma_number = 500, magma_range = 0:magma_number, magma_rev = FALSE, ...) {
+                                magma_number = 500, magma_range = 50:magma_number, magma_rev = FALSE, ...) {
   if (!missing(...)){
     v_args = list(n=viridis_number, ...)
     m_args = list(n=magma_number, ...)
