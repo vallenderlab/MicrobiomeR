@@ -212,6 +212,51 @@ order_metacoder_data <- function(obj) {
   return(mo_clone)
 }
 
+#' @title Validate MicrobiomeR Format
+#' @description This funciton validates that taxmap/metacoder objects are in a valid format MicrobiomeR format.
+#' @param obj A Taxmap/metacoder object.
+#' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
+#' @param valid_formats A vector of formats that are used for validation.
+#' @param force_format A logical denoting if the selected format is to be forced.  Default: FALSE
+#' @param min_or_max A base function (min or max) that determines which format is to be forced.
+#' This is particularly useful if you provide multiple \emph{valid_formats}.  Min will choose the lowest
+#' level format, while max will choose the highest level format.  Default: base::max
+#' @param ... An optional list of parameters to use in \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}.
+#' @return If the object is validated, a Taxmap/metacoder object.
+#' @details This function can provide a way to check if a taxmap object has undergone a
+#' \code{\link[MicrobiomeR:MicrobiomeR_Workflow]{MicrobiomeR Style Workflow}}.
+#' @export
+#' @family Validation
+#' @rdname validate_MicrobiomeR_format
+#' @seealso
+#'  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
+#' @importFrom glue glue
+#' @importFrom crayon bgWhite green yellow red
+validate_MicrobiomeR_format <- function(obj, validated = FALSE, valid_formats, force_format = FALSE, min_or_max = base::max, ...) {
+  mo_clone <- obj$clone()
+  format_list <- pkg.private$format_level_list
+  if (validated == TRUE) {
+    return(mo_clone)
+  }
+  fmt <- which_format(obj = mo_clone)
+  rank_list <- c(format_list[[fmt]])
+  high_rank <- fmt
+  if (fmt %in% valid_formats) {
+    return(mo_clone)
+  } else if (force_format == TRUE) {
+    for (v_fmt in valid_formats) {
+      rank_list <- c(rank_list, format_list[[v_fmt]])
+      high_rank <- ifelse(format_list[[v_fmt]] >= min_or_max(rank_list), v_fmt, high_rank)
+    }
+    message(crayon::yellow(glue::glue("Forcing the metacoder object from the ", crayon::bgWhite(crayon::red({fmt})), " to the ",
+                                      crayon::bgWhite(crayon::green({high_rank})),".")))
+    mo_clone <- as_MicrobiomeR_format(obj = mo_clone, format = high_rank, ...)
+    return(mo_clone)
+  } else {
+    stop(glue::glue("The metacoder object is not in one of the valid formats: {valid_formats}." ))
+  }
+}
+
 #' @title As Raw MicrobiomeR Format
 #' @description Converts a metacoder object to the raw_format.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
@@ -458,7 +503,7 @@ as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_ann
   return(mo_clone)
 }
 
-#' @title Format Metacoder Objects
+#' @title As Custom MicrobiomeR Format
 #' @description A function for formatting metacoder objects in the MicrobiomeR format.  This function
 #' attempts to give more customization than the as_*_format functions.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
@@ -471,12 +516,12 @@ as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_ann
 #' @details This function is meant to be more helpful for customizing the metacoder object.
 #' @export
 #' @family Formatting
-#' @rdname format_metacoder_object
+#' @rdname as_custom_format
 #' @seealso
 #'  \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
 #' @importFrom glue glue
 #' @importFrom crayon red
-format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
+as_custom_format <- function(obj, format, change_name_list = NULL, ...) {
 
   # Metacoder Objects
   obj <- object_handler(obj = obj)
@@ -538,48 +583,5 @@ format_metacoder_object <- function(obj, format, change_name_list = NULL, ...) {
   return(mo_clone)
 }
 
-#' @title Validate MicrobiomeR Format
-#' @description This funciton validates that taxmap/metacoder objects are in a valid format MicrobiomeR format.
-#' @param obj A Taxmap/metacoder object.
-#' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
-#' @param valid_formats A vector of formats that are used for validation.
-#' @param force_format A logical denoting if the selected format is to be forced.  Default: FALSE
-#' @param min_or_max A base function (min or max) that determines which format is to be forced.
-#' This is particularly useful if you provide multiple \emph{valid_formats}.  Min will choose the lowest
-#' level format, while max will choose the highest level format.  Default: base::max
-#' @param ... An optional list of parameters to use in \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}.
-#' @return If the object is validated, a Taxmap/metacoder object.
-#' @details This function can provide a way to check if a taxmap object has undergone a
-#' \code{\link[MicrobiomeR:MicrobiomeR_Workflow]{MicrobiomeR Style Workflow}}.
-#' @export
-#' @family Validation
-#' @rdname validate_MicrobiomeR_format
-#' @seealso
-#'  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
-#' @importFrom glue glue
-#' @importFrom crayon bgWhite green yellow red
-validate_MicrobiomeR_format <- function(obj, validated = FALSE, valid_formats, force_format = FALSE, min_or_max = base::max, ...) {
-  mo_clone <- obj$clone()
-  format_list <- pkg.private$format_level_list
-  if (validated == TRUE) {
-    return(mo_clone)
-  }
-  fmt <- which_format(obj = mo_clone)
-  rank_list <- c(format_list[[fmt]])
-  high_rank <- fmt
-  if (fmt %in% valid_formats) {
-    return(mo_clone)
-  } else if (force_format == TRUE) {
-    for (v_fmt in valid_formats) {
-      rank_list <- c(rank_list, format_list[[v_fmt]])
-      high_rank <- ifelse(format_list[[v_fmt]] >= min_or_max(rank_list), v_fmt, high_rank)
-    }
-    message(crayon::yellow(glue::glue("Forcing the metacoder object from the ", crayon::bgWhite(crayon::red({fmt})), " to the ",
-                       crayon::bgWhite(crayon::green({high_rank})),".")))
-    mo_clone <- as_MicrobiomeR_format(obj = mo_clone, format = high_rank, ...)
-    return(mo_clone)
-  } else {
-    stop(glue::glue("The metacoder object is not in one of the valid formats: {valid_formats}." ))
-  }
-}
+
 
