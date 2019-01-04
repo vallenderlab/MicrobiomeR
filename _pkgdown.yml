@@ -14,12 +14,18 @@ authors:
 navbar:
   title: MicrobiomeR
   left:
-    - text: Home
+    - text: "Home"
       href: index.html
     - text: "Vignettes"
       menu:
-      - text: "Get Started"
-        href: articles/get-started.html
+      - text: "Introduction"
+        href: articles/introduction.html
+      - text: "Data Wrangling"
+        href: articles/data-wrangling.html
+      - text: "Data Filtering"
+        href: articles/filtering.html
+      - text: "Data Analysis"
+        href: articles/analysis.html
     - text: "Reference"
       href: reference/index.html
     - text: "Changelog"
@@ -31,25 +37,11 @@ navbar:
       href: https://twitter.com/datasnakes
 
 reference:
-- title: Data Processing
+- title: Data Importers
   contents:
-  - as_MicrobiomeR_format
-  - transformer
-  - transposer
+  - get_phyloseq_obj
+  - parse_taxonomy_default
+  - parse_taxonomy_silva_128
+  - parse_taxonomy_greengenes
+  - parse_taxonomy_qiime
 
-- title: Alpha Diversity
-  contents:
-  - get_alpha_diversity_measures
-  - alpha_diversity_plot
-
-- title: Data Visualization
-  contents:
-  - get_color_palette
-  - get_heat_tree_plots
-  - get_correlation_plots
-  - stacked_barplot
-
-- title: Utilities
-  contents:
-  - create_pub_table
-  - vlookup
