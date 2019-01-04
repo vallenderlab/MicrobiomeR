@@ -118,8 +118,9 @@ metacoder_obj <- as_MicrobiomeR_format(obj = metacoder_obj, format = "analyzed_f
 ## Visualization
 
 Visualization of taxmap objects can be done in several ways.  The metacoder package primarily 
-produces `heat_tree()`s.  MicrobiomeR does this as well, but takes care of creating default values
-that the developers enjoyed in their heat tree plots.  MicrobiomeR also uses ggplot2 to create 
+produces `heat_tree()`s for visualization, which can be used for any taxmap object.  MicrobiomeR 
+does this as well, but takes care of creating default values that we enjoyed in our heat tree plots.  
+MicrobiomeR also uses ggplot2 to create 
 `correlation_plot()`s.
 
 ```{r message=FALSE, warning=FALSE}
