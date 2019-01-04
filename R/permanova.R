@@ -99,3 +99,32 @@ top_coefficients_barplot <- function(top_coefficients, title = NULL) {
   )
   return(plot)
 }
+
+#' @title Save Top Coefficients Barplot
+#' @description Save a top coefficients barplot.
+#' @param plot The plot object.
+#' @param filename The name of the file. (an extension should not be included)
+#' @examples
+#' \dontrun{
+#' if (interactive()) {
+#'   library(MicrobiomeR)
+#'   save_top_coefficients_barplot(plot = plot, filename = "stacked_bar_phylum")
+#' }
+#' }
+#' @export
+#' @rdname save_top_coefficients_barplot
+#' @importFrom ggplot2 ggsave
+#' @importFrom crayon green yellow
+#' @importFrom glue glue
+save_top_coefficients_barplot <- function(plot, filename, format = "tiff", start_path = "output", ...) {
+  if (is.null(filename)) {
+    filename <- plot
+  }
+  full_path <- get_output_dir(start_path = start_path, plot_type = "top_coef_barplot", ...)
+  message(glue::glue(crayon::yellow("Saving Top Coefficents Barplot to the following directory: \n", "\r\t{full_path}")))
+  message(glue::glue(crayon::green("Saving the top coefficients barplot.")))
+  ggplot2::ggsave(paste0(filename, ".", format),
+                  plot = plot, device = format, path = full_path,
+                  width = 8, height = 5, units = "in", dpi = 500
+  )
+}
