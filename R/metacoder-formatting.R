@@ -106,8 +106,7 @@ is_raw_format <- function(obj) {
 #'     print(sprintf("It's %s!", fmt))
 #' }
 #'  }
-#'  }
-#' }
+#'}
 #' @export
 #' @family Validation
 #' @rdname is_basic_format
@@ -137,7 +136,6 @@ is_basic_format <- function(obj) {
 #'     print("It's not analyzed!")
 #'     print(sprintf("It's %s!", fmt))
 #' }
-#'  }
 #'  }
 #' }
 #' @export
@@ -437,7 +435,7 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
 #' @family Formatting
 #' @rdname as_MicrobiomeR_format
 #' @seealso
-#'  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
+#'  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
 #' @importFrom glue glue
 #' @importFrom crayon silver green red
 as_MicrobiomeR_format <- function(obj, format, ...) {

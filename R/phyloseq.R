@@ -107,7 +107,7 @@ create_phyloseq <- function(biom_file = NULL, tree_file = NULL, metadata_file = 
 #' @seealso
 #'  \code{\link[ape]{root}}, \code{\link[ape]{read.tree}}, \code{\link[ape]{write.tree}}
 #'
-#'  \code{\link[phyloseq]{phy_tree}}
+#'  \code{\link[phyloseq:phy_tree-methods]{phy_tree}}
 #'
 #'  \code{\link[tools]{fileutils}}
 #' @importFrom ape is.rooted read.tree write.tree

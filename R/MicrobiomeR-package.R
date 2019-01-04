@@ -17,7 +17,7 @@
 #'   \item{microbiome}{\url{http://microbiome.github.io/microbiome/}}
 #'   \item{MicrobiomeR}{\url{https://github.com/vallenderlab/MicrobiomeR}
 #' }}
-#' The [MicrobiomeR_Workflows] and [MicrobiomeR_Formats] help sections are also useful for understanding the
+#' The [MicrobiomeR_Workflow] and [MicrobiomeR_Formats] help sections are also useful for understanding the
 #' package.
 #'
 #'
