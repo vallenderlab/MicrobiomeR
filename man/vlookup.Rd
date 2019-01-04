@@ -33,6 +33,7 @@ if(interactive()){
 }
 }
 \seealso{
-Other Data Manipulators: \code{\link{metacoder_comp_func_1}}
+Other Data Manipulators: \code{\link{metacoder_comp_func_1}},
+  \code{\link{transformer}}, \code{\link{transposer}}
 }
 \concept{Data Manipulators}

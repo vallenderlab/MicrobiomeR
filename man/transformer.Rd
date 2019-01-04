@@ -60,5 +60,8 @@ if(interactive()){
 \code{\link[MicrobiomeR]{transposer}}
 \code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}}
 \code{\link[purrr]{modify}}
+
+Other Data Manipulators: \code{\link{metacoder_comp_func_1}},
+  \code{\link{transposer}}, \code{\link{vlookup}}
 }
-\concept{Data Manipulator}
+\concept{Data Manipulators}
