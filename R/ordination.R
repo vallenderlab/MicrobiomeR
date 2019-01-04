@@ -19,9 +19,9 @@
 #' }
 #' }
 #' @export
+#' @family Visualizations
 #' @rdname ordination_plot
-#' @seealso
-#'
+#' @seealso View \code{\link{save_ordination_plots}} to save your ordination plot or multiple ordination plots.
 #' @importFrom metacoder as_phyloseq
 #' @importFrom phyloseq ordinate plot_ordination
 #' @importFrom ggplot2 element_text geom_point theme element_blank guide_legend guides ggtitle unit scale_fill_manual labs scale_color_manual
