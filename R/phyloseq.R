@@ -36,11 +36,11 @@
 #' md_file <- system.file("extdata", "nephele_metadata.txt", package = "MicrobiomeR")
 #' }
 #' # Create a phyloseq object from the data files.
-#' phy_obj <- get_phyloseq_obj(biom_file = biome_file, tree_file = tree_file, metadata_file = md_file)
+#' phy_obj <- create_phyloseq(biom_file = biome_file, tree_file = tree_file, metadata_file = md_file)
 #' }
 #' @export
 #' @family Data Importers
-#' @rdname get_phyloseq_obj
+#' @rdname create_phyloseq
 #' @seealso
 #'  \code{\link[phyloseq]{import_biom}}, \code{\link[phyloseq:sample_data-methods]{phyloseq::sample_data()}}, \code{\link[phyloseq:phy_tree-methods]{phyloseq::phy_tree()}}, \code{\link[phyloseq]{import_qiime_sample_data}}, \code{\link[phyloseq]{merge_phyloseq}}
 #'
@@ -50,7 +50,7 @@
 #' @importFrom phyloseq import_biom sample_data phy_tree import_qiime_sample_data merge_phyloseq
 #' @importFrom ape is.rooted write.tree read.tree
 #' @importFrom tools file_path_as_absolute
-get_phyloseq_obj <- function(biom_file = NULL, tree_file = NULL, metadata_file = NULL,
+create_phyloseq <- function(biom_file = NULL, tree_file = NULL, metadata_file = NULL,
                              treatment_group = NULL, parse_func = NULL, rdata_file = NULL,
                              save_rooted_tree = FALSE, recursive_save = FALSE) {
   if (!is.null(rdata_file)) {
