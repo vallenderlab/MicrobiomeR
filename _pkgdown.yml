@@ -37,17 +37,15 @@ navbar:
       href: https://twitter.com/datasnakes
 
 reference:
-- title: Data Import
+- title: Import
   contents:
   - get_phyloseq_obj
   - parse_taxonomy_default
   - parse_taxonomy_silva_128
   - parse_taxonomy_greengenes
   - parse_taxonomy_qiime
+  - has_concept("Phylogenetic Tree Manipulators")
 
-- title: Data Formatting
+- title: Formatting
   contents:
-  - starts_with("as_")
-  - format_metacoder_object
-
-
+  - has_concept("Formatting")
