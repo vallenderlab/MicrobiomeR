@@ -29,10 +29,10 @@ metadata_file <- input_files$metadata # Path to Nephele metadata
 parse_func <- parse_taxonomy_silva_128 # A custom phyloseq parsing function for silva annotations
 
 # Get the phyloseq object
-phy_obj <- get_phyloseq_obj(biom_file = biom_file, 
-                                    tree_file = tree_file, 
-                                    metadata_file = metadata_file,
-                                    parse_func = parse_func)
+phy_obj <- create_phyloseq(biom_file = biom_file, 
+                           tree_file = tree_file, 
+                           metadata_file = metadata_file,
+                           parse_func = parse_func)
 
 # Get the taxmap object in the raw format
 raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
@@ -70,7 +70,7 @@ a filtering function (.f_filter), and a coditional function (.f_condition).
 ```{r message=FALSE, warning=FALSE}
 # Low Sample Filter - Remove the low samples
 # The sample filter should generally be implemented first
-metacoder_obj <- sample_filter(obj = metacoder_obj,
+metacoder_obj <- sample_id_filter(obj = metacoder_obj,
                                .f_filter = ~sum(.),
                                .f_condition = ~.>= 20, 
                                validated = TRUE)

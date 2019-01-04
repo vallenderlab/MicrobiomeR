@@ -8,7 +8,7 @@
 #' dependencies used to create the MicrobiomeR formats listed below:
 #' \describe{
 #'   \item{phyloseq_format}{Level 0.  The "phyloseq_format" is the format given to a \emph{taxmap} object that has just
-#'   been converted from a \emph{phyloseq} object using \emph{metacoder} via \code{\link[MicrobiomeR]{get_phyloseq_obj}}.  A taxmap object identified by MicrobiomeR
+#'   been converted from a \emph{phyloseq} object using \emph{metacoder} via \code{\link[MicrobiomeR]{create_phyloseq}}.  A taxmap object identified by MicrobiomeR
 #'   to be in this format will contain "otu_table", "tax_data", "sample_data" and "phy_tree" data in the observation
 #'   tables (\strong{metacoder_obj$data}), which represents the matching \emph{phyloseq::otu_table}, \emph{phyloseq::tax_table},
 #'   \emph{phyloseq::sample_data}, and \emph{phyloseq::phy_tree} data in the original phyloseq object.}
@@ -32,7 +32,7 @@ NULL
 #' packages.  Primarily \strong{phyloseq}, \strong{taxa}, and \strong{metacoder}.
 #'
 #' @section Data Import:
-#' Data is imported with the \code{\link[MicrobiomeR]{get_phyloseq_obj}} function or something proprietary that
+#' Data is imported with the \code{\link[MicrobiomeR]{create_phyloseq}} function or something proprietary that
 #' creates a \code{\link[phyloseq:phyloseq-class]{phyloseq object}} with an \code{\link[phyloseq:otu_table-class]{phyloseq::otu_table}},
 #' a \code{\link[phyloseq:taxonomyTable-class]{phyloseq::tax_table}}, a \code{\link[phyloseq:sample_data-class]{phyloseq::sample_data}},
 #' and a \code{\link[phyloseq:phylo-class]{phyloseq::phy_tree}}.  The data is preferrably not filtered
