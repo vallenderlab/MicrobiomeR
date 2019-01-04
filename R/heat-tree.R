@@ -98,7 +98,7 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
 #'
 #'  \code{\link[purrr]{list_modify}}
 #'
-#'  \code{\link[rlang:quotation]{enquos}},  \code{\link[rlang:quo]{is_quosure}},  \code{\link[rlang]{eval_tidy}}
+#'  \code{\link[rlang:quotation]{enquos}},  \code{\link[rlang:quosure]{is_quosure}},  \code{\link[rlang]{eval_tidy}}
 #' @importFrom taxa n_obs taxon_names
 #' @importFrom purrr list_modify
 #' @importFrom rlang enquos is_quosure eval_tidy
