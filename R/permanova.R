@@ -7,7 +7,10 @@
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   # EXAMPLE1
+#'   library(MicrobiomeR)
+#'   data <- analyzed_silva
+#'   p <- permanova(obj = data)
+#'   p$permanova
 #' }
 #' }
 #' @export
@@ -78,6 +81,7 @@ permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
 #' }
 #' }
 #' @export
+#' @family Visualizations
 #' @rdname top_coefficients_barplot
 top_coefficients_barplot <- function(top_coefficients, title = NULL) {
   # Set graphical parameters
