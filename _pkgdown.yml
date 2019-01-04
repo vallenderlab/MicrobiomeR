@@ -53,3 +53,8 @@ reference:
 - title: Validation
   contents:
   - has_concept("Validation")
+
+-title: Filtering
+  contents:
+  - has_concept("Data Manipulators")
+  - has_concept("Metacoder Filters")
