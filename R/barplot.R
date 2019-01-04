@@ -126,6 +126,7 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
 #' }
 #' }
 #' @export
+#' @family Visualizations
 #' @rdname save_barplot
 #' @seealso
 #'
