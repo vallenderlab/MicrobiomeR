@@ -22,7 +22,7 @@
 #'   processed with \code{\link[MicrobiomeR]{as_analyzed_format}}.  It contains the tables available in the "basic_format" along
 #'   with "statistical_data" and "stats_tax_data" tables.}
 #' }
-#'
+#' @family Formatting
 #' @name MicrobiomeR_Formats
 NULL
 
