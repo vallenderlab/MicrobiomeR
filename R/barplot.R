@@ -2,9 +2,9 @@
 #' @description Melt the metacoder or phyloseq tables into a dataframe.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @return Returns a melted dataframe.
-#' @rdname melt_metacoder
-#' @importFrom  dplyr right_join setdiff
-#' @importFrom  tidyr gather_
+#' @rdname stacked_barplot
+#' @importFrom dplyr right_join setdiff
+#' @importFrom tidyr gather_
 melt_metacoder <- function(obj) {
   sd <- data.frame(obj$data$sample_data)
   TT <- data.frame(obj$data$otu_annotations, stringsAsFactors = FALSE)
@@ -24,6 +24,7 @@ melt_metacoder <- function(obj) {
 #' @return Returns a transformed dataframe.
 #' @importFrom dplyr filter group_by summarize mutate enquo quo_name
 #' @importFrom stats na.omit
+#' @rdname stacked_barplot
 transform_metacoder <- function(melted_df, tax_level) {
   t <- dplyr::enquo(tax_level)
   tax_level.abund <- paste0(dplyr::quo_name(t), ".Abundance")
