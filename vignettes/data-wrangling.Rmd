@@ -85,7 +85,7 @@ MicrobiomeR provides a group of helpful functions that can be used to format tax
 * `is_*_format()` for testing if an object is in a specific format.
 * `as_*_format()` for converting an object to a specific format.
 * `order_metacoder_data()` for ordering the observation data for analysis.
-* `validate_MicrobiomeR_fomrat()` for validating that the taxmap object is in a specific format.
+* `validate_MicrobiomeR_format()` for validating that the taxmap object is in a specific format.
 
 ```{r message=FALSE, warning=FALSE}
 # Determine format
