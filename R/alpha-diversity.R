@@ -16,7 +16,7 @@
 #' @export
 #' @rdname get_alpha_diversity_measures
 #' @seealso
-#'  \code{\link[microbiome]{diversities}},\code{\link[microbiome]{meta}}
+#'  View \code{\link[microbiome]{diversities}},\code{\link[microbiome]{meta}} to learn more about generating diversity measures with the microbiome package.
 #' @importFrom microbiome diversities meta
 #' @importFrom metacoder as_phyloseq
 #' @importFrom utils combn
@@ -52,11 +52,12 @@ get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' @title Alpha Diversity Plot
 #' @description Plot the alpha diversity using a violin plot.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
-#' @param measure Select an alpha diversity measure such as Shannon, Gini Simpson, and Inverse Simpson, Default: 'shannon'
+#' @param measure Select an alpha diversity measure such as shannon, gini simpson, and inverse simpson, Default: 'shannon'
 #' @param select_otu_table Choose an otu table to analyze, Default: 'otu_proportions'
 #' @param save Save the plot, Default: FALSE
 #' @return Returns an alpha diversity plot.
 #' @details Alpha diversity helps to determine the species richness (the number of different species in a sample) or evenness (similar abundance level).
+#' We prefer to use `shannon` as it is better for data generated using the QUIIME pipeline.
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
@@ -68,7 +69,7 @@ get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' }
 #' @export
 #' @rdname alpha_diversity_plot
-#' @seealso
+#' @seealso \code{\link{get_alpha_diversity_measures}}, \code{\link[vegan]{diversity}}, \code{\link[ggpubr]{ggviolin}}
 #' @family Visualizations
 #' @importFrom ggplot2 xlab ylab
 #' @importFrom ggpubr stat_compare_means ggviolin
