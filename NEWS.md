@@ -1,4 +1,4 @@
-# MicrobiomeR 0.1.4
+# MicrobiomeR 0.2.3
 
 * Added vignettes to package and pkgdown config.
   * Introduction
@@ -12,6 +12,7 @@
   * Filtering
   * Visualization
 * Updated `vlookup` and `get_color_palette` parameters.
+* Changed `sample_filter` to `sample_id_filter`.
 * Added the `root_phyloseq_tree` function.
 * Fixed minor bugs in code and docs.
 
