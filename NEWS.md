@@ -1,4 +1,4 @@
-# MicrobiomeR 0.2.3
+# MicrobiomeR 0.2.0
 
 * Added vignettes to package and pkgdown config.
   * Introduction
