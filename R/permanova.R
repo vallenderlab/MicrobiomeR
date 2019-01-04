@@ -15,8 +15,7 @@
 #' }
 #' @export
 #' @rdname permanova
-#' @seealso
-#'
+#' @seealso View \code{\link{top_coefficients_barplot}} to plot the top_coefficients returned from this function.
 #' @importFrom dplyr select
 #' @importFrom microbiome abundances meta
 #' @importFrom vegan adonis vegdist betadisper
@@ -124,7 +123,7 @@ save_top_coefficients_barplot <- function(plot, filename, format = "tiff", start
   message(glue::glue(crayon::yellow("Saving Top Coefficents Barplot to the following directory: \n", "\r\t{full_path}")))
   message(glue::glue(crayon::green("Saving the top coefficients barplot.")))
   ggplot2::ggsave(paste0(filename, ".", format),
-                  plot = plot, device = format, path = full_path,
-                  width = 8, height = 5, units = "in", dpi = 500
+    plot = plot, device = format, path = full_path,
+    width = 8, height = 5, units = "in", dpi = 500
   )
 }
