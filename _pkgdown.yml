@@ -58,3 +58,9 @@ reference:
   contents:
   - has_concept("Data Manipulators")
   - has_concept("Metacoder Filters")
+
+- title: Visualization
+  contents:
+  - get_output_dir
+  - has_concept("Color Palettes")
+  - has_concept("Visualizations")
