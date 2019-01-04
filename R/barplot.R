@@ -127,8 +127,6 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
 #' }
 #' @export
 #' @rdname save_barplot
-#' @seealso
-#'
 #' @importFrom ggplot2 ggsave
 save_barplot <- function(plot, filename) {
   if (is.null(filename)) {
