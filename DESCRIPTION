@@ -1,6 +1,6 @@
 Package: MicrobiomeR
 Title: Analyze Microbiome Data
-Version: 0.1.2
+Version: 0.1.4
 Authors@R: c(
     person("Robert", "Gilmore", email = "rgilmore@umc.edu", role = "cre"),
     person("Shaurita", "Hutchins", email = "shutchins2@umc.edu", role = "aut"))
