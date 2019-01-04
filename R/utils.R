@@ -20,7 +20,7 @@
 #'  }
 #' }
 #' @export
-#' @family Formatting and Validation
+#' @family Validation
 #' @rdname object_handler
 #' @seealso
 #'  \code{\link[metacoder]{parse_phyloseq}}
@@ -188,7 +188,7 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
 #'  }
 #' }
 #' @export
-#' @family Data Manipulation
+#' @family Data Manipulators
 #' @rdname transposer
 #' @seealso
 #'  \code{\link[tibble]{is_tibble}}
@@ -284,7 +284,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
 #'  }
 #' }
 #' @export
-#' @family Data Manipulator
+#' @family Data Manipulators
 #' @rdname transformer
 #' @seealso
 #'  \code{\link[MicrobiomeR]{transposer}}
