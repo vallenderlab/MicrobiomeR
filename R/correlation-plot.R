@@ -231,7 +231,7 @@ save_correlation_plots <- function(corr, pairwise = FALSE, format = "tiff", star
   if (pairwise == FALSE) {
     for (rank in names(corr)) {
       message(glue::glue(crayon::green("Saving the {rank} Correlation Plot.")))
-      ggplot2::ggsave(filename = sprintf("%s.corr_plot.tiff", rank), plot = corr[[rank]], device = format, path = full_path, dpi = 500, width = 500, height = 250, units = "mm")
+      ggplot2::ggsave(filename = sprintf("%s.corr_plot.%s", c(rank, format)), plot = corr[[rank]], device = format, path = full_path, dpi = 500, width = 500, height = 250, units = "mm")
     }
   } else if (pairwise == TRUE) {
     for (pr_name in names(corr)) {
