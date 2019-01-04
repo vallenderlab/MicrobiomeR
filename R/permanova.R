@@ -81,6 +81,7 @@ permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
 #' }
 #' }
 #' @export
+#' @seealso View \code{\link{permanova}} to understand how to generate `top_coefficents`.
 #' @family Visualizations
 #' @rdname top_coefficients_barplot
 top_coefficients_barplot <- function(top_coefficients, title = NULL) {
