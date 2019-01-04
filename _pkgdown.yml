@@ -54,7 +54,7 @@ reference:
   contents:
   - has_concept("Validation")
 
--title: Filtering
+- title: Filtering
   contents:
   - has_concept("Data Manipulators")
   - has_concept("Metacoder Filters")
