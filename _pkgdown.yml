@@ -39,7 +39,7 @@ navbar:
 reference:
 - title: Import
   contents:
-  - get_phyloseq_obj
+  - create_phyloseq
   - parse_taxonomy_default
   - parse_taxonomy_silva_128
   - parse_taxonomy_greengenes
@@ -54,13 +54,23 @@ reference:
   contents:
   - has_concept("Validation")
 
-- title: Filtering
+- title: Basic Filtering
+  contents:
+  - has_concept("Basic Metacoder Filters")
+
+- title: Advanced Filtering
+  contents:
+  - has_concept("Advanced Metacoder Filters")
+
+- title: Other Filtering
   contents:
   - has_concept("Data Manipulators")
-  - has_concept("Metacoder Filters")
 
 - title: Visualization
   contents:
   - get_output_dir
-  - has_concept("Color Palettes")
   - has_concept("Visualizations")
+
+- title: Color Palettes
+  contents:
+  - has_concept("Color Palettes")
