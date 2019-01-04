@@ -16,6 +16,7 @@
 #' @export
 #' @rdname permanova
 #' @seealso View \code{\link{top_coefficients_barplot}} to plot the top_coefficients returned from this function.
+#' See \code{\link[vegan]{adonis}} and \code{\link[vegan]{betadisper}} to understand more about how the permanova data was generated
 #' @importFrom dplyr select
 #' @importFrom microbiome abundances meta
 #' @importFrom vegan adonis vegdist betadisper
