@@ -25,7 +25,7 @@ Below are some links to helpful R package used, while developing this package.
 \item{microbiome}{\url{http://microbiome.github.io/microbiome/}}
 \item{MicrobiomeR}{\url{https://github.com/vallenderlab/MicrobiomeR}
 }}
-The \link{MicrobiomeR_Workflows} and \link{MicrobiomeR_Formats} help sections are also useful for understanding the
+The \link{MicrobiomeR_Workflow} and \link{MicrobiomeR_Formats} help sections are also useful for understanding the
 package.
 }
 

@@ -10,14 +10,14 @@ get_correlation_plots(obj, primary_ranks, secondary_ranks = TRUE,
 \arguments{
 \item{obj}{PARAM_DESCRIPTION}
 
+\item{primary_ranks}{A vector of primary ranks used to label the points.}
+
+\item{secondary_ranks}{The secondary rank used to color the points.  Can be an integer specifying
+the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE}
+
 \item{pairwise}{This does a pairwise comparison of the primary and secondary ranks.  Default: FALSE}
 
 \item{...}{An optional list of parameters to use in the correlation_plot function.}
-
-\item{primary_rank}{A vector of primary ranks used to label the points.}
-
-\item{secondary_rank}{The secondary rank used to color the points.  Can be an integer specifying
-the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE}
 }
 \value{
 A list object containing correlation plots.  A pairwise comparison returns a nested list.
@@ -47,6 +47,7 @@ Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{get_heat_tree_parameters}},
   \code{\link{get_heat_tree_plots}},
   \code{\link{get_plot_limits}},
+  \code{\link{save_barplot}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},
   \code{\link{stacked_barplot}}

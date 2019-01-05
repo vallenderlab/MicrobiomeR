@@ -15,6 +15,8 @@ a \emph{the output of the output function} from \code{\link[grDevices]{colorRamp
 
 \item{display}{A logical for displaying a pie chart of the palette. Default: TRUE}
 
+\item{rev}{A logical that will reverse the order of the color palette.}
+
 \item{...}{Parameters for the \emph{pal_func}.}
 }
 \value{
