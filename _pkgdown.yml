@@ -26,10 +26,14 @@ navbar:
         href: articles/filtering.html
       - text: "Data Analysis"
         href: articles/analysis.html
+      - text: "Color Palettes"
+        href: articles/color-palettes.html
     - text: "Reference"
       href: reference/index.html
     - text: "Changelog"
       href: news/index.html
+    - text: "About"
+      href: articles/about.html
   right:
     - icon: fa-github
       href: https://github.com/vallenderlab/MicrobiomeR
