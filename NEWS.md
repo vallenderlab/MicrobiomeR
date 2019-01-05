@@ -1,6 +1,9 @@
 # MicrobiomeR 0.2.0
 
+## Documentations
+
 * Added vignettes to package and pkgdown config.
+  * About
   * Introduction
   * Data Wrangling
   * Filtering
@@ -9,10 +12,16 @@
   * Import
   * Formatting
   * Validation
-  * Filtering
+  * Filtering (Basic, Advanced, Other)
   * Visualization
+  * Color Palettes
+
+## Functional Changes
+
+* Renamed `sample_filter` to `sample_id_filter`.
+* Renamed `get_phyloseq_obj` to `create_phyloseq`.
+* Renamed `format_metacoder_object` to `as_custom_format`.
 * Updated `vlookup` and `get_color_palette` parameters.
-* Changed `sample_filter` to `sample_id_filter`.
 * Added the `root_phyloseq_tree` function.
 * Fixed minor bugs in code and docs.
 
