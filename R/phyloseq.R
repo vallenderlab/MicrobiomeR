@@ -87,7 +87,7 @@ create_phyloseq <- function(biom_file = NULL, tree_file = NULL, metadata_file = 
 #' @param tree_path The path to the existing or desired phylogenetic tree file.
 #' @param save_rooted_tree A logical that determines weather or not the rooted tree
 #' is saved.
-#' @param recursive If the directory doesn't exists create the parent directories
+#' @param recursive If the directory doesn't exist, create the parent directories
 #' that don't exist as well, Default: TRUE
 #' @return Returns a phyloseq object with a rooted tree.
 #' @pretty_print TRUE
