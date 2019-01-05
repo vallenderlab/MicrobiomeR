@@ -4,7 +4,7 @@
 # MicrobiomeR
 
 An R package for microbiome analysis that incorporates [phyloseq](https://github.com/joey711/phyloseq), 
-[metacoder](https://github.com/grunwaldlab/metacoder), [taxa](https://github.com/ropensci/taxa), and [microbiome](https://github.com/microbiome/microbiome/) into a fully featured bioinformatics workflow.
+[metacoder](https://github.com/grunwaldlab/metacoder), [taxa](https://github.com/ropensci/taxa), and [microbiome](https://github.com/microbiome/microbiome/) in order to standardize and simplify common microbiome workflows.
 
 ## Installation
 
