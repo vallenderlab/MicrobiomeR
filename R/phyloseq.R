@@ -92,7 +92,7 @@ create_phyloseq <- function(biom_file = NULL, tree_file = NULL, metadata_file = 
 #' @return Returns a phyloseq object with a rooted tree.
 #' @pretty_print TRUE
 #' @details This function is a helper function to get a proper phyloseq object for
-#' downstream analysis.  Some analysis requre a rooted tree.  The function saves
+#' downstream analysis.  Some analyses require a rooted tree.  The function saves
 #' the rooted tree in the phyloseq object.  It can also save the tree as a file
 #' if desired.
 #' @examples
