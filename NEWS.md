@@ -1,6 +1,6 @@
 # MicrobiomeR 0.2.0
 
-## Documentations
+## Documentation Updates
 
 * Added vignettes to package and pkgdown config.
   * About
