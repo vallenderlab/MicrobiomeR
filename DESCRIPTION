@@ -48,7 +48,9 @@ Imports:
     forcats,
     ggrepel,
     scales,
-    vegan
+    vegan,
+    leaflet,
+    htmlwidgets
 Suggests:
     knitr,
     testthat,
