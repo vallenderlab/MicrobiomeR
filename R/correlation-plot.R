@@ -133,8 +133,8 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 #' @title Get Multiple Correlation Plots
 #' @description This function allows the user to create a list of multiple correlation plots.
 #' @param obj PARAM_DESCRIPTION
-#' @param primary_rank A vector of primary ranks used to label the points.
-#' @param secondary_rank The secondary rank used to color the points.  Can be an integer specifying
+#' @param primary_ranks A vector of primary ranks used to label the points.
+#' @param secondary_ranks  The secondary rank used to color the points.  Can be an integer specifying
 #' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
 #' @param pairwise This does a pairwise comparison of the primary and secondary ranks.  Default: FALSE
 #' @param ... An optional list of parameters to use in the correlation_plot function.

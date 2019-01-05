@@ -4,6 +4,7 @@
 #' a \emph{the output of the output function} from \code{\link[grDevices]{colorRamp}}.  Default: viridis_magma_palette
 #' @param color_no The number of colors in the palette.  Default: 20
 #' @param display A logical for displaying a pie chart of the palette. Default: TRUE
+#' @param rev A logical that will reverse the order of the color palette.
 #' @param ... Parameters for the \emph{pal_func}.
 #' @return Returns a color palette in the form of a character vector.
 #' @pretty_print TRUE
