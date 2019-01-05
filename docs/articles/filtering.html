@@ -102,7 +102,7 @@
       <h1>MicrobiomeR: Filtering</h1>
                         <h4 class="author">Robert Gilmore</h4>
             
-            <h4 class="date">2019-01-04</h4>
+            <h4 class="date">2019-01-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vallenderlab/MicrobiomeR/blob/master/vignettes/filtering.Rmd"><code>vignettes/filtering.Rmd</code></a></small>
       <div class="hidden name"><code>filtering.Rmd</code></div>
@@ -490,7 +490,7 @@
 <a class="sourceLine" id="cb7-16" data-line-number="16">                         <span class="dt">return_var =</span> <span class="st">"wilcox_p_value"</span>)</a>
 <a class="sourceLine" id="cb7-17" data-line-number="17"></a>
 <a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co"># Create a new column in the phylum_data.</span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">new_data &lt;-<span class="st"> </span>phylum_data <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">class_p_value =</span> class_p_value)</a>
+<a class="sourceLine" id="cb7-19" data-line-number="19">new_data &lt;-<span class="st"> </span>phylum_data <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/dplyr/topics/mutate">mutate</a></span>(<span class="dt">class_p_value =</span> class_p_value)</a>
 <a class="sourceLine" id="cb7-20" data-line-number="20">new_data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"taxon_id"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"class_p_value"</span>, <span class="st">"wilcox_p_value"</span>)]</a>
 <a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt; # A tibble: 13 x 5</span></a>
 <a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt;    taxon_id Phylum           Class class_p_value wilcox_p_value</span></a>
