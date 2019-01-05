@@ -1,0 +1,34 @@
+---
+title: "About"
+author: "Robert Gilmore"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{About}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The MicrobiomeR package was developed at the University of Mississippi Medical Center
+in Dr. Eric Vallender's lab by Rob Gilmore and Shaurita Hutchins.  
+
+The study associated with this package was conducted by Xiao Zhang.
+
+```{r, echo=FALSE}
+# set seed for reproducible widget id
+if (requireNamespace("htmltools", quietly = TRUE)) {
+  htmlwidgets::setWidgetIdSeed(42)
+}
+library(leaflet)
+leaflet() %>% 
+  setView(lng = -90.1730625, lat = 32.3308125, zoom = 11) %>% 
+  addTiles() %>% 
+  addMarkers(lng = -90.1730625, lat = 32.3308125, popup = "UMMC's Guyton Research Complex")
+```
