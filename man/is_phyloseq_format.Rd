@@ -36,6 +36,7 @@ if(is_analyzed_format(MicrobiomeR::raw_silva)){
 Other Validation: \code{\link{is_analyzed_format}},
   \code{\link{is_basic_format}},
   \code{\link{is_raw_format}},
+  \code{\link{object_handler}},
   \code{\link{order_metacoder_data}},
   \code{\link{validate_MicrobiomeR_format}},
   \code{\link{which_format}}

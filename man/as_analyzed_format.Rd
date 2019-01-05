@@ -37,10 +37,11 @@ See the \link{MicrobiomeR_Formats} documentation.
 
 \code{\link[taxa]{taxonomy_table}},  \code{\link[taxa]{taxon_ids}}
 
-Other Formatting: \code{\link{as_MicrobiomeR_format}},
+Other Formatting: \code{\link{MicrobiomeR_Formats}},
+  \code{\link{as_MicrobiomeR_format}},
   \code{\link{as_basic_format}},
+  \code{\link{as_custom_format}},
   \code{\link{as_phyloseq_format}},
-  \code{\link{as_raw_format}},
-  \code{\link{format_metacoder_object}}
+  \code{\link{as_raw_format}}
 }
 \concept{Formatting}

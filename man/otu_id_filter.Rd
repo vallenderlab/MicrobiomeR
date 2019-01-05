@@ -62,12 +62,7 @@ return(mo_clone)
 
 \code{\link[purrr]{map}},  \code{\link[purrr]{keep}}
 
-Other Metacoder Filters: \code{\link{agglomerate_metacoder}},
-  \code{\link{cov_filter}},
-  \code{\link{otu_prevalence_filter}},
-  \code{\link{otu_proportion_filter}},
-  \code{\link{sample_filter}},
-  \code{\link{taxa_prevalence_filter}},
+Other Basic Metacoder Filters: \code{\link{sample_id_filter}},
   \code{\link{taxon_id_filter}}
 }
-\concept{Metacoder Filters}
+\concept{Basic Metacoder Filters}

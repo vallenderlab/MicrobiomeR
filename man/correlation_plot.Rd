@@ -5,7 +5,7 @@
 \title{Correlation Plot}
 \usage{
 correlation_plot(obj, primary_rank, secondary_rank = TRUE,
-  wp_value = 0.05)
+  wp_value = 0.05, pal_func = NULL)
 }
 \arguments{
 \item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
@@ -16,6 +16,8 @@ correlation_plot(obj, primary_rank, secondary_rank = TRUE,
 the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE}
 
 \item{wp_value}{The Wilcoxian P-Value used to represent significant points.  Default: 0.05}
+
+\item{pal_func}{A palette function that returns grDevices::colorRampPalette.}
 }
 \value{
 A 1:1 correlation plot built with ggplot2.
@@ -52,6 +54,7 @@ Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{get_heat_tree_parameters}},
   \code{\link{get_heat_tree_plots}},
   \code{\link{get_plot_limits}},
+  \code{\link{save_barplot}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},
   \code{\link{stacked_barplot}}

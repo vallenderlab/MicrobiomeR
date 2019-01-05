@@ -1,4 +1,4 @@
-#' @title Filter Samples from Metacoder Objects
+#' @title Filter Samples Ids from Metacoder Objects
 #' @description This function provides a flexible way to filter unwanted samples from the
 #' \emph{"otu_abundance"} and \emph{"sample_data"} observations of a MicrobiomeR formatted object.
 #' @param obj A Taxmap/metacoder object.
@@ -15,7 +15,7 @@
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#' # Use the sample_filter early on in your analysis
+#' # Use the sample_id_filter early on in your analysis
 #' library(MicrobiomeR)
 #' library(metacoder)
 #' library(taxa)
@@ -33,14 +33,14 @@
 #' metacoder_obj <- filter_ambiguous_taxa(metacoder_obj, subtaxa = TRUE)
 #'
 #' # Low Sample Filter - Remove the low samples
-#' metacoder_obj <- sample_filter(obj          = metacoder_obj,
+#' metacoder_obj <- sample_id_filter(obj          = metacoder_obj,
 #'                                .f_filter    = ~sum(.),
 #'                                .f_condition = ~.>= 20, validated = TRUE)
 #'  }
 #' }
 #' @export
-#' @family Metacoder Filters
-#' @rdname sample_filter
+#' @family Basic Metacoder Filters
+#' @rdname sample_id_filter
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{transformer}}
 #'
@@ -54,7 +54,7 @@
 #' @importFrom purrr map keep
 #' @importFrom glue glue
 #' @importFrom crayon red
-sample_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condition = NULL, validated = FALSE, ...) {
+sample_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condition = NULL, validated = FALSE, ...) {
   mo_clone <- obj$clone()
   # Make sure the required functions are provided.
   if (!is.null(.f_filter) && !is.null(.f_condition)) {
@@ -89,7 +89,7 @@ sample_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #' @title Filter Taxon Ids from Metacoder Objects
 #' @description This function provides a flexible way to filter unwanted taxon_ids from the taxmap object and from the
 #' observations of a MicrobiomeR formatted object.
-#' @inheritParams sample_filter
+#' @inheritParams sample_id_filter
 #' @return Returns a metacoder object with taxon_ids that pass the filters.
 #' @pretty_print TRUE
 #' @details Get the taxon_ids to keep by using purr and the user supplied transform and filter + condition formulas.
@@ -122,7 +122,7 @@ sample_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #'  }
 #' }
 #' @export
-#' @family Metacoder Filters
+#' @family Basic Metacoder Filters
 #' @rdname taxon_id_filter
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{transposer}},  \code{\link[MicrobiomeR]{transformer}}
@@ -173,7 +173,7 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
 #' @title Filter OTU Ids from Metacoder Objects
 #' @description This function provides a flexible way to filter unwanted otu_ids from the taxmap object and from the
 #' observations of a MicrobiomeR formatted object.
-#' @inheritParams sample_filter
+#' @inheritParams sample_id_filter
 #' @return Returns a metacoder object with otu_ids that pass the filters.
 #' @pretty_print TRUE
 #' @details Get the otu_ids to keep by using purr and the user supplied transform and filter + condition formulas.
@@ -200,7 +200,7 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
 #'  }
 #' }
 #' @export
-#' @family Metacoder Filters
+#' @family Basic Metacoder Filters
 #' @rdname otu_id_filter
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{transposer}},  \code{\link[MicrobiomeR]{transformer}}
@@ -274,7 +274,7 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #'  }
 #' }
 #' @export
-#' @family Metacoder Filters
+#' @family Advanced Metacoder Filters
 #' @rdname agglomerate_metacoder
 #' @seealso
 #'  \code{\link[taxa]{filter_taxa}}
@@ -326,7 +326,7 @@ agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
 #' metacoder_obj <- filter_ambiguous_taxa(metacoder_obj, subtaxa = TRUE)
 #'
 #' # Low Sample Filter - Remove the low samples
-#' metacoder_obj <- sample_filter(obj          = metacoder_obj,
+#' metacoder_obj <- sample_id_filter(obj          = metacoder_obj,
 #'                                .f_filter    = ~sum(.),
 #'                                .f_condition = ~.>= 20, validated = TRUE)
 #'
@@ -338,7 +338,7 @@ agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
 #'  }
 #' }
 #' @export
-#' @family Metacoder Filters
+#' @family Advanced Metacoder Filters
 #' @rdname otu_proportion_filter
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},\code{\link[MicrobiomeR]{otu_id_filter}}
@@ -385,7 +385,7 @@ otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FAL
 #' metacoder_obj <- filter_ambiguous_taxa(metacoder_obj, subtaxa = TRUE)
 #'
 #' # Low Sample Filter - Remove the low samples
-#' metacoder_obj <- sample_filter(obj          = metacoder_obj,
+#' metacoder_obj <- sample_id_filter(obj          = metacoder_obj,
 #'                                .f_filter    = ~sum(.),
 #'                                .f_condition = ~.>= 20, validated = TRUE)
 #'
@@ -400,7 +400,7 @@ otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FAL
 #'  }
 #' }
 #' @export
-#' @family Metacoder Filters
+#' @family Advanced Metacoder Filters
 #' @rdname otu_prevalence_filter
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
@@ -465,7 +465,7 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
 #' metacoder_obj <- filter_ambiguous_taxa(metacoder_obj, subtaxa = TRUE)
 #'
 #' # Low Sample Filter - Remove the low samples
-#' metacoder_obj <- sample_filter(obj          = metacoder_obj,
+#' metacoder_obj <- sample_id_filter(obj          = metacoder_obj,
 #'                                .f_filter    = ~sum(.),
 #'                                .f_condition = ~.>= 20, validated = TRUE)
 #'
@@ -490,7 +490,7 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
 #'  }
 #' }
 #' @export
-#' @family Metacoder Filters
+#' @family Advanced Metacoder Filters
 #' @rdname taxa_prevalence_filter
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
@@ -555,7 +555,7 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
 #' metacoder_obj <- filter_ambiguous_taxa(metacoder_obj, subtaxa = TRUE)
 #'
 #' # Low Sample Filter - Remove the low samples
-#' metacoder_obj <- sample_filter(obj          = metacoder_obj,
+#' metacoder_obj <- sample_id_filter(obj          = metacoder_obj,
 #'                                .f_filter    = ~sum(.),
 #'                                .f_condition = ~.>= 20, validated = TRUE)
 #'
@@ -588,7 +588,7 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
 #'  }
 #' }
 #' @export
-#' @family Metacoder Filters
+#' @family Advanced Metacoder Filters
 #' @rdname cov_filter
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{otu_id_filter}}

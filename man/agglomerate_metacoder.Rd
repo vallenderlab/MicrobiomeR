@@ -42,12 +42,9 @@ order_obj <- agglomerate_metacoder(obj = MicrobiomeR::basic_silva, rank = "Order
 
 \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
 
-Other Metacoder Filters: \code{\link{cov_filter}},
-  \code{\link{otu_id_filter}},
+Other Advanced Metacoder Filters: \code{\link{cov_filter}},
   \code{\link{otu_prevalence_filter}},
   \code{\link{otu_proportion_filter}},
-  \code{\link{sample_filter}},
-  \code{\link{taxa_prevalence_filter}},
-  \code{\link{taxon_id_filter}}
+  \code{\link{taxa_prevalence_filter}}
 }
-\concept{Metacoder Filters}
+\concept{Advanced Metacoder Filters}

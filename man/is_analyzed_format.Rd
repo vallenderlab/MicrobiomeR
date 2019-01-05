@@ -18,10 +18,25 @@ This function returns a logical based on weather or not the object is in the ana
 \details{
 The "analyzed_format" is Level 3. in the \link{MicrobiomeR_Formats} hierarchy.
 }
+\examples{
+\dontrun{
+if(interactive()){
+library(MicrobiomeR)
+if(is_analyzed_format(MicrobiomeR::raw_silva)){
+    print("It's analyzed!")
+} else {
+    fmt <- which_format(MicrobiomeR::raw_silva)
+    print("It's not analyzed!")
+    print(sprintf("It's \%s!", fmt))
+}
+ }
+}
+}
 \seealso{
 Other Validation: \code{\link{is_basic_format}},
   \code{\link{is_phyloseq_format}},
   \code{\link{is_raw_format}},
+  \code{\link{object_handler}},
   \code{\link{order_metacoder_data}},
   \code{\link{validate_MicrobiomeR_format}},
   \code{\link{which_format}}

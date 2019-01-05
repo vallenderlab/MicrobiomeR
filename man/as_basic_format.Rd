@@ -27,10 +27,11 @@ See the \link{MicrobiomeR_Formats} documentation.
 
 \code{\link[metacoder]{calc_taxon_abund}}, \code{\link[metacoder]{calc_obs_props}}
 
-Other Formatting: \code{\link{as_MicrobiomeR_format}},
+Other Formatting: \code{\link{MicrobiomeR_Formats}},
+  \code{\link{as_MicrobiomeR_format}},
   \code{\link{as_analyzed_format}},
+  \code{\link{as_custom_format}},
   \code{\link{as_phyloseq_format}},
-  \code{\link{as_raw_format}},
-  \code{\link{format_metacoder_object}}
+  \code{\link{as_raw_format}}
 }
 \concept{Formatting}

@@ -54,5 +54,8 @@ if(interactive()){
 \code{\link[tidyr]{gather}},  \code{\link[tidyr]{unite}},  \code{\link[tidyr]{spread}},  \code{\link[tidyr]{separate}}
 
 \code{\link[stringr]{str_detect}},  \code{\link[stringr]{str_count}}
+
+Other Data Manipulators: \code{\link{metacoder_comp_func_1}},
+  \code{\link{transformer}}, \code{\link{vlookup}}
 }
-\concept{Data Manipulation}
+\concept{Data Manipulators}
