@@ -15,7 +15,7 @@ root_phyloseq_tree(phyloseq_object, tree_path, save_rooted_tree,
 \item{save_rooted_tree}{A logical that determines weather or not the rooted tree
 is saved.}
 
-\item{recursive}{If the directory doesn't exists create the parent directories
+\item{recursive}{If the directory doesn't exist, create the parent directories
 that don't exist as well, Default: TRUE}
 }
 \value{
@@ -26,7 +26,7 @@ A function for rooting and saving a phylogenetic tree.
 }
 \details{
 This function is a helper function to get a proper phyloseq object for
-downstream analysis.  Some analysis requre a rooted tree.  The function saves
+downstream analysis.  Some analyses require a rooted tree.  The function saves
 the rooted tree in the phyloseq object.  It can also save the tree as a file
 if desired.
 }
