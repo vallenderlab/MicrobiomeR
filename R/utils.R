@@ -20,7 +20,7 @@
 #'  }
 #' }
 #' @export
-#' @family Formatting and Validation
+#' @family Validation
 #' @rdname object_handler
 #' @seealso
 #'  \code{\link[metacoder]{parse_phyloseq}}
@@ -104,25 +104,25 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
       full_path <- file.path(root_path)
     }
     # Add the output folder to use (generally a new folder, or pre-existing output folder)
-    if (!is.null(start_path)) {
+    if (is.character(start_path)) {
       full_path <- file.path(full_path, start_path)
       # Add a folder for the specific experiment you are conducting
-      if (!is.null(experiment)) {
+      if (is.character(experiment)) {
         full_path <- file.path(full_path, experiment)
       }
       # Add a folder for the plot_type that's being generated
-      if (!is.null(plot_type)) {
+      if (is.character(plot_type)) {
         full_path <- file.path(full_path, plot_type)
       }
       # Add a folder for any extra
-      if (!is.null(end_path)) {
-        full_path <- file.path(full_path, extra_path)
-      } else if (is.null(end_path)) {
+      if (is.null(end_path)) {
         full_path <- file.path(full_path, format(Sys.time(), "%Y-%m-%d_%s"))
+      } else if (is.character(end_path)) {
+        full_path <- file.path(full_path, end_path)
       }
     } else if (is.null(end_path)) {
       # Add a folder for the plot_type that's being generated
-      if (!is.null(plot_type)) {
+      if (is.character(plot_type)) {
         full_path <- file.path(full_path, plot_type)
       } else {
         full_path <- file.path(full_path, "output")
@@ -188,7 +188,7 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
 #'  }
 #' }
 #' @export
-#' @family Data Manipulation
+#' @family Data Manipulators
 #' @rdname transposer
 #' @seealso
 #'  \code{\link[tibble]{is_tibble}}
@@ -237,13 +237,16 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
     if (!is.null(separated_categories)) {
       trans_data <- trans_data %>% tidyr::separate(col = header_name, into = separated_categories, sep = "<_>")
     } else {
-      messsage(crayon::yellow("Separated categories have not been supplied.  Columns will be named as \"category_#\"."))
+      message(crayon::yellow("Separated categories have not been supplied.  Columns will be named as \"category_#\"."))
       n_cats <- stringr::str_count(trans_data[[header_name]][1], pattern = "<_>") + 1
       trans_data <- trans_data %>% tidyr::separate(col = header_name, into = paste("category", seq(1:n_cats), sep = "_"), sep = "<_>")
     }
+    message(crayon::silver("Re-Transposed Data."))
+    return(trans_data)
+  } else {
+    message(crayon::silver("Transposed Data."))
+    return(trans_data)
   }
-  message(crayon::silver("Transposed Data."))
-  return(trans_data)
 }
 
 #' @title Transforming Tidy Data
@@ -281,7 +284,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
 #'  }
 #' }
 #' @export
-#' @family Data Manipulator
+#' @family Data Manipulators
 #' @rdname transformer
 #' @seealso
 #'  \code{\link[MicrobiomeR]{transposer}}
@@ -315,10 +318,10 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
 
 #' @title Mock Excel "VlookUp" Function
 #' @description A function that mimicks excels vlookup, but for R's dataframe.
-#' @param lookup_data A vector of items to look up.
+#' @param lookup_vector A vector of items to look up.
 #' @param df The dataframe to search.
-#' @param match_data The column name to search in the dataframe.
-#' @param return_data The column of data to return when matched.
+#' @param match_var The column name to search in the dataframe.
+#' @param return_var The column of data to return when matched.
 #' @return A vector that contains the items of interest.
 #' @pretty_print TRUE
 #' @details A function that works like the VLOOKUP function in excel.  This function was
@@ -332,10 +335,10 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
 #' @export
 #' @family Data Manipulators
 #' @rdname vlookup
-vlookup <- function(lookup_data, df, match_data, return_data) {
+vlookup <- function(lookup_vector, df, match_var, return_var) {
   # TODO: Update the way this returns data.  Allow it to add data to a new column.
-  m <- match(lookup_data, df[[match_data]])
-  df[[return_data]][m]
+  m <- match(lookup_vector, df[[match_var]])
+  df[[return_var]][m]
 }
 
 #' @title Create Publication Table

@@ -1,5 +1,11 @@
-pandoc: 1.19.2.1
-pkgdown: 1.1.0
+pandoc: 2.3.1
+pkgdown: 1.3.0
 pkgdown_sha: ~
-articles: []
+articles:
+  about: about.html
+  analysis: analysis.html
+  color-palettes: color-palettes.html
+  data-wrangling: data-wrangling.html
+  filtering: filtering.html
+  introduction: introduction.html
 

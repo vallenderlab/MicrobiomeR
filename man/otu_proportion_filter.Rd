@@ -46,7 +46,7 @@ metacoder_obj <- filter_taxa(
 metacoder_obj <- filter_ambiguous_taxa(metacoder_obj, subtaxa = TRUE)
 
 # Low Sample Filter - Remove the low samples
-metacoder_obj <- sample_filter(obj          = metacoder_obj,
+metacoder_obj <- sample_id_filter(obj          = metacoder_obj,
                                .f_filter    = ~sum(.),
                                .f_condition = ~.>= 20, validated = TRUE)
 
@@ -61,11 +61,9 @@ metacoder_obj <- otu_proportion_filter(
 \seealso{
 \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},\code{\link[MicrobiomeR]{otu_id_filter}}
 
-Other Metacoder Filters: \code{\link{agglomerate_metacoder}},
-  \code{\link{cov_filter}}, \code{\link{otu_id_filter}},
+Other Advanced Metacoder Filters: \code{\link{agglomerate_metacoder}},
+  \code{\link{cov_filter}},
   \code{\link{otu_prevalence_filter}},
-  \code{\link{sample_filter}},
-  \code{\link{taxa_prevalence_filter}},
-  \code{\link{taxon_id_filter}}
+  \code{\link{taxa_prevalence_filter}}
 }
-\concept{Metacoder Filters}
+\concept{Advanced Metacoder Filters}

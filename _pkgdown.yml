@@ -14,16 +14,26 @@ authors:
 navbar:
   title: MicrobiomeR
   left:
-    - text: Home
+    - text: "Home"
       href: index.html
     - text: "Vignettes"
       menu:
-      - text: "Get Started"
-        href: articles/get-started.html
+      - text: "Introduction"
+        href: articles/introduction.html
+      - text: "Data Wrangling"
+        href: articles/data-wrangling.html
+      - text: "Data Filtering"
+        href: articles/filtering.html
+      - text: "Data Analysis"
+        href: articles/analysis.html
+      - text: "Color Palettes"
+        href: articles/color-palettes.html
     - text: "Reference"
       href: reference/index.html
     - text: "Changelog"
       href: news/index.html
+    - text: "About"
+      href: articles/about.html
   right:
     - icon: fa-github
       href: https://github.com/vallenderlab/MicrobiomeR
@@ -31,25 +41,40 @@ navbar:
       href: https://twitter.com/datasnakes
 
 reference:
-- title: Data Processing
+- title: Import
   contents:
-  - as_MicrobiomeR_format
-  - transformer
-  - transposer
+  - create_phyloseq
+  - parse_taxonomy_default
+  - parse_taxonomy_silva_128
+  - parse_taxonomy_greengenes
+  - parse_taxonomy_qiime
+  - has_concept("Phylogenetic Tree Manipulators")
 
-- title: Alpha Diversity
+- title: Formatting
   contents:
-  - get_alpha_diversity_measures
-  - alpha_diversity_plot
+  - has_concept("Formatting")
 
-- title: Data Visualization
+- title: Validation
   contents:
-  - get_color_palette
-  - get_heat_tree_plots
-  - get_correlation_plots
-  - stacked_barplot
+  - has_concept("Validation")
 
-- title: Utilities
+- title: Basic Filtering
   contents:
-  - create_pub_table
-  - vlookup
+  - has_concept("Basic Metacoder Filters")
+
+- title: Advanced Filtering
+  contents:
+  - has_concept("Advanced Metacoder Filters")
+
+- title: Other Filtering
+  contents:
+  - has_concept("Data Manipulators")
+
+- title: Visualization
+  contents:
+  - get_output_dir
+  - has_concept("Visualizations")
+
+- title: Color Palettes
+  contents:
+  - has_concept("Color Palettes")

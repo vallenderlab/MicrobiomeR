@@ -5,7 +5,7 @@
 \title{Get a Color Palette}
 \usage{
 get_color_palette(pal_func = viridis_magma_palette, color_no = 20,
-  display = TRUE, ...)
+  display = TRUE, rev = FALSE, ...)
 }
 \arguments{
 \item{pal_func}{A function that \emph{returns the output function} from \code{\link[grDevices]{colorRamp}} or
@@ -14,6 +14,8 @@ a \emph{the output of the output function} from \code{\link[grDevices]{colorRamp
 \item{color_no}{The number of colors in the palette.  Default: 20}
 
 \item{display}{A logical for displaying a pie chart of the palette. Default: TRUE}
+
+\item{rev}{A logical that will reverse the order of the color palette.}
 
 \item{...}{Parameters for the \emph{pal_func}.}
 }

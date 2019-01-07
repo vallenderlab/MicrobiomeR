@@ -9,7 +9,7 @@ packages.  Primarily \strong{phyloseq}, \strong{taxa}, and \strong{metacoder}.
 }
 \section{Data Import}{
 
-Data is imported with the \code{\link[MicrobiomeR]{get_phyloseq_obj}} function or something proprietary that
+Data is imported with the \code{\link[MicrobiomeR]{create_phyloseq}} function or something proprietary that
 creates a \code{\link[phyloseq:phyloseq-class]{phyloseq object}} with an \code{\link[phyloseq:otu_table-class]{phyloseq::otu_table}},
 a \code{\link[phyloseq:taxonomyTable-class]{phyloseq::tax_table}}, a \code{\link[phyloseq:sample_data-class]{phyloseq::sample_data}},
 and a \code{\link[phyloseq:phylo-class]{phyloseq::phy_tree}}.  The data is preferrably not filtered

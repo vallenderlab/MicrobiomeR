@@ -1,0 +1,32 @@
+---
+title: "MicrobiomeR: Introduction"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+MicrobiomeR is a microbiome workflow package that uses [phyloseq](https://github.com/joey711/phyloseq) for 
+data import, [taxa](https://github.com/ropensci/taxa) for the primary R object called a Taxmap, 
+[metacoder](https://github.com/grunwaldlab/metacoder) for data analysis, and a combination of packages for 
+data visualization including ggplot2.
+
+The goal of this package is to enhance the use of the 
+[metacoder](https://grunwaldlab.github.io/metacoder_documentation/) package by providing tools that mimic 
+the functionality of the [phyloseq](http://joey711.github.io/phyloseq/) package.  The only difference being
+that the main data object is a [taxa::taxmap object](https://github.com/ropensci/taxa#the-taxmap-class) 
+instead of a [phyloseq::phyloseq object](http://joey711.github.io/phyloseq/import-data.html#import_biom).
+
+

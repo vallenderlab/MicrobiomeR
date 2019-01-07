@@ -10,7 +10,7 @@ It is also inherently important to understand the \link{MicrobiomeR_Workflow}, w
 dependencies used to create the MicrobiomeR formats listed below:
 \describe{
 \item{phyloseq_format}{Level 0.  The "phyloseq_format" is the format given to a \emph{taxmap} object that has just
-been converted from a \emph{phyloseq} object using \emph{metacoder} via \code{\link[MicrobiomeR]{get_phyloseq_obj}}.  A taxmap object identified by MicrobiomeR
+been converted from a \emph{phyloseq} object using \emph{metacoder} via \code{\link[MicrobiomeR]{create_phyloseq}}.  A taxmap object identified by MicrobiomeR
 to be in this format will contain "otu_table", "tax_data", "sample_data" and "phy_tree" data in the observation
 tables (\strong{metacoder_obj$data}), which represents the matching \emph{phyloseq::otu_table}, \emph{phyloseq::tax_table},
 \emph{phyloseq::sample_data}, and \emph{phyloseq::phy_tree} data in the original phyloseq object.}
@@ -25,3 +25,12 @@ processed with \code{\link[MicrobiomeR]{as_analyzed_format}}.  It contains the t
 with "statistical_data" and "stats_tax_data" tables.}
 }
 }
+\seealso{
+Other Formatting: \code{\link{as_MicrobiomeR_format}},
+  \code{\link{as_analyzed_format}},
+  \code{\link{as_basic_format}},
+  \code{\link{as_custom_format}},
+  \code{\link{as_phyloseq_format}},
+  \code{\link{as_raw_format}}
+}
+\concept{Formatting}
