@@ -39,5 +39,5 @@ install_github("vallenderlab/MicrobiomeR") # Install the package
 ## Notes
 
 * Code Style based on Google's R style developed by Hadley Wickham.
-* Please note that the [34m'MicrobiomeR'[39m project is released with a [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
+* Please note that the `MicrobiomeR` project is released with a [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
 
