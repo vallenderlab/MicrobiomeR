@@ -9,3 +9,10 @@ Brief description of the problem
 ```r
 # insert reprex here
 ```
+
+## Session Information
+<!-- Please provide session information in the code blocks below using the `sessionInfo()` command in your R console. -->
+
+```console
+# Insert Session info here
+```
