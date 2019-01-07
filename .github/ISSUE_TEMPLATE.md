@@ -4,7 +4,7 @@ Please include a minimal reproducible example (AKA a reprex). If you've never he
 
 ---
 
-Brief description of the problem
+## Brief description of the problem
 
 ```r
 # insert reprex here
