@@ -423,7 +423,9 @@ pkg.private$input_files = list(
   tree_files = list(
     silva = system.file("extdata", "silva.tre", package = "MicrobiomeR"),
     greengenes = system.file("extdata", "greengenes.tre", package = "MicrobiomeR")),
-  metadata = system.file("extdata", "nephele_metadata.txt", package = "MicrobiomeR")
+  metadata = list(
+    two_groups = system.file("extdata", "nephele_metadata.txt", package = "MicrobiomeR"),
+    three_groups = system.file("extdata", "nephele_metadata2.txt", package = "MicrobiomeR"))
 )
 
 
