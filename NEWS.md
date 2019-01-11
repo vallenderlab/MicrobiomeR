@@ -1,9 +1,12 @@
 # MicrobiomeR 0.2.1
 
-## Feature Added
+## Features Added
 
 * Added permanova function for generating permanova stats.
 * Added top_coefficients_barplot for generating a plot of the top coefficients output from the permanova function.
+
+## Tests Added
+
 * Added tests for permanova.R.
 
 # MicrobiomeR 0.2.0
