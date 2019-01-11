@@ -54,7 +54,6 @@ get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @param measure Select an alpha diversity measure such as shannon, gini simpson, and inverse simpson, Default: 'shannon'
 #' @param select_otu_table Choose an otu table to analyze, Default: 'otu_proportions'
-#' @param save Save the plot, Default: FALSE
 #' @return Returns an alpha diversity plot.
 #' @details Alpha diversity helps to determine the species richness (the number of different species in a sample) or evenness (similar abundance level).
 #' We prefer to use `shannon` as it is better for data generated using the QUIIME pipeline.
