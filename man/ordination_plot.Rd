@@ -5,8 +5,7 @@
 \title{Ordination Plot}
 \usage{
 ordination_plot(obj, method = "PCoA", distance = "wunifrac",
-  color = "TreatmentGroup", title = NULL, save = FALSE,
-  only_data = FALSE)
+  color = "TreatmentGroup", title = NULL, only_data = FALSE)
 }
 \arguments{
 \item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
@@ -18,8 +17,6 @@ ordination_plot(obj, method = "PCoA", distance = "wunifrac",
 \item{color}{Choose the group or factor of which colors will be mapped to, Default: 'TreatmentGroup'}
 
 \item{title}{The title of the plot, Default: NULL}
-
-\item{save}{Save your plot, Default: FALSE}
 
 \item{only_data}{Allows for only ordination data to be generated, Default: FALSE}
 }
@@ -40,3 +37,19 @@ if (interactive()) {
 }
 }
 }
+\seealso{
+View \code{\link{save_ordination_plots}} to save your ordination plot or multiple ordination plots.
+
+Other Visualizations: \code{\link{alpha_diversity_plot}},
+  \code{\link{correlation_plot}},
+  \code{\link{get_correlation_plots}},
+  \code{\link{get_heat_tree_parameters}},
+  \code{\link{get_heat_tree_plots}},
+  \code{\link{get_plot_limits}},
+  \code{\link{melt_metacoder}}, \code{\link{save_barplot}},
+  \code{\link{save_correlation_plots}},
+  \code{\link{save_heat_tree_plots}},
+  \code{\link{save_ordination_plots}},
+  \code{\link{top_coefficients_barplot}}
+}
+\concept{Visualizations}

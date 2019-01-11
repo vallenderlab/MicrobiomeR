@@ -24,7 +24,7 @@ Evaluate whether the group(s) has a significant effect on overall gut microbiota
 if (interactive()) {
   library(MicrobiomeR)
   data <- analyzed_silva
-  p <- permanova(obj = data)
+  p <- permanova(obj = data, group = "TreatmentGroup")
   p$permanova
 }
 }

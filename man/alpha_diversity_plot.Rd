@@ -5,16 +5,14 @@
 \title{Alpha Diversity Plot}
 \usage{
 alpha_diversity_plot(obj, measure = "shannon",
-  select_otu_table = "otu_proportions", save = FALSE)
+  select_otu_table = "otu_proportions")
 }
 \arguments{
 \item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
 
-\item{measure}{Select an alpha diversity measure such as Shannon, Gini Simpson, and Inverse Simpson, Default: 'shannon'}
+\item{measure}{Select an alpha diversity measure such as shannon, gini simpson, and inverse simpson, Default: 'shannon'}
 
 \item{select_otu_table}{Choose an otu table to analyze, Default: 'otu_proportions'}
-
-\item{save}{Save the plot, Default: FALSE}
 }
 \value{
 Returns an alpha diversity plot.
@@ -24,6 +22,7 @@ Plot the alpha diversity using a violin plot.
 }
 \details{
 Alpha diversity helps to determine the species richness (the number of different species in a sample) or evenness (similar abundance level).
+We prefer to use \code{shannon} as it is better for data generated using the QUIIME pipeline.
 }
 \examples{
 \dontrun{
@@ -36,14 +35,19 @@ if (interactive()) {
 }
 }
 \seealso{
+\code{\link{get_alpha_diversity_measures}}, \code{\link[vegan]{diversity}}, \code{\link[ggpubr]{ggviolin}}
+
 Other Visualizations: \code{\link{correlation_plot}},
   \code{\link{get_correlation_plots}},
   \code{\link{get_heat_tree_parameters}},
   \code{\link{get_heat_tree_plots}},
   \code{\link{get_plot_limits}},
+  \code{\link{melt_metacoder}},
+  \code{\link{ordination_plot}},
   \code{\link{save_barplot}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},
-  \code{\link{stacked_barplot}}
+  \code{\link{save_ordination_plots}},
+  \code{\link{top_coefficients_barplot}}
 }
 \concept{Visualizations}

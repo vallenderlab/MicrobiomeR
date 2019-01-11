@@ -7,7 +7,9 @@
 top_coefficients_barplot(top_coefficients, title = NULL)
 }
 \arguments{
-\item{top_coefficients}{PARAM_DESCRIPTION}
+\item{top_coefficients}{Coefficients for the top taxa separating the groups.}
+
+\item{title}{The title of the plot, Default = NULL}
 }
 \value{
 Returns a barplot of the top coefficients
@@ -26,7 +28,7 @@ if (interactive()) {
 }
 }
 \seealso{
-View \code{\link{permanova}} to understand how to generate \code{top_coefficents}.
+View \code{\link{permanova}} to understand how to generate \code{top_coefficents}
 
 Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{correlation_plot}},
@@ -36,6 +38,7 @@ Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{get_plot_limits}},
   \code{\link{melt_metacoder}},
   \code{\link{ordination_plot}},
+  \code{\link{save_barplot}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},
   \code{\link{save_ordination_plots}}
