@@ -5,7 +5,6 @@
 #' @param distance Choose a distance method from 'bray', 'unifrac' or 'wunifrac', Default: 'wunifrac'
 #' @param color Choose the group or factor of which colors will be mapped to, Default: 'TreatmentGroup'
 #' @param title The title of the plot, Default: NULL
-#' @param save Save your plot, Default: FALSE
 #' @param only_data Allows for only ordination data to be generated, Default: FALSE
 #' @return By default, it returns an ordination plot.
 #' @examples
