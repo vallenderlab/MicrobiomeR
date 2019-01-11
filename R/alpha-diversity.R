@@ -102,10 +102,5 @@ alpha_diversity_plot <- function(obj, measure = "shannon", select_otu_table = "o
     ggthemes::theme_pander() + ggpubr::stat_compare_means(comparisons = metacoder_object$data$sample_data$treatment_group.pairs, label = "p.signif", label.y = 7) +
     ggpubr::stat_compare_means(label.y = 8)
 
-  if (save == TRUE) {
-    ggplot2::ggsave(filename = "alpha_diversity.tiff")
-    return(plot)
-  } else {
-    return(plot)
-  }
+  return(plot)
 }
