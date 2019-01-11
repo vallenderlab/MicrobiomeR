@@ -69,7 +69,8 @@ permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
 
 #' @title Top Coefficients Barplot
 #' @description A barplot to visualize which taxa have had the greatest impact on the overall gut composition.
-#' @param top_coefficients PARAM_DESCRIPTION
+#' @param top_coefficients Coefficients for the top taxa separating the groups.
+#' @param title The title of the plot, Default = NULL
 #' @return Returns a barplot of the top coefficients
 #' @examples
 #' \dontrun{
@@ -81,7 +82,7 @@ permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
 #' }
 #' }
 #' @export
-#' @seealso View \code{\link{permanova}} to understand how to generate `top_coefficents`.
+#' @seealso View \code{\link{permanova}} to understand how to generate `top_coefficents`
 #' @family Visualizations
 #' @rdname top_coefficients_barplot
 top_coefficients_barplot <- function(top_coefficients, title = NULL) {
@@ -104,6 +105,9 @@ top_coefficients_barplot <- function(top_coefficients, title = NULL) {
 #' @description Save a top coefficients barplot.
 #' @param plot The plot object.
 #' @param filename The name of the file. (an extension should not be included)
+#' @param format The file format, Default = "tiff"
+#' @param start_path The path of which your output should be saved.
+#' @param ... Additional paramaters.
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
