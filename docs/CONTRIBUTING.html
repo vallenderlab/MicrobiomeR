@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>License • MicrobiomeR</title>
+<title>Contributing to MicrobiomeR • MicrobiomeR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,7 +32,7 @@
 
   <link href="extra.css" rel="stylesheet">
   
-<meta property="og:title" content="License" />
+<meta property="og:title" content="Contributing to MicrobiomeR" />
 
 
 
@@ -131,31 +131,68 @@
 <div class="row">
   <div class="contents col-md-9">
     <div class="page-header">
-      <h1>License</h1>
+      <h1>Contributing to MicrobiomeR</h1>
     </div>
 
-<pre>MIT License
+<div id="contributing-to-microbiomer" class="section level1">
 
-Copyright (c) 2018 Vallender Lab
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-</pre>
+<p>This outlines how to propose a change to MicrobiomeR. For more detailed info about contributing to this, and other tidyverse packages, please see the <a href="https://rstd.io/tidy-contrib"><strong>development contributing guide</strong></a>. Please read through the MicrobiomeR documentation as well.</p>
+<div id="fixing-typos" class="section level3">
+<h3 class="hasAnchor">
+<a href="#fixing-typos" class="anchor"></a>Fixing typos</h3>
+<p>Small typos or grammatical errors in documentation may be edited directly using the GitHub web interface, so long as the changes are made in the <em>source</em> file. However, it is also preferred that you build the package if you know how. If you don’t know how, please notify the maintainers so that we can do it for you.</p>
+<ul>
+<li>You may edit a roxygen comment in a <code>.R</code> file below <code>R/</code>.</li>
+<li>You may <strong>NOT</strong> edit an <code>.Rd</code> file below <code>man/</code>.</li>
+<li>You may <strong>NOT</strong> edit any files below <code>pkgdown/</code> or <code>docs/</code> unless they are configuration files.</li>
+<li>Any alteration to code must be submitted via Pull Request.</li>
+</ul>
+</div>
+<div id="prerequisites" class="section level3">
+<h3 class="hasAnchor">
+<a href="#prerequisites" class="anchor"></a>Prerequisites</h3>
+<p>Before you make a substantial pull request, you should always file an issue and make sure someone from the team agrees that it’s a problem. If you’ve found a bug, create an associated issue and illustrate the bug with a minimal <a href="https://www.tidyverse.org/help/#reprex">reprex</a>.</p>
+</div>
+<div id="pull-request-process" class="section level3">
+<h3 class="hasAnchor">
+<a href="#pull-request-process" class="anchor"></a>Pull request process</h3>
+<ul>
+<li>We recommend that you create a Git branch prefereably off of the <a href="https://github.com/vallenderlab/MicrobiomeR/tree/dev-master">dev-master</a> branch for each pull request (PR).<br>
+</li>
+<li>Look at the Travis and AppVeyor build status before and after making changes. The <code>README</code> should contain badges for any continuous integration services used by the package.<br>
+</li>
+<li>New code should follow the tidyverse <a href="http://style.tidyverse.org">style guide</a>. You can use the <a href="https://CRAN.R-project.org/package=styler">styler</a> package to apply these styles, but please don’t restyle code that has nothing to do with your PR.<br>
+</li>
+<li>We use <a href="https://cran.r-project.org/package=roxygen2">roxygen2</a>, with <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/markdown.html">Markdown syntax</a>, for documentation.<br>
+</li>
+<li>We use <a href="https://cran.r-project.org/package=testthat">testthat</a>. Contributions with test cases included are easier to accept.</li>
+<li>We use the <a href="https://github.com/r-lib/pkgdown">pkgdown</a> for creating our documentation website. Please do not edit anyt</li>
+<li>For user-facing changes, add a bullet to the top of <code>NEWS.md</code> below the current development version header describing the changes made followed by your GitHub username, and links to relevant issue(s)/PR(s).</li>
+</ul>
+</div>
+<div id="other-notes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#other-notes" class="anchor"></a>Other Notes</h3>
+<p>Please make yourself familiar with the projects below before contributing any substantial code changes. We have made several contributions to these packages as well during the development of MicrobiomeR:</p>
+<ul>
+<li><a href="https://github.com/grunwaldlab/metacoder">metacoder</a></li>
+<li><a href="https://github.com/ropensci/taxa">taxa</a></li>
+<li><a href="https://github.com/joey711/phyloseq">phyloseq</a></li>
+<li><a href="https://github.com/microbiome/microbiome">microbiome</a></li>
+</ul>
+</div>
+<div id="code-of-conduct" class="section level3">
+<h3 class="hasAnchor">
+<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h3>
+<p>Please note that the MicrobiomeR project is released with a <a href="CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project you agree to abide by its terms.</p>
+</div>
+<div id="see-tidyverse-development-contributing-guide" class="section level3">
+<h3 class="hasAnchor">
+<a href="#see-tidyverse-development-contributing-guide" class="anchor"></a>See tidyverse <a href="https://rstd.io/tidy-contrib">development contributing guide</a>
+</h3>
+<p>for further details.</p>
+</div>
+</div>
 
   </div>
 
