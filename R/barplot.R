@@ -3,6 +3,7 @@
 #' @return Returns a melted dataframe.
 #' @importFrom dplyr right_join setdiff
 #' @importFrom tidyr gather_
+#' @family Formatting
 #' @rdname stacked_barplot
 melt_metacoder <- function(obj) {
   sd <- data.frame(obj$data$sample_data)
