@@ -22,6 +22,7 @@ melt_metacoder <- function(obj) {
 #' @return Returns a transformed dataframe.
 #' @importFrom dplyr filter group_by summarize mutate enquo quo_name
 #' @importFrom stats na.omit
+#' @family Data Manipulators
 #' @rdname stacked_barplot
 transform_metacoder <- function(melted_df, tax_level) {
   t <- dplyr::enquo(tax_level)
