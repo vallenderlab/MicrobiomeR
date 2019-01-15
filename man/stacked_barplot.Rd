@@ -2,13 +2,13 @@
 % Please edit documentation in R/barplot.R
 \name{melt_metacoder}
 \alias{melt_metacoder}
-\alias{transform_metacoder}
+\alias{convert_proportions}
 \alias{stacked_barplot}
 \title{Melt Metacoder Object}
 \usage{
 melt_metacoder(obj)
 
-transform_metacoder(melted_df, tax_level)
+convert_proportions(melted_df, tax_level)
 
 stacked_barplot(obj, tax_level = "Phylum", fill = "Phylum",
   xlabel = "Samples", faceted = FALSE, title = NULL, palette_values)
@@ -40,7 +40,7 @@ Returns a stacked barplot.
 \description{
 Melt the metacoder or phyloseq tables into a dataframe.
 
-Transform the dataframe abundance values to percent 100.
+Convert the dataframe abundance values to percent 100.
 
 Create a stacked barplot to show relative abundance of taxa.
 }
@@ -57,6 +57,18 @@ if (interactive()) {
 }
 }
 \seealso{
+Other Formatting: \code{\link{MicrobiomeR_Formats}},
+  \code{\link{as_MicrobiomeR_format}},
+  \code{\link{as_analyzed_format}},
+  \code{\link{as_basic_format}},
+  \code{\link{as_custom_format}},
+  \code{\link{as_phyloseq_format}},
+  \code{\link{as_raw_format}}
+
+Other Data Manipulators: \code{\link{metacoder_comp_func_1}},
+  \code{\link{transformer}}, \code{\link{transposer}},
+  \code{\link{vlookup}}
+
 Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{correlation_plot}},
   \code{\link{get_correlation_plots}},
@@ -70,4 +82,6 @@ Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{save_ordination_plots}},
   \code{\link{top_coefficients_barplot}}
 }
+\concept{Data Manipulators}
+\concept{Formatting}
 \concept{Visualizations}
