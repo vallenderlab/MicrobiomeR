@@ -17,15 +17,15 @@ melt_metacoder <- function(obj) {
     rename(OTU = `otu_id`)
 }
 
-#' @title Transform Metacoder Dataframe
-#' @description Transform the dataframe abundance values to percent 100.
+#' @title Convert Proportions
+#' @description Convert the dataframe abundance values to percent 100.
 #' @param melted_df A "melted" dataframe from the metacoder object's data.
 #' @return Returns a transformed dataframe.
 #' @importFrom dplyr filter group_by summarize mutate enquo quo_name
 #' @importFrom stats na.omit
 #' @family Data Manipulators
 #' @rdname stacked_barplot
-transform_metacoder <- function(melted_df, tax_level) {
+convert_proportions <- function(melted_df, tax_level) {
   t <- dplyr::enquo(tax_level)
   tax_level.abund <- paste0(dplyr::quo_name(t), ".Abundance")
 
@@ -75,7 +75,7 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
 
   # Start by melting the data in the "standard" way using psmelt.
   # Also, transform the abundance data to relative abundance
-  mdf <- transform_metacoder(melt_metacoder(metacoder_object), tax_level)
+  mdf <- convert_proportions(melt_metacoder(metacoder_object), tax_level)
   mdf <- dplyr::mutate(mdf, !!sym(tax_level) := factor(!!sym(tax_level), levels = unique(mdf[[tax_level]])))
 
   # Build the plot data structure
