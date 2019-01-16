@@ -36,6 +36,6 @@ Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_analyzed_format}},
   \code{\link{as_basic_format}},
   \code{\link{as_custom_format}},
-  \code{\link{as_raw_format}}
+  \code{\link{as_raw_format}}, \code{\link{melt_metacoder}}
 }
 \concept{Formatting}

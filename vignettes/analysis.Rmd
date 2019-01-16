@@ -63,7 +63,7 @@ metacoder_obj <- otu_proportion_filter(obj = metacoder_obj,
                                        otu_percentage = 0.00001)
 
 # Taxon Prevalence Filter - Add taxa_abundance and taxa_proportions and then filter OTUs that do not
-# appear more than a certian amount of times in a certain percentage of samples at the specified
+# appear more than a certain amount of times in a certain percentage of samples at the specified
 # agglomerated rank.  This is considered a supervised method, because it relies on intermediate
 # taxonomies to filter the data.
 # The default minimum abundance is 5 and the sample percentage is 0.5 (5%).

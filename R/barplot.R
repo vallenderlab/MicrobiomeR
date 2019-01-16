@@ -1,10 +1,10 @@
 #' @title Melt Metacoder Object
 #' @description Melt the metacoder or phyloseq tables into a dataframe.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @return Returns a melted dataframe.
-#' @rdname melt_metacoder
-#' @importFrom  dplyr right_join setdiff
-#' @importFrom  tidyr gather_
+#' @importFrom dplyr right_join setdiff
+#' @importFrom tidyr gather_
+#' @family Formatting
+#' @rdname stacked_barplot
 melt_metacoder <- function(obj) {
   sd <- data.frame(obj$data$sample_data)
   TT <- data.frame(obj$data$otu_annotations, stringsAsFactors = FALSE)
@@ -17,14 +17,15 @@ melt_metacoder <- function(obj) {
     rename(OTU = `otu_id`)
 }
 
-#' @title Transform Metacoder Dataframe
-#' @description Transform the dataframe abundance values to percent 100.
+#' @title Convert Proportions
+#' @description Convert the dataframe abundance values to percent 100.
 #' @param melted_df A "melted" dataframe from the metacoder object's data.
-#' @param tax_level The taxonomic level.
 #' @return Returns a transformed dataframe.
 #' @importFrom dplyr filter group_by summarize mutate enquo quo_name
 #' @importFrom stats na.omit
-transform_metacoder <- function(melted_df, tax_level) {
+#' @family Data Manipulators
+#' @rdname stacked_barplot
+convert_proportions <- function(melted_df, tax_level) {
   t <- dplyr::enquo(tax_level)
   tax_level.abund <- paste0(dplyr::quo_name(t), ".Abundance")
 
@@ -74,7 +75,7 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
 
   # Start by melting the data in the "standard" way using psmelt.
   # Also, transform the abundance data to relative abundance
-  mdf <- transform_metacoder(melt_metacoder(metacoder_object), tax_level)
+  mdf <- convert_proportions(melt_metacoder(metacoder_object), tax_level)
   mdf <- dplyr::mutate(mdf, !!sym(tax_level) := factor(!!sym(tax_level), levels = unique(mdf[[tax_level]])))
 
   # Build the plot data structure
@@ -128,8 +129,6 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
 #' @export
 #' @family Visualizations
 #' @rdname save_barplot
-#' @seealso
-#'
 #' @importFrom ggplot2 ggsave
 save_barplot <- function(plot, filename) {
   if (is.null(filename)) {

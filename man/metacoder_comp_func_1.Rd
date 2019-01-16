@@ -26,7 +26,8 @@ every combination of treatment groups.
 
 \code{\link[modes]{bimodality_coefficient}}
 
-Other Data Manipulators: \code{\link{transformer}},
-  \code{\link{transposer}}, \code{\link{vlookup}}
+Other Data Manipulators: \code{\link{melt_metacoder}},
+  \code{\link{transformer}}, \code{\link{transposer}},
+  \code{\link{vlookup}}
 }
 \concept{Data Manipulators}

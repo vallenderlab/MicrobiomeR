@@ -232,7 +232,7 @@ get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, pa
 #'
 #'  \code{\link[ggplot2]{ggsave}}
 #' @importFrom ggplot2 ggsave
-#' @importFrom crayon green
+#' @importFrom crayon green yellow
 #' @importFrom glue glue
 save_correlation_plots <- function(corr, pairwise = FALSE, format = "tiff", start_path = "output", ...) {
   # Create the relative path to the heat_tree plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
@@ -243,7 +243,7 @@ save_correlation_plots <- function(corr, pairwise = FALSE, format = "tiff", star
   if (pairwise == FALSE) {
     for (rank in names(corr)) {
       message(glue::glue(crayon::green("Saving the {rank} Correlation Plot.")))
-      ggplot2::ggsave(filename = sprintf("%s.corr_plot.tiff", rank), plot = corr[[rank]], device = format, path = full_path, dpi = 500, width = 500, height = 250, units = "mm")
+      ggplot2::ggsave(filename = sprintf("%s.corr_plot.%s", c(rank, format)), plot = corr[[rank]], device = format, path = full_path, dpi = 500, width = 500, height = 250, units = "mm")
     }
   } else if (pairwise == TRUE) {
     for (pr_name in names(corr)) {

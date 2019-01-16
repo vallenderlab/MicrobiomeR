@@ -55,7 +55,8 @@ if(interactive()){
 
 \code{\link[stringr]{str_detect}},  \code{\link[stringr]{str_count}}
 
-Other Data Manipulators: \code{\link{metacoder_comp_func_1}},
+Other Data Manipulators: \code{\link{melt_metacoder}},
+  \code{\link{metacoder_comp_func_1}},
   \code{\link{transformer}}, \code{\link{vlookup}}
 }
 \concept{Data Manipulators}

@@ -2,16 +2,23 @@
 % Please edit documentation in R/utils.R
 \name{create_pub_table}
 \alias{create_pub_table}
-\title{Create a table from a data frame}
+\title{Create Publication Table}
 \usage{
 create_pub_table(dataframe)
 }
 \arguments{
-\item{dataframe}{A dataframe of data.}
+\item{dataframe}{A dataframe object.}
 }
 \value{
 The text table as an object that can be saved to png/tiff/jpg/pdf.
 }
 \description{
 Creates an image of a table from a dataframe.
+}
+\examples{
+\dontrun{
+if(interactive()){
+ #EXAMPLE1
+ }
+}
 }
