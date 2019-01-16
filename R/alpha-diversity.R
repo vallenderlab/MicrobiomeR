@@ -40,9 +40,10 @@ get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 
   # create a list of pairwise comaprisons
   groups <- levels(as.factor(phyloseq_object.meta[[group]])) # get the variables
+  num_groups <- length(groups)
 
   # make a pairwise list that we want to compare.
-  group.pairs <- utils::combn(seq_along(groups), 2, simplify = FALSE, FUN = function(i) groups[i])
+  group.pairs <- utils::combn(seq_along(groups), num_groups, simplify = FALSE, FUN = function(i) groups[i])
 
   phyloseq_object.meta$group.pairs <- group.pairs
 
@@ -53,7 +54,9 @@ get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' @description Plot the alpha diversity using a violin plot.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
 #' @param measure Select an alpha diversity measure such as shannon, gini simpson, and inverse simpson, Default: 'shannon'
+#' @param group The "TreatmentGroup" or similar grouping or column from your metadata to denote sample groups, Default: 'TreatmentGroup'
 #' @param select_otu_table Choose an otu table to analyze, Default: 'otu_proportions'
+#' @param title The title of the plot, Default: NULL
 #' @return Returns an alpha diversity plot.
 #' @details Alpha diversity helps to determine the species richness (the number of different species in a sample) or evenness (similar abundance level).
 #' We prefer to use `shannon` as it is better for data generated using the QUIIME pipeline.
@@ -74,7 +77,7 @@ get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' @importFrom ggpubr stat_compare_means ggviolin
 #' @importFrom ggthemes theme_pander
 #' @importFrom utils combn
-alpha_diversity_plot <- function(obj, measure = "shannon", select_otu_table = "otu_proportions") {
+alpha_diversity_plot <- function(obj, measure = "shannon", group = "TreatmentGroup", select_otu_table = "otu_proportions", title = NULL) {
   # Validate data format
   metacoder_object <- validate_MicrobiomeR_format(
     obj = create_metacoder(obj),
@@ -84,21 +87,22 @@ alpha_diversity_plot <- function(obj, measure = "shannon", select_otu_table = "o
     MARGIN = 2, index = measure
   )
 
-  metacoder_object$data$sample_data$TreatmentGroup <- factor(metacoder_object$data$sample_data$TreatmentGroup, levels = c("Control", "Stressed"))
-  treatment_groups <- levels(metacoder_object$data$sample_data$TreatmentGroup) # get the variables
+  metacoder_object$data$sample_data[[group]] <- factor(metacoder_object$data$sample_data[[group]], levels = list(unique(metacoder_object$data$sample_data[[group]])))
+  groups <- levels(metacoder_object$data$sample_data[[group]]) # get the variables
+  num_groups <- length(groups)
 
   # make a pairwise list that we want to compare.
-  metacoder_object$data$sample_data$treatment_group.pairs <- utils::combn(seq_along(treatment_groups), 2, simplify = FALSE, FUN = function(i) treatment_groups[i])
+  metacoder_object$data$sample_data$group.pairs <- utils::combn(seq_along(groups), num_groups, simplify = FALSE, FUN = function(i) groups[i])
 
   plot <- ggpubr::ggviolin(metacoder_object$data$sample_data,
-    x = "TreatmentGroup", y = measure,
+    x = group, y = measure,
     color = "black",
     add = "boxplot",
-    fill = "TreatmentGroup",
+    fill = group,
     palette = c("#3288bd", "#d53e4f"),
-    legend.title = "Treatment Group"
-  ) + ggplot2::xlab("Treatment Group") + ggplot2::ylab(toupper(measure)) +
-    ggthemes::theme_pander() + ggpubr::stat_compare_means(comparisons = metacoder_object$data$sample_data$treatment_group.pairs, label = "p.signif", label.y = 7) +
+    legend.title = title
+  ) + ggplot2::xlab(title) + ggplot2::ylab(toupper(measure)) +
+    ggthemes::theme_pander() + ggpubr::stat_compare_means(comparisons = metacoder_object$data$sample_data$group.pairs, label = "p.signif", label.y = 7) +
     ggpubr::stat_compare_means(label.y = 8)
 
   return(plot)
