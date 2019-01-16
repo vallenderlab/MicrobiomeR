@@ -94,6 +94,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
   # primary_data <- dplyr::arrange(primary_data, label, wilcox_p_value)
   # significant_data <- dplyr::arrange(significant_data, wilcox_p_value)
 
+  # Get the corelation data
   # Get the limits of the plot based on the data
   plot_limits <- get_plot_limits(primary_data$mean_treat1, primary_data$mean_treat2)
   # Create a dataframe for background color
@@ -234,29 +235,67 @@ get_correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_va
   primary_data <- primary_mo$data$stats_tax_data
   secondary_data <- secondary_mo$data$stats_tax_data
 
-  # Add a P-Value column for color, a Significance column (TRUE/FALSE) for subsetting, an Abundance column for the
-  # legend, and a label column (TRUE/FALSE) for subsetting
-  primary_data <- primary_data %>% dplyr::mutate(color_wilcox_p_value = vlookup(!! quoted_str, secondary_data, secondary_rank, "wilcox_p_value")) %>%
-    dplyr::mutate(Significance = wilcox_p_value < wp_value) %>%
-    dplyr::mutate(Abundance = ifelse(Significance == TRUE, ifelse(sign(log2_mean_ratio) == 1, "Significant Increase", "Significant Decrease"), "Insignificant Change")) %>%
-    dplyr::mutate(label = ifelse(Significance == TRUE, ifelse(sign(log2_mean_ratio) == 1, TRUE, TRUE), FALSE))
+  # Get treatment data
+  treat_1 <- as.character(obj$data$stats_tax_data$treatment_1)
+  treat_2 <- as.character(obj$data$stats_tax_data$treatment_2)
+  treatments <- unique(c(treat_1, treat_2))
+  combinations <- t(utils::combn(seq_along(treatments), 2))
+  combinations <- sapply(seq_len(nrow(combinations)),
+                function(index) {
+                  set.seed(1)
+                  treat_a <- treatments[combinations[index, 1]]
+                  treat_b <- treatments[combinations[index, 2]]
+                  c(treat_a, treat_b)
+                  })
 
-  # Update points with 0 values so they look good on the plot
-  primary_data$mean_treat1[primary_data$mean_treat1 == 0] <- 0.000000001
-  primary_data$mean_treat2[primary_data$mean_treat2 == 0] <- 0.000000001
+  # Compare treatments
+  corr_data <- list()
+  for (i in seq_len(ncol(combinations))) {
+    # Get treatment information
+    treat_a <- combinations[1,i]
+    treat_b <- combinations[2,i]
 
-  # Create a label for the legend
-  rank_label <- sprintf("%s_label", primary_rank)
+    p_mo <- primary_mo %>%
+      taxa::filter_obs("stats_tax_data",
+                       (treatment_1 == treat_a &
+                          treatment_2 == treat_b) |
+                         (treatment_1 == treat_b &
+                            treatment_2 == treat_a))
+    p_d <- p_mo$data$stats_tax_data
+    s_mo <- secondary_mo %>%
+      taxa::filter_obs("stats_tax_data",
+                       (treatment_1 == treat_a &
+                          treatment_2 == treat_b) |
+                         (treatment_1 == treat_b &
+                            treatment_2 == treat_a))
+    s_d <- s_mo$data$stats_tax_data
+    # Add a P-Value column for color, a Significance column (TRUE/FALSE) for subsetting, an Abundance column for the
+    # legend, and a label column (TRUE/FALSE) for subsetting
+    p_d <- p_d %>% dplyr::mutate(color_wilcox_p_value = vlookup(!! quoted_str, s_d, secondary_rank, "wilcox_p_value")) %>%
+      dplyr::mutate(Significance = wilcox_p_value < wp_value) %>%
+      dplyr::mutate(Abundance = ifelse(Significance == TRUE, ifelse(sign(log2_mean_ratio) == 1, "Significant Increase", "Significant Decrease"), "Insignificant Change")) %>%
+      dplyr::mutate(label = ifelse(Significance == TRUE, ifelse(sign(log2_mean_ratio) == 1, TRUE, TRUE), FALSE))
 
-  # Create a dataframe that contains only significant data.  This is used for point outlines
-  significant_data <- dplyr::filter(primary_data, label == TRUE) %>%
-    dplyr::mutate(rank_label = .[[primary_rank]])
-  # Add a column for labeling the points with taxonomy data based on significance
-  primary_data <- dplyr::mutate(primary_data, rank_label = vlookup(primary_data[[primary_rank]], significant_data, primary_rank, "rank_label"))
-  primary_data <- dplyr::arrange(primary_data, label, wilcox_p_value)
-  significant_data <- dplyr::arrange(significant_data, wilcox_p_value)
+    # Update points with 0 values so they look good on the plot
+    p_d$mean_treat1[p_d$mean_treat1 == 0] <- 0.000000001
+    p_d$mean_treat2[p_d$mean_treat2 == 0] <- 0.000000001
 
-  return(list(primary_data = primary_data, secondary_data = secondary_data, significant_data = significant_data))
+    # Create a label for the legend
+    rank_label <- sprintf("%s_label", primary_rank)
+
+    # Create a dataframe that contains only significant data.  This is used for point outlines
+    sig_d <- dplyr::filter(p_d, label == TRUE) %>%
+      dplyr::mutate(rank_label = .[[primary_rank]])
+
+    # Add a column for labeling the points with taxonomy data based on significance
+    p_d <- dplyr::mutate(p_d, rank_label = vlookup(p_d[[primary_rank]], sig_d, primary_rank, "rank_label"))
+    p_d <- dplyr::arrange(p_d, label, wilcox_p_value)
+    sig_d <- dplyr::arrange(sig_d, wilcox_p_value)
+
+    temp_data <- list(list(primary_data = p_d, significant_data = sig_d, treatments = combinations[,i]))
+    corr_data <- append(corr_data, temp_data)
+  }
+  return(corr_data)
 }
 
 #' @title Save Correlation Plots
