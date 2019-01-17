@@ -22,16 +22,13 @@
 #' @family Visualizations
 #' @rdname correlation_plot
 #' @seealso
-#'  \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{agglomerate_metacoder}},  \code{\link[MicrobiomeR]{vlookup}},  \code{\link[MicrobiomeR]{get_plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
-#'
-#'  \code{\link[dplyr]{tidyeval}},  \code{\link[dplyr]{mutate}},  \code{\link[dplyr]{filter}},  \code{\link[dplyr]{arrange}}
+#'  \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{get_correlation_data}},  \code{\link[MicrobiomeR]{get_plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
 #'
 #'  \code{\link[ggplot2]{ggplot}},  \code{\link[ggplot2]{aes}},  \code{\link[ggplot2]{geom_polygon}},  \code{\link[ggplot2]{geom_point}},  \code{\link[ggplot2]{labs}},  \code{\link[ggplot2]{scale_continuous}},  \code{\link[ggplot2]{scale_manual}},  \code{\link[ggplot2]{guide_legend}},  \code{\link[ggplot2]{geom_abline}}
 #'
 #'  \code{\link[ggrepel:geom_text_repel]{geom_label_repel}}
 #'
 #'  \code{\link[forcats]{fct_reorder}}
-#' @importFrom dplyr enquo mutate filter arrange
 #' @importFrom ggplot2 ggplot aes geom_polygon geom_point labs scale_y_log10 scale_x_log10 scale_shape_manual scale_fill_manual scale_color_manual guide_legend geom_abline
 #' @importFrom forcats fct_reorder
 #' @importFrom ggrepel geom_label_repel
@@ -104,7 +101,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
       ggplot2::scale_color_manual(values = c(myPal), name = sprintf("%s:", c(secondary_rank)), guide = ggplot2::guide_legend(ncol = 2)) +
       ggplot2::geom_abline(slope = 1, intercept = 0, linetype = "dashed")
     message(crayon::green(sprintf("Generating Correlation Plot comparing %s for %s with color based on %s", crayon::bgWhite(comp_title), crayon::bgWhite(primary_rank), crayon::bgWhite(secondary_rank))))
-    corrs[[glue::glue("{comp_title}")]] <- corr
+    corrs[[comp_title]] <- corr
   }
   return(corrs)
 }
@@ -115,7 +112,6 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 #' @param primary_ranks A vector of primary ranks used to label the points.
 #' @param secondary_ranks  The secondary rank used to color the points.  Can be an integer specifying
 #' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
-#' @param pairwise This does a pairwise comparison of the primary and secondary ranks.  Default: FALSE
 #' @param ... An optional list of parameters to use in the correlation_plot function.
 #' @return A list object containing correlation plots.  A pairwise comparison returns a nested list.
 #' @pretty_print TRUE
@@ -136,7 +132,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 #' @family Visualizations
 #' @rdname get_correlation_plots
 #' @importFrom crayon green bgWhite
-get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, pairwise = FALSE, ...) {
+get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ...) {
   corr <- list()
   params <- list(...)
   rank_index <- pkg.private$rank_index
@@ -151,36 +147,55 @@ get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, pa
       secondary_ranks <- rep(secondary_ranks, length(primary_ranks))
     }
   }
-
-  if (pairwise == TRUE) {
-    for (i in 1:length(primary_ranks)) {
-      pr <- primary_ranks[i]
-      corr[[pr]] <- list()
-      for (j in 1:length(unique(secondary_ranks))) {
-        sr <- secondary_ranks[j]
-        if (is.numeric(sr)) {
-          sr <- as.character(ranks[rank_index[[pr]] - sr])
-
-        } else if (sr == FALSE) {
-          sr <- pr
-        }
-        if (rank_index[[pr]] < rank_index[[sr]]) {
-          next()
-        }
-        message(glue::glue(crayon::green("Generating a Correlation Plot comparing ", crayon::bgWhite({pr}), " with ", crayon::bgWhite({sr}), ".")))
-        corr[[pr]][[sr]] <- do.call(correlation_plot, c(list(obj = obj, primary_rank = pr, secondary_rank = sr), params))
+  # Get correlation plots
+  for (i in 1:length(primary_ranks)) {
+    pr <- primary_ranks[i]
+    corr[[pr]] <- list()
+    for (j in 1:length(unique(secondary_ranks))) {
+      sr <- secondary_ranks[j]
+      if (is.numeric(sr)) {
+        sr <- as.character(ranks[rank_index[[pr]] - sr])
+      } else if (sr == FALSE) {
+        sr <- pr
       }
-    }
-  } else {
-    for (i in 1:length(primary_ranks)) {
-      pr <- primary_ranks[i]
-      sr <- secondary_ranks[i]
-      corr[[pr]] <- do.call(correlation_plot, c(list(obj = obj, primary_rank = pr, secondary_rank = sr), params))
+      if (rank_index[[pr]] < rank_index[[sr]]) {
+        next()
+      }
+      message(glue::glue(crayon::green("Generating a Correlation Plot comparing ", crayon::bgWhite({pr}), " with ", crayon::bgWhite({sr}), ".")))
+      corr[[pr]][[sr]] <- do.call(correlation_plot, c(list(obj = obj, primary_rank = pr, secondary_rank = sr), params))
     }
   }
   return(corr)
 }
 
+#' @title Get Correlation Plot Data
+#' @description Get the correlation plot data comparing all of the treatment groups.
+#' @param obj PARAM_DESCRIPTION
+#' @param primary_rank PARAM_DESCRIPTION
+#' @param secondary_rank PARAM_DESCRIPTION, Default: TRUE
+#' @param wp_value PARAM_DESCRIPTION, Default: 0.05
+#' @return OUTPUT_DESCRIPTION
+#' @pretty_print TRUE
+#' @details DETAILS
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Visualizations
+#' @rdname get_correlation_data
+#' @seealso
+#'  \code{\link[MicrobiomeR]{agglomerate_metacoder}},  \code{\link[MicrobiomeR]{vlookup}}
+#'
+#'  \code{\link[dplyr]{tidyeval}},  \code{\link[dplyr]{mutate}},  \code{\link[dplyr]{filter}},  \code{\link[dplyr]{arrange}}
+#'
+#'  \code{\link[taxa]{filter_obs}}
+#' @importFrom dplyr enquo mutate filter arrange
+#' @importFrom utils combn
+#' @importFrom taxa filter_obs
+#' @importFrom glue glue
 get_correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_value = 0.05) {
   # Quotes
   quoted_str <- dplyr::enquo(secondary_rank)
@@ -258,7 +273,6 @@ get_correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_va
 #' @title Save Correlation Plots
 #' @description This function saves correlation plots storred in a listlike object to an output folder.
 #' @param corr A correlation plot list generated by correlation_plot or get_correlation_plots.
-#' @param pairwise Denotes weather or not the plot list is pairwise.  Default: FALSE
 #' @param format The format of the output image.  Default: 'tiff'
 #' @param start_path The starting path of the output directory.  Default: 'output'
 #' @param ... An optional list of parameters to use in the get_output_dir function.
@@ -287,22 +301,17 @@ get_correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_va
 #' @importFrom ggplot2 ggsave
 #' @importFrom crayon green
 #' @importFrom glue glue
-save_correlation_plots <- function(corr, pairwise = FALSE, format = "tiff", start_path = "output", ...) {
-  # Create the relative path to the heat_tree plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
-  # With the parameters set the full path will be <pwd>/output/<experiment>/heat_trees/<extra_path>.
+save_correlation_plots <- function(corr, format = "tiff", start_path = "output", ...) {
+  # Create the relative path to the correlation plots.  By default the path will be <pwd>/output/<experiment>/corr_plot/<format(Sys.time(), "%Y-%m-%d_%s")>
+  # With the parameters set the full path will be <pwd>/output/<experiment>/corr_plot/<extra_path>.
   full_path <- get_output_dir(start_path = start_path, plot_type = "corr_plot", ...)
   message(glue::glue(crayon::yellow("Saving Correlation Plots to the following directory: \n", "\r\t{full_path}")))
   # Iterate the heat_tree plot list and save them in the proper directory
-  if (pairwise == FALSE) {
-    for (rank in names(corr)) {
-      message(glue::glue(crayon::green("Saving the {rank} Correlation Plot.")))
-      ggplot2::ggsave(filename = sprintf("%s.corr_plot.tiff", rank), plot = corr[[rank]], device = format, path = full_path, dpi = 500, width = 500, height = 250, units = "mm")
-    }
-  } else if (pairwise == TRUE) {
-    for (pr_name in names(corr)) {
-      for (sr_name in names(corr[[pr_name]])) {
-        message(glue::glue(crayon::green("Saving the {pr_name} X {sr_name} Correlation Plot.")))
-        ggplot2::ggsave(filename = sprintf("%s_%s.corr_plot.tiff", pr_name, sr_name), plot = corr[[pr_name]][[sr_name]], device = format, path = full_path, dpi = 500, width = 500, height = 250, units = "mm")
+  for (pr_name in names(corr)) {
+    for (sr_name in names(corr[[pr_name]])) {
+      for (comp in names(corr[[pr_name]][[sr_name]])) {
+        message(glue::glue(crayon::green("Saving the {pr_name}-{sr_name} Correlation Plot comparing {comp}.")))
+        ggplot2::ggsave(filename = sprintf("%s_%s_%s.corr_plot.tiff", pr_name, sr_name, comp), plot = corr[[pr_name]][[sr_name]][[comp]], device = format, path = full_path, dpi = 500, width = 500, height = 250, units = "mm")
       }
     }
   }
