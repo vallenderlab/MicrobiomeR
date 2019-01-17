@@ -134,15 +134,15 @@ get_heat_tree_parameters <- function(obj, title, treatment_no, ...) {
       title = title,
       # NODE
       ## The node size is relevant to the Abundance level
-      ## The node color is relevant to wheather the abundance is higher in control vs stressed animals
+      ## The node color is relevant to wheather the abundance is higher in treatment_1 vs treatment_2 animals
       ## The node labels are relevant to significant taxon names.
       node_size = n_obs,
       node_color = log2_mean_ratio,
       node_label = ifelse(wilcox_p_value < 0.05, taxon_names, NA),
       node_label_size = 1,
-      ### The color red indicates higher abundance in Stressed animals
-      ### The color blue indicates higher abundance in Control animals
-      ### The color grey represents no difference in Control vs Stressed abundance
+      ### The color red indicates higher abundance in Treatment_1 animals
+      ### The color blue indicates higher abundance in Treatment_2 animals
+      ### The color grey represents no difference in treatment_1 vs treatment_2 abundance
       ### Colorblind node_color_range = c("navy", "grey80", "greenyellow"),
       ### Colorblind node_color_range = c("navy", "grey80", "yellow3"),
       # #ffffbf
@@ -150,7 +150,7 @@ get_heat_tree_parameters <- function(obj, title, treatment_no, ...) {
       node_color_trans = "linear",
       node_color_interval = c(-4, 4),
       node_size_axis_label = "Number of OTUs",
-      node_color_axis_label = "Upregulated in Stressed (red) vs.\n Downregulated in Stressed (blue)\n",
+      node_color_axis_label = glue::glue("Upregulated (red) vs.\n Downregulated (blue)\n"),
       ### The labels are only for significant (pvalue < 0.05) abundance changes
       ### The labels are green to offset the blue/red colors.
       node_label_color = wilcox_p_value,
@@ -201,15 +201,15 @@ get_heat_tree_parameters <- function(obj, title, treatment_no, ...) {
       title = title,
       # NODE
       ## The node size is relevant to the Abundance level
-      ## The node color is relevant to wheather the abundance is higher in control vs stressed animals
+      ## The node color is relevant to wheather the abundance is higher in treatment_1 vs treatment_2
       ## The node labels are relevant to significant taxon names.
       node_size = n_obs,
       node_color = log2_mean_ratio,
       node_label = ifelse(wilcox_p_value < 0.05, taxon_names, NA),
       node_label_size = 1,
-      ### The color red indicates higher abundance in Stressed animals
-      ### The color blue indicates higher abundance in Control animals
-      ### The color grey represents no difference in Control vs Stressed abundance
+      ### The color red indicates higher abundance in Treatment_1 animals
+      ### The color blue indicates higher abundance in Treatment_2 animals
+      ### The color grey represents no difference in Treatment_1 vs Treatment_2 abundance
       ### Colorblind node_color_range = c("navy", "grey80", "greenyellow"),
       ### Colorblind node_color_range = c("navy", "grey80", "yellow3"),
       # #ffffbf
@@ -217,7 +217,7 @@ get_heat_tree_parameters <- function(obj, title, treatment_no, ...) {
       node_color_trans = "linear",
       node_color_interval = c(-4, 4),
       node_size_axis_label = "Number of OTUs",
-      node_color_axis_label = "Upregulated in Stressed (red) vs.\n Downregulated in Stressed (blue)\n",
+      node_color_axis_label = "Upregulated (red) vs.\n Downregulated (blue)\n",
       ### The labels are only for significant (pvalue < 0.05) abundance changes
       ### The labels are green to offset the blue/red colors.
       node_label_color = wilcox_p_value,
