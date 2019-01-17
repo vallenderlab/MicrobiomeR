@@ -22,10 +22,10 @@ The "raw_format" is Level 1. in the \link{MicrobiomeR_Formats} hierarchy.
 \dontrun{
 if(interactive()){
 library(MicrobiomeR)
-if(is_raw_format(MicrobiomeR::raw_silva)){
+if(is_raw_format(MicrobiomeR::raw_silva_2)){
     print("It's raw!")
 } else {
-    fmt <- which_format(MicrobiomeR::raw_silva)
+    fmt <- which_format(MicrobiomeR::raw_silva_2)
     print("It's not analyzed!")
     print(sprintf("It's \%s!", fmt))
 }

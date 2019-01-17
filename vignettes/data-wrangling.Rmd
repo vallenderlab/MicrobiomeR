@@ -36,7 +36,7 @@ file.
 input_files <- pkg.data$input_files
 biom_file <- input_files$biom_files$silva # Path to silva biom file
 tree_file <- input_files$tree_files$silva # Path to silva tree file
-metadata_file <- input_files$metadata # Path to Nephele metadata
+metadata_file <- input_files$metadata$two_groups # Path to Nephele metadata
 parse_func <- parse_taxonomy_silva_128 # A custom phyloseq parsing function for silva annotations
 
 # Get the phyloseq object

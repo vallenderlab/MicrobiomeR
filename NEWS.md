@@ -1,4 +1,4 @@
-# MicrobiomeR 0.2.2
+# MicrobiomeR 0.2.3
 
 ## Documentation Updates
 
@@ -7,6 +7,24 @@
 ## Tests Added
 
 * Added tests for utils.R
+
+# MicrobiomeR 0.2.2
+
+## Functional Changes
+
+* Added support for multiple treatments for some plots
+  * `get_heat_tree_plots` now produces a `metacoder::heat_tree_matrix`.
+  * `correlation_plot` now produces multiple plots for data with more that 2 treatments.
+  * Added the `get_treatment_matrix` function
+  * Added the `get_correlation_data` function
+* Updated `analysis` vignette to demonstrate more than 2 treatment groups.
+* Updated internal data files.
+  * Added new metadata file with 3 treatment groups (`nephele_metadata3.txt`).
+  * Formatted Treatment Group metadata.
+* Updated public datasets.
+  * Removed Greengenes datasets.
+  * Added Silva data with 3 treatment groups.
+* Added the `color-palettes` vignette.
 
 # MicrobiomeR 0.2.1
 

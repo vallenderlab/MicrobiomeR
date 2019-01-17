@@ -4,7 +4,7 @@ library(testthat)
 context("Testing of stacked barplot")
 
 # Use existing data for test.
-data <- as_MicrobiomeR_format(raw_silva, format = "analyzed_format")
+data <- as_MicrobiomeR_format(raw_silva_2, format = "analyzed_format")
 test_palette <- get_color_palette(color_no = 12)
 
 

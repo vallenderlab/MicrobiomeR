@@ -63,7 +63,8 @@ Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_basic_format}},
   \code{\link{as_custom_format}},
   \code{\link{as_phyloseq_format}},
-  \code{\link{as_raw_format}}
+  \code{\link{as_raw_format}},
+  \code{\link{get_treatment_matrix}}
 
 Other Data Manipulators: \code{\link{metacoder_comp_func_1}},
   \code{\link{transformer}}, \code{\link{transposer}},
@@ -71,6 +72,7 @@ Other Data Manipulators: \code{\link{metacoder_comp_func_1}},
 
 Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{correlation_plot}},
+  \code{\link{get_correlation_data}},
   \code{\link{get_correlation_plots}},
   \code{\link{get_heat_tree_parameters}},
   \code{\link{get_heat_tree_plots}},

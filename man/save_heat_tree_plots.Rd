@@ -32,7 +32,8 @@ if(interactive()){
 # This example uses data that are no longer available in the MicrobiomeR package,
 # however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_analyzed_format}}.
 library(MicrobiomeR)
-h_trees <- get_heat_tree_plots(MicrobiomeR::analyzed_silva, rank_list = c("Phylum", "Class"))
+analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+h_trees <- get_heat_tree_plots(analyzed_silva, rank_list = c("Phylum", "Class"))
 # Save to \\emph{./output/heat_trees} folder.
 save_heat_tree_plots(h_trees)
  }
@@ -44,6 +45,7 @@ save_heat_tree_plots(h_trees)
 
 Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{correlation_plot}},
+  \code{\link{get_correlation_data}},
   \code{\link{get_correlation_plots}},
   \code{\link{get_heat_tree_parameters}},
   \code{\link{get_heat_tree_plots}},
