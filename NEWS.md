@@ -1,3 +1,13 @@
+# MicrobiomeR 0.2.2
+
+## Documentation Updates
+
+* Updated documentation for `create_pub_table` function.
+
+## Tests Added
+
+* Added tests for utils.R
+
 # MicrobiomeR 0.2.1
 
 ## Features Added
