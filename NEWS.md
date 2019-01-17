@@ -14,6 +14,7 @@
 * Updated public datasets.
   * Removed Greengenes datasets.
   * Added Silva data with 3 treatment groups.
+* Added the `color-palettes` vignette.
 
 # MicrobiomeR 0.2.0
 
