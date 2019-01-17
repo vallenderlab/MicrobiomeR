@@ -209,19 +209,7 @@ get_correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_va
   primary_data <- primary_mo$data$stats_tax_data
   secondary_data <- secondary_mo$data$stats_tax_data
 
-  # Get treatment data
-  treat_1 <- as.character(obj$data$stats_tax_data$treatment_1)
-  treat_2 <- as.character(obj$data$stats_tax_data$treatment_2)
-  treatments <- unique(c(treat_1, treat_2))
-  combinations <- t(utils::combn(seq_along(treatments), 2))
-  combinations <- sapply(seq_len(nrow(combinations)),
-                function(index) {
-                  set.seed(1)
-                  treat_a <- treatments[combinations[index, 1]]
-                  treat_b <- treatments[combinations[index, 2]]
-                  c(treat_a, treat_b)
-                  })
-
+  combinations <- get_treatment_matrix(obj = obj)
   # Compare treatments
   corr_data <- list()
   for (i in seq_len(ncol(combinations))) {
