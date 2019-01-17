@@ -38,3 +38,23 @@ custom_pal <- get_color_palette(color_no=data_len)
 print(custom_pal)
 
 ```
+
+## Basics: Scico and Viridis
+
+We have built in support for the [scico](https://github.com/thomasp85/scico) package...
+
+```{r message=FALSE, warning=FALSE}
+basic_pal <- scico_palette(scico_palette="hawaii")(25)
+pie(rep(1, length(basic_pal)), col=basic_pal)
+print(basic_pal)
+better_pal <- get_color_palette(pal_func = scico_palette, color_no = 25)
+print(better_pal)
+```
+
+```{r message=FALSE, warning=FALSE}
+basic_pal <- viridis::viridis(n=25, option="magma")
+pie(rep(1, length(basic_pal)), col=basic_pal)
+print(basic_pal)
+better_pal <- get_color_palette(pal_func = viridis_palette, color_no = 25)
+print(better_pal)
+```
