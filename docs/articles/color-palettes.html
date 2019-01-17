@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@
       <h1>Vignette Title</h1>
                         <h4 class="author">Vignette Author</h4>
             
-            <h4 class="date">2019-01-05</h4>
+            <h4 class="date">2019-01-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vallenderlab/MicrobiomeR/blob/master/vignettes/color-palettes.Rmd"><code>vignettes/color-palettes.Rmd</code></a></small>
       <div class="hidden name"><code>color-palettes.Rmd</code></div>
@@ -111,210 +111,110 @@
 
     
     
-<p>Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The <code>html_vignette</code> output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The <code>html_vignette</code> format:</p>
-<ul>
-<li>Never uses retina figures</li>
-<li>Has a smaller default figure size</li>
-<li>Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style</li>
-</ul>
-<div id="vignette-info" class="section level2">
+<div id="introduction" class="section level1">
+<h1 class="hasAnchor">
+<a href="#introduction" class="anchor"></a>Introduction</h1>
+<p>The color palette workflow created for MicrobiomeR are based on the <code><a href="../reference/get_color_palette.html">get_color_palette(pal_func = ...)</a></code> with a palette function that returns <code><a href="https://www.rdocumentation.org/packages/grDevices/topics/colorRamp">grDevices::colorRampPalette(...)</a></code> (called), <code><a href="https://www.rdocumentation.org/packages/grDevices/topics/colorRamp">grDevices::colorRampPalette</a></code> (not called), or a color palette function that returns a character vector. Several palette funcitons come built with MicrobiomeR and are used in the plotting functions.</p>
+<div id="getting-a-color-palette" class="section level2">
 <h2 class="hasAnchor">
-<a href="#vignette-info" class="anchor"></a>Vignette Info</h2>
-<p>Note the various macros within the <code>vignette</code> section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the <code>title</code> field and the <code>\VignetteIndexEntry</code> to match the title of your vignette.</p>
+<a href="#getting-a-color-palette" class="anchor"></a>Getting a Color Palette</h2>
+<p>Getting a color palette is simple. You can toggle the palette preview with <code>display=FALSE</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">analyzed_silva &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as_MicrobiomeR_format.html">as_MicrobiomeR_format</a></span>(MicrobiomeR<span class="op">::</span>raw_silva_<span class="dv">2</span>, <span class="st">"analyzed_format"</span>)
+data &lt;-<span class="st"> </span>analyzed_silva<span class="op">$</span>data<span class="op">$</span>stats_tax_data<span class="op">$</span>Phylum
+data_len &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(data))
+custom_pal &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_color_palette.html">get_color_palette</a></span>(<span class="dt">color_no=</span>data_len)</code></pre></div>
+<p><img src="color-palettes_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(custom_pal)
+<span class="co">#&gt;  [1] "#FDE725" "#D3E21A" "#A6DB35" "#7BD150" "#55C667" "#30B47B" "#218E8D"</span>
+<span class="co">#&gt;  [8] "#1E1149" "#471078" "#762181" "#A6317D" "#D8456B" "#F7725C" "#FEA26E"</span>
+<span class="co">#&gt; [15] "#FECF92" "#FCFDBF"</span></code></pre></div>
 </div>
-<div id="styles" class="section level2">
+<div id="scico" class="section level2">
 <h2 class="hasAnchor">
-<a href="#styles" class="anchor"></a>Styles</h2>
-<p>The <code>html_vignette</code> template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:</p>
-<pre><code>output: 
-  rmarkdown::html_vignette:
-    css: mystyles.css</code></pre>
+<a href="#scico" class="anchor"></a>Scico</h2>
+<p>We have built in support for the <a href="https://github.com/thomasp85/scico">scico</a> package…</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">basic_pal &lt;-<span class="st"> </span><span class="kw"><a href="../reference/scico_palette.html">scico_palette</a></span>(<span class="dt">scico_palette=</span><span class="st">"hawaii"</span>)(<span class="dv">25</span>)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/pie">pie</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(basic_pal)), <span class="dt">col=</span>basic_pal)</code></pre></div>
+<p><img src="color-palettes_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(basic_pal)
+<span class="co">#&gt;  [1] "#8C0172" "#8E1468" "#90255C" "#92344F" "#944344" "#96513B" "#985E31"</span>
+<span class="co">#&gt;  [8] "#9A6C28" "#9C7B20" "#9C8A1C" "#9A9B1E" "#95A92A" "#8EB53B" "#86BE4E"</span>
+<span class="co">#&gt; [15] "#7DC562" "#74CC75" "#6CD38A" "#64D89D" "#5FDEB0" "#5FE3C2" "#66E8D4"</span>
+<span class="co">#&gt; [22] "#78EDE5" "#8CEFEF" "#A0F1F8" "#B2F2FD"</span>
+better_pal &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_color_palette.html">get_color_palette</a></span>(<span class="dt">pal_func =</span> scico_palette, <span class="dt">color_no =</span> <span class="dv">25</span>)</code></pre></div>
+<p><img src="color-palettes_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(better_pal)
+<span class="co">#&gt;  [1] "#001959" "#07275C" "#0D365D" "#144660" "#1C5561" "#2B625C" "#3B6B55"</span>
+<span class="co">#&gt;  [8] "#49704E" "#5B7645" "#6C7B3C" "#7E8032" "#8C852E" "#9F892D" "#B38D32"</span>
+<span class="co">#&gt; [15] "#C7913D" "#DA954D" "#E9995E" "#F49E71" "#F9A384" "#FCAA98" "#FCB0AB"</span>
+<span class="co">#&gt; [22] "#FCB7BE" "#FDBED0" "#FCC4E4" "#F9CCF9"</span></code></pre></div>
 </div>
-<div id="figures" class="section level2">
+<div id="viridis" class="section level2">
 <h2 class="hasAnchor">
-<a href="#figures" class="anchor"></a>Figures</h2>
-<p>The figure sizes have been customised so that you can easily put two images side-by-side.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="dv">10</span><span class="op">:</span><span class="dv">1</span>)</a></code></pre></div>
-<p><img src="color-palettes_files/figure-html/unnamed-chunk-1-1.png" width="700"><img src="color-palettes_files/figure-html/unnamed-chunk-1-2.png" width="700"></p>
-<p>You can enable figure captions by <code>fig_caption: yes</code> in YAML:</p>
-<pre><code>output:
-  rmarkdown::html_vignette:
-    fig_caption: yes</code></pre>
-<p>Then you can use the chunk option <code>fig.cap = "Your figure caption."</code> in <strong>knitr</strong>.</p>
+<a href="#viridis" class="anchor"></a>Viridis</h2>
+<p>…And the <a href="https://github.com/sjmgarnier/viridis">viridis</a> package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">basic_pal &lt;-<span class="st"> </span>viridis<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/viridis/topics/reexports">viridis</a></span>(<span class="dt">n=</span><span class="dv">25</span>, <span class="dt">option=</span><span class="st">"magma"</span>)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/pie">pie</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(basic_pal)), <span class="dt">col=</span>basic_pal)</code></pre></div>
+<p><img src="color-palettes_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(basic_pal)
+<span class="co">#&gt;  [1] "#000004FF" "#060517FF" "#100B2EFF" "#1D1147FF" "#2D1160FF"</span>
+<span class="co">#&gt;  [6] "#3F0F72FF" "#51127CFF" "#611880FF" "#721F81FF" "#822681FF"</span>
+<span class="co">#&gt; [11] "#932B80FF" "#A5317EFF" "#B63679FF" "#C73D73FF" "#D8456CFF"</span>
+<span class="co">#&gt; [16] "#E65164FF" "#F1605DFF" "#F8735CFF" "#FB8861FF" "#FD9B6BFF"</span>
+<span class="co">#&gt; [21] "#FEAF77FF" "#FEC287FF" "#FED799FF" "#FDEAABFF" "#FCFDBFFF"</span>
+better_pal &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_color_palette.html">get_color_palette</a></span>(<span class="dt">pal_func =</span> viridis_palette, <span class="dt">color_no =</span> <span class="dv">25</span>)</code></pre></div>
+<p><img src="color-palettes_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(better_pal)
+<span class="co">#&gt;  [1] "#440154" "#470D60" "#481E6F" "#472B7A" "#443A83" "#3E4A89" "#365B8D"</span>
+<span class="co">#&gt;  [8] "#2E6D8E" "#277F8E" "#21908C" "#1FA187" "#28AE7F" "#39BA76" "#48C16E"</span>
+<span class="co">#&gt; [15] "#56C666" "#65CB5D" "#75D054" "#85D549" "#95D83F" "#A7DB34" "#B8DE29"</span>
+<span class="co">#&gt; [22] "#CAE11F" "#DBE318" "#EDE51B" "#FDE725"</span></code></pre></div>
 </div>
-<div id="more-examples" class="section level2">
+<div id="combinging-color-palettes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#more-examples" class="anchor"></a>More Examples</h2>
-<p>You can write math expressions, e.g. <span class="math inline">\(Y = X\beta + \epsilon\)</span>, footnotes<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, and tables, e.g. using <code><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">knitr::kable()</a></code>.</p>
-<table class="table">
-<thead><tr class="header">
-<th></th>
-<th align="right">mpg</th>
-<th align="right">cyl</th>
-<th align="right">disp</th>
-<th align="right">hp</th>
-<th align="right">drat</th>
-<th align="right">wt</th>
-<th align="right">qsec</th>
-<th align="right">vs</th>
-<th align="right">am</th>
-<th align="right">gear</th>
-<th align="right">carb</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>Mazda RX4</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160.0</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.620</td>
-<td align="right">16.46</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td>Mazda RX4 Wag</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160.0</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.875</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-<tr class="odd">
-<td>Datsun 710</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">108.0</td>
-<td align="right">93</td>
-<td align="right">3.85</td>
-<td align="right">2.320</td>
-<td align="right">18.61</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td>Hornet 4 Drive</td>
-<td align="right">21.4</td>
-<td align="right">6</td>
-<td align="right">258.0</td>
-<td align="right">110</td>
-<td align="right">3.08</td>
-<td align="right">3.215</td>
-<td align="right">19.44</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td>Hornet Sportabout</td>
-<td align="right">18.7</td>
-<td align="right">8</td>
-<td align="right">360.0</td>
-<td align="right">175</td>
-<td align="right">3.15</td>
-<td align="right">3.440</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td>Valiant</td>
-<td align="right">18.1</td>
-<td align="right">6</td>
-<td align="right">225.0</td>
-<td align="right">105</td>
-<td align="right">2.76</td>
-<td align="right">3.460</td>
-<td align="right">20.22</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td>Duster 360</td>
-<td align="right">14.3</td>
-<td align="right">8</td>
-<td align="right">360.0</td>
-<td align="right">245</td>
-<td align="right">3.21</td>
-<td align="right">3.570</td>
-<td align="right">15.84</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td>Merc 240D</td>
-<td align="right">24.4</td>
-<td align="right">4</td>
-<td align="right">146.7</td>
-<td align="right">62</td>
-<td align="right">3.69</td>
-<td align="right">3.190</td>
-<td align="right">20.00</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td>Merc 230</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">140.8</td>
-<td align="right">95</td>
-<td align="right">3.92</td>
-<td align="right">3.150</td>
-<td align="right">22.90</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td>Merc 280</td>
-<td align="right">19.2</td>
-<td align="right">6</td>
-<td align="right">167.6</td>
-<td align="right">123</td>
-<td align="right">3.92</td>
-<td align="right">3.440</td>
-<td align="right">18.30</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-</tbody>
-</table>
-<p>Also a quote using <code>&gt;</code>:</p>
+<a href="#combinging-color-palettes" class="anchor"></a>Combinging Color Palettes</h2>
+<p>Here is a useful functionality. Combining color palettes can help with situations where you need something more custom. This can be especially helpful if you are using more than 20 colors. The <code>combination_palette</code> function can take a dynamic number of arguments, must be named and the value must be a <code>list</code>. The list members can contain members with the following names:</p>
 <blockquote>
-<p>“He who gives up [code] safety for [code] speed deserves neither.” (<a href="https://twitter.com/hadleywickham/status/504368538874703872">via</a>)</p>
+<p>You can use any name for your arguments, but the values must be a named list. palette: This is a palette function that returns a vector of colors. args: This is another named list used for the palette function parameters. range: This is a range (1:10) used to subset the color palette vector. rev: This is a logical (TRUE/FALSE)used to reverse the color palette.</p>
 </blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This is the code for MicrobiomeR::viridis_magma_palette, but</span>
+<span class="co"># it's also a useful example for understanding how this works.</span>
+ viridis_magma_palette &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">viridis_number =</span> <span class="dv">800</span>, 
+                                   <span class="dt">viridis_range =</span> <span class="dv">300</span><span class="op">:</span>viridis_number,
+                                   <span class="dt">viridis_rev =</span> <span class="ot">TRUE</span>,
+                                   <span class="dt">magma_number =</span> <span class="dv">500</span>, 
+                                   <span class="dt">magma_range =</span> <span class="dv">0</span><span class="op">:</span>magma_number, 
+                                   <span class="dt">magma_rev =</span> <span class="ot">FALSE</span>, 
+                                   ...) {
+   <span class="co"># Get the arguments for both functions</span>
+   <span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/missing">missing</a></span>(...)){
+       v_args =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">n=</span>viridis_number, ...)
+       m_args =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">n=</span>magma_number, ...)
+   } <span class="cf">else</span> {
+       v_args =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">n=</span>viridis_number)
+       m_args =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">n=</span>magma_number)
+   }
+   <span class="co"># Get combo palette</span>
+   crp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/combination_palette.html">combination_palette</a></span>(<span class="dt">viridis =</span>
+                                 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">palette =</span> viridis<span class="op">::</span>viridis,
+                                       <span class="dt">args =</span> v_args,
+                                       <span class="dt">range =</span> viridis_range,
+                                       <span class="dt">rev =</span> viridis_rev),
+                                <span class="dt">magma =</span>
+                                  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">palette =</span> viridis<span class="op">::</span>magma,
+                                       <span class="dt">args =</span> m_args,
+                                       <span class="dt">range =</span> magma_range,
+                                       <span class="dt">rev =</span> magma_rev)
+                                )
+     <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(crp)
+ }
+combo_palette &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_color_palette.html">get_color_palette</a></span>(<span class="dt">pal_func =</span> viridis_magma_palette)</code></pre></div>
+<p><img src="color-palettes_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">combo_palette
+<span class="co">#&gt;  [1] "#FDE725" "#D9E319" "#B4DE2B" "#8FD644" "#6DCD58" "#4EC36B" "#2DB27C"</span>
+<span class="co">#&gt;  [8] "#20938C" "#010105" "#110D30" "#2D1161" "#55137D" "#7B2382" "#A3307E"</span>
+<span class="co">#&gt; [15] "#CE4070" "#F05F5D" "#FC8861" "#FEB078" "#FED698" "#FCFDBF"</span></code></pre></div>
 </div>
-<div class="footnotes">
-<hr>
-<ol>
-<li id="fn1"><p>A footnote here.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-</ol>
 </div>
   </div>
 
@@ -323,10 +223,14 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#vignette-info">Vignette Info</a></li>
-      <li><a href="#styles">Styles</a></li>
-      <li><a href="#figures">Figures</a></li>
-      <li><a href="#more-examples">More Examples</a></li>
+<li>
+<a href="#introduction">Introduction</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#getting-a-color-palette">Getting a Color Palette</a></li>
+      <li><a href="#scico">Scico</a></li>
+      <li><a href="#viridis">Viridis</a></li>
+      <li><a href="#combinging-color-palettes">Combinging Color Palettes</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>

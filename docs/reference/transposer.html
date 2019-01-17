@@ -66,7 +66,7 @@ tidyr package." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
       </span>
     </div>
 
@@ -189,8 +189,8 @@ the original data.  Default: NULL</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/tibble/topics/is_tibble'>is_tibble</a></code></p>
-<p><code><a href='https://www.rdocumentation.org/packages/dplyr/topics/select_all'>select_all</a></code>,  <code><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></code>,  <code><a href='https://www.rdocumentation.org/packages/dplyr/topics/reexports'>reexports</a></code>,  <code><a href='https://www.rdocumentation.org/packages/dplyr/topics/tidyeval'>sym</a></code>,  <code><a href='https://www.rdocumentation.org/packages/dplyr/topics/reexports'>one_of</a></code></p>
+    <div class='dont-index'><p><code><a href='https://tibble.tidyverse.org/reference/is_tibble.html'>is_tibble</a></code></p>
+<p><code><a href='https://dplyr.tidyverse.org/reference/select_all.html'>select_all</a></code>,  <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></code>,  <code><a href='https://dplyr.tidyverse.org/reference/reexports.html'>reexports</a></code>,  <code><a href='https://dplyr.tidyverse.org/reference/tidyeval.html'>sym</a></code>,  <code><a href='https://dplyr.tidyverse.org/reference/reexports.html'>one_of</a></code></p>
 <p><code><a href='https://tidyr.tidyverse.org/reference/gather.html'>gather</a></code>,  <code><a href='https://tidyr.tidyverse.org/reference/unite.html'>unite</a></code>,  <code><a href='https://tidyr.tidyverse.org/reference/spread.html'>spread</a></code>,  <code><a href='https://tidyr.tidyverse.org/reference/separate.html'>separate</a></code></p>
 <p><code><a href='https://stringr.tidyverse.org/reference/str_detect.html'>str_detect</a></code>,  <code><a href='https://stringr.tidyverse.org/reference/str_count.html'>str_count</a></code></p>
 <p>Other Data Manipulators: <code><a href='metacoder_comp_func_1.html'>metacoder_comp_func_1</a></code>,
@@ -203,7 +203,8 @@ the original data.  Default: NULL</p></td>
 <span class='co'># This example uses data that are no longer available in the MicrobiomeR package,</span>
 <span class='co'># however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.</span>
  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
- <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'>basic_silva</span>$<span class='no'>data</span>$<span class='no'>taxa_abundance</span>
+ <span class='no'>basic_silva</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_MicrobiomeR_format.html'>as_MicrobiomeR_format</a></span>(<span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/MicrobiomeR/topics/raw_silva_2'>raw_silva_2</a></span>, <span class='st'>"basic_format"</span>)
+ <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='no'>basic_silva</span>$<span class='no'>data</span>$<span class='no'>taxa_abundance</span>
  <span class='no'>trans_data</span> <span class='kw'>&lt;-</span> <span class='no'>data</span> <span class='kw'>%&gt;%</span>
    <span class='fu'>transposer</span>(<span class='kw'>ids</span> <span class='kw'>=</span> <span class='st'>"taxon_id"</span>, <span class='kw'>header_name</span> <span class='kw'>=</span> <span class='st'>"samples"</span>)
  <span class='no'>retrans_data</span> <span class='kw'>&lt;-</span> <span class='no'>trans_data</span> <span class='kw'>%&gt;%</span>

@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
       </span>
     </div>
 
@@ -189,7 +189,7 @@ get_color_palette function.</p>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='kw'>if</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()){
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
-<span class='no'>basic_pal</span> <span class='kw'>&lt;-</span> <span class='fu'>viridis</span>(<span class='kw'>viridis_palette</span><span class='kw'>=</span><span class='st'>"magma"</span>)(<span class='fl'>25</span>)
+<span class='no'>basic_pal</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>viridis</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='fl'>25</span>, <span class='kw'>option</span><span class='kw'>=</span><span class='st'>"magma"</span>)
 <span class='no'>better_pal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_color_palette.html'>get_color_palette</a></span>(<span class='kw'>pal_func</span> <span class='kw'>=</span> <span class='no'>viridis_palette</span>, <span class='kw'>color_no</span> <span class='kw'>=</span> <span class='fl'>25</span>)
  }
 <span class='co'># }</span></pre>

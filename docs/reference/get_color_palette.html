@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
       </span>
     </div>
 
@@ -196,7 +196,8 @@ a <em>the output of the output function</em> from <code><a href='https://www.rdo
 <span class='co'># This example uses data that are no longer available in the MicrobiomeR package,</span>
 <span class='co'># however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.</span>
  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
- <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'>analyzed_silva</span>$<span class='no'>data</span>$<span class='no'>stats_tax_data</span>$<span class='no'>Phylum</span>
+<span class='no'>analyzed_silva</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_MicrobiomeR_format.html'>as_MicrobiomeR_format</a></span>(<span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/MicrobiomeR/topics/raw_silva_2'>raw_silva_2</a></span>, <span class='st'>"analyzed_format"</span>)
+ <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='no'>analyzed_silva</span>$<span class='no'>data</span>$<span class='no'>stats_tax_data</span>$<span class='no'>Phylum</span>
  <span class='no'>data_len</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unique'>unique</a></span>(<span class='no'>data</span>))
  <span class='no'>custom_pal</span> <span class='kw'>&lt;-</span> <span class='fu'>get_color_palette</span>(<span class='kw'>color_no</span><span class='kw'>=</span><span class='no'>data_len</span>)
  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>custom_pal</span>)

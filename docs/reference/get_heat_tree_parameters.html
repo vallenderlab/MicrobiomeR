@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
       </span>
     </div>
 
@@ -145,7 +145,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_heat_tree_parameters</span>(<span class='no'>obj</span>, <span class='no'>title</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>get_heat_tree_parameters</span>(<span class='no'>obj</span>, <span class='no'>title</span>, <span class='no'>treatment_no</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,6 +157,10 @@
     <tr>
       <th>title</th>
       <td><p>The title used in the heat_tree plot.</p></td>
+    </tr>
+    <tr>
+      <th>treatment_no</th>
+      <td><p>The number of treatment groups in the data.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -180,6 +184,7 @@ be done explicitely on the metacoder object.</p></td>
 <p><code><a href='https://www.rdocumentation.org/packages/rlang/topics/quotation'>enquos</a></code>,  <code><a href='https://www.rdocumentation.org/packages/rlang/topics/quosure'>is_quosure</a></code>,  <code><a href='https://www.rdocumentation.org/packages/rlang/topics/eval_tidy'>eval_tidy</a></code></p>
 <p>Other Visualizations: <code><a href='alpha_diversity_plot.html'>alpha_diversity_plot</a></code>,
   <code><a href='correlation_plot.html'>correlation_plot</a></code>,
+  <code><a href='get_correlation_data.html'>get_correlation_data</a></code>,
   <code><a href='get_correlation_plots.html'>get_correlation_plots</a></code>,
   <code><a href='get_heat_tree_plots.html'>get_heat_tree_plots</a></code>,
   <code><a href='get_plot_limits.html'>get_plot_limits</a></code>,

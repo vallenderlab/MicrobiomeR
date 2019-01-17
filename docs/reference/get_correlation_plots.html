@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
       </span>
     </div>
 
@@ -145,15 +145,14 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_correlation_plots</span>(<span class='no'>obj</span>, <span class='no'>primary_ranks</span>, <span class='kw'>secondary_ranks</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>pairwise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>get_correlation_plots</span>(<span class='no'>obj</span>, <span class='no'>primary_ranks</span>, <span class='kw'>secondary_ranks</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>PARAM_DESCRIPTION</p></td>
+      <td><p>An object to be converted to a metacoder object with <code><a href='object_handler.html'>object_handler</a></code>.</p></td>
     </tr>
     <tr>
       <th>primary_ranks</th>
@@ -163,10 +162,6 @@
       <th>secondary_ranks</th>
       <td><p>The secondary rank used to color the points.  Can be an integer specifying
 the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE</p></td>
-    </tr>
-    <tr>
-      <th>pairwise</th>
-      <td><p>This does a pairwise comparison of the primary and secondary ranks.  Default: FALSE</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -186,6 +181,7 @@ the number of supertaxon ranks above the primary rank or the name of a supertaxo
 
     <div class='dont-index'><p>Other Visualizations: <code><a href='alpha_diversity_plot.html'>alpha_diversity_plot</a></code>,
   <code><a href='correlation_plot.html'>correlation_plot</a></code>,
+  <code><a href='get_correlation_data.html'>get_correlation_data</a></code>,
   <code><a href='get_heat_tree_parameters.html'>get_heat_tree_parameters</a></code>,
   <code><a href='get_heat_tree_plots.html'>get_heat_tree_plots</a></code>,
   <code><a href='get_plot_limits.html'>get_plot_limits</a></code>,
@@ -201,8 +197,9 @@ the number of supertaxon ranks above the primary rank or the name of a supertaxo
 <span class='co'># This example uses data that are no longer available in the MicrobiomeR package,</span>
 <span class='co'># however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
-<span class='no'>corr_plots</span> <span class='kw'>&lt;-</span> <span class='fu'>get_correlation_plots</span>(<span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'>analyzed_silva</span>, <span class='kw'>primary_ranks</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Phylum"</span>, <span class='st'>"Class"</span>, <span class='st'>"Order"</span>),
-                      <span class='kw'>secondary_ranks</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Phylum"</span>, <span class='st'>"Class"</span>, <span class='st'>"Order"</span>, <span class='st'>"Family"</span>, <span class='st'>"Genus"</span>), <span class='kw'>pairwise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>analyzed_silva</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_MicrobiomeR_format.html'>as_MicrobiomeR_format</a></span>(<span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/MicrobiomeR/topics/raw_silva_2'>raw_silva_2</a></span>, <span class='st'>"analyzed_format"</span>)
+<span class='no'>corr_plots</span> <span class='kw'>&lt;-</span> <span class='fu'>get_correlation_plots</span>(<span class='no'>analyzed_silva</span>, <span class='kw'>primary_ranks</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Phylum"</span>, <span class='st'>"Class"</span>, <span class='st'>"Order"</span>),
+                      <span class='kw'>secondary_ranks</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Phylum"</span>, <span class='st'>"Class"</span>, <span class='st'>"Order"</span>, <span class='st'>"Family"</span>, <span class='st'>"Genus"</span>))
 <span class='co'># Show a plot</span>
 <span class='no'>corr_plots</span>$<span class='no'>Class</span>$<span class='no'>Phylum</span>
  }

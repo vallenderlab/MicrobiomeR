@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
       </span>
     </div>
 
@@ -204,7 +204,7 @@ in the purrr package.  The purr package allows the use of anonymous functions as
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='transposer.html'>transposer</a></code>
-<code><a href='https://www.rdocumentation.org/packages/dplyr/topics/select_all'>select_all</a></code>,  <code><a href='https://www.rdocumentation.org/packages/dplyr/topics/select'>select</a></code>
+<code><a href='https://dplyr.tidyverse.org/reference/select_all.html'>select_all</a></code>,  <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></code>
 <code><a href='https://purrr.tidyverse.org/reference/modify.html'>modify</a></code></p>
 <p>Other Data Manipulators: <code><a href='metacoder_comp_func_1.html'>metacoder_comp_func_1</a></code>,
   <code><a href='transposer.html'>transposer</a></code>, <code><a href='vlookup.html'>vlookup</a></code></p></div>
@@ -216,7 +216,8 @@ in the purrr package.  The purr package allows the use of anonymous functions as
 <span class='co'># This example uses data that are no longer available in the MicrobiomeR package,</span>
 <span class='co'># however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.</span>
  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
- <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'>basic_silva</span>$<span class='no'>data</span>$<span class='no'>taxa_abundance</span>
+ <span class='no'>basic_silva</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_MicrobiomeR_format.html'>as_MicrobiomeR_format</a></span>(<span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/MicrobiomeR/topics/raw_silva_2'>raw_silva_2</a></span>, <span class='st'>"basic_format"</span>)
+ <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='no'>basic_silva</span>$<span class='no'>data</span>$<span class='no'>taxa_abundance</span>
  <span class='co'># Get proportions using the anonymous functions</span>
  <span class='no'>tax_props</span> <span class='kw'>&lt;-</span> <span class='no'>data</span> <span class='kw'>%&gt;%</span> <span class='fu'>transformer</span>(~<span class='no'>.</span>/<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>.</span>))
  <span class='co'># Get proportions using explicit functions</span>
