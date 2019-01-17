@@ -4,12 +4,14 @@
 \alias{get_heat_tree_parameters}
 \title{Get Heat Tree Parameters}
 \usage{
-get_heat_tree_parameters(obj, title, ...)
+get_heat_tree_parameters(obj, title, treatment_no, ...)
 }
 \arguments{
 \item{obj}{A metacoder object.}
 
 \item{title}{The title used in the heat_tree plot.}
+
+\item{treatment_no}{The number of treatment groups in the data.}
 
 \item{...}{Any of the heat tree parameters list below can be used to change the way the heat_tree
 output is displayed.  However, this function acts as a default list of parameters.  The memebers
@@ -34,6 +36,7 @@ This function get's the parameters used for the get_heat_tree_plots function.
 
 Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{correlation_plot}},
+  \code{\link{get_correlation_data}},
   \code{\link{get_correlation_plots}},
   \code{\link{get_heat_tree_plots}},
   \code{\link{get_plot_limits}},
