@@ -351,7 +351,11 @@ vlookup <- function(lookup_vector, df, match_var, return_var) {
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' # This example uses data that are no longer available in the MicrobiomeR package,
+#' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.
+#'  library(MicrobiomeR)
+#'  data <- MicrobiomeR::basic_silva$data$taxa_abundance
+#'  create_pub_table(data)
 #'  }
 #' }
 #' @rdname create_pub_table
