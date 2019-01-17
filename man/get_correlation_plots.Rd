@@ -4,8 +4,7 @@
 \alias{get_correlation_plots}
 \title{Get Multiple Correlation Plots}
 \usage{
-get_correlation_plots(obj, primary_ranks, secondary_ranks = TRUE,
-  pairwise = FALSE, ...)
+get_correlation_plots(obj, primary_ranks, secondary_ranks = TRUE, ...)
 }
 \arguments{
 \item{obj}{PARAM_DESCRIPTION}
@@ -14,8 +13,6 @@ get_correlation_plots(obj, primary_ranks, secondary_ranks = TRUE,
 
 \item{secondary_ranks}{The secondary rank used to color the points.  Can be an integer specifying
 the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE}
-
-\item{pairwise}{This does a pairwise comparison of the primary and secondary ranks.  Default: FALSE}
 
 \item{...}{An optional list of parameters to use in the correlation_plot function.}
 }
@@ -44,6 +41,7 @@ corr_plots$Class$Phylum
 \seealso{
 Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{correlation_plot}},
+  \code{\link{get_correlation_data}},
   \code{\link{get_heat_tree_parameters}},
   \code{\link{get_heat_tree_plots}},
   \code{\link{get_plot_limits}},
