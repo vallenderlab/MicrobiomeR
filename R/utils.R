@@ -317,7 +317,7 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
 }
 
 #' @title Mock Excel "VlookUp" Function
-#' @description A function that mimicks excels vlookup, but for R's dataframe.
+#' @description A function that mimics excels vlookup, but for R's dataframe.
 #' @param lookup_vector A vector of items to look up.
 #' @param df The dataframe to search.
 #' @param match_var The column name to search in the dataframe.
