@@ -4,7 +4,7 @@ library(testthat)
 context("Testing of alpha diversity measures and plot")
 
 # Use existing data for test.
-data <- as_MicrobiomeR_format(raw_silva, format = "analyzed_format")
+data <- as_MicrobiomeR_format(raw_silva_2, format = "analyzed_format")
 
 
 test_that("basic alpha diversity plot works", {
