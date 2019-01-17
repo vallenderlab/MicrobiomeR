@@ -15,7 +15,7 @@
 #' \dontrun{
 #' if(interactive()){
 #'  library(MicrobiomeR)
-#'  phy_obj <- MicrobiomeR::phyloseq_silva
+#'  phy_obj <- MicrobiomeR::phyloseq_silva_2
 #'  mc_obj <- object_handler(phy_obj)
 #'  }
 #' }
@@ -47,6 +47,38 @@ object_handler <- function(obj) {
     }
   }
   return(metacoder_object)
+}
+
+#' @title Get Treatment Matrix
+#' @description A function that returns a matrix with used for comparing treatment data.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @return A matrix with each column representing a comparison to be made.
+#' @pretty_print TRUE
+#' @details Use this when you want to do pairwise comparisons.
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @export
+#' @family Formatting
+#' @rdname get_treatment_matrix
+#' @importFrom utils combn
+get_treatment_matrix <- function(obj) {
+  # Get treatment data
+  treat_1 <- as.character(obj$data$stats_tax_data$treatment_1)
+  treat_2 <- as.character(obj$data$stats_tax_data$treatment_2)
+  treatments <- unique(c(treat_1, treat_2))
+  combinations <- t(utils::combn(seq_along(treatments), 2))
+  combinations <- sapply(seq_len(nrow(combinations)),
+                         function(index) {
+                           set.seed(1)
+                           treat_a <- treatments[combinations[index, 1]]
+                           treat_b <- treatments[combinations[index, 2]]
+                           c(treat_a, treat_b)
+                         })
+  return(combinations)
 }
 
 #' @title Create an Output Directory
@@ -180,7 +212,8 @@ get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end
 #' # This example uses data that are no longer available in the MicrobiomeR package,
 #' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.
 #'  library(MicrobiomeR)
-#'  data <- MicrobiomeR::basic_silva$data$taxa_abundance
+#'  basic_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "basic_format")
+#'  data <- basic_silva$data$taxa_abundance
 #'  trans_data <- data %>%
 #'    transposer(ids = "taxon_id", header_name = "samples")
 #'  retrans_data <- trans_data %>%
@@ -276,7 +309,8 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
 #' # This example uses data that are no longer available in the MicrobiomeR package,
 #' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.
 #'  library(MicrobiomeR)
-#'  data <- MicrobiomeR::basic_silva$data$taxa_abundance
+#'  basic_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "basic_format")
+#'  data <- basic_silva$data$taxa_abundance
 #'  # Get proportions using the anonymous functions
 #'  tax_props <- data %>% transformer(~./sum(.))
 #'  # Get proportions using explicit functions
@@ -431,7 +465,9 @@ pkg.private$input_files = list(
   tree_files = list(
     silva = system.file("extdata", "silva.tre", package = "MicrobiomeR"),
     greengenes = system.file("extdata", "greengenes.tre", package = "MicrobiomeR")),
-  metadata = system.file("extdata", "nephele_metadata.txt", package = "MicrobiomeR")
+  metadata = list(
+    two_groups = system.file("extdata", "nephele_metadata2.txt", package = "MicrobiomeR"),
+    three_groups = system.file("extdata", "nephele_metadata3.txt", package = "MicrobiomeR"))
 )
 
 

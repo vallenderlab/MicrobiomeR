@@ -29,7 +29,7 @@ get_color_palette function.
 \dontrun{
 if(interactive()){
 library(MicrobiomeR)
-basic_pal <- viridis(viridis_palette="magma")(25)
+basic_pal <- viridis::viridis(n=25, option="magma")
 better_pal <- get_color_palette(pal_func = viridis_palette, color_no = 25)
  }
 }

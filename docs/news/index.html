@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
       </span>
     </div>
 
@@ -135,43 +135,44 @@
       <small>Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="microbiomer-021" class="section level1">
+    <div id="microbiomer-0-2-2" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-021" class="anchor"></a>MicrobiomeR 0.2.1</h1>
-<div id="features-added" class="section level2">
+<a href="#microbiomer-0-2-2" class="anchor"></a>MicrobiomeR 0.2.2</h1>
+<div id="functional-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#features-added" class="anchor"></a>Features Added</h2>
+<a href="#functional-changes" class="anchor"></a>Functional Changes</h2>
 <ul>
-<li>Added permanova function for generating permanova stats.</li>
-<li>Added top_coefficients_barplot for generating a plot of the top coefficients output from the permanova function.</li>
+<li>Added support for multiple treatments for some plots</li>
+<li>
+<code>get_heat_tree_plots</code> now produces a <code><a href="https://www.rdocumentation.org/packages/metacoder/topics/heat_tree_matrix">metacoder::heat_tree_matrix</a></code>.</li>
+<li>
+<code>correlation_plot</code> now produces multiple plots for data with more that 2 treatments.</li>
+<li>Added the <code>get_treatment_matrix</code> function</li>
+<li>Added the <code>get_correlation_data</code> function</li>
+<li>Updated <code>analysis</code> vignette to demonstrate more than 2 treatment groups.</li>
+<li>Updated internal data files.</li>
+<li>Added new metadata file with 3 treatment groups (<code>nephele_metadata3.txt</code>).</li>
+<li>Formatted Treatment Group metadata.</li>
+<li>Updated public datasets.</li>
+<li>Removed Greengenes datasets.</li>
+<li>Added Silva data with 3 treatment groups.</li>
 </ul>
 </div>
-<div id="tests-added" class="section level2">
-<h2 class="hasAnchor">
-<a href="#tests-added" class="anchor"></a>Tests Added</h2>
-<ul>
-<li>Added tests for permanova.R.</li>
-</ul>
 </div>
-</div>
-    <div id="microbiomer-020" class="section level1">
+    <div id="microbiomer-0-2-0" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-020" class="anchor"></a>MicrobiomeR 0.2.0</h1>
+<a href="#microbiomer-0-2-0" class="anchor"></a>MicrobiomeR 0.2.0</h1>
 <div id="documentation-updates" class="section level2">
 <h2 class="hasAnchor">
 <a href="#documentation-updates" class="anchor"></a>Documentation Updates</h2>
 <ul>
-<li>Added vignettes to package and pkgdown config.
-<ul>
+<li>Added vignettes to package and pkgdown config.</li>
 <li>About</li>
 <li>Introduction</li>
 <li>Data Wrangling</li>
 <li>Filtering</li>
 <li>Analysis</li>
-</ul>
-</li>
-<li>Added reference sections to pkgdown config corresponding to <a href='https://github.com/family'>@family</a> tag.
-<ul>
+<li>Added reference sections to pkgdown config corresponding to <a href='https://github.com/family'>@family</a> tag.</li>
 <li>Import</li>
 <li>Formatting</li>
 <li>Validation</li>
@@ -179,12 +180,10 @@
 <li>Visualization</li>
 <li>Color Palettes</li>
 </ul>
-</li>
-</ul>
 </div>
-<div id="functional-changes" class="section level2">
+<div id="functional-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functional-changes" class="anchor"></a>Functional Changes</h2>
+<a href="#functional-changes-1" class="anchor"></a>Functional Changes</h2>
 <ul>
 <li>Renamed <code>sample_filter</code> to <code>sample_id_filter</code>.</li>
 <li>Renamed <code>get_phyloseq_obj</code> to <code>create_phyloseq</code>.</li>
@@ -195,33 +194,33 @@
 </ul>
 </div>
 </div>
-    <div id="microbiomer-013" class="section level1">
+    <div id="microbiomer-0-1-3" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-013" class="anchor"></a>MicrobiomeR 0.1.3</h1>
+<a href="#microbiomer-0-1-3" class="anchor"></a>MicrobiomeR 0.1.3</h1>
 <ul>
 <li>Added custom css for pkgdown.</li>
 <li>Added more sections including authors and vignettes to _pkgdown.yml.</li>
 <li>Fixed <code>@importFrom</code> sections for crayon.</li>
 </ul>
 </div>
-    <div id="microbiomer-012" class="section level1">
+    <div id="microbiomer-0-1-2" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-012" class="anchor"></a>MicrobiomeR 0.1.2</h1>
+<a href="#microbiomer-0-1-2" class="anchor"></a>MicrobiomeR 0.1.2</h1>
 <ul>
 <li>Added <code>ordination.R</code> for ordination plots.</li>
 <li>Added tests for ordination plots.</li>
 </ul>
 </div>
-    <div id="microbiomer-011" class="section level1">
+    <div id="microbiomer-0-1-1" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-011" class="anchor"></a>MicrobiomeR 0.1.1</h1>
+<a href="#microbiomer-0-1-1" class="anchor"></a>MicrobiomeR 0.1.1</h1>
 <ul>
 <li>Added loggging and better warning messages.</li>
 </ul>
 </div>
-    <div id="microbiomer-010" class="section level1">
+    <div id="microbiomer-0-1-0" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-010" class="anchor"></a>MicrobiomeR 0.1.0</h1>
+<a href="#microbiomer-0-1-0" class="anchor"></a>MicrobiomeR 0.1.0</h1>
 <ul>
 <li>Changed to a semantic versioning scheme.</li>
 <li>Added <code>barplot.R</code> file of stacked barplot functions.</li>
@@ -230,16 +229,16 @@
 <li>Added simple tests for <code>stacked_barplot</code> and <code>alpha_diversity_plot</code>.</li>
 </ul>
 </div>
-    <div id="microbiomer-0092" class="section level1">
+    <div id="microbiomer-0-0-9-2" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-0092" class="anchor"></a>MicrobiomeR 0.0.9.2</h1>
+<a href="#microbiomer-0-0-9-2" class="anchor"></a>MicrobiomeR 0.0.9.2</h1>
 <ul>
 <li>Fixes to heat tree plots</li>
 </ul>
 </div>
-    <div id="microbiomer-0091" class="section level1">
+    <div id="microbiomer-0-0-9-1" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-0091" class="anchor"></a>MicrobiomeR 0.0.9.1</h1>
+<a href="#microbiomer-0-0-9-1" class="anchor"></a>MicrobiomeR 0.0.9.1</h1>
 <ul>
 <li>Added <code>barplot.R</code> file of stacked barplot functions.</li>
 </ul>
@@ -250,14 +249,14 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#microbiomer-021">0.2.1</a></li>
-        <li><a href="#microbiomer-020">0.2.0</a></li>
-        <li><a href="#microbiomer-013">0.1.3</a></li>
-        <li><a href="#microbiomer-012">0.1.2</a></li>
-        <li><a href="#microbiomer-011">0.1.1</a></li>
-        <li><a href="#microbiomer-010">0.1.0</a></li>
-        <li><a href="#microbiomer-0092">0.0.9.2</a></li>
-        <li><a href="#microbiomer-0091">0.0.9.1</a></li>
+        <li><a href="#microbiomer-0-2-2">0.2.2</a></li>
+        <li><a href="#microbiomer-0-2-0">0.2.0</a></li>
+        <li><a href="#microbiomer-0-1-3">0.1.3</a></li>
+        <li><a href="#microbiomer-0-1-2">0.1.2</a></li>
+        <li><a href="#microbiomer-0-1-1">0.1.1</a></li>
+        <li><a href="#microbiomer-0-1-0">0.1.0</a></li>
+        <li><a href="#microbiomer-0-0-9-2">0.0.9.2</a></li>
+        <li><a href="#microbiomer-0-0-9-1">0.0.9.1</a></li>
       </ul>
     </div>
   </div>
@@ -270,7 +269,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>
