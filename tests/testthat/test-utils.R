@@ -40,6 +40,10 @@ test_that("create_pub_table works", {
   expect_true(!is.null(create_pub_table(basic_silva$data$taxa_abundance[1:5, 1:5])))
 })
 
+test_that("vlookup works", {
+  expect_true(!is.null(vlookup(lookup_vector = c("ab", "ac"), df = basic_silva$data$taxa_abundance, match_var = "taxon_id", return_var = "Sample_1")))
+})
+
 # Remove direcotry created by test
 if (dir.exists("output/test")) {
   unlink("output", recursive = TRUE)
