@@ -240,9 +240,9 @@ heat_trees$Order
 # Generate Correlation plots
 corr_plots <- get_correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
 
-corr_plots$Class$Phylum$`experimental2-vs-experimental`
-corr_plots$Class$Phylum$`experimental2-vs-Control`
-corr_plots$Class$Phylum$`experimental-vs-Control`
+corr_plots$Class$Phylum$`Exp_Var2-vs-Exp_Var1`
+corr_plots$Class$Phylum$`Exp_Var2-vs-Control`
+corr_plots$Class$Phylum$`Exp_Var1-vs-Control`
 ```
 
 
