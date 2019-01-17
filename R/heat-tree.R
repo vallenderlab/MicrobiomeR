@@ -13,7 +13,8 @@
 #' # This example uses data that are no longer available in the MicrobiomeR package,
 #' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
 #' library(MicrobiomeR)
-#' h_trees <- get_heat_tree_plots(MicrobiomeR::analyzed_silva, rank_list = c("Phylum", "Class"))
+#' analyzed_silva <- as_Microbiome_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+#' h_trees <- get_heat_tree_plots(analyzed_silva, rank_list = c("Phylum", "Class"))
 #' h_trees$Class
 #'  }
 #' }
@@ -285,7 +286,8 @@ get_heat_tree_parameters <- function(obj, title, treatment_no, ...) {
 #' # This example uses data that are no longer available in the MicrobiomeR package,
 #' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
 #' library(MicrobiomeR)
-#' h_trees <- get_heat_tree_plots(MicrobiomeR::analyzed_silva, rank_list = c("Phylum", "Class"))
+#' analyzed_silva <- as_Microbiome_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+#' h_trees <- get_heat_tree_plots(analyzed_silva, rank_list = c("Phylum", "Class"))
 #' # Save to \emph{./output/heat_trees} folder.
 #' save_heat_tree_plots(h_trees)
 #'  }

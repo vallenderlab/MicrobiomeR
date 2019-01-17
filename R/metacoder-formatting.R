@@ -9,7 +9,7 @@
 #' \dontrun{
 #' if(interactive()){
 #' library(MicrobiomeR)
-#' fmt <- which fmt(MicrobiomeR::raw_silva)
+#' fmt <- which fmt(MicrobiomeR::raw_silva_2)
 #' print(fmt)
 #'  }
 #' }
@@ -67,10 +67,10 @@ which_format <- function(obj) {
 #' \dontrun{
 #' if(interactive()){
 #' library(MicrobiomeR)
-#' if(is_raw_format(MicrobiomeR::raw_silva)){
+#' if(is_raw_format(MicrobiomeR::raw_silva_2)){
 #'     print("It's raw!")
 #' } else {
-#'     fmt <- which_format(MicrobiomeR::raw_silva)
+#'     fmt <- which_format(MicrobiomeR::raw_silva_2)
 #'     print("It's not analyzed!")
 #'     print(sprintf("It's %s!", fmt))
 #' }
@@ -98,10 +98,10 @@ is_raw_format <- function(obj) {
 #' \dontrun{
 #' if(interactive()){
 #' library(MicrobiomeR)
-#' if(is_basic_format(MicrobiomeR::raw_silva)){
+#' if(is_basic_format(MicrobiomeR::raw_silva_2)){
 #'     print("It's basic!")
 #' } else {
-#'     fmt <- which_format(MicrobiomeR::raw_silva)
+#'     fmt <- which_format(MicrobiomeR::raw_silva_2)
 #'     print("It's not analyzed!")
 #'     print(sprintf("It's %s!", fmt))
 #' }
@@ -129,10 +129,10 @@ is_basic_format <- function(obj) {
 #' \dontrun{
 #' if(interactive()){
 #' library(MicrobiomeR)
-#' if(is_analyzed_format(MicrobiomeR::raw_silva)){
+#' if(is_analyzed_format(MicrobiomeR::raw_silva_2)){
 #'     print("It's analyzed!")
 #' } else {
-#'     fmt <- which_format(MicrobiomeR::raw_silva)
+#'     fmt <- which_format(MicrobiomeR::raw_silva_2)
 #'     print("It's not analyzed!")
 #'     print(sprintf("It's %s!", fmt))
 #' }
@@ -161,10 +161,10 @@ is_analyzed_format <- function(obj) {
 #' \dontrun{
 #' if(interactive()){
 #' library(MicrobiomeR)
-#' if(is_analyzed_format(MicrobiomeR::raw_silva)){
+#' if(is_analyzed_format(MicrobiomeR::raw_silva_2)){
 #'     print("It's phyloseq format!")
 #' } else {
-#'     fmt <- which_format(MicrobiomeR::raw_silva)
+#'     fmt <- which_format(MicrobiomeR::raw_silva_2)
 #'     print("It's not phyloseq fomrat!")
 #'     print(sprintf("It's %s!", fmt))
 #' }

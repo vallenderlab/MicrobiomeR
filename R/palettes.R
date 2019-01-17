@@ -15,7 +15,8 @@
 #' # This example uses data that are no longer available in the MicrobiomeR package,
 #' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
 #'  library(MicrobiomeR)
-#'  data <- MicrobiomeR::analyzed_silva$data$stats_tax_data$Phylum
+#' analyzed_silva <- as_Microbiome_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+#'  data <- analyzed_silva$data$stats_tax_data$Phylum
 #'  data_len <- length(unique(data))
 #'  custom_pal <- get_color_palette(color_no=data_len)
 #'  print(custom_pal)
