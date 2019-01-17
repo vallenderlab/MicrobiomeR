@@ -15,7 +15,7 @@
 #' # This example uses data that are no longer available in the MicrobiomeR package,
 #' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
 #' library(MicrobiomeR)
-#' analyzed_silva <- as_Microbiome_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+#' analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
 #' correlation_plot(analyzed_silva, primary_rank = "Class", secondary_rank = "Phylum")
 #'  }
 #' }
@@ -123,7 +123,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 #' # This example uses data that are no longer available in the MicrobiomeR package,
 #' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
 #' library(MicrobiomeR)
-#' analyzed_silva <- as_Microbiome_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+#' analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
 #' corr_plots <- get_correlation_plots(analyzed_silva, primary_ranks = c("Phylum", "Class", "Order"),
 #'                       secondary_ranks = c("Phylum", "Class", "Order", "Family", "Genus"))
 #' # Show a plot
@@ -276,7 +276,7 @@ get_correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_va
 #' # This example uses data that are no longer available in the MicrobiomeR package,
 #' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_silva}}.
 #' library(MicrobiomeR)
-#' analyzed_silva <- as_Microbiome_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+#' analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
 #' corr_plot <- correlation_plot(analyzed_silva, primary_rank = "Class", secondary_rank = "Phylum")
 #' # Save to \emph{./output/corr_plot} folder.
 #' save_correlation_plots(corr_plot)

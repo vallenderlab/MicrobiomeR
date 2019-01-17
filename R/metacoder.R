@@ -268,7 +268,7 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #' # This example uses data that are no longer available in the MicrobiomeR package,
 #' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.
 #' library(MicrobiomeR)
-#' basic_silva <- as_Microbiome_format(MicrobiomeR::raw_silva_2, "basic_format")
+#' basic_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "basic_format")
 #' phylum_obj <- agglomerate_metacoder(obj = basic_silva, rank = "Phylum")
 #' class_obj <- agglomerate_metacoder(obj = basic_silva, rank = "Class")
 #' order_obj <- agglomerate_metacoder(obj = basic_silva, rank = "Order")
