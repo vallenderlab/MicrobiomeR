@@ -172,7 +172,7 @@ get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ..
 
 #' @title Get Correlation Plot Data
 #' @description Get the correlation plot data comparing all of the treatment groups.
-#' @param obj PARAM_DESCRIPTION
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
 #' @param primary_rank PARAM_DESCRIPTION
 #' @param secondary_rank PARAM_DESCRIPTION, Default: TRUE
 #' @param wp_value PARAM_DESCRIPTION, Default: 0.05
