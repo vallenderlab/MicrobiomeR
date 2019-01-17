@@ -146,7 +146,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>alpha_diversity_plot</span>(<span class='no'>obj</span>, <span class='kw'>measure</span> <span class='kw'>=</span> <span class='st'>"shannon"</span>,
-  <span class='kw'>select_otu_table</span> <span class='kw'>=</span> <span class='st'>"otu_proportions"</span>, <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>select_otu_table</span> <span class='kw'>=</span> <span class='st'>"otu_proportions"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,15 +157,11 @@
     </tr>
     <tr>
       <th>measure</th>
-      <td><p>Select an alpha diversity measure such as Shannon, Gini Simpson, and Inverse Simpson, Default: 'shannon'</p></td>
+      <td><p>Select an alpha diversity measure such as shannon, gini simpson, and inverse simpson, Default: 'shannon'</p></td>
     </tr>
     <tr>
       <th>select_otu_table</th>
       <td><p>Choose an otu table to analyze, Default: 'otu_proportions'</p></td>
-    </tr>
-    <tr>
-      <th>save</th>
-      <td><p>Save the plot, Default: FALSE</p></td>
     </tr>
     </table>
     
@@ -175,20 +171,25 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Alpha diversity helps to determine the species richness (the number of different species in a sample) or evenness (similar abundance level).</p>
+    <p>Alpha diversity helps to determine the species richness (the number of different species in a sample) or evenness (similar abundance level).
+We prefer to use <code>shannon</code> as it is better for data generated using the QUIIME pipeline.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Visualizations: <code><a href='correlation_plot.html'>correlation_plot</a></code>,
+    <div class='dont-index'><p><code><a href='get_alpha_diversity_measures.html'>get_alpha_diversity_measures</a></code>, <code><a href='https://www.rdocumentation.org/packages/vegan/topics/diversity'>diversity</a></code>, <code><a href='https://www.rdocumentation.org/packages/ggpubr/topics/ggviolin'>ggviolin</a></code></p>
+<p>Other Visualizations: <code><a href='correlation_plot.html'>correlation_plot</a></code>,
   <code><a href='get_correlation_data.html'>get_correlation_data</a></code>,
   <code><a href='get_correlation_plots.html'>get_correlation_plots</a></code>,
   <code><a href='get_heat_tree_parameters.html'>get_heat_tree_parameters</a></code>,
   <code><a href='get_heat_tree_plots.html'>get_heat_tree_plots</a></code>,
   <code><a href='get_plot_limits.html'>get_plot_limits</a></code>,
+  <code><a href='stacked_barplot.html'>melt_metacoder</a></code>,
+  <code><a href='ordination_plot.html'>ordination_plot</a></code>,
   <code><a href='save_barplot.html'>save_barplot</a></code>,
   <code><a href='save_correlation_plots.html'>save_correlation_plots</a></code>,
   <code><a href='save_heat_tree_plots.html'>save_heat_tree_plots</a></code>,
-  <code><a href='stacked_barplot.html'>stacked_barplot</a></code></p></div>
+  <code><a href='save_ordination_plots.html'>save_ordination_plots</a></code>,
+  <code><a href='top_coefficients_barplot.html'>top_coefficients_barplot</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

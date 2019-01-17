@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Stacked Barplot — stacked_barplot • MicrobiomeR</title>
+<title>Melt Metacoder Object — melt_metacoder • MicrobiomeR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,11 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Stacked Barplot — stacked_barplot" />
+<meta property="og:title" content="Melt Metacoder Object — melt_metacoder" />
 
-<meta property="og:description" content="Create a stacked barplot to show relative abundance of taxa." />
+<meta property="og:description" content="Melt the metacoder or phyloseq tables into a dataframe.
+Convert the dataframe abundance values to percent 100.
+Create a stacked barplot to show relative abundance of taxa." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -134,18 +136,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Stacked Barplot</h1>
+    <h1>Melt Metacoder Object</h1>
     <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/barplot.R'><code>R/barplot.R</code></a></small>
     <div class="hidden name"><code>stacked_barplot.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Create a stacked barplot to show relative abundance of taxa.</p>
+    <p>Melt the metacoder or phyloseq tables into a dataframe.</p>
+<p>Convert the dataframe abundance values to percent 100.</p>
+<p>Create a stacked barplot to show relative abundance of taxa.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>stacked_barplot</span>(<span class='no'>obj</span>, <span class='kw'>tax_level</span> <span class='kw'>=</span> <span class='st'>"Phylum"</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"Phylum"</span>,
+    <pre class="usage"><span class='fu'>melt_metacoder</span>(<span class='no'>obj</span>)
+
+<span class='fu'>convert_proportions</span>(<span class='no'>melted_df</span>, <span class='no'>tax_level</span>)
+
+<span class='fu'>stacked_barplot</span>(<span class='no'>obj</span>, <span class='kw'>tax_level</span> <span class='kw'>=</span> <span class='st'>"Phylum"</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>"Phylum"</span>,
   <span class='kw'>xlabel</span> <span class='kw'>=</span> <span class='st'>"Samples"</span>, <span class='kw'>faceted</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>palette_values</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -154,6 +162,10 @@
     <tr>
       <th>obj</th>
       <td><p>An object to be converted to a metacoder object with <code><a href='object_handler.html'>object_handler</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>melted_df</th>
+      <td><p>A "melted" dataframe from the metacoder object's data.</p></td>
     </tr>
     <tr>
       <th>tax_level</th>
@@ -183,20 +195,36 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a stacked barplot.</p>
+    <p>Returns a melted dataframe.</p>
+<p>Returns a transformed dataframe.</p>
+<p>Returns a stacked barplot.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Visualizations: <code><a href='alpha_diversity_plot.html'>alpha_diversity_plot</a></code>,
+    <div class='dont-index'><p>Other Formatting: <code><a href='MicrobiomeR_Formats.html'>MicrobiomeR_Formats</a></code>,
+  <code><a href='as_MicrobiomeR_format.html'>as_MicrobiomeR_format</a></code>,
+  <code><a href='as_analyzed_format.html'>as_analyzed_format</a></code>,
+  <code><a href='as_basic_format.html'>as_basic_format</a></code>,
+  <code><a href='as_custom_format.html'>as_custom_format</a></code>,
+  <code><a href='as_phyloseq_format.html'>as_phyloseq_format</a></code>,
+  <code><a href='as_raw_format.html'>as_raw_format</a></code>,
+  <code><a href='get_treatment_matrix.html'>get_treatment_matrix</a></code></p>
+<p>Other Data Manipulators: <code><a href='metacoder_comp_func_1.html'>metacoder_comp_func_1</a></code>,
+  <code><a href='transformer.html'>transformer</a></code>, <code><a href='transposer.html'>transposer</a></code>,
+  <code><a href='vlookup.html'>vlookup</a></code></p>
+<p>Other Visualizations: <code><a href='alpha_diversity_plot.html'>alpha_diversity_plot</a></code>,
   <code><a href='correlation_plot.html'>correlation_plot</a></code>,
   <code><a href='get_correlation_data.html'>get_correlation_data</a></code>,
   <code><a href='get_correlation_plots.html'>get_correlation_plots</a></code>,
   <code><a href='get_heat_tree_parameters.html'>get_heat_tree_parameters</a></code>,
   <code><a href='get_heat_tree_plots.html'>get_heat_tree_plots</a></code>,
   <code><a href='get_plot_limits.html'>get_plot_limits</a></code>,
+  <code><a href='ordination_plot.html'>ordination_plot</a></code>,
   <code><a href='save_barplot.html'>save_barplot</a></code>,
   <code><a href='save_correlation_plots.html'>save_correlation_plots</a></code>,
-  <code><a href='save_heat_tree_plots.html'>save_heat_tree_plots</a></code></p></div>
+  <code><a href='save_heat_tree_plots.html'>save_heat_tree_plots</a></code>,
+  <code><a href='save_ordination_plots.html'>save_ordination_plots</a></code>,
+  <code><a href='top_coefficients_barplot.html'>top_coefficients_barplot</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
