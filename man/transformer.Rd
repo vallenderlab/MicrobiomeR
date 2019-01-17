@@ -48,7 +48,8 @@ if(interactive()){
 # This example uses data that are no longer available in the MicrobiomeR package,
 # however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_basic_format}}.
  library(MicrobiomeR)
- data <- MicrobiomeR::basic_silva$data$taxa_abundance
+ basic_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "basic_format")
+ data <- basic_silva$data$taxa_abundance
  # Get proportions using the anonymous functions
  tax_props <- data \%>\% transformer(~./sum(.))
  # Get proportions using explicit functions

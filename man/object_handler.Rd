@@ -29,7 +29,7 @@ for the obj parameter in those functions.
 \dontrun{
 if(interactive()){
  library(MicrobiomeR)
- phy_obj <- MicrobiomeR::phyloseq_silva
+ phy_obj <- MicrobiomeR::phyloseq_silva_2
  mc_obj <- object_handler(phy_obj)
  }
 }

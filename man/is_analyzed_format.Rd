@@ -22,10 +22,10 @@ The "analyzed_format" is Level 3. in the \link{MicrobiomeR_Formats} hierarchy.
 \dontrun{
 if(interactive()){
 library(MicrobiomeR)
-if(is_analyzed_format(MicrobiomeR::raw_silva)){
+if(is_analyzed_format(MicrobiomeR::raw_silva_2)){
     print("It's analyzed!")
 } else {
-    fmt <- which_format(MicrobiomeR::raw_silva)
+    fmt <- which_format(MicrobiomeR::raw_silva_2)
     print("It's not analyzed!")
     print(sprintf("It's \%s!", fmt))
 }

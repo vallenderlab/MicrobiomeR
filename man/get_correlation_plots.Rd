@@ -7,7 +7,7 @@
 get_correlation_plots(obj, primary_ranks, secondary_ranks = TRUE, ...)
 }
 \arguments{
-\item{obj}{PARAM_DESCRIPTION}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
 
 \item{primary_ranks}{A vector of primary ranks used to label the points.}
 
@@ -31,8 +31,9 @@ if(interactive()){
 # This example uses data that are no longer available in the MicrobiomeR package,
 # however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_analyzed_format}}.
 library(MicrobiomeR)
-corr_plots <- get_correlation_plots(MicrobiomeR::analyzed_silva, primary_ranks = c("Phylum", "Class", "Order"),
-                      secondary_ranks = c("Phylum", "Class", "Order", "Family", "Genus"), pairwise = TRUE)
+analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+corr_plots <- get_correlation_plots(analyzed_silva, primary_ranks = c("Phylum", "Class", "Order"),
+                      secondary_ranks = c("Phylum", "Class", "Order", "Family", "Genus"))
 # Show a plot
 corr_plots$Class$Phylum
  }

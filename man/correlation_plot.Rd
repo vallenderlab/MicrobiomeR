@@ -34,7 +34,8 @@ if(interactive()){
 # This example uses data that are no longer available in the MicrobiomeR package,
 # however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_analyzed_format}}.
 library(MicrobiomeR)
-correlation_plot(MicrobiomeR::analyzed_silva, primary_rank = "Class", secondary_rank = "Phylum")
+analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+correlation_plot(analyzed_silva, primary_rank = "Class", secondary_rank = "Phylum")
  }
 }
 }
