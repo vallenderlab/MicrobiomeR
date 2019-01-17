@@ -161,7 +161,12 @@ corr_plots$Order
 
 ```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=8}
 # Heat Trees
+input_files <- pkg.data$input_files
 metadata_file <- input_files$metadata$three_groups
+biom_file <- input_files$biom_files$silva # Path to silva biom file
+tree_file <- input_files$tree_files$silva # Path to silva tree file
+parse_func <- parse_taxonomy_silva_128 # A custom phyloseq parsing function for silva annotations
+
 # Get the phyloseq object
 phy_obj <- create_phyloseq(biom_file = biom_file, 
                                     tree_file = tree_file, 
@@ -231,6 +236,13 @@ heat_trees <- heat_tree_plots$heat_trees
 heat_trees$Phylum
 heat_trees$Class
 heat_trees$Order
+
+# Generate Correlation plots
+corr_plots <- get_correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
+
+corr_plots$Class$Phylum$`experimental2-vs-experimental`
+corr_plots$Class$Phylum$`experimental2-vs-Control`
+corr_plots$Class$Phylum$`experimental-vs-Control`
 ```
 
 
