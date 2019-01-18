@@ -33,10 +33,11 @@
 #' # Get the datafiles from the package
 #' biom_file <- system.file("extdata", "silva_OTU.biom", package = "MicrobiomeR")
 #' tree_file <- system.file("extdata", "silva.tre", package = "MicrobiomeR")
-#' md_file <- system.file("extdata", "nephele_metadata.txt", package = "MicrobiomeR")
+#' md_file <- system.file("extdata", "nephele_metadata2.txt", package = "MicrobiomeR")
+#' parse_func <- parse_parse_taxonomy_silva_128
 #' }
 #' # Create a phyloseq object from the data files.
-#' phy_obj <- create_phyloseq(biom_file = biome_file, tree_file = tree_file, metadata_file = md_file)
+#' phy_obj <- create_phyloseq(biom_file = biom_file, tree_file = tree_file, metadata_file = md_file, parse_func = parse_func)
 #' }
 #' @export
 #' @family Data Importers
@@ -67,7 +68,7 @@ create_phyloseq <- function(biom_file = NULL, tree_file = NULL, metadata_file = 
     # This step gives other functions a standard treatment group variable to work with
     if (!is.null(treatment_group)){
       if (is.numeric(treatment_group) || is.character(treatment_group)){
-        phyloseq::sample_data(phyloseq_object)[["X.TreatmentGroup"]] <- phyloseq::sample_data(phyloseq_object)[[treatment_group]]
+        phyloseq::sample_data(phyloseq_object)[["TreatmentGroup"]] <- phyloseq::sample_data(phyloseq_object)[[treatment_group]]
       } else {
         warning("The treatment_group parameter must be numeric or a character string.")
         warning("The data might not be appropriate for other MicrobiomeR functions.  Please try again.")
@@ -127,7 +128,7 @@ root_phyloseq_tree <- function(phyloseq_object, tree_path, save_rooted_tree, rec
     } else if (file_isdir == FALSE) { # Is existing file
       tf <- basename(tree_path)
     } else if (is.na(file_isdir)) { # Does not exist
-      if (tools::file_ext() == "") { # Is it a directory string?
+      if (tools::file_ext(tree_path) == "") { # Is it a directory string?
         if (!dir.create(tree_path, recursive = recursive) == TRUE) {
           stop("Unable to create directory.  Please check the path to your tree file.")
         }
