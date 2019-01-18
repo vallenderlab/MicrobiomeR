@@ -351,7 +351,7 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
 }
 
 #' @title Mock Excel "VlookUp" Function
-#' @description A function that mimicks excels vlookup, but for R's dataframe.
+#' @description A function that mimics excels vlookup, but for R's dataframe.
 #' @param lookup_vector A vector of items to look up.
 #' @param df The dataframe to search.
 #' @param match_var The column name to search in the dataframe.
@@ -385,7 +385,11 @@ vlookup <- function(lookup_vector, df, match_var, return_var) {
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' # This example uses data that are no longer available in the MicrobiomeR package,
+#' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.
+#'  library(MicrobiomeR)
+#'  data <- MicrobiomeR::basic_silva$data$taxa_abundance
+#'  create_pub_table(data)
 #'  }
 #' }
 #' @rdname create_pub_table
