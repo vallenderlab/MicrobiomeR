@@ -57,10 +57,11 @@ library(MicrobiomeR)
 # Get the datafiles from the package
 biom_file <- system.file("extdata", "silva_OTU.biom", package = "MicrobiomeR")
 tree_file <- system.file("extdata", "silva.tre", package = "MicrobiomeR")
-md_file <- system.file("extdata", "nephele_metadata.txt", package = "MicrobiomeR")
+md_file <- system.file("extdata", "nephele_metadata2.txt", package = "MicrobiomeR")
+parse_func <- parse_parse_taxonomy_silva_128
 }
 # Create a phyloseq object from the data files.
-phy_obj <- create_phyloseq(biom_file = biome_file, tree_file = tree_file, metadata_file = md_file)
+phy_obj <- create_phyloseq(biom_file = biom_file, tree_file = tree_file, metadata_file = md_file, parse_func = parse_func)
 }
 }
 \seealso{

@@ -41,7 +41,7 @@ library(MicrobiomeR)
 library(metacoder)
 library(taxa)
 # Convert Phyloseq object to metacoder object
-metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
+metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_silva_2, format = "raw_format")
 
 # Remove Archaea from the metacoder object
 metacoder_obj <- filter_taxa(
