@@ -1,10 +1,10 @@
-#' Stress Microbiome Phyloseq Data (SILVA)
+#' Phyloseq Data with 2 Treatment Groups
 #'
 #' Data from the Nephele-16S-Qiime-Silva microbiome pipeline
 #' in the form of a phyloseq object.
 #'
 #' @docType data
-#' @usage data(phyloseq_silva)
+#' @usage data(phyloseq_silva_2)
 #' @format An object of class \code{"phyloseq"}
 #' @keywords datasets
 #'
@@ -12,15 +12,15 @@
 #' (\href{https://www.ncbi.nlm.nih.gov/pubmed/}{PubMed})
 #'
 #' @source \href{https://nephele.niaid.nih.gov/user_guide_pipes/#amplicon_pipes}{Nephele-16S Qiime Pipeline}
-"phyloseq_silva"
+"phyloseq_silva_2"
 
-#' Stress Microbiome Phylseq Data (Greengenes)
+#' Phyloseq Data with 3 Treatment Groups
 #'
-#' Data from the Nephele-16S-Qiime-Greengenes microbiome pipeline
+#' Data from the Nephele-16S-Qiime-Silva microbiome pipeline
 #' in the form of a phyloseq object.
 #'
 #' @docType data
-#' @usage data(phyloseq_greengenes)
+#' @usage data(phyloseq_silva_3)
 #' @format An object of class \code{"phyloseq"}
 #' @keywords datasets
 #'
@@ -28,16 +28,16 @@
 #' (\href{https://www.ncbi.nlm.nih.gov/pubmed/}{PubMed})
 #'
 #' @source \href{https://nephele.niaid.nih.gov/user_guide_pipes/#amplicon_pipes}{Nephele-16S Qiime Pipeline}
-"phyloseq_greengenes"
+"phyloseq_silva_3"
 
-#' Stress Microbiome "raw_format" Data (Silva)
+#' "raw_format" Data with 2 Treatment Groups
 #'
 #' Data from the Nephele-16S-Qiime-Silva microbiome pipeline
 #' in the form of a taxmap object.  This taxmap object has been
 #' formatted into the MicrobiomeR "raw_format".
 #'
 #' @docType data
-#' @usage data(raw_silva)
+#' @usage data(raw_silva_2)
 #' @format An object of class \code{"Taxmap"} with customized observation tables:
 #' \describe{
 #' \item{otu_abundance}{An abundance table with otu_id, taxon_id, and Sample_* columns.}
@@ -52,16 +52,16 @@
 #' (\href{https://www.ncbi.nlm.nih.gov/pubmed/}{PubMed})
 #'
 #' @source \href{https://nephele.niaid.nih.gov/user_guide_pipes/#amplicon_pipes}{Nephele-16S Qiime Pipeline}
-"raw_silva"
+"raw_silva_2"
 
-#' Stress Microbiome "raw_format" Data (Greengenes)
+#' "raw_format" Data with 3 Treatment Groups
 #'
-#' Data from the Nephele-16S-Qiime-Greengenes microbiome pipeline
+#' Data from the Nephele-16S-Qiime-Silva microbiome pipeline
 #' in the form of a taxmap object.  This taxmap object has been
 #' formatted into the MicrobiomeR "raw_format".
 #'
 #' @docType data
-#' @usage data(raw_greengenes)
+#' @usage data(raw_silva_3)
 #' @format An object of class \code{"Taxmap"} with customized observation tables:
 #' \describe{
 #' \item{otu_abundance}{An abundance table with otu_id, taxon_id, and Sample_* columns.}
@@ -76,4 +76,4 @@
 #' (\href{https://www.ncbi.nlm.nih.gov/pubmed/}{PubMed})
 #'
 #' @source \href{https://nephele.niaid.nih.gov/user_guide_pipes/#amplicon_pipes}{Nephele-16S Qiime Pipeline}
-"raw_greengenes"
+"raw_silva_3"

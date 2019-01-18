@@ -14,52 +14,100 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(MicrobiomeR)
+pkg.data <- MicrobiomeR:::pkg.private
 ```
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+# Introduction
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+The color palette workflow created for MicrobiomeR are based on the 
+`get_color_palette(pal_func = ...)` with a palette function that returns
+`grDevices::colorRampPalette(...)` (called), `grDevices::colorRampPalette` (not called),
+or a color palette function that returns a character vector.  Several palette funcitons
+come built with MicrobiomeR and are used in the plotting functions.
 
-## Vignette Info
+## Getting a Color Palette
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+Getting a color palette is simple.  You can toggle the palette preview with `display=FALSE`.
 
-## Styles
+```{r message=FALSE, warning=FALSE}
+analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+data <- analyzed_silva$data$stats_tax_data$Phylum
+data_len <- length(unique(data))
+custom_pal <- get_color_palette(color_no=data_len)
+print(custom_pal)
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+## Scico
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+We have built in support for the [scico](https://github.com/thomasp85/scico) package...
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+```{r message=FALSE, warning=FALSE}
+basic_pal <- scico_palette(scico_palette="hawaii")(25)
+pie(rep(1, length(basic_pal)), col=basic_pal)
+print(basic_pal)
+better_pal <- get_color_palette(pal_func = scico_palette, color_no = 25)
+print(better_pal)
 ```
 
-Also a quote using `>`:
+## Viridis
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+...And the [viridis](https://github.com/sjmgarnier/viridis) package.
+
+```{r message=FALSE, warning=FALSE}
+basic_pal <- viridis::viridis(n=25, option="magma")
+pie(rep(1, length(basic_pal)), col=basic_pal)
+print(basic_pal)
+better_pal <- get_color_palette(pal_func = viridis_palette, color_no = 25)
+print(better_pal)
+```
+
+## Combinging Color Palettes
+
+Here is a useful functionality.  Combining color palettes can help with situations
+where you need something more custom.  This can be especially helpful if you are using
+more than 20 colors.  The `combination_palette` function can take a dynamic number of 
+arguments, must be named and the value must be a `list`.  The list members can contain members with the following names:  
+
+> You can use any name for your arguments, but the values must be a named list.
+  palette:  This is a palette function that returns a vector of colors.
+  args:  This is another named list used for the palette function parameters.
+  range:  This is a range (1:10) used to subset the color palette vector.
+  rev:  This is a logical (TRUE/FALSE)used to reverse the color palette.
+
+```{r message=FALSE, warning=FALSE}
+# This is the code for MicrobiomeR::viridis_magma_palette, but
+# it's also a useful example for understanding how this works.
+ viridis_magma_palette <- function(viridis_number = 800, 
+                                   viridis_range = 300:viridis_number,
+                                   viridis_rev = TRUE,
+                                   magma_number = 500, 
+                                   magma_range = 0:magma_number, 
+                                   magma_rev = FALSE, 
+                                   ...) {
+   # Get the arguments for both functions
+   if (!missing(...)){
+       v_args = list(n=viridis_number, ...)
+       m_args = list(n=magma_number, ...)
+   } else {
+       v_args = list(n=viridis_number)
+       m_args = list(n=magma_number)
+   }
+   # Get combo palette
+   crp <- combination_palette(viridis =
+                                 list(palette = viridis::viridis,
+                                       args = v_args,
+                                       range = viridis_range,
+                                       rev = viridis_rev),
+                                magma =
+                                  list(palette = viridis::magma,
+                                       args = m_args,
+                                       range = magma_range,
+                                       rev = magma_rev)
+                                )
+     return(crp)
+ }
+combo_palette <- get_color_palette(pal_func = viridis_magma_palette)
+combo_palette
+```

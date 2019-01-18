@@ -4,7 +4,7 @@ library(testthat)
 context("Testing of permanova")
 
 # Use existing data for test.
-data <- as_MicrobiomeR_format(raw_silva, format = "analyzed_format")
+data <- as_MicrobiomeR_format(raw_silva_2, format = "analyzed_format")
 
 test_that("default permanova works", {
   expect_equal(length(permanova(data)), 4)
