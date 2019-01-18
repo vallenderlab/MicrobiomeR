@@ -8,16 +8,16 @@ get_correlation_data(obj, primary_rank, secondary_rank = TRUE,
   wp_value = 0.05)
 }
 \arguments{
-\item{obj}{PARAM_DESCRIPTION}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
 
-\item{primary_rank}{PARAM_DESCRIPTION}
+\item{primary_rank}{A primary rank used to label the points.}
 
-\item{secondary_rank}{PARAM_DESCRIPTION, Default: TRUE}
+\item{secondary_rank}{The secondary rank used to color the points, Default: TRUE}
 
-\item{wp_value}{PARAM_DESCRIPTION, Default: 0.05}
+\item{wp_value}{The wilcoxon p-value cutoff/threshold, Default: 0.05}
 }
 \value{
-OUTPUT_DESCRIPTION
+Data for the correlation plots.
 }
 \description{
 Get the correlation plot data comparing all of the treatment groups.
