@@ -4,7 +4,7 @@ library(testthat)
 context("Testing of utils.R")
 
 # Use existing data for test.
-basic_silva <- as_MicrobiomeR_format(raw_silva2, format = "basic_format")
+basic_silva <- as_MicrobiomeR_format(raw_silva_2, format = "basic_format")
 
 test_that("get_output_dir function works", {
   expect_true(!dir.exists(get_output_dir(start_path="output", experiment="test", mkdir=FALSE)))
@@ -18,7 +18,7 @@ test_that("get_output_dir function works", {
 })
 
 test_that("object handler works", {
-  expect_true(!is.null(object_handler(phyloseq_silva)))
+  expect_true(!is.null(object_handler(phyloseq_silva_2)))
   expect_error(object_handler(obj = "data/raw_silva_2.rda"), "object 'metacoder_object' not found")
   expect_error(object_handler(obj = NULL), "Please use a metacoder/phyloseq object or an rdata file.")
 
