@@ -19,7 +19,7 @@ vlookup(lookup_vector, df, match_var, return_var)
 A vector that contains the items of interest.
 }
 \description{
-A function that mimicks excels vlookup, but for R's dataframe.
+A function that mimics excels vlookup, but for R's dataframe.
 }
 \details{
 A function that works like the VLOOKUP function in excel.  This function was
