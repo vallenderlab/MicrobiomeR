@@ -1,3 +1,11 @@
+# MicrobiomeR 0.2.4
+
+* Added new tests
+  * Correlation plot tests
+  * Heat tree tests
+  * Metacoder Formatting tests
+  * Phyloseq tests
+
 # MicrobiomeR 0.2.3
 
 ## Documentation Updates

@@ -20,7 +20,7 @@
 #' library(metacoder)
 #' library(taxa)
 #' # Convert Phyloseq object to metacoder object
-#' metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
+#' metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_silva_2, format = "raw_format")
 #'
 #' # Remove Archaea from the metacoder object
 #' metacoder_obj <- filter_taxa(
@@ -143,8 +143,8 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
   if (!is.null(.f_filter) && !is.null(.f_condition)) {
 
     # Validate and get taxa_abundance data
-    mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
-                                            force_format = TRUE, validated = validated, min_or_max = min)
+    mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("basic_format"),
+                                            force_format = TRUE, validated = validated, min_or_max = max)
     abund_data <- taxa::get_dataset(obj = mo_clone, data = "taxa_abundance")
     #  Get the taxon_id data columns to work with
     if (is.null(.f_transform)) { # Get raw sample data
