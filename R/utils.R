@@ -1,4 +1,4 @@
-#' @title Object handler
+#' @title Get Metacoder Object
 #' @description A function that handles the conversion of objects to metacoder (\strong{taxa::taxmap}) objects.
 #' @param obj An object that contains the data being analyzed.  Can be one of the following:
 #' \describe{
@@ -20,7 +20,7 @@
 #'  }
 #' }
 #' @export
-#' @family Validation
+#' @family Data Importers
 #' @rdname create_metacoder
 #' @seealso
 #'  \code{\link[metacoder]{parse_phyloseq}}
