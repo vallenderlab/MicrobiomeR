@@ -7,7 +7,7 @@
 as_MicrobiomeR_format(obj, format, ...)
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
 
 \item{format}{The name of the format to convert the object to.}
 
@@ -24,7 +24,7 @@ Converts a metacoder object to the specified format.
 See the \link{MicrobiomeR_Formats} documentation.
 }
 \seealso{
-\code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
+\code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \code{\link[MicrobiomeR]{create_metacoder}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
 
 Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_analyzed_format}},
@@ -32,7 +32,7 @@ Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_custom_format}},
   \code{\link{as_phyloseq_format}},
   \code{\link{as_raw_format}},
-  \code{\link{get_treatment_matrix}},
-  \code{\link{melt_metacoder}}
+  \code{\link{melt_metacoder}},
+  \code{\link{treatment_matrix}}
 }
 \concept{Formatting}

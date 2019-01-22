@@ -8,7 +8,7 @@ correlation_plot(obj, primary_rank, secondary_rank = TRUE,
   wp_value = 0.05, pal_func = NULL)
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
 
 \item{primary_rank}{The primary rank used to label the points.}
 
@@ -40,7 +40,7 @@ correlation_plot(analyzed_silva, primary_rank = "Class", secondary_rank = "Phylu
 }
 }
 \seealso{
-\code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{get_correlation_data}},  \code{\link[MicrobiomeR]{get_plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
+\code{\link[MicrobiomeR]{create_metacoder}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{correlation_data}},  \code{\link[MicrobiomeR]{plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
 
 \code{\link[ggplot2]{ggplot}},  \code{\link[ggplot2]{aes}},  \code{\link[ggplot2]{geom_polygon}},  \code{\link[ggplot2]{geom_point}},  \code{\link[ggplot2]{labs}},  \code{\link[ggplot2]{scale_continuous}},  \code{\link[ggplot2]{scale_manual}},  \code{\link[ggplot2]{guide_legend}},  \code{\link[ggplot2]{geom_abline}}
 
@@ -49,13 +49,12 @@ correlation_plot(analyzed_silva, primary_rank = "Class", secondary_rank = "Phylu
 \code{\link[forcats]{fct_reorder}}
 
 Other Visualizations: \code{\link{alpha_diversity_plot}},
-  \code{\link{get_correlation_data}},
-  \code{\link{get_correlation_plots}},
-  \code{\link{get_heat_tree_parameters}},
-  \code{\link{get_heat_tree_plots}},
-  \code{\link{get_plot_limits}},
+  \code{\link{correlation_data}},
+  \code{\link{correlation_plots}},
+  \code{\link{heat_tree_parameters}},
+  \code{\link{heat_tree_plots}},
   \code{\link{melt_metacoder}},
-  \code{\link{ordination_plot}},
+  \code{\link{ordination_plot}}, \code{\link{plot_limits}},
   \code{\link{save_barplot}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},

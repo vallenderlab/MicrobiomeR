@@ -14,7 +14,7 @@ save_heat_tree_plots(htrees, format = "tiff", start_path = "output",
 
 \item{start_path}{The starting path of the output directory.  Default: 'output'}
 
-\item{...}{An optional list of parameters to use in the get_output_dir function.}
+\item{...}{An optional list of parameters to use in the output_dir function.}
 }
 \value{
 An output directory that contains heat tree plots.
@@ -33,25 +33,25 @@ if(interactive()){
 # however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_analyzed_format}}.
 library(MicrobiomeR)
 analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
-h_trees <- get_heat_tree_plots(analyzed_silva, rank_list = c("Phylum", "Class"))
+h_trees <- heat_tree_plots(analyzed_silva, rank_list = c("Phylum", "Class"))
 # Save to \\emph{./output/heat_trees} folder.
 save_heat_tree_plots(h_trees)
  }
 }
 }
 \seealso{
-\code{\link[MicrobiomeR]{get_output_dir}}
+\code{\link[MicrobiomeR]{output_dir}}
+
 \code{\link[ggplot2]{ggsave}}
 
 Other Visualizations: \code{\link{alpha_diversity_plot}},
+  \code{\link{correlation_data}},
+  \code{\link{correlation_plots}},
   \code{\link{correlation_plot}},
-  \code{\link{get_correlation_data}},
-  \code{\link{get_correlation_plots}},
-  \code{\link{get_heat_tree_parameters}},
-  \code{\link{get_heat_tree_plots}},
-  \code{\link{get_plot_limits}},
+  \code{\link{heat_tree_parameters}},
+  \code{\link{heat_tree_plots}},
   \code{\link{melt_metacoder}},
-  \code{\link{ordination_plot}},
+  \code{\link{ordination_plot}}, \code{\link{plot_limits}},
   \code{\link{save_barplot}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_ordination_plots}},

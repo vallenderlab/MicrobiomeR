@@ -7,7 +7,7 @@
 as_raw_format(obj)
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
 }
 \value{
 A Taxmap/metacoder object in the "raw_format".
@@ -28,7 +28,7 @@ Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_basic_format}},
   \code{\link{as_custom_format}},
   \code{\link{as_phyloseq_format}},
-  \code{\link{get_treatment_matrix}},
-  \code{\link{melt_metacoder}}
+  \code{\link{melt_metacoder}},
+  \code{\link{treatment_matrix}}
 }
 \concept{Formatting}

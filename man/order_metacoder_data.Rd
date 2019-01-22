@@ -7,7 +7,7 @@
 order_metacoder_data(obj)
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
 }
 \value{
 A taxmap object with observation data in the proper order for downstream analysis.
@@ -25,7 +25,6 @@ Other Validation: \code{\link{is_analyzed_format}},
   \code{\link{is_basic_format}},
   \code{\link{is_phyloseq_format}},
   \code{\link{is_raw_format}},
-  \code{\link{object_handler}},
   \code{\link{validate_MicrobiomeR_format}},
   \code{\link{which_format}}
 }
