@@ -1,3 +1,15 @@
+# MicrobiomeR 0.3.0
+
+* Changed function names
+  * From `get_treatment_matrix` to `treatment_matrix`
+  * From `get_output_dir` to `output_dir`
+  * From `get_correlation_plots` to `correlation_plots`
+  * From `get_correlation_data` to `correlation_data`
+  * From `get_plot_limits` to `plot_limits`
+  * From `get_heat_tree_plots` to `heat_tree_plots`
+  * From `get_heat_tree_parameters` to `heat_tree_parameters`
+  * From `object_handler` to `create_metacoder`
+
 # MicrobiomeR 0.2.4
 
 * Added new tests
