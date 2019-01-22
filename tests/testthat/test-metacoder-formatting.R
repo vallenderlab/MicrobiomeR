@@ -11,7 +11,7 @@ test_that("which_format works", {
 })
 
 test_that("as_*_format works", {
-  expect_true(is_raw_format(as_raw_format(object_handler(phyloseq_silva_2))))
+  expect_true(is_raw_format(as_raw_format(create_metacoder(phyloseq_silva_2))))
 })
 
 test_that("is_*_format works", {
