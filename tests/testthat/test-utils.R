@@ -18,9 +18,9 @@ test_that("output_dir function works", {
 })
 
 test_that("object handler works", {
-  expect_true(!is.null(object_handler(phyloseq_silva_2)))
-  expect_error(object_handler(obj = "data/raw_silva_2.rda"), "object 'metacoder_object' not found")
-  expect_error(object_handler(obj = NULL), "Please use a metacoder/phyloseq object or an rdata file.")
+  expect_true(!is.null(create_metacoder(phyloseq_silva_2)))
+  expect_error(create_metacoder(obj = "data/raw_silva_2.rda"), "object 'metacoder_object' not found")
+  expect_error(create_metacoder(obj = NULL), "Please use a metacoder/phyloseq object or an rdata file.")
 
 })
 

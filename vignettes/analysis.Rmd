@@ -127,7 +127,7 @@ MicrobiomeR also uses ggplot2 to create
 
 ```{r message=FALSE, warning=FALSE}
 # Generate heat_trees
-heat_tree_plots <- get_heat_tree_plots(metacoder_obj,
+heat_tree_plots <- heat_tree_plots(metacoder_obj,
                                        rank_list = c("Phylum", "Class", "Order"),
                                        node_label = ifelse(wilcox_p_value > 0.05, taxon_ids, NA),
                                        node_label_size = 2,
@@ -226,7 +226,7 @@ metacoder_obj <- cov_filter(obj = metacoder_obj,
 metacoder_obj <- as_MicrobiomeR_format(obj = metacoder_obj, format = "analyzed_format")
 
 # Generate heat_trees
-heat_tree_plots <- get_heat_tree_plots(metacoder_obj,
+heat_tree_plots <- heat_tree_plots(metacoder_obj,
                                        rank_list = c("Phylum", "Class", "Order"),
                                        node_label = ifelse(wilcox_p_value > 0.05, taxon_ids, NA),
                                        node_label_size = 2,

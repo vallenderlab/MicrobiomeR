@@ -1,6 +1,6 @@
 #' @title Ordination Plot
 #' @description This function allows for ordination (which helps us to distinguish beta diversity relationships) to be plotted as well as for the corresponding data to be returned.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
 #' @param method Choose an ordination method from 'PCoA', 'CCA', 'NMDS' or 'DPCoA', Default: 'PCoA'
 #' @param distance Choose a distance method from 'bray', 'unifrac' or 'wunifrac', Default: 'wunifrac'
 #' @param color Choose the group or factor of which colors will be mapped to, Default: 'TreatmentGroup'
@@ -26,7 +26,7 @@
 #' @importFrom ggplot2 element_text geom_point theme element_blank guide_legend guides ggtitle unit scale_fill_manual labs scale_color_manual
 ordination_plot <- function(obj, method = "PCoA", distance = "wunifrac", color = "TreatmentGroup", title = NULL, only_data = FALSE) {
   metacoder_object <- validate_MicrobiomeR_format(
-    obj = object_handler(obj),
+    obj = create_metacoder(obj),
     valid_formats = c("analyzed_format")
   )
 

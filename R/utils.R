@@ -16,12 +16,12 @@
 #' if(interactive()){
 #'  library(MicrobiomeR)
 #'  phy_obj <- MicrobiomeR::phyloseq_silva_2
-#'  mc_obj <- object_handler(phy_obj)
+#'  mc_obj <- create_metacoder(phy_obj)
 #'  }
 #' }
 #' @export
 #' @family Validation
-#' @rdname object_handler
+#' @rdname create_metacoder
 #' @seealso
 #'  \code{\link[metacoder]{parse_phyloseq}}
 #'
@@ -29,7 +29,7 @@
 #' @importFrom metacoder parse_phyloseq
 #' @importFrom tools file_ext
 #' @importFrom crayon red
-object_handler <- function(obj) {
+create_metacoder <- function(obj) {
   if (is.null(obj)) {
     stop(crayon::red("Please use a metacoder/phyloseq object or an rdata file."))
   } else {
@@ -51,7 +51,7 @@ object_handler <- function(obj) {
 
 #' @title Get Treatment Matrix
 #' @description A function that returns a matrix with used for comparing treatment data.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
 #' @return A matrix with each column representing a comparison to be made.
 #' @pretty_print TRUE
 #' @details Use this when you want to do pairwise comparisons.
