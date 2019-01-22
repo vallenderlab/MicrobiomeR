@@ -8,7 +8,7 @@ alpha_diversity_plot(obj, measure = "shannon",
   select_otu_table = "otu_proportions")
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
 
 \item{measure}{Select an alpha diversity measure such as shannon, gini simpson, and inverse simpson, Default: 'shannon'}
 
@@ -37,14 +37,13 @@ if (interactive()) {
 \seealso{
 \code{\link{get_alpha_diversity_measures}}, \code{\link[vegan]{diversity}}, \code{\link[ggpubr]{ggviolin}}
 
-Other Visualizations: \code{\link{correlation_plot}},
-  \code{\link{get_correlation_data}},
-  \code{\link{get_correlation_plots}},
-  \code{\link{get_heat_tree_parameters}},
-  \code{\link{get_heat_tree_plots}},
-  \code{\link{get_plot_limits}},
+Other Visualizations: \code{\link{correlation_data}},
+  \code{\link{correlation_plots}},
+  \code{\link{correlation_plot}},
+  \code{\link{heat_tree_parameters}},
+  \code{\link{heat_tree_plots}},
   \code{\link{melt_metacoder}},
-  \code{\link{ordination_plot}},
+  \code{\link{ordination_plot}}, \code{\link{plot_limits}},
   \code{\link{save_barplot}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},

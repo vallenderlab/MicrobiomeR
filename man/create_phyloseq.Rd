@@ -70,5 +70,7 @@ phy_obj <- create_phyloseq(biom_file = biom_file, tree_file = tree_file, metadat
 \code{\link[ape]{root}}, \code{\link[ape:root]{is.rooted}}, \code{\link[ape]{read.tree}}, \code{\link[ape]{write.tree}}
 
 \code{\link[MicrobiomeR]{root_by_longest_edge}}
+
+Other Data Importers: \code{\link{create_metacoder}}
 }
 \concept{Data Importers}

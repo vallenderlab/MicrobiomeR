@@ -14,7 +14,7 @@ stacked_barplot(obj, tax_level = "Phylum", fill = "Phylum",
   xlabel = "Samples", faceted = FALSE, title = NULL, palette_values)
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
 
 \item{melted_df}{A "melted" dataframe from the metacoder object's data.}
 
@@ -64,20 +64,19 @@ Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_custom_format}},
   \code{\link{as_phyloseq_format}},
   \code{\link{as_raw_format}},
-  \code{\link{get_treatment_matrix}}
+  \code{\link{treatment_matrix}}
 
 Other Data Manipulators: \code{\link{metacoder_comp_func_1}},
   \code{\link{transformer}}, \code{\link{transposer}},
   \code{\link{vlookup}}
 
 Other Visualizations: \code{\link{alpha_diversity_plot}},
+  \code{\link{correlation_data}},
+  \code{\link{correlation_plots}},
   \code{\link{correlation_plot}},
-  \code{\link{get_correlation_data}},
-  \code{\link{get_correlation_plots}},
-  \code{\link{get_heat_tree_parameters}},
-  \code{\link{get_heat_tree_plots}},
-  \code{\link{get_plot_limits}},
-  \code{\link{ordination_plot}},
+  \code{\link{heat_tree_parameters}},
+  \code{\link{heat_tree_plots}},
+  \code{\link{ordination_plot}}, \code{\link{plot_limits}},
   \code{\link{save_barplot}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},

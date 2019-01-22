@@ -1,6 +1,6 @@
 #' @title PERMANOVA
 #' @description Evaluate whether the group(s) has a significant effect on overall gut microbiota composition.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
 #' @param distance_method  Use a desired distance method, Default: 'bray'
 #' @param group The group or column in the metadata to test upon, Default: 'TreatmentGroup'
 #' @return Returns a list which includes permanova, anova, coefficients, and top coefficients.
@@ -25,7 +25,7 @@
 permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
   # Validate data format
   metacoder_object <- validate_MicrobiomeR_format(
-    obj = object_handler(obj),
+    obj = create_metacoder(obj),
     valid_formats = c("analyzed_format")
   )
   permanova <- list()
@@ -124,7 +124,7 @@ save_top_coefficients_barplot <- function(plot, filename, format = "tiff", start
   if (is.null(filename)) {
     filename <- plot
   }
-  full_path <- get_output_dir(start_path = start_path, plot_type = "top_coef_barplot", ...)
+  full_path <- output_dir(start_path = start_path, plot_type = "top_coef_barplot", ...)
   message(glue::glue(crayon::yellow("Saving Top Coefficents Barplot to the following directory: \n", "\r\t{full_path}")))
   message(glue::glue(crayon::green("Saving the top coefficients barplot.")))
   ggplot2::ggsave(paste0(filename, ".", format),

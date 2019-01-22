@@ -94,13 +94,13 @@ metacoder_obj <- cov_filter(obj = metacoder_obj,
 # Analysis
 
 Analysis is primarily done with metacoder, MicrobiomeR, and ggplot2.  Before beginning the analysis
-it's wise to create an output directory.  Use `end_path=FALSE` with MicrobiomeR's `get_output_dir()`
+it's wise to create an output directory.  Use `end_path=FALSE` with MicrobiomeR's `output_dir()`
 function to avoid the creation of a date formatted directory.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 # Create a directory for whichever plot you want to save
-heat_tree_path <- get_output_dir(end_path = FALSE, start_path = "output", plot_type = "heat_tree")
-corr_plot_path <- get_output_dir(end_path = FALSE, start_path = "output", plot_type = "correlation")
+heat_tree_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "heat_tree")
+corr_plot_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "correlation")
 ```
 
 ## Statistics
@@ -127,14 +127,14 @@ MicrobiomeR also uses ggplot2 to create
 
 ```{r message=FALSE, warning=FALSE}
 # Generate heat_trees
-heat_tree_plots <- get_heat_tree_plots(metacoder_obj,
+heat_tree_plots <- heat_tree_plots(metacoder_obj,
                                        rank_list = c("Phylum", "Class", "Order"),
                                        node_label = ifelse(wilcox_p_value > 0.05, taxon_ids, NA),
                                        node_label_size = 2,
                                        node_label_color = c("darkgreen"))
 names(heat_tree_plots)
 # Generate correlation_plots
-corr_plots <- get_correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
+corr_plots <- correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
 names(corr_plots)
 ```
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
@@ -226,7 +226,7 @@ metacoder_obj <- cov_filter(obj = metacoder_obj,
 metacoder_obj <- as_MicrobiomeR_format(obj = metacoder_obj, format = "analyzed_format")
 
 # Generate heat_trees
-heat_tree_plots <- get_heat_tree_plots(metacoder_obj,
+heat_tree_plots <- heat_tree_plots(metacoder_obj,
                                        rank_list = c("Phylum", "Class", "Order"),
                                        node_label = ifelse(wilcox_p_value > 0.05, taxon_ids, NA),
                                        node_label_size = 2,
@@ -238,7 +238,7 @@ heat_trees$Class
 heat_trees$Order
 
 # Generate Correlation plots
-corr_plots <- get_correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
+corr_plots <- correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
 
 corr_plots$Class$Phylum$`Exp_Var2-vs-Exp_Var1`
 corr_plots$Class$Phylum$`Exp_Var2-vs-Control`

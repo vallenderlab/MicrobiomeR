@@ -1,4 +1,4 @@
-#' @title Object handler
+#' @title Get Metacoder Object
 #' @description A function that handles the conversion of objects to metacoder (\strong{taxa::taxmap}) objects.
 #' @param obj An object that contains the data being analyzed.  Can be one of the following:
 #' \describe{
@@ -16,12 +16,12 @@
 #' if(interactive()){
 #'  library(MicrobiomeR)
 #'  phy_obj <- MicrobiomeR::phyloseq_silva_2
-#'  mc_obj <- object_handler(phy_obj)
+#'  mc_obj <- create_metacoder(phy_obj)
 #'  }
 #' }
 #' @export
-#' @family Validation
-#' @rdname object_handler
+#' @family Data Importers
+#' @rdname create_metacoder
 #' @seealso
 #'  \code{\link[metacoder]{parse_phyloseq}}
 #'
@@ -29,7 +29,7 @@
 #' @importFrom metacoder parse_phyloseq
 #' @importFrom tools file_ext
 #' @importFrom crayon red
-object_handler <- function(obj) {
+create_metacoder <- function(obj) {
   if (is.null(obj)) {
     stop(crayon::red("Please use a metacoder/phyloseq object or an rdata file."))
   } else {
@@ -51,7 +51,7 @@ object_handler <- function(obj) {
 
 #' @title Get Treatment Matrix
 #' @description A function that returns a matrix with used for comparing treatment data.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
 #' @return A matrix with each column representing a comparison to be made.
 #' @pretty_print TRUE
 #' @details Use this when you want to do pairwise comparisons.
@@ -63,9 +63,9 @@ object_handler <- function(obj) {
 #' }
 #' @export
 #' @family Formatting
-#' @rdname get_treatment_matrix
+#' @rdname treatment_matrix
 #' @importFrom utils combn
-get_treatment_matrix <- function(obj) {
+treatment_matrix <- function(obj) {
   # Get treatment data
   treat_1 <- as.character(obj$data$stats_tax_data$treatment_1)
   treat_2 <- as.character(obj$data$stats_tax_data$treatment_2)
@@ -103,18 +103,18 @@ get_treatment_matrix <- function(obj) {
 #' if(interactive()){
 #'  # Get the path to an output directory without creating
 #'  library(MicrobiomeR)
-#'  output_dir <- get_output_dir(start_path="output", experiment="microbiome-proj", mkdir=FALSE)
+#'  output_dir <- output_dir(start_path="output", experiment="microbiome-proj", mkdir=FALSE)
 #'  print(output_dir)
 #'
 #'  # Create a folder for your plot types
-#'  output_dir <- get_output_dir(plot_type="scatter-plots")
+#'  output_dir <- output_dir(plot_type="scatter-plots")
 #'  print(output_dir)
 #'
 #'  }
 #' }
 #' @export
 #' @family Project Management
-#' @rdname get_output_dir
+#' @rdname output_dir
 #' @seealso
 #'  \code{\link[glue]{glue}}
 #'
@@ -122,7 +122,7 @@ get_treatment_matrix <- function(obj) {
 #' @importFrom glue glue
 #' @importFrom stringr str_to_lower
 #' @importFrom crayon yellow blue red green
-get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end_path=NULL, root_path=NULL,
+output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end_path=NULL, root_path=NULL,
                            custom_path = NULL, overwrite=FALSE, mkdir=TRUE) {
   # Create the relative path to the plots.  By default the full_path will be <root_path>/output
   # With ONLY the plot_type set the full_path will be <root_path>/<plot_type>

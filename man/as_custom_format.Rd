@@ -7,7 +7,7 @@
 as_custom_format(obj, format, change_name_list = NULL, ...)
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
 
 \item{format}{The name of the format to convert the object to.}
 
@@ -27,7 +27,7 @@ attempts to give more customization than the as_*_format functions.
 This function is meant to be more helpful for customizing the metacoder object.
 }
 \seealso{
-\code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
+\code{\link[MicrobiomeR]{create_metacoder}},  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
 
 Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_MicrobiomeR_format}},
@@ -35,7 +35,7 @@ Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_basic_format}},
   \code{\link{as_phyloseq_format}},
   \code{\link{as_raw_format}},
-  \code{\link{get_treatment_matrix}},
-  \code{\link{melt_metacoder}}
+  \code{\link{melt_metacoder}},
+  \code{\link{treatment_matrix}}
 }
 \concept{Formatting}

@@ -6,21 +6,21 @@ context("Testing of utils.R")
 # Use existing data for test.
 basic_silva <- as_MicrobiomeR_format(raw_silva_2, format = "basic_format")
 
-test_that("get_output_dir function works", {
-  expect_true(!dir.exists(get_output_dir(start_path="output", experiment="test", mkdir=FALSE)))
-  expect_true(dir.exists(get_output_dir(start_path="output", experiment="test", mkdir=TRUE)))
-  expect_error(get_output_dir(start_path="output", experiment="test", mkdir=TRUE, overwrite=FALSE), paste0("The directory ", getwd(), "/output/test/", format(Sys.time(), "%Y-%m-%d_%s"), " already exists. And you don't want to overwrite the directory."))
-  expect_equal(get_output_dir(start_path="output", experiment="test", mkdir=FALSE), paste0(getwd(), "/output/test/", format(Sys.time(), "%Y-%m-%d_%s")))
-  expect_equal(get_output_dir(start_path="output", experiment="test", mkdir=FALSE, end_path = "cool"), paste0(getwd(), "/output/test/cool"))
-  expect_equal(get_output_dir(mkdir=FALSE, plot_type = "cool"), paste0(getwd(), "/cool"))
-  expect_equal(get_output_dir(mkdir=FALSE), paste0(getwd(), "/output"))
-  expect_equal(get_output_dir(start_path="output", experiment="test", mkdir=FALSE, plot_type = "plot"), paste0(getwd(), "/output/test/plot/", format(Sys.time(), "%Y-%m-%d_%s")))
+test_that("output_dir function works", {
+  expect_true(!dir.exists(output_dir(start_path="output", experiment="test", mkdir=FALSE)))
+  expect_true(dir.exists(output_dir(start_path="output", experiment="test", mkdir=TRUE)))
+  expect_error(output_dir(start_path="output", experiment="test", mkdir=TRUE, overwrite=FALSE), paste0("The directory ", getwd(), "/output/test/", format(Sys.time(), "%Y-%m-%d_%s"), " already exists. And you don't want to overwrite the directory."))
+  expect_equal(output_dir(start_path="output", experiment="test", mkdir=FALSE), paste0(getwd(), "/output/test/", format(Sys.time(), "%Y-%m-%d_%s")))
+  expect_equal(output_dir(start_path="output", experiment="test", mkdir=FALSE, end_path = "cool"), paste0(getwd(), "/output/test/cool"))
+  expect_equal(output_dir(mkdir=FALSE, plot_type = "cool"), paste0(getwd(), "/cool"))
+  expect_equal(output_dir(mkdir=FALSE), paste0(getwd(), "/output"))
+  expect_equal(output_dir(start_path="output", experiment="test", mkdir=FALSE, plot_type = "plot"), paste0(getwd(), "/output/test/plot/", format(Sys.time(), "%Y-%m-%d_%s")))
 })
 
 test_that("object handler works", {
-  expect_true(!is.null(object_handler(phyloseq_silva_2)))
-  expect_error(object_handler(obj = "data/raw_silva_2.rda"), "object 'metacoder_object' not found")
-  expect_error(object_handler(obj = NULL), "Please use a metacoder/phyloseq object or an rdata file.")
+  expect_true(!is.null(create_metacoder(phyloseq_silva_2)))
+  expect_error(create_metacoder(obj = "data/raw_silva_2.rda"), "object 'metacoder_object' not found")
+  expect_error(create_metacoder(obj = NULL), "Please use a metacoder/phyloseq object or an rdata file.")
 
 })
 

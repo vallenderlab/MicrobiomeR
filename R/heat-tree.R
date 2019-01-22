@@ -1,9 +1,9 @@
 #' @title Get Heat Tree Plots
 #' @description A function for getting multiple heat_tree plots per rank.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
 #' @param rank_list A vector of ranks used to generate heat_trees.  Default: NULL
 #' @param ... Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
-#' output is displayed.  Please see the \code{\link[MicrobiomeR]{get_heat_tree_parameters}} documentation
+#' output is displayed.  Please see the \code{\link[MicrobiomeR]{heat_tree_parameters}} documentation
 #' for further explanation.
 #' @return A list of heat_tree plots.
 #' @pretty_print TRUE
@@ -14,17 +14,17 @@
 #' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
 #' library(MicrobiomeR)
 #' analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
-#' h_trees <- get_heat_tree_plots(analyzed_silva, rank_list = c("Phylum", "Class"))
+#' h_trees <- heat_tree_plots(analyzed_silva, rank_list = c("Phylum", "Class"))
 #' h_trees$Class
 #'  }
 #' }
 #' @export
 #' @family Visualizations
-#' @rdname get_heat_tree_plots
+#' @rdname heat_tree_plots
 #' @seealso
 #'  \code{\link[metacoder]{heat_tree}}
 #'
-#'  \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{get_heat_tree_parameters}}
+#'  \code{\link[MicrobiomeR]{create_metacoder}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{heat_tree_parameters}}
 #'
 #'  \code{\link[taxa]{filter_obs}}
 #'
@@ -36,7 +36,7 @@
 #' @importFrom metacoder heat_tree
 #' @importFrom ggplot2 theme element_text ggtitle
 #' @importFrom crayon green bgWhite
-get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
+heat_tree_plots <- function(obj, rank_list = NULL, ...) {
   suppressWarnings({
     rank_index <- pkg.private$rank_index
     if (is.null(rank_list)) {
@@ -46,7 +46,7 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
     htrees <- list()
     flt_taxmaps <- list()
     # Create a metacoder object from a phyloseq/metacoder/RData file
-    obj <- object_handler(obj)
+    obj <- create_metacoder(obj)
     obj <- validate_MicrobiomeR_format(
       obj = obj,
       valid_formats = c("analyzed_format"),
@@ -62,7 +62,7 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
       title <- sprintf("Bacterial Abundance (%s Level)", rank)
       message(crayon::green(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(title))))
       treatment_no <- length(unique(filtered_obj$data$sample_data$TreatmentGroup))
-      default_heat_tree_parameters <- get_heat_tree_parameters(obj = filtered_obj, title = title, treatment_no = treatment_no, ...)
+      default_heat_tree_parameters <- heat_tree_parameters(obj = filtered_obj, title = title, treatment_no = treatment_no, ...)
       # Filter by Taxonomy Rank and then create a heat tree.
       if (treatment_no == 2) {
         htrees[[rank]] <- do.call(what = metacoder::heat_tree, args = default_heat_tree_parameters)
@@ -87,7 +87,7 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
 
 
 #' @title Get Heat Tree Parameters
-#' @description This function get's the parameters used for the get_heat_tree_plots function.
+#' @description This function get's the parameters used for the heat_tree_plots function.
 #' @param obj A metacoder object.
 #' @param title The title used in the heat_tree plot.
 #' @param treatment_no The number of treatment groups in the data.
@@ -100,7 +100,7 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
 #' @pretty_print TRUE
 #' @export
 #' @family Visualizations
-#' @rdname get_heat_tree_parameters
+#' @rdname heat_tree_parameters
 #' @seealso
 #'  \code{\link[metacoder]{heat_tree}}
 #'
@@ -112,7 +112,7 @@ get_heat_tree_plots <- function(obj, rank_list = NULL, ...) {
 #' @importFrom taxa n_obs taxon_names
 #' @importFrom purrr list_modify
 #' @importFrom rlang enquos is_quosure eval_tidy
-get_heat_tree_parameters <- function(obj, title, treatment_no, ...) {
+heat_tree_parameters <- function(obj, title, treatment_no, ...) {
   # Clone the taxmap object.
   input <- obj$clone()
 
@@ -275,7 +275,7 @@ get_heat_tree_parameters <- function(obj, title, treatment_no, ...) {
 #' @param htrees A named list of heat trees.
 #' @param format The format of the output image.  Default: 'tiff'
 #' @param start_path The starting path of the output directory.  Default: 'output'
-#' @param ... An optional list of parameters to use in the get_output_dir function.
+#' @param ... An optional list of parameters to use in the output_dir function.
 #' @return An output directory that contains heat tree plots.
 #' @pretty_print TRUE
 #' @details This function creates an appropriate output directory, where it saves publication ready
@@ -287,7 +287,7 @@ get_heat_tree_parameters <- function(obj, title, treatment_no, ...) {
 #' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
 #' library(MicrobiomeR)
 #' analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
-#' h_trees <- get_heat_tree_plots(analyzed_silva, rank_list = c("Phylum", "Class"))
+#' h_trees <- heat_tree_plots(analyzed_silva, rank_list = c("Phylum", "Class"))
 #' # Save to \emph{./output/heat_trees} folder.
 #' save_heat_tree_plots(h_trees)
 #'  }
@@ -296,7 +296,8 @@ get_heat_tree_parameters <- function(obj, title, treatment_no, ...) {
 #' @family Visualizations
 #' @rdname save_heat_tree_plots
 #' @seealso
-#'  \code{\link[MicrobiomeR]{get_output_dir}}
+#'  \code{\link[MicrobiomeR]{output_dir}}
+#'
 #'  \code{\link[ggplot2]{ggsave}}
 #' @importFrom ggplot2 ggsave
 #' @importFrom crayon yellow green
@@ -304,7 +305,7 @@ get_heat_tree_parameters <- function(obj, title, treatment_no, ...) {
 save_heat_tree_plots <- function (htrees, format="tiff", start_path = "output", ...) {
   # Create the relative path to the heat_tree plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
   # With the parameters set the full path will be <pwd>/output/<experiment>/heat_trees/<extra_path>.
-  full_path <- get_output_dir(start_path = start_path, plot_type = "heat_trees", ...)
+  full_path <- output_dir(start_path = start_path, plot_type = "heat_trees", ...)
   message(glue::glue(crayon::yellow("Saving Heat Trees to the following directory: \n", "\r\t{full_path}")))
   # Iterate the heat_tree plot list and save them in the proper directory
   for (rank in names(htrees)) {

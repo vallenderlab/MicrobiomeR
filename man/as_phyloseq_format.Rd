@@ -9,7 +9,7 @@ as_phyloseq_format(obj, otu_table = "otu_abundance",
   phy_tree = "phy_tree")
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
 
 \item{otu_table}{The name of the observation table with OTU data.  Default: NULL}
 
@@ -29,7 +29,7 @@ Converts the metacoder object to the phyloseq_format.
 See the \link{MicrobiomeR_Formats} documentation.
 }
 \seealso{
-\code{\link[MicrobiomeR]{object_handler}},\code{\link[MicrobiomeR]{order_metacoder_data}}
+\code{\link[MicrobiomeR]{create_metacoder}},\code{\link[MicrobiomeR]{order_metacoder_data}}
 
 Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_MicrobiomeR_format}},
@@ -37,7 +37,7 @@ Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_basic_format}},
   \code{\link{as_custom_format}},
   \code{\link{as_raw_format}},
-  \code{\link{get_treatment_matrix}},
-  \code{\link{melt_metacoder}}
+  \code{\link{melt_metacoder}},
+  \code{\link{treatment_matrix}}
 }
 \concept{Formatting}

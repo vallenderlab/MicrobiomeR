@@ -1,6 +1,6 @@
 #' @title Correlation Plot
 #' @description Create a correlation plot from a metacoder/taxmap object.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
 #' @param primary_rank The primary rank used to label the points.
 #' @param secondary_rank The secondary rank used to color the points.  Can be an integer specifying
 #' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
@@ -23,7 +23,7 @@
 #' @family Visualizations
 #' @rdname correlation_plot
 #' @seealso
-#'  \code{\link[MicrobiomeR]{object_handler}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{get_correlation_data}},  \code{\link[MicrobiomeR]{get_plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
+#'  \code{\link[MicrobiomeR]{create_metacoder}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{correlation_data}},  \code{\link[MicrobiomeR]{plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
 #'
 #'  \code{\link[ggplot2]{ggplot}},  \code{\link[ggplot2]{aes}},  \code{\link[ggplot2]{geom_polygon}},  \code{\link[ggplot2]{geom_point}},  \code{\link[ggplot2]{labs}},  \code{\link[ggplot2]{scale_continuous}},  \code{\link[ggplot2]{scale_manual}},  \code{\link[ggplot2]{guide_legend}},  \code{\link[ggplot2]{geom_abline}}
 #'
@@ -36,7 +36,7 @@
 #' @importFrom crayon yellow
 correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
                              wp_value = 0.05, pal_func = NULL) {
-  metacoder_object <- object_handler(obj)
+  metacoder_object <- create_metacoder(obj)
   metacoder_object <- validate_MicrobiomeR_format(obj = metacoder_object,
                                                   valid_formats = c("analyzed_format"))
   ranks <- pkg.private$ranks
@@ -60,7 +60,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
   }
 
   # Get the corelation data
-  corr_data <- get_correlation_data(obj = metacoder_object, primary_rank = primary_rank, secondary_rank = secondary_rank, wp_value = wp_value)
+  corr_data <- correlation_data(obj = metacoder_object, primary_rank = primary_rank, secondary_rank = secondary_rank, wp_value = wp_value)
   corrs <- list()
   for (comp_title in names(corr_data)) {
     treat_data <- corr_data[[comp_title]]
@@ -69,7 +69,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
     treatments <- treat_data$treatments
 
     # Get the limits of the plot based on the data
-    plot_limits <- get_plot_limits(primary_data$mean_treat1, primary_data$mean_treat2)
+    plot_limits <- plot_limits(primary_data$mean_treat1, primary_data$mean_treat2)
     # Create a dataframe for background color
     background_limits <- data.frame(id = c("1", "1", "1", "2", "2", "2"), x = c(0, Inf, 0, 0, Inf, Inf), y = c(0, Inf, Inf, 0, 0, Inf))
     # Get a color palette
@@ -109,7 +109,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 
 #' @title Get Multiple Correlation Plots
 #' @description This function allows the user to create a list of multiple correlation plots.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
 #' @param primary_ranks A vector of primary ranks used to label the points.
 #' @param secondary_ranks  The secondary rank used to color the points.  Can be an integer specifying
 #' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
@@ -124,7 +124,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 #' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
 #' library(MicrobiomeR)
 #' analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
-#' corr_plots <- get_correlation_plots(analyzed_silva, primary_ranks = c("Phylum", "Class", "Order"),
+#' corr_plots <- correlation_plots(analyzed_silva, primary_ranks = c("Phylum", "Class", "Order"),
 #'                       secondary_ranks = c("Phylum", "Class", "Order", "Family", "Genus"))
 #' # Show a plot
 #' corr_plots$Class$Phylum
@@ -132,9 +132,9 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 #' }
 #' @export
 #' @family Visualizations
-#' @rdname get_correlation_plots
+#' @rdname correlation_plots
 #' @importFrom crayon green bgWhite
-get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ...) {
+correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ...) {
   corr <- list()
   params <- list(...)
   rank_index <- pkg.private$rank_index
@@ -172,7 +172,7 @@ get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ..
 
 #' @title Get Correlation Plot Data
 #' @description Get the correlation plot data comparing all of the treatment groups.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{object_handler}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
 #' @param primary_rank A primary rank used to label the points.
 #' @param secondary_rank  The secondary rank used to color the points, Default: TRUE
 #' @param wp_value The wilcoxon p-value cutoff/threshold, Default: 0.05
@@ -187,7 +187,7 @@ get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ..
 #' }
 #' @export
 #' @family Visualizations
-#' @rdname get_correlation_data
+#' @rdname correlation_data
 #' @seealso
 #'  \code{\link[MicrobiomeR]{agglomerate_metacoder}},  \code{\link[MicrobiomeR]{vlookup}}
 #'
@@ -198,7 +198,7 @@ get_correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ..
 #' @importFrom utils combn
 #' @importFrom taxa filter_obs
 #' @importFrom glue glue
-get_correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_value = 0.05) {
+correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_value = 0.05) {
   # Quotes
   quoted_str <- dplyr::enquo(secondary_rank)
   # Create the primary metacoder object
@@ -211,7 +211,7 @@ get_correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_va
   primary_data <- primary_mo$data$stats_tax_data
   secondary_data <- secondary_mo$data$stats_tax_data
 
-  combinations <- get_treatment_matrix(obj = obj)
+  combinations <- treatment_matrix(obj = obj)
   # Compare treatments
   corr_data <- list()
   for (i in seq_len(ncol(combinations))) {
@@ -262,10 +262,10 @@ get_correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_va
 
 #' @title Save Correlation Plots
 #' @description This function saves correlation plots storred in a listlike object to an output folder.
-#' @param corr A correlation plot list generated by correlation_plot or get_correlation_plots.
+#' @param corr A correlation plot list generated by correlation_plot or correlation_plots.
 #' @param format The format of the output image.  Default: 'tiff'
 #' @param start_path The starting path of the output directory.  Default: 'output'
-#' @param ... An optional list of parameters to use in the get_output_dir function.
+#' @param ... An optional list of parameters to use in the output_dir function.
 #' @return An output directory that contains correlation plots.
 #' @pretty_print TRUE
 #' @details This function creates an appropriate output directory, where it saves publication ready
@@ -286,7 +286,7 @@ get_correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_va
 #' @family Visualizations
 #' @rdname save_correlation_plots
 #' @seealso
-#'  \code{\link[MicrobiomeR]{get_output_dir}}
+#'  \code{\link[MicrobiomeR]{output_dir}}
 #'
 #'  \code{\link[ggplot2]{ggsave}}
 #' @importFrom ggplot2 ggsave
@@ -295,7 +295,7 @@ get_correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_va
 save_correlation_plots <- function(corr, format = "tiff", start_path = "output", ...) {
   # Create the relative path to the correlation plots.  By default the path will be <pwd>/output/<experiment>/corr_plot/<format(Sys.time(), "%Y-%m-%d_%s")>
   # With the parameters set the full path will be <pwd>/output/<experiment>/corr_plot/<extra_path>.
-  full_path <- get_output_dir(start_path = start_path, plot_type = "corr_plot", ...)
+  full_path <- output_dir(start_path = start_path, plot_type = "corr_plot", ...)
   message(glue::glue(crayon::yellow("Saving Correlation Plots to the following directory: \n", "\r\t{full_path}")))
   # Iterate the heat_tree plot list and save them in the proper directory
   for (pr_name in names(corr)) {
@@ -316,8 +316,8 @@ save_correlation_plots <- function(corr, format = "tiff", start_path = "output",
 #' @return A vector that supplies the overarching x and y limits.
 #' @pretty_print TRUE
 #' @family Visualizations
-#' @rdname get_plot_limits
-get_plot_limits <- function(x, y) {
+#' @rdname plot_limits
+plot_limits <- function(x, y) {
   x_max <- max(x)
   x_min <- min(x)
   y_max <- max(y)
