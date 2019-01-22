@@ -124,7 +124,7 @@ save_top_coefficients_barplot <- function(plot, filename, format = "tiff", start
   if (is.null(filename)) {
     filename <- plot
   }
-  full_path <- get_output_dir(start_path = start_path, plot_type = "top_coef_barplot", ...)
+  full_path <- output_dir(start_path = start_path, plot_type = "top_coef_barplot", ...)
   message(glue::glue(crayon::yellow("Saving Top Coefficents Barplot to the following directory: \n", "\r\t{full_path}")))
   message(glue::glue(crayon::green("Saving the top coefficients barplot.")))
   ggplot2::ggsave(paste0(filename, ".", format),

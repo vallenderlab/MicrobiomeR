@@ -63,9 +63,9 @@ object_handler <- function(obj) {
 #' }
 #' @export
 #' @family Formatting
-#' @rdname get_treatment_matrix
+#' @rdname treatment_matrix
 #' @importFrom utils combn
-get_treatment_matrix <- function(obj) {
+treatment_matrix <- function(obj) {
   # Get treatment data
   treat_1 <- as.character(obj$data$stats_tax_data$treatment_1)
   treat_2 <- as.character(obj$data$stats_tax_data$treatment_2)
@@ -103,18 +103,18 @@ get_treatment_matrix <- function(obj) {
 #' if(interactive()){
 #'  # Get the path to an output directory without creating
 #'  library(MicrobiomeR)
-#'  output_dir <- get_output_dir(start_path="output", experiment="microbiome-proj", mkdir=FALSE)
+#'  output_dir <- output_dir(start_path="output", experiment="microbiome-proj", mkdir=FALSE)
 #'  print(output_dir)
 #'
 #'  # Create a folder for your plot types
-#'  output_dir <- get_output_dir(plot_type="scatter-plots")
+#'  output_dir <- output_dir(plot_type="scatter-plots")
 #'  print(output_dir)
 #'
 #'  }
 #' }
 #' @export
 #' @family Project Management
-#' @rdname get_output_dir
+#' @rdname output_dir
 #' @seealso
 #'  \code{\link[glue]{glue}}
 #'
@@ -122,7 +122,7 @@ get_treatment_matrix <- function(obj) {
 #' @importFrom glue glue
 #' @importFrom stringr str_to_lower
 #' @importFrom crayon yellow blue red green
-get_output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end_path=NULL, root_path=NULL,
+output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end_path=NULL, root_path=NULL,
                            custom_path = NULL, overwrite=FALSE, mkdir=TRUE) {
   # Create the relative path to the plots.  By default the full_path will be <root_path>/output
   # With ONLY the plot_type set the full_path will be <root_path>/<plot_type>

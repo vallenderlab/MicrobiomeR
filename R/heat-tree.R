@@ -275,7 +275,7 @@ get_heat_tree_parameters <- function(obj, title, treatment_no, ...) {
 #' @param htrees A named list of heat trees.
 #' @param format The format of the output image.  Default: 'tiff'
 #' @param start_path The starting path of the output directory.  Default: 'output'
-#' @param ... An optional list of parameters to use in the get_output_dir function.
+#' @param ... An optional list of parameters to use in the output_dir function.
 #' @return An output directory that contains heat tree plots.
 #' @pretty_print TRUE
 #' @details This function creates an appropriate output directory, where it saves publication ready
@@ -296,7 +296,8 @@ get_heat_tree_parameters <- function(obj, title, treatment_no, ...) {
 #' @family Visualizations
 #' @rdname save_heat_tree_plots
 #' @seealso
-#'  \code{\link[MicrobiomeR]{get_output_dir}}
+#'  \code{\link[MicrobiomeR]{output_dir}}
+#'
 #'  \code{\link[ggplot2]{ggsave}}
 #' @importFrom ggplot2 ggsave
 #' @importFrom crayon yellow green
@@ -304,7 +305,7 @@ get_heat_tree_parameters <- function(obj, title, treatment_no, ...) {
 save_heat_tree_plots <- function (htrees, format="tiff", start_path = "output", ...) {
   # Create the relative path to the heat_tree plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
   # With the parameters set the full path will be <pwd>/output/<experiment>/heat_trees/<extra_path>.
-  full_path <- get_output_dir(start_path = start_path, plot_type = "heat_trees", ...)
+  full_path <- output_dir(start_path = start_path, plot_type = "heat_trees", ...)
   message(glue::glue(crayon::yellow("Saving Heat Trees to the following directory: \n", "\r\t{full_path}")))
   # Iterate the heat_tree plot list and save them in the proper directory
   for (rank in names(htrees)) {

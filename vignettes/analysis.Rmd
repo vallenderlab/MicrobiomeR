@@ -94,13 +94,13 @@ metacoder_obj <- cov_filter(obj = metacoder_obj,
 # Analysis
 
 Analysis is primarily done with metacoder, MicrobiomeR, and ggplot2.  Before beginning the analysis
-it's wise to create an output directory.  Use `end_path=FALSE` with MicrobiomeR's `get_output_dir()`
+it's wise to create an output directory.  Use `end_path=FALSE` with MicrobiomeR's `output_dir()`
 function to avoid the creation of a date formatted directory.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 # Create a directory for whichever plot you want to save
-heat_tree_path <- get_output_dir(end_path = FALSE, start_path = "output", plot_type = "heat_tree")
-corr_plot_path <- get_output_dir(end_path = FALSE, start_path = "output", plot_type = "correlation")
+heat_tree_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "heat_tree")
+corr_plot_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "correlation")
 ```
 
 ## Statistics
