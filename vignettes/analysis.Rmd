@@ -134,7 +134,7 @@ heat_tree_plots <- get_heat_tree_plots(metacoder_obj,
                                        node_label_color = c("darkgreen"))
 names(heat_tree_plots)
 # Generate correlation_plots
-corr_plots <- get_correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
+corr_plots <- correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
 names(corr_plots)
 ```
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
@@ -238,7 +238,7 @@ heat_trees$Class
 heat_trees$Order
 
 # Generate Correlation plots
-corr_plots <- get_correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
+corr_plots <- correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
 
 corr_plots$Class$Phylum$`Exp_Var2-vs-Exp_Var1`
 corr_plots$Class$Phylum$`Exp_Var2-vs-Control`
