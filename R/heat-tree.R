@@ -1,6 +1,6 @@
 #' @title Get Heat Tree Plots
 #' @description A function for getting multiple heat_tree plots per rank.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param rank_list A vector of ranks used to generate heat_trees.  Default: NULL
 #' @param ... Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
 #' output is displayed.  Please see the \code{\link[MicrobiomeR]{heat_tree_parameters}} documentation
@@ -24,7 +24,7 @@
 #' @seealso
 #'  \code{\link[metacoder]{heat_tree}}
 #'
-#'  \code{\link[MicrobiomeR]{create_metacoder}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{heat_tree_parameters}}
+#'  \code{\link[MicrobiomeR]{create_taxmap}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{heat_tree_parameters}}
 #'
 #'  \code{\link[taxa]{filter_obs}}
 #'
@@ -46,7 +46,7 @@ heat_tree_plots <- function(obj, rank_list = NULL, ...) {
     htrees <- list()
     flt_taxmaps <- list()
     # Create a metacoder object from a phyloseq/metacoder/RData file
-    obj <- create_metacoder(obj)
+    obj <- create_taxmap(obj)
     obj <- validate_MicrobiomeR_format(
       obj = obj,
       valid_formats = c("analyzed_format"),

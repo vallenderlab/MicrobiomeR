@@ -1,6 +1,6 @@
 #' @title Correlation Plot
 #' @description Create a correlation plot from a metacoder/taxmap object.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param primary_rank The primary rank used to label the points.
 #' @param secondary_rank The secondary rank used to color the points.  Can be an integer specifying
 #' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
@@ -23,7 +23,7 @@
 #' @family Visualizations
 #' @rdname correlation_plot
 #' @seealso
-#'  \code{\link[MicrobiomeR]{create_metacoder}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{correlation_data}},  \code{\link[MicrobiomeR]{plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
+#'  \code{\link[MicrobiomeR]{create_taxmap}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{correlation_data}},  \code{\link[MicrobiomeR]{plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
 #'
 #'  \code{\link[ggplot2]{ggplot}},  \code{\link[ggplot2]{aes}},  \code{\link[ggplot2]{geom_polygon}},  \code{\link[ggplot2]{geom_point}},  \code{\link[ggplot2]{labs}},  \code{\link[ggplot2]{scale_continuous}},  \code{\link[ggplot2]{scale_manual}},  \code{\link[ggplot2]{guide_legend}},  \code{\link[ggplot2]{geom_abline}}
 #'
@@ -36,7 +36,7 @@
 #' @importFrom crayon yellow
 correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
                              wp_value = 0.05, pal_func = NULL) {
-  metacoder_object <- create_metacoder(obj)
+  metacoder_object <- create_taxmap(obj)
   metacoder_object <- validate_MicrobiomeR_format(obj = metacoder_object,
                                                   valid_formats = c("analyzed_format"))
   ranks <- pkg.private$ranks
@@ -109,7 +109,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 
 #' @title Get Multiple Correlation Plots
 #' @description This function allows the user to create a list of multiple correlation plots.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param primary_ranks A vector of primary ranks used to label the points.
 #' @param secondary_ranks  The secondary rank used to color the points.  Can be an integer specifying
 #' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
@@ -172,7 +172,7 @@ correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ...) {
 
 #' @title Get Correlation Plot Data
 #' @description Get the correlation plot data comparing all of the treatment groups.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param primary_rank A primary rank used to label the points.
 #' @param secondary_rank  The secondary rank used to color the points, Default: TRUE
 #' @param wp_value The wilcoxon p-value cutoff/threshold, Default: 0.05

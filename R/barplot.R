@@ -39,7 +39,7 @@ convert_proportions <- function(melted_df, tax_level) {
 
 #' @title Stacked Barplot
 #' @description Create a stacked barplot to show relative abundance of taxa.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param tax_level The taxonomic level, Default: 'Phylum'
 #' @param fill The taxonomic level by which the bars are filled, Default: 'Phylum'
 #' @param xlabel The label of the x axis, Default: 'Samples'
@@ -69,7 +69,7 @@ convert_proportions <- function(melted_df, tax_level) {
 #' @export
 stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel = "Samples", faceted = FALSE, title = NULL, palette_values) {
   metacoder_object <- validate_MicrobiomeR_format(
-    obj = create_metacoder(obj),
+    obj = create_taxmap(obj),
     valid_formats = c("analyzed_format")
   )
 
