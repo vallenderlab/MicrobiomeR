@@ -1,3 +1,11 @@
+# MicrobiomeR 0.4.0
+
+* Added the JOSS paper
+* Changed function names
+  * From `create_metacoder` to `create_taxmap`
+  * From `agglomerate_metacoder` to `agglomerate_taxmap`
+  * From `melt_metacoder` to `melt_taxmap`
+
 # MicrobiomeR 0.3.0
 
 * Changed function names
