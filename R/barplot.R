@@ -5,7 +5,7 @@
 #' @importFrom tidyr gather_
 #' @family Formatting
 #' @rdname stacked_barplot
-melt_metacoder <- function(obj) {
+melt_taxmap <- function(obj) {
   sd <- data.frame(obj$data$sample_data)
   TT <- data.frame(obj$data$otu_annotations, stringsAsFactors = FALSE)
   otu.table <- data.frame(obj$data$otu_proportions, check.names = FALSE, stringsAsFactors = FALSE)
@@ -75,7 +75,7 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
 
   # Start by melting the data in the "standard" way using psmelt.
   # Also, transform the abundance data to relative abundance
-  mdf <- convert_proportions(melt_metacoder(metacoder_object), tax_level)
+  mdf <- convert_proportions(melt_taxmap(metacoder_object), tax_level)
   mdf <- dplyr::mutate(mdf, !!sym(tax_level) := factor(!!sym(tax_level), levels = unique(mdf[[tax_level]])))
 
   # Build the plot data structure
