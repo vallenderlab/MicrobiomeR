@@ -41,7 +41,7 @@ raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
 # Filtering
 
 ```{r message=FALSE, warning=FALSE}
-# Remove Archaea from the metacoder object
+# Remove Archaea from the taxmap object
 metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
                                    taxon_names == "Archaea",
                                    subtaxa = TRUE,
@@ -175,7 +175,7 @@ phy_obj <- create_phyloseq(biom_file = biom_file,
 
 # Get the taxmap object in the raw format
 raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
-# Remove Archaea from the metacoder object
+# Remove Archaea from the taxmap object
 metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
                                    taxon_names == "Archaea",
                                    subtaxa = TRUE,

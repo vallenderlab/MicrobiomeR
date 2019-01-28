@@ -51,7 +51,7 @@ create_taxmap <- function(obj) {
 
 #' @title Get Treatment Matrix
 #' @description A function that returns a matrix with used for comparing treatment data.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.
+#' @param obj An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @return A matrix with each column representing a comparison to be made.
 #' @pretty_print TRUE
 #' @details Use this when you want to do pairwise comparisons.

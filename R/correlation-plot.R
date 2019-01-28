@@ -1,6 +1,6 @@
 #' @title Correlation Plot
 #' @description Create a correlation plot from a metacoder/taxmap object.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.
+#' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param primary_rank The primary rank used to label the points.
 #' @param secondary_rank The secondary rank used to color the points.  Can be an integer specifying
 #' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
@@ -109,7 +109,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 
 #' @title Get Multiple Correlation Plots
 #' @description This function allows the user to create a list of multiple correlation plots.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.
+#' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param primary_ranks A vector of primary ranks used to label the points.
 #' @param secondary_ranks  The secondary rank used to color the points.  Can be an integer specifying
 #' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
@@ -172,7 +172,7 @@ correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ...) {
 
 #' @title Get Correlation Plot Data
 #' @description Get the correlation plot data comparing all of the treatment groups.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.
+#' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param primary_rank A primary rank used to label the points.
 #' @param secondary_rank  The secondary rank used to color the points, Default: TRUE
 #' @param wp_value The wilcoxon p-value cutoff/threshold, Default: 0.05
@@ -201,10 +201,10 @@ correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ...) {
 correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_value = 0.05) {
   # Quotes
   quoted_str <- dplyr::enquo(secondary_rank)
-  # Create the primary metacoder object
+  # Create the primary Taxmap object
   primary_mo <- agglomerate_metacoder(obj = obj, rank = primary_rank,
                                       validated = TRUE)
-  # Create the secondary metacoder object
+  # Create the secondary Taxmap object
   secondary_mo <- agglomerate_metacoder(obj = obj, rank = secondary_rank,
                                         validated = TRUE)
   # Get the primary and secondary statistical-taxonomy data frame

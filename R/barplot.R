@@ -1,4 +1,4 @@
-#' @title Melt Metacoder Object
+#' @title Melt Taxmap Object
 #' @description Melt the metacoder or phyloseq tables into a dataframe.
 #' @return Returns a melted dataframe.
 #' @importFrom dplyr right_join setdiff
@@ -19,7 +19,7 @@ melt_metacoder <- function(obj) {
 
 #' @title Convert Proportions
 #' @description Convert the dataframe abundance values to percent 100.
-#' @param melted_df A "melted" dataframe from the metacoder object's data.
+#' @param melted_df A "melted" dataframe from the Taxmap object's data.
 #' @return Returns a transformed dataframe.
 #' @importFrom dplyr filter group_by summarize mutate enquo quo_name
 #' @importFrom stats na.omit
@@ -39,7 +39,7 @@ convert_proportions <- function(melted_df, tax_level) {
 
 #' @title Stacked Barplot
 #' @description Create a stacked barplot to show relative abundance of taxa.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.
+#' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param tax_level The taxonomic level, Default: 'Phylum'
 #' @param fill The taxonomic level by which the bars are filled, Default: 'Phylum'
 #' @param xlabel The label of the x axis, Default: 'Samples'

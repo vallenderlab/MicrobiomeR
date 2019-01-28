@@ -30,7 +30,7 @@ permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
   )
   permanova <- list()
 
-  # Convert metacoder object to a phyloseq object.
+  # Convert taxmap object to a phyloseq object.
   phyloseq_object <- metacoder::as_phyloseq(metacoder_object, otu_table = "otu_abundance", phy_tree = "phy_tree")
 
   # TODO: Convert this to metacoder strictly.

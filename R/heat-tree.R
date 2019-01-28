@@ -1,6 +1,6 @@
 #' @title Get Heat Tree Plots
 #' @description A function for getting multiple heat_tree plots per rank.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.
+#' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param rank_list A vector of ranks used to generate heat_trees.  Default: NULL
 #' @param ... Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
 #' output is displayed.  Please see the \code{\link[MicrobiomeR]{heat_tree_parameters}} documentation
@@ -45,7 +45,7 @@ heat_tree_plots <- function(obj, rank_list = NULL, ...) {
     returned_data <- list()
     htrees <- list()
     flt_taxmaps <- list()
-    # Create a metacoder object from a phyloseq/metacoder/RData file
+    # Create a Taxmap object from a phyloseq/metacoder/RData file
     obj <- create_taxmap(obj)
     obj <- validate_MicrobiomeR_format(
       obj = obj,
@@ -88,14 +88,14 @@ heat_tree_plots <- function(obj, rank_list = NULL, ...) {
 
 #' @title Get Heat Tree Parameters
 #' @description This function get's the parameters used for the heat_tree_plots function.
-#' @param obj A metacoder object.
+#' @param obj A Taxmap object.
 #' @param title The title used in the heat_tree plot.
 #' @param treatment_no The number of treatment groups in the data.
 #' @param ... Any of the heat tree parameters list below can be used to change the way the heat_tree
 #' output is displayed.  However, this function acts as a default list of parameters.  The memebers
 #' of the default list will be overridden by the dot parameters.  Any variable in obj$data$stats_tax_data
 #' can be used to manipulate the heat tree parameters.  Function calls from the taxa package must
-#' be done explicitely on the metacoder object.
+#' be done explicitely on the Taxmap object.
 #' @return A list used with do.call and the metacoder::heat_tree function.
 #' @pretty_print TRUE
 #' @export

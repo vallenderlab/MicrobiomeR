@@ -45,7 +45,7 @@ such as `metacoder::filter_ambiguous_taxa()`, `taxa::filter_taxa()`, and `taxa::
 can almost always be used in your workflow.  
 
 ```{r message=FALSE, warning=FALSE}
-# Remove Archaea from the metacoder object
+# Remove Archaea from the taxmap object
 metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
                                    taxon_names == "Archaea",
                                    subtaxa = TRUE,
@@ -130,7 +130,7 @@ metacoder_obj <- cov_filter(obj = metacoder_obj,
 As mentioned previously taxmap filtering can be done in any way that fits your needs with the `taxa`
 and `metacoder` packages.  However, MicrobiomeR also provides some utility based function for 
 filtering/manipulating your _observation_ data by hand.  Observation data can be accessed within
-the metacoder object.  Make sure you don't manipulate existing data inside of your taxmap object
+the taxmap object.  Make sure you don't manipulate existing data inside of your taxmap object
 unless you're absolutely sure you know what you're doing.
 
 ## Transposing

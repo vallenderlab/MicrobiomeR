@@ -30,7 +30,7 @@ ordination_plot <- function(obj, method = "PCoA", distance = "wunifrac", color =
     valid_formats = c("analyzed_format")
   )
 
-  # Convert metacoder object to a phyloseq object.
+  # Convert taxmap object to a phyloseq object.
   phyloseq_object <- metacoder::as_phyloseq(metacoder_object, otu_table = "otu_abundance", phy_tree = "phy_tree")
 
   ord <- phyloseq::ordinate(phyloseq_object, method, distance)

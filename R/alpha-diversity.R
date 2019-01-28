@@ -1,6 +1,6 @@
 #' @title Get Alpha Diversity
 #' @description This function generates various alpha diversity measures include Shannon, Fisher, Coverage, Gini Simpson, and Inverse Simpson.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param group The "TreatmentGroup" or similar grouping from your metadata to denote sample groups, Default: 'TreatmentGroup'
 #' @return Returns a list of alpha diversity measures with metadata.
 #' @pretty_print TRUE
@@ -22,11 +22,11 @@
 #' @importFrom utils combn
 get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
   metacoder_object <- validate_MicrobiomeR_format(
-    obj = create_metacoder(obj),
+    obj = create_taxmap(obj),
     valid_formats = c("analyzed_format")
   )
 
-  # Convert metacoder object to a phyloseq object.
+  # Convert Taxmap object to a phyloseq object.
   phyloseq_object <- metacoder::as_phyloseq(metacoder_object, otu_table = "otu_abundance", phy_tree = "phy_tree")
 
   # Get all of the diversities.
@@ -51,7 +51,7 @@ get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 
 #' @title Alpha Diversity Plot
 #' @description Plot the alpha diversity using a violin plot.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param measure Select an alpha diversity measure such as shannon, gini simpson, and inverse simpson, Default: 'shannon'
 #' @param select_otu_table Choose an otu table to analyze, Default: 'otu_proportions'
 #' @return Returns an alpha diversity plot.
@@ -77,7 +77,7 @@ get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 alpha_diversity_plot <- function(obj, measure = "shannon", select_otu_table = "otu_proportions") {
   # Validate data format
   metacoder_object <- validate_MicrobiomeR_format(
-    obj = create_metacoder(obj),
+    obj = create_taxmap(obj),
     valid_formats = c("analyzed_format")
   )
   metacoder_object$data$sample_data[[measure]] <- vegan::diversity(metacoder_object$data[[select_otu_table]][, metacoder_object$data$sample_data$X.SampleID],
