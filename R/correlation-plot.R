@@ -189,7 +189,7 @@ correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ...) {
 #' @family Visualizations
 #' @rdname correlation_data
 #' @seealso
-#'  \code{\link[MicrobiomeR]{agglomerate_metacoder}},  \code{\link[MicrobiomeR]{vlookup}}
+#'  \code{\link[MicrobiomeR]{agglomerate_taxmap}},  \code{\link[MicrobiomeR]{vlookup}}
 #'
 #'  \code{\link[dplyr]{tidyeval}},  \code{\link[dplyr]{mutate}},  \code{\link[dplyr]{filter}},  \code{\link[dplyr]{arrange}}
 #'
@@ -202,10 +202,10 @@ correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_value 
   # Quotes
   quoted_str <- dplyr::enquo(secondary_rank)
   # Create the primary Taxmap object
-  primary_mo <- agglomerate_metacoder(obj = obj, rank = primary_rank,
+  primary_mo <- agglomerate_taxmap(obj = obj, rank = primary_rank,
                                       validated = TRUE)
   # Create the secondary Taxmap object
-  secondary_mo <- agglomerate_metacoder(obj = obj, rank = secondary_rank,
+  secondary_mo <- agglomerate_taxmap(obj = obj, rank = secondary_rank,
                                         validated = TRUE)
   # Get the primary and secondary statistical-taxonomy data frame
   primary_data <- primary_mo$data$stats_tax_data

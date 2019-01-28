@@ -269,14 +269,14 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.
 #' library(MicrobiomeR)
 #' basic_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "basic_format")
-#' phylum_obj <- agglomerate_metacoder(obj = basic_silva, rank = "Phylum")
-#' class_obj <- agglomerate_metacoder(obj = basic_silva, rank = "Class")
-#' order_obj <- agglomerate_metacoder(obj = basic_silva, rank = "Order")
+#' phylum_obj <- agglomerate_taxmap(obj = basic_silva, rank = "Phylum")
+#' class_obj <- agglomerate_taxmap(obj = basic_silva, rank = "Class")
+#' order_obj <- agglomerate_taxmap(obj = basic_silva, rank = "Order")
 #'  }
 #' }
 #' @export
 #' @family Advanced Metacoder Filters
-#' @rdname agglomerate_metacoder
+#' @rdname agglomerate_taxmap
 #' @seealso
 #'  \code{\link[taxa]{filter_taxa}}
 #'
@@ -284,7 +284,7 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #' @importFrom taxa filter_taxa taxon_ranks
 #' @importFrom glue glue
 #' @importFrom crayon silver
-agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
+agglomerate_taxmap <- function(obj, rank, validated = FALSE) {
   mo_clone <- obj$clone()
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format", "analyzed_format"),
                                           force_format = TRUE, validated = validated, min_or_max = min)
@@ -513,7 +513,7 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
                                           min_or_max = min, valid_formats = c("basic_format"))
   # Calculate the ids that need to be removed based on taxonomic rank
   suppressMessages({
-    ids_to_remove <- agglomerate_metacoder(obj = mo_clone, rank = rank, validated = TRUE) %>% # Agglomeration
+    ids_to_remove <- agglomerate_taxmap(obj = mo_clone, rank = rank, validated = TRUE) %>% # Agglomeration
     metacoder::calc_prop_samples("taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
     dplyr::filter(n_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
   # Taxonomic Prevalence Filtering
