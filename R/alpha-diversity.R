@@ -65,7 +65,7 @@ get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' if (interactive()) {
 #'   library(MicrobiomeR)
 #'   data <- analyzed_silva
-#'   plot <- alpha_diversity_plot(obj = data, measure = "shannon", select_otu_table = "otu_proportions", save = FALSE)
+#'   plot <- alpha_diversity_plot(obj = data, measure = "shannon", select_otu_table = "otu_proportions")
 #'   plot
 #' }
 #' }
@@ -94,16 +94,38 @@ alpha_diversity_plot <- function(obj, measure = "shannon", group = "TreatmentGro
   # make a pairwise list that we want to compare.
   metacoder_object$data$sample_data$group.pairs <- utils::combn(seq_along(groups), num_groups, simplify = FALSE, FUN = function(i) groups[i])
 
+  if (num_groups == 2) {
+    palette = c("#3288bd", "#d53e4f")
+  } else {
+    # Create a palette when there are more than 2 groups
+    palette = get_color_palette(color_no = num_groups)
+  }
+
   plot <- ggpubr::ggviolin(metacoder_object$data$sample_data,
     x = group, y = measure,
     color = "black",
     add = "boxplot",
     fill = group,
-    palette = c("#3288bd", "#d53e4f"),
+    palette = palette,
     legend.title = title
   ) + ggplot2::xlab(title) + ggplot2::ylab(toupper(measure)) +
     ggthemes::theme_pander() + ggpubr::stat_compare_means(comparisons = metacoder_object$data$sample_data$group.pairs, label = "p.signif", label.y = 7) +
     ggpubr::stat_compare_means(label.y = 8)
 
   return(plot)
+}
+
+#' @title Alpha Diversity Plots
+#' @description Generate plots for all alpha diversity measures.
+#' @return Returns a melted dataframe.
+#' @family Visualizations
+#' @rdname alpha_diversity_plot
+alpha_diversity_plots <- function(obj, select_otu_table = "otu_proportions") {
+  measures <- c("shannon", "simpson", "invsimpson")
+  alpha_div_plots <- list()
+  for (m in measures){
+    alpha_div_plots[[m]] <- alpha_diversity_plot(obj, measure = m, select_otu_table = select_otu_table, title = m)
+  }
+
+  return(alpha_div_plots)
 }
