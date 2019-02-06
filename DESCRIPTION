@@ -54,7 +54,8 @@ Imports:
 Suggests:
     knitr,
     testthat,
-    rmarkdown
+    rmarkdown,
+    covr
 Additional_repositories:
     http://bioconductor.org/packages/release/bioc/,
     http://bioconductor.org/packages/release/data/annotation,
