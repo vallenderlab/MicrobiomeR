@@ -1,3 +1,7 @@
+# MicrobiomeR 0.3.1
+
+* Added code coverage.
+
 # MicrobiomeR 0.3.0
 
 * Changed function names
