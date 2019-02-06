@@ -22,5 +22,9 @@ r:
 - release
 - devel
 
+r_github_packages:
+  - r-lib/covr
+
 after_success:
   - R CMD INSTALL $PKG_TARBALL
+  - Rscript -e 'covr::codecov()'
