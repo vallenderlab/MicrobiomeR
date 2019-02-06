@@ -87,7 +87,11 @@ alpha_diversity_plot <- function(obj, measure = "shannon", group = "TreatmentGro
     MARGIN = 2, index = measure
   )
 
-  metacoder_object$data$sample_data[[group]] <- factor(metacoder_object$data$sample_data[[group]], levels = list(unique(metacoder_object$data$sample_data[[group]])))
+  if (typeof(metacoder_object$data$sample_data$TreatmentGroup) == "character") {
+    metacoder_object$data$sample_data[[group]] <- as.factor(metacoder_object$data$sample_data$TreatmentGroup)
+  } else {
+    metacoder_object$data$sample_data[[group]] <- factor(metacoder_object$data$sample_data[[group]], levels = list(unique(metacoder_object$data$sample_data[[group]])))
+  }
   groups <- levels(metacoder_object$data$sample_data[[group]]) # get the variables
   num_groups <- length(groups)
 
@@ -95,10 +99,10 @@ alpha_diversity_plot <- function(obj, measure = "shannon", group = "TreatmentGro
   metacoder_object$data$sample_data$group.pairs <- utils::combn(seq_along(groups), num_groups, simplify = FALSE, FUN = function(i) groups[i])
 
   if (num_groups == 2) {
-    palette = c("#3288bd", "#d53e4f")
+    palette <- c("#3288bd", "#d53e4f")
   } else {
     # Create a palette when there are more than 2 groups
-    palette = get_color_palette(color_no = num_groups)
+    palette <- get_color_palette(color_no = num_groups)
   }
 
   plot <- ggpubr::ggviolin(metacoder_object$data$sample_data,
@@ -117,15 +121,69 @@ alpha_diversity_plot <- function(obj, measure = "shannon", group = "TreatmentGro
 
 #' @title Alpha Diversity Plots
 #' @description Generate plots for all alpha diversity measures.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param measures A list of alpha diversity measures such as shannon, gini simpson, and inverse simpson, Default: 'c("shannon", "simpson", "invsimpson")'
+#' @param group The "TreatmentGroup" or similar grouping or column from your metadata to denote sample groups, Default: 'TreatmentGroup'
+#' @param select_otu_table Choose an otu table to analyze, Default: 'otu_proportions'
 #' @return Returns a melted dataframe.
 #' @family Visualizations
 #' @rdname alpha_diversity_plot
-alpha_diversity_plots <- function(obj, select_otu_table = "otu_proportions") {
-  measures <- c("shannon", "simpson", "invsimpson")
+alpha_diversity_plots <- function(obj, measures = c("shannon", "simpson", "invsimpson"), group = "TreatmentGroup", select_otu_table = "otu_proportions") {
+  if (is.null(measures)) {
+    measures <- c("shannon", "simpson", "invsimpson")
+  } else if (length(measures) < 2) {
+    stop("Use the alpha_diversity_plot function for generating a plot for 1 alpha diversity index.")
+  }
   alpha_div_plots <- list()
-  for (m in measures){
-    alpha_div_plots[[m]] <- alpha_diversity_plot(obj, measure = m, select_otu_table = select_otu_table, title = m)
+  for (m in measures) {
+    alpha_div_plots[[m]] <- alpha_diversity_plot(obj, measure = m, group = group, select_otu_table = select_otu_table, title = m)
   }
 
   return(alpha_div_plots)
+}
+
+#' @title Save Alpha Diversity Plots
+#' @description This function saves alpha diversity plots stored in a list object to an output folder.
+#' @param plots A named list of alpha diversity plots.
+#' @param format The format of the output image.  Default: 'tiff'
+#' @param start_path The starting path of the output directory.  Default: 'output'
+#' @param ... An optional list of parameters to use in the output_dir function.
+#' @return An output directory that contains heat tree plots.
+#' @pretty_print TRUE
+#' @details This function creates an appropriate output directory, where it saves publication ready
+#' plots.
+#' @examples
+#' \dontrun{
+#' if (interactive()) {
+#'   # This example uses data that are no longer available in the MicrobiomeR package,
+#'   # however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
+#'   library(MicrobiomeR)
+#'   analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+#'   alpha_div_plots <- alpha_diversity_plots(analyzed_silva)
+#'   # Save to \emph{./output/alpha_diversity} folder.
+#'   save_alpha_diversity_plot(salpha_div_plots)
+#' }
+#' }
+#' @export
+#' @family Visualizations
+#' @rdname save_alpha_diversity_plots
+#' @seealso
+#'  \code{\link[MicrobiomeR]{output_dir}}
+#'
+#'  \code{\link[ggplot2]{ggsave}}
+#' @importFrom ggplot2 ggsave
+#' @importFrom crayon yellow green
+#' @importFrom glue glue
+save_alpha_diversity_plots <- function(plots, format = "tiff", start_path = "output", ...) {
+  # Create the relative path to the heat_tree plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
+  # With the parameters set the full path will be <pwd>/output/<experiment>/heat_trees/<extra_path>.
+  full_path <- output_dir(start_path = start_path, plot_type = "alpha_diversity", ...)
+  message(glue::glue(crayon::yellow("Saving Alpha Diversity plots to the following directory: \n", "\r\t{full_path}")))
+  # Iterate the plot list and save them in the proper directory
+  for (measure in names(plots)) {
+    if (measure != "metacoder_object") {
+      message(crayon::green("Saving the {measure} alpha aiversity plot."))
+      ggplot2::ggsave(filename = sprintf("%s_alpha_diversity.%s", measure, format), plot = plots[[measure]], device = format, path = full_path, dpi = 500)
+    }
+  }
 }
