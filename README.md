@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.com/vallenderlab/MicrobiomeR.svg?token=xfnbNTQhjNbir5xACn8R&branch=master)](https://travis-ci.com/vallenderlab/MicrobiomeR)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Coverage status](https://codecov.io/gh/vallenderlab/MicrobiomeR/branch/master/graph/badge.svg)](https://codecov.io/github/vallenderlab/MicrobiomeR?branch=master)
 
 # MicrobiomeR
 
