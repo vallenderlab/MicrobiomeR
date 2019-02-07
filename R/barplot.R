@@ -115,6 +115,28 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
   return(p)
 }
 
+
+#' @title Stacked Barplots
+#' @description Create a stacked barplot to show relative abundance of taxa.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param tax_levels The taxonomic levels, Default: 'Phylum'
+#' @return Returns a melted dataframe.
+#' @family Visualizations
+#' @rdname stacked_barplot
+stacked_barplots <- function(obj, tax_levels = c("Phylum", "Class", "Order"), group = "TreatmentGroup", select_otu_table = "otu_proportions") {
+  if (is.null(tax_levels)) {
+    tax_levels <- c("Phylum", "Class", "Order")
+  } else if (length(tax_levels) < 2) {
+    stop("Use the stacked_plot function for generating a plot for 1 taxonomic level.")
+  }
+  stacked_barplots <- list()
+  for (t in tax_levels) {
+    stacked_barplots[[t]] <- stacked_barplot(obj = obj, tax_level = t, fill = t, palette_values = palette)
+  }
+
+  return(stacked_barplots)
+}
+
 #' @title Save Barplot
 #' @description Save a stacked barplot.
 #' @param plot The plot object.
@@ -139,3 +161,5 @@ save_barplot <- function(plot, filename) {
     width = 8, height = 5, units = "in", dpi = 500
   )
 }
+
+
