@@ -148,7 +148,7 @@ alpha_diversity_plots <- function(obj, measures = c("shannon", "simpson", "invsi
 #' @param format The format of the output image.  Default: 'tiff'
 #' @param start_path The starting path of the output directory.  Default: 'output'
 #' @param ... An optional list of parameters to use in the output_dir function.
-#' @return An output directory that contains heat tree plots.
+#' @return An output directory that contains alpha diversity plots.
 #' @pretty_print TRUE
 #' @details This function creates an appropriate output directory, where it saves publication ready
 #' plots.
