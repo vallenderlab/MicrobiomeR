@@ -65,6 +65,7 @@ convert_proportions <- function(melted_df, tax_level) {
 #'
 #' @inheritParams transform_metacoder
 #' @family Visualizations
+#' @rdname stacked_barplot
 #' @return Returns a stacked barplot.
 #' @export
 stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel = "Samples", faceted = FALSE, title = NULL, palette_values) {
@@ -119,8 +120,8 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
 #' @title Stacked Barplots
 #' @description Create a stacked barplot to show relative abundance of taxa.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
-#' @param tax_levels The taxonomic levels, Default: 'Phylum'
-#' @return Returns a melted dataframe.
+#' @param tax_levels The taxonomic levels, Default: 'c("Phylum", "Class", "Order")'
+#' @return Returns a list of stacked barplots.+-
 #' @family Visualizations
 #' @rdname stacked_barplot
 stacked_barplots <- function(obj, tax_levels = c("Phylum", "Class", "Order"), group = "TreatmentGroup", select_otu_table = "otu_proportions") {
@@ -137,7 +138,7 @@ stacked_barplots <- function(obj, tax_levels = c("Phylum", "Class", "Order"), gr
   return(stacked_barplots)
 }
 
-#' @title Save Barplot
+#' @title Save Stacked Barplot
 #' @description Save a stacked barplot.
 #' @param plot The plot object.
 #' @param filename The name of the file. (an extension should not be included)
@@ -150,9 +151,9 @@ stacked_barplots <- function(obj, tax_levels = c("Phylum", "Class", "Order"), gr
 #' }
 #' @export
 #' @family Visualizations
-#' @rdname save_barplot
+#' @rdname save_stacked_barplot
 #' @importFrom ggplot2 ggsave
-save_barplot <- function(plot, filename) {
+save_stacked_barplot <- function(plot, filename) {
   if (is.null(filename)) {
     filename <- plot
   }
@@ -160,6 +161,54 @@ save_barplot <- function(plot, filename) {
     plot = plot, device = "tiff",
     width = 8, height = 5, units = "in", dpi = 500
   )
+}
+
+
+#' @title Save Stacked Barplots
+#' @description This function saves stacked barplot stored in a list object to an output folder.
+#' @param plots A named list of stacked barplots.
+#' @param format The format of the output image.  Default: 'tiff'
+#' @param start_path The starting path of the output directory.  Default: 'output'
+#' @param ... An optional list of parameters to use in the output_dir function.
+#' @return An output directory that contains stacked barplot.
+#' @pretty_print TRUE
+#' @details This function creates an appropriate output directory, where it saves publication ready
+#' plots.
+#' @examples
+#' \dontrun{
+#' if (interactive()) {
+#'   # This example uses data that are no longer available in the MicrobiomeR package,
+#'   # however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
+#'   library(MicrobiomeR)
+#'   analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+#'   alpha_div_plots <- alpha_diversity_plots(analyzed_silva)
+#'   # Save to \emph{./output/alpha_diversity} folder.
+#'   save_alpha_diversity_plot(salpha_div_plots)
+#' }
+#' }
+#' @export
+#' @family Visualizations
+#' @rdname save_stacked_barplots
+#' @seealso
+#'  \code{\link[MicrobiomeR]{output_dir}}
+#'
+#'  \code{\link[ggplot2]{ggsave}}
+#' @importFrom ggplot2 ggsave
+#' @importFrom crayon yellow green
+#' @importFrom glue glue
+save_stacked_barplots <- function(plots, format = "tiff", start_path = "output", ...) {
+  # Create the relative path to the heat_tree plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
+  # With the parameters set the full path will be <pwd>/output/<experiment>/heat_trees/<extra_path>.
+  full_path <- output_dir(start_path = start_path, plot_type = "stacked_barplots", ...)
+  message(glue::glue(crayon::yellow("Saving Stacked Barplots to the following directory: \n", "\r\t{full_path}")))
+  # Iterate the plot list and save them in the proper directory
+  for (rank in names(plots)) {
+    if (rank != "metacoder_object") {
+      message(crayon::green("Saving the {rank} stacked barplot."))
+      ggplot2::ggsave(filename = sprintf("%s_stacked_barplot.%s", rank, format), plot = plots[[rank]], device = format, path = full_path,
+                      width = 8, height = 5, units = "in", dpi = 500)
+    }
+  }
 }
 
 
