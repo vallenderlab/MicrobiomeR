@@ -167,7 +167,7 @@ output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end_pat
   if (mkdir == TRUE) {
     answer_flag <- FALSE
     if (dir.exists(full_path) && overwrite == FALSE) {
-      stop(glue::glue("The directory {full_path} already exists. And you don't want to overwrite the directory."))
+      message(glue::glue("The directory {full_path} already exists. And you don't want to overwrite the directory."))
     } else if (dir.exists(full_path) && overwrite == TRUE) {
       message(glue::glue(crayon::yellow("You have chosen to overwrite the directory: {full_path}.")))
       while (answer_flag == FALSE) {
