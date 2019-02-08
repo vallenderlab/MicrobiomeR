@@ -96,11 +96,16 @@ ordination_plot <- function(obj, method = "PCoA", distance = "wunifrac", color =
 #' @importFrom ggplot2 ggsave
 #' @importFrom crayon green
 #' @importFrom glue glue
-save_ordination_plots <- function(ord, format = "tiff", start_path = "output", ...) {
-  # Create the relative path to the ordination plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
-  # With the parameters set the full path will be <pwd>/output/<experiment>/ord_plot/<extra_path>.
-  full_path <- output_dir(start_path = start_path, plot_type = "ord_plot", ...)
-  message(glue::glue(crayon::yellow("Saving Ordination Plots to the following directory: \n", "\r\t{full_path}")))
-
-  # ggplot2::ggsave(filename = paste0("ordination_", tolower(method), "_", tolower(distance), ".tiff"))
+save_ordination_plots <- function(plots, format = "tiff", start_path = "output", ...) {
+  # Create the relative path to the ordination plots.  By default the path will be <pwd>/output/<experiment>/ordination/<format(Sys.time(), "%Y-%m-%d_%s")>
+  # With the parameters set the full path will be <pwd>/output/<experiment>/ordination/<extra_path>.
+  full_path <- output_dir(start_path = start_path, plot_type = "ordination", ...)
+  message(glue::glue(crayon::yellow("Saving Ordination plots to the following directory: \n", "\r\t{full_path}")))
+  # Iterate the plot list and save them in the proper directory
+  for (method in names(plots)) {
+    if (method != "metacoder_object") {
+      message(crayon::green("Saving the {method} alpha aiversity plot."))
+      ggplot2::ggsave(filename = sprintf("%s_ordination.%s", method, format), plot = plots[[method]], device = format, path = full_path, dpi = 500)
+    }
+  }
 }
