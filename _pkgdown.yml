@@ -31,7 +31,7 @@ navbar:
     - text: "Reference"
       href: reference/index.html
     - text: "Publication"
-      href: paper.html
+      href: articles/paper.html
     - text: "Changelog"
       href: news/index.html
     - text: "About"
