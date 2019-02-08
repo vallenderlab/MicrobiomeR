@@ -175,8 +175,8 @@ alpha_diversity_plots <- function(obj, measures = c("shannon", "simpson", "invsi
 #' @importFrom crayon yellow green
 #' @importFrom glue glue
 save_alpha_diversity_plots <- function(plots, format = "tiff", start_path = "output", ...) {
-  # Create the relative path to the heat_tree plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
-  # With the parameters set the full path will be <pwd>/output/<experiment>/heat_trees/<extra_path>.
+  # Create the relative path to the alpha diversity plots.  By default the path will be <pwd>/output/<experiment>/alpha_diversity/<format(Sys.time(), "%Y-%m-%d_%s")>
+  # With the parameters set the full path will be <pwd>/output/<experiment>/alpha_diversity/<extra_path>.
   full_path <- output_dir(start_path = start_path, plot_type = "alpha_diversity", ...)
   message(glue::glue(crayon::yellow("Saving Alpha Diversity plots to the following directory: \n", "\r\t{full_path}")))
   # Iterate the plot list and save them in the proper directory
