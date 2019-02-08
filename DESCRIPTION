@@ -26,7 +26,6 @@ Imports:
     glue,
     metacoder,
     modes,
-    openxlsx,
     phyloseq,
     plotly,
     purrr,
