@@ -1,7 +1,5 @@
 ---
 title: "About"
-author: "Robert Gilmore"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{About}
@@ -16,12 +14,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-The MicrobiomeR package was developed at the University of Mississippi Medical Center
+The `MicrobiomeR` package was developed at the University of Mississippi Medical Center
 in Dr. Eric Vallender's lab by Rob Gilmore and Shaurita Hutchins.  
 
-The study associated with this package was conducted by Xiao Zhang.
+This package is associated with a microbiome study (article to be submitted soon), which was conducted by Ph.D. candidate, Xiao Zhang.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 # set seed for reproducible widget id
 if (requireNamespace("htmltools", quietly = TRUE)) {
   htmlwidgets::setWidgetIdSeed(42)
