@@ -44,6 +44,7 @@ reference:
 - title: Import
   contents:
   - create_phyloseq
+  - create_metacoder
   - parse_taxonomy_default
   - parse_taxonomy_silva_128
   - parse_taxonomy_greengenes
@@ -53,6 +54,11 @@ reference:
 - title: Formatting
   contents:
   - has_concept("Formatting")
+
+- title: Statistics
+  contents:
+  - alpha_diversity_measures
+  - permanova
 
 - title: Validation
   contents:
@@ -78,3 +84,7 @@ reference:
 - title: Color Palettes
   contents:
   - has_concept("Color Palettes")
+
+- title: Miscellaneous
+  contents:
+  - create_pub_table
