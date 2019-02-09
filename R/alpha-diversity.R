@@ -1,4 +1,4 @@
-#' @title Get Alpha Diversity
+#' @title Alpha Diveristy Measues
 #' @description This function generates various alpha diversity measures include Shannon, Fisher, Coverage, Gini Simpson, and Inverse Simpson.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
 #' @param group The "TreatmentGroup" or similar grouping from your metadata to denote sample groups, Default: 'TreatmentGroup'
@@ -9,18 +9,18 @@
 #' if (interactive()) {
 #'   library(MicrobiomeR)
 #'   data <- analyzed_silva
-#'   measures <- get_alpha_diversity_measures(data)
+#'   measures <- alpha_diversity_measures(data)
 #'   measures$Shannon
 #' }
 #' }
 #' @export
-#' @rdname get_alpha_diversity_measures
+#' @rdname alpha_diversity_measures
 #' @seealso
 #'  View \code{\link[microbiome]{diversities}},\code{\link[microbiome]{meta}} to learn more about generating diversity measures with the microbiome package.
 #' @importFrom microbiome diversities meta
 #' @importFrom metacoder as_phyloseq
 #' @importFrom utils combn
-get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
+alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
   metacoder_object <- validate_MicrobiomeR_format(
     obj = create_metacoder(obj),
     valid_formats = c("analyzed_format")
@@ -51,7 +51,7 @@ get_alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 }
 
 #' @title Alpha Diversity Plot
-#' @description Plot the alpha diversity using a violin plot.
+#' @description Plot the alpha diversity using a violin plot. `alpha_diversity_plots` generates plots for all alpha diversity measures.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
 #' @param measure Select an alpha diversity measure such as shannon, gini simpson, and inverse simpson, Default: 'shannon'
 #' @param group The "TreatmentGroup" or similar grouping or column from your metadata to denote sample groups, Default: 'TreatmentGroup'
@@ -102,7 +102,7 @@ alpha_diversity_plot <- function(obj, measure = "shannon", group = "TreatmentGro
     palette <- c("#3288bd", "#d53e4f")
   } else {
     # Create a palette when there are more than 2 groups
-    palette <- get_color_palette(color_no = num_groups)
+    palette <- c("#3288bd", "#d53e4f", "#62954C", "#C59144")
   }
 
   plot <- ggpubr::ggviolin(metacoder_object$data$sample_data,
@@ -119,12 +119,7 @@ alpha_diversity_plot <- function(obj, measure = "shannon", group = "TreatmentGro
   return(plot)
 }
 
-#' @title Alpha Diversity Plots
-#' @description Generate plots for all alpha diversity measures.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
 #' @param measures A list of alpha diversity measures such as shannon, gini simpson, and inverse simpson, Default: 'c("shannon", "simpson", "invsimpson")'
-#' @param group The "TreatmentGroup" or similar grouping or column from your metadata to denote sample groups, Default: 'TreatmentGroup'
-#' @param select_otu_table Choose an otu table to analyze, Default: 'otu_proportions'
 #' @return Returns a melted dataframe.
 #' @family Visualizations
 #' @rdname alpha_diversity_plot
