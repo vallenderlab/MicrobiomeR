@@ -35,10 +35,12 @@ navbar:
     - text: "About"
       href: articles/about.html
   right:
-    - icon: fa-github
-      href: https://github.com/vallenderlab/MicrobiomeR
+    - text: "About"
+      href: articles/about.html
     - icon: fa-twitter
       href: https://twitter.com/datasnakes
+    - icon: fa-github
+      href: https://github.com/vallenderlab/MicrobiomeR
 
 reference:
 - title: Import
