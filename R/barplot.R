@@ -83,7 +83,7 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
   # Add a palette if default not given.
   if (is.null(palette_values)) {
     # Dynamically change palette colors based on number of taxa being input.
-    palette_values <- get_color_palette(pal_func = scico_palette(), color_no = length(unique(mdf[[fill]])))
+    palette_values <- get_color_palette(pal_func = scico_palette(), color_no = length(unique(mdf[[fill]])), display = FALSE)
   }
 
   # Create the theme
