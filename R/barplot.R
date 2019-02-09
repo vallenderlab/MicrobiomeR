@@ -58,7 +58,7 @@ convert_proportions <- function(melted_df, tax_level) {
 #' @import scales
 #' @import vegan
 #'
-#' @inheritParams transform_metacoder
+#' @inheritParams convert_proportions
 #' @family Visualizations
 #' @rdname stacked_barplot
 #' @return Returns a stacked barplot.
