@@ -156,7 +156,7 @@ alpha_diversity_plots <- function(obj, measures = c("shannon", "simpson", "invsi
 #'   analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
 #'   alpha_div_plots <- alpha_diversity_plots(analyzed_silva)
 #'   # Save to \emph{./output/alpha_diversity} folder.
-#'   save_alpha_diversity_plot(salpha_div_plots)
+#'   save_alpha_diversity_plot(alpha_div_plots)
 #' }
 #' }
 #' @export

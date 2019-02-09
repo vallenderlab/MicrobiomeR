@@ -25,7 +25,21 @@ test_that("creating multiple alpha diversity plots works", {
   expect_true(!is.null(alpha_diversity_plots(obj = data)))
 })
 
+plots <- alpha_diversity_plots(obj = data)
+save_alpha_diversity_plots(plots = plots, custom_path = "output/")
+
+test_that("alpha diversity plots exist", {
+  expect_true(file.exists("output/shannon_alpha_diversity.tiff"))
+  expect_true(file.exists("output/simpson_alpha_diversity.tiff"))
+  expect_true(file.exists("output/invsimpson_alpha_diversity.tiff"))
+})
+
 # Remove file created by test
 if (file.exists("Rplots.pdf")) {
   file.remove("Rplots.pdf")
+}
+
+# Remove directory created by test
+if (dir.exists("output")) {
+  unlink("output", recursive = TRUE)
 }
