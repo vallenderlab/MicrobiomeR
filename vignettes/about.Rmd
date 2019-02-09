@@ -19,6 +19,8 @@ in Dr. Eric Vallender's lab by Rob Gilmore and Shaurita Hutchins.
 
 This package is associated with a microbiome study (article to be submitted soon), which was conducted by Ph.D. candidate, Xiao Zhang.
 
+## Where are we located?
+
 ```{r, echo=FALSE, warning=FALSE}
 # set seed for reproducible widget id
 if (requireNamespace("htmltools", quietly = TRUE)) {
