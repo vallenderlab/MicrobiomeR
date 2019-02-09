@@ -147,7 +147,7 @@ Visualization of taxmap objects can be done in several ways, and `MicrobiomeR` o
 does this as well, but takes care of creating default values that we enjoyed in our heat tree plots.  
 MicrobiomeR also uses ggplot2 to create `correlation_plot()`s. 
 
-### Two "Treatment" Groups
+## Analyzing Two "Treatment" Groups
 
 ```{r message=FALSE, warning=FALSE}
 # Generate heat_trees
@@ -193,7 +193,7 @@ sb_plots$Phylum
 ```
 
 
-### Two or More "Treatment" Groups
+## Analyzing More than 2 "Treatment" Groups
 
 ```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=8}
 # Heat Trees
