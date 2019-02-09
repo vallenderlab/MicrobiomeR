@@ -30,7 +30,7 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
   phyloseq_object <- metacoder::as_phyloseq(metacoder_object, otu_table = "otu_abundance", phy_tree = "phy_tree")
 
   # Get all of the diversities.
-  divs <- microbiome::diversities(phyloseq_object, index = "all")
+  divs <- microbiome::diversity(phyloseq_object, index = "all")
   phyloseq_object.meta <- microbiome::meta(phyloseq_object)
   phyloseq_object.meta$Shannon <- divs$shannon
   phyloseq_object.meta$InverseSimpson <- divs$inverse_simpson

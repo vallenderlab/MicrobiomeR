@@ -14,8 +14,8 @@ Depends:
 Remotes: 
     github::ropensci/taxa,
     github::grunwaldlab/metacoder,
-    github::joey711/phyloseq,
-    github::microbiome/microbiome
+    github::joey711/phyloseq
+biocViews:
 Imports:
     ape,
     DT,
@@ -26,6 +26,7 @@ Imports:
     glue,
     metacoder,
     modes,
+    microbiome (>= 1.5.27),
     openxlsx,
     phyloseq,
     plotly,
