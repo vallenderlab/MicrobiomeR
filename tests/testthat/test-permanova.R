@@ -12,6 +12,11 @@ test_that("default permanova works", {
   expect_true(!is.null(permanova(data)$top_coefficients))
 })
 
+test_that("permanova using unifrac methods works", {
+  expect_warning(permanova(data, distance_method = "wunifrac"), "Coefficients were not able to be generated using this distance method.")
+  expect_warning(permanova(data, distance_method = "unifrac"), "Coefficients were not able to be generated using this distance method.")
+})
+
 p <- permanova(data)
 
 test_that("top coefficients barplot works", {
