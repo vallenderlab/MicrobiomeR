@@ -10,7 +10,7 @@ ordination_plot(obj, method = "PCoA", distance = "wunifrac",
 
 ordination_plots(obj, methods = c("PCoA", "NMDS"),
   distances = c("wunifrac", "unifrac", "bray"),
-  group = "TreatmentGroup", select_otu_table = "otu_proportions")
+  color = "TreatmentGroup", select_otu_table = "otu_proportions")
 }
 \arguments{
 \item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
@@ -27,11 +27,9 @@ ordination_plots(obj, methods = c("PCoA", "NMDS"),
 
 \item{methods}{A list of ordination methods, Default: 'c("PCoA", "NMDS")'}
 
-\item{select_otu_table}{Choose an otu table to analyze, Default: 'otu_proportions'}
+\item{distances}{A list of distance methods, Default: 'c("wunifrac", "unifrac", "bray")'}
 
 \item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
-
-\item{distancse}{A list of distance methods, Default: 'c("wunifrac", "unifrac", "bray")'}
 }
 \value{
 By default, it returns an ordination plot.
