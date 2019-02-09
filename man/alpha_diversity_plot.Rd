@@ -49,7 +49,7 @@ if (interactive()) {
 }
 }
 \seealso{
-\code{\link{get_alpha_diversity_measures}}, \code{\link[vegan]{diversity}}, \code{\link[ggpubr]{ggviolin}}
+\code{\link{alpha_diversity_measures}}, \code{\link[vegan]{diversity}}, \code{\link[ggpubr]{ggviolin}}
 
 Other Visualizations: \code{\link{correlation_data}},
   \code{\link{correlation_plots}},

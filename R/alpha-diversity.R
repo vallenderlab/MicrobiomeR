@@ -71,7 +71,7 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' }
 #' @export
 #' @rdname alpha_diversity_plot
-#' @seealso \code{\link{get_alpha_diversity_measures}}, \code{\link[vegan]{diversity}}, \code{\link[ggpubr]{ggviolin}}
+#' @seealso \code{\link{alpha_diversity_measures}}, \code{\link[vegan]{diversity}}, \code{\link[ggpubr]{ggviolin}}
 #' @family Visualizations
 #' @importFrom ggplot2 xlab ylab
 #' @importFrom ggpubr stat_compare_means ggviolin
