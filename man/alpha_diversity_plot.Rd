@@ -2,9 +2,15 @@
 % Please edit documentation in R/alpha-diversity.R
 \name{alpha_diversity_plot}
 \alias{alpha_diversity_plot}
+\alias{alpha_diversity_plots}
 \title{Alpha Diversity Plot}
 \usage{
 alpha_diversity_plot(obj, measure = "shannon",
+  group = "TreatmentGroup", select_otu_table = "otu_proportions",
+  title = NULL)
+
+alpha_diversity_plots(obj, measures = c("shannon", "simpson",
+  "invsimpson"), group = "TreatmentGroup",
   select_otu_table = "otu_proportions")
 }
 \arguments{
@@ -12,13 +18,21 @@ alpha_diversity_plot(obj, measure = "shannon",
 
 \item{measure}{Select an alpha diversity measure such as shannon, gini simpson, and inverse simpson, Default: 'shannon'}
 
+\item{group}{The "TreatmentGroup" or similar grouping or column from your metadata to denote sample groups, Default: 'TreatmentGroup'}
+
 \item{select_otu_table}{Choose an otu table to analyze, Default: 'otu_proportions'}
+
+\item{title}{The title of the plot, Default: NULL}
+
+\item{measures}{A list of alpha diversity measures such as shannon, gini simpson, and inverse simpson, Default: 'c("shannon", "simpson", "invsimpson")'}
 }
 \value{
 Returns an alpha diversity plot.
+
+Returns a melted dataframe.
 }
 \description{
-Plot the alpha diversity using a violin plot.
+Plot the alpha diversity using a violin plot. \code{alpha_diversity_plots} generates plots for all alpha diversity measures.
 }
 \details{
 Alpha diversity helps to determine the species richness (the number of different species in a sample) or evenness (similar abundance level).
@@ -29,7 +43,7 @@ We prefer to use \code{shannon} as it is better for data generated using the QUI
 if (interactive()) {
   library(MicrobiomeR)
   data <- analyzed_silva
-  plot <- alpha_diversity_plot(obj = data, measure = "shannon", select_otu_table = "otu_proportions", save = FALSE)
+  plot <- alpha_diversity_plot(obj = data, measure = "shannon", select_otu_table = "otu_proportions")
   plot
 }
 }
@@ -44,10 +58,25 @@ Other Visualizations: \code{\link{correlation_data}},
   \code{\link{heat_tree_plots}},
   \code{\link{melt_metacoder}},
   \code{\link{ordination_plot}}, \code{\link{plot_limits}},
-  \code{\link{save_barplot}},
+  \code{\link{save_alpha_diversity_plots}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},
   \code{\link{save_ordination_plots}},
+  \code{\link{save_stacked_barplots}},
+  \code{\link{top_coefficients_barplot}}
+
+Other Visualizations: \code{\link{correlation_data}},
+  \code{\link{correlation_plots}},
+  \code{\link{correlation_plot}},
+  \code{\link{heat_tree_parameters}},
+  \code{\link{heat_tree_plots}},
+  \code{\link{melt_metacoder}},
+  \code{\link{ordination_plot}}, \code{\link{plot_limits}},
+  \code{\link{save_alpha_diversity_plots}},
+  \code{\link{save_correlation_plots}},
+  \code{\link{save_heat_tree_plots}},
+  \code{\link{save_ordination_plots}},
+  \code{\link{save_stacked_barplots}},
   \code{\link{top_coefficients_barplot}}
 }
 \concept{Visualizations}

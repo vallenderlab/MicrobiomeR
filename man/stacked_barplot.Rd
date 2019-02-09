@@ -4,14 +4,19 @@
 \alias{melt_metacoder}
 \alias{convert_proportions}
 \alias{stacked_barplot}
-\title{Melt Metacoder Object}
+\alias{stacked_barplots}
+\title{Stacked Barplot}
 \usage{
 melt_metacoder(obj)
 
 convert_proportions(melted_df, tax_level)
 
 stacked_barplot(obj, tax_level = "Phylum", fill = "Phylum",
-  xlabel = "Samples", faceted = FALSE, title = NULL, palette_values)
+  xlabel = "Samples", faceted = FALSE, title = NULL,
+  palette_values = NULL)
+
+stacked_barplots(obj, tax_levels = c("Phylum", "Class", "Order"),
+  group = "TreatmentGroup", select_otu_table = "otu_proportions")
 }
 \arguments{
 \item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
@@ -28,21 +33,16 @@ stacked_barplot(obj, tax_level = "Phylum", fill = "Phylum",
 
 \item{title}{The title or name of the plot.}
 
-\item{palette_values}{A list of the colors to input to be mapped to the plot palette.}
+\item{palette_values}{A list of the colors to input to be mapped to the plot palette, Default: 'NULL'}
+
+\item{tax_levels}{The taxonomic levels, Default: 'c("Phylum", "Class", "Order")'}
 }
 \value{
-Returns a melted dataframe.
-
-Returns a transformed dataframe.
-
 Returns a stacked barplot.
 }
 \description{
-Melt the metacoder or phyloseq tables into a dataframe.
-
-Convert the dataframe abundance values to percent 100.
-
-Create a stacked barplot to show relative abundance of taxa.
+Create a stacked barplot to show relative abundance of taxa. \code{convert_proportions} converts the dataframe abundance values to percent 100 and returns a transformed dataframe.
+\code{melt_metacoder} melts the metacoder or phyloseq tables into a dataframe and returns a melted dataframe. \code{stacked_barplots} creates a stacked barplots for multiple taxonomic levels and returns a list of stacked barplots.
 }
 \examples{
 \dontrun{
@@ -77,10 +77,25 @@ Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{heat_tree_parameters}},
   \code{\link{heat_tree_plots}},
   \code{\link{ordination_plot}}, \code{\link{plot_limits}},
-  \code{\link{save_barplot}},
+  \code{\link{save_alpha_diversity_plots}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},
   \code{\link{save_ordination_plots}},
+  \code{\link{save_stacked_barplots}},
+  \code{\link{top_coefficients_barplot}}
+
+Other Visualizations: \code{\link{alpha_diversity_plot}},
+  \code{\link{correlation_data}},
+  \code{\link{correlation_plots}},
+  \code{\link{correlation_plot}},
+  \code{\link{heat_tree_parameters}},
+  \code{\link{heat_tree_plots}},
+  \code{\link{ordination_plot}}, \code{\link{plot_limits}},
+  \code{\link{save_alpha_diversity_plots}},
+  \code{\link{save_correlation_plots}},
+  \code{\link{save_heat_tree_plots}},
+  \code{\link{save_ordination_plots}},
+  \code{\link{save_stacked_barplots}},
   \code{\link{top_coefficients_barplot}}
 }
 \concept{Data Manipulators}
