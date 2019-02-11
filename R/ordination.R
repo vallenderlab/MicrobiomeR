@@ -135,7 +135,7 @@ ordination_plots <- function(obj, methods = c("PCoA", "NMDS"), distances = c("wu
 #' @importFrom ggplot2 ggsave
 #' @importFrom crayon green
 #' @importFrom glue glue
-save_ordination_plots <- function(plots, format = "tiff", start_path = "output", ...) {
+save_ordination_plots <- function(ord_plots, format = "tiff", start_path = "output", ...) {
   # Create the relative path to the ordination plots.  By default the path will be <pwd>/output/<experiment>/ordination/<format(Sys.time(), "%Y-%m-%d_%s")>
   # With the parameters set the full path will be <pwd>/output/<experiment>/ordination/<extra_path>.
   full_path <- output_dir(start_path = start_path, plot_type = "ordination", ...)
