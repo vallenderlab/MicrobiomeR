@@ -1,0 +1,287 @@
+---
+title: "Data Analysis"
+author: "Rob Gilmore & Shaurita Hutchins"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(MicrobiomeR)
+pkg.data <- MicrobiomeR:::pkg.private
+```
+
+# Data Import & Wrangling
+
+Beginning an microbiome analysis starts with importing data and wrangling it into a proper format.
+
+```{r message=FALSE, warning=FALSE}
+# Get the data files from package
+input_files <- pkg.data$input_files
+biom_file <- input_files$biom_files$silva # Path to silva biom file
+tree_file <- input_files$tree_files$silva # Path to silva tree file
+metadata_file <- input_files$metadata$two_groups # Path to Nephele metadata
+parse_func <- parse_taxonomy_silva_128 # A custom phyloseq parsing function for silva annotations
+
+# Get the phyloseq object
+phy_obj <- create_phyloseq(biom_file = biom_file, 
+                                    tree_file = tree_file, 
+                                    metadata_file = metadata_file,
+                                    parse_func = parse_func)
+
+# Get the taxmap object in the raw format
+raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
+```
+
+# Filtering Data
+
+After importing data and formatting it, data should be filtered to reduce noise and if desired, to subset data.
+
+```{r message=FALSE, warning=FALSE}
+# Remove Archaea from the metacoder object
+metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
+                                   taxon_names == "Archaea",
+                                   subtaxa = TRUE,
+                                   invert = TRUE)
+
+# Ambiguous Annotation Filter - Remove taxonomies with ambiguous names
+metacoder_obj <- metacoder::filter_ambiguous_taxa(metacoder_obj, 
+                                                  subtaxa = TRUE)
+
+# Low Sample Filter - Remove the low samples
+# The sample filter should generally be implemented first
+metacoder_obj <- sample_id_filter(obj = metacoder_obj,
+                               .f_filter = ~sum(.),
+                               .f_condition = ~.>= 20, 
+                               validated = TRUE)
+
+# Master Threshold Filter - Add the otu_proportions table and then filter OTUs based on min %
+metacoder_obj <- otu_proportion_filter(obj = metacoder_obj,
+                                       otu_percentage = 0.00001)
+
+# Taxon Prevalence Filter - Add taxa_abundance and taxa_proportions and then filter OTUs that do not
+# appear more than a certain amount of times in a certain percentage of samples at the specified
+# agglomerated rank.  This is considered a supervised method, because it relies on intermediate
+# taxonomies to filter the data.
+# The default minimum abundance is 5 and the sample percentage is 0.5 (5%).
+# Phylum
+metacoder_obj <- taxa_prevalence_filter(obj = metacoder_obj,
+                                        rank = "Phylum")
+# Class
+metacoder_obj <- taxa_prevalence_filter(obj = metacoder_obj,
+                                        rank = "Class", 
+                                        validated = TRUE)
+# Order
+metacoder_obj <- taxa_prevalence_filter(obj = metacoder_obj,
+                                        rank = "Order", 
+                                        validated = TRUE)
+
+# OTU Prevalence Filter - Filter OTUs that do not appear more than a certian amount of times in a
+# certain percentage of samples.  This is considered an unsupervised method, because it relies only
+# on the leaf OTU ids to filter the data.
+metacoder_obj <- otu_prevalence_filter(obj = metacoder_obj, 
+                                       validated = TRUE)
+
+# Coefficient of Variation Filter - Filter OTUs based on the coefficient of variation
+metacoder_obj <- cov_filter(obj = metacoder_obj,
+                            coefficient_of_variation = 3, 
+                            validated = TRUE)
+```
+
+# Analysis
+
+Analysis is primarily done with metacoder, MicrobiomeR, and ggplot2.  Before beginning the analysis
+it's wise to create an output directory.  Use `end_path=FALSE` with MicrobiomeR's `output_dir()`
+function to avoid the creation of a date formatted directory.
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+# Create a directory for whichever plot you want to save
+heat_tree_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "heat_tree")
+corr_plot_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "correlation")
+sb_plot_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "stacked_barplot")
+ord_plot_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "ordination")
+```
+
+## Statistical Analysis
+
+Statistical analysis is primarily done with the help of metacoder style functions such as the 
+`calc_*()` group of functions, and `compare_groups()`.  The taxa function `taxonomy_table()` is also 
+useful for matching stats with the proper taxonomic annotation.  MicrobiomeR creates the proper 
+tables with `as_MicrobiomeR_format(format = "analyzed_format", ...)`.
+
+```{r message=FALSE, warning=FALSE}
+# Get the statistical observation data.
+metacoder_obj <- as_MicrobiomeR_format(obj = metacoder_obj, format = "analyzed_format")
+```
+
+In addition to standard statistical analysis provided by metacoder, `MicrobiomeR` simplifies alpha diversity, ordination, and [PERMANOVA](https://onlinelibrary.wiley.com/doi/10.1002/9781118445112.stat07841) analysis.
+
+```{r message=FALSE, warning=FALSE}
+# Generate alpha diversity measures
+measures <- alpha_diversity_measures(obj = metacoder_obj)
+measures$Shannon
+```
+
+
+```{r message=FALSE, warning=FALSE}
+# Get only ordination data for the first Axis based on principal coordinates analysis using weighted unifrac.
+ordination <- ordination_plot(obj = metacoder_obj, method = "PCoA", distance = "wunifrac", only_data = TRUE)
+ordination$Axis.1
+```
+
+
+```{r message=FALSE, warning=FALSE}
+# Generate permanova statistics for data
+permanova <- permanova(obj = metacoder_obj, group = "TreatmentGroup")
+permanova$permanova$aov.tab
+```
+
+## Data Visualization
+
+Visualization of taxmap objects can be done in several ways, and `MicrobiomeR` offers the most complete visualizations of any other existing microbiome package.  The metacoder package primarily produces `heat_tree()`s for visualization, which can be used for any taxmap object.  MicrobiomeR 
+does this as well, but takes care of creating default values that we enjoyed in our heat tree plots.  
+MicrobiomeR also uses ggplot2 to create `correlation_plot()`s. 
+
+## Analyzing Two "Treatment" Groups
+
+```{r message=FALSE, warning=FALSE}
+# Generate heat_trees
+heat_tree_plots <- heat_tree_plots(metacoder_obj,
+                                       rank_list = c("Phylum", "Class", "Order"),
+                                       node_label = ifelse(wilcox_p_value > 0.05, taxon_ids, NA),
+                                       node_label_size = 2,
+                                       node_label_color = c("darkgreen"))
+names(heat_tree_plots)
+
+# Generate correlation_plots
+corr_plots <- correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
+names(corr_plots)
+
+
+# Generate stacked_barplots
+sb_plots <- stacked_barplots(metacoder_obj, tax_levels = c("Phylum", "Class", "Order"))
+names(sb_plots)
+```
+
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+# Save plots with a custom output path
+save_heat_tree_plots(htrees = heat_tree_plots, custom_path = heat_tree_path)
+save_correlation_plots(corr = corr_plots, custom_path = corr_plot_path)
+save_stacked_barplots(sb_plots = sb_plots, custom_path = sb_plot_path)
+save_ordination_plots(ord_plots = ordination, custom_path = ord_plot_path)
+```
+
+```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=8}
+# View the Phylum level heat tree
+heat_trees <- heat_tree_plots$heat_trees
+heat_trees$Phylum
+
+```
+
+```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=5.3}
+# View the Phylum level correlation plot
+corr_plots$Phylum
+```
+
+```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=5.3}
+# View the Phylum level stacked barplot
+sb_plots$Phylum
+```
+
+
+## Analyzing More than 2 "Treatment" Groups
+
+```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=8}
+# Heat Trees
+input_files <- pkg.data$input_files
+metadata_file <- input_files$metadata$three_groups
+biom_file <- input_files$biom_files$silva # Path to silva biom file
+tree_file <- input_files$tree_files$silva # Path to silva tree file
+parse_func <- parse_taxonomy_silva_128 # A custom phyloseq parsing function for silva annotations
+
+# Get the phyloseq object
+phy_obj <- create_phyloseq(biom_file = biom_file, 
+                                    tree_file = tree_file, 
+                                    metadata_file = metadata_file,
+                                    parse_func = parse_func)
+
+# Get the taxmap object in the raw format
+raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
+# Remove Archaea from the metacoder object
+metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
+                                   taxon_names == "Archaea",
+                                   subtaxa = TRUE,
+                                   invert = TRUE)
+
+# Ambiguous Annotation Filter - Remove taxonomies with ambiguous names
+metacoder_obj <- metacoder::filter_ambiguous_taxa(metacoder_obj, 
+                                                  subtaxa = TRUE)
+
+# Low Sample Filter - Remove the low samples
+# The sample filter should generally be implemented first
+metacoder_obj <- sample_id_filter(obj = metacoder_obj,
+                               .f_filter = ~sum(.),
+                               .f_condition = ~.>= 20, 
+                               validated = TRUE)
+
+# Master Threshold Filter - Add the otu_proportions table and then filter OTUs based on min %
+metacoder_obj <- otu_proportion_filter(obj = metacoder_obj,
+                                       otu_percentage = 0.00001)
+
+# Taxon Prevalence Filter - Add taxa_abundance and taxa_proportions and then filter OTUs that do not
+# appear more than a certian amount of times in a certain percentage of samples at the specified
+# agglomerated rank.  This is considered a supervised method, because it relies on intermediate
+# taxonomies to filter the data.
+# The default minimum abundance is 5 and the sample percentage is 0.5 (5%).
+# Phylum
+metacoder_obj <- taxa_prevalence_filter(obj = metacoder_obj,
+                                        rank = "Phylum")
+# Class
+metacoder_obj <- taxa_prevalence_filter(obj = metacoder_obj,
+                                        rank = "Class", 
+                                        validated = TRUE)
+# Order
+metacoder_obj <- taxa_prevalence_filter(obj = metacoder_obj,
+                                        rank = "Order", 
+                                        validated = TRUE)
+
+# OTU Prevalence Filter - Filter OTUs that do not appear more than a certian amount of times in a
+# certain percentage of samples.  This is considered an unsupervised method, because it relies only
+# on the leaf OTU ids to filter the data.
+metacoder_obj <- otu_prevalence_filter(obj = metacoder_obj, 
+                                       validated = TRUE)
+
+# Coefficient of Variation Filter - Filter OTUs based on the coefficient of variation
+metacoder_obj <- cov_filter(obj = metacoder_obj,
+                            coefficient_of_variation = 3, 
+                            validated = TRUE)
+metacoder_obj <- as_MicrobiomeR_format(obj = metacoder_obj, format = "analyzed_format")
+
+# Generate heat_trees
+heat_tree_plots <- heat_tree_plots(metacoder_obj,
+                                       rank_list = c("Phylum", "Class", "Order"),
+                                       node_label = ifelse(wilcox_p_value > 0.05, taxon_ids, NA),
+                                       node_label_size = 2,
+                                       node_label_color = c("darkgreen"))
+
+heat_trees <- heat_tree_plots$heat_trees
+heat_trees$Phylum
+
+
+# Generate Correlation plots
+corr_plots <- correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
+
+corr_plots$Class$Phylum$`Exp_Var2-vs-Exp_Var1`
+corr_plots$Class$Phylum$`Exp_Var2-vs-Control`
+corr_plots$Class$Phylum$`Exp_Var1-vs-Control`
+```
+
+

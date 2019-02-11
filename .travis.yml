@@ -1,0 +1,30 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+sudo: false
+cache: packages
+warnings_are_errors: false
+cran: http://cran.rstudio.com
+
+branches:
+  only:
+  - master
+  - dev-master
+  - build-fixes
+
+
+env:
+  global:
+    - _R_CHECK_FORCE_SUGGESTS_=false
+    - R_REMOTES_NO_ERRORS_FROM_WARNINGS=true
+
+r:
+- release
+- devel
+
+r_github_packages:
+  - r-lib/covr
+
+after_success:
+  - R CMD INSTALL $PKG_TARBALL
+  - Rscript -e 'covr::codecov()'

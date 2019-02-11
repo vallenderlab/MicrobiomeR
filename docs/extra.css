@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css?family=Quicksand");
+@import url('https://fonts.googleapis.com/css?family=Muli');
+@import url('https://fonts.googleapis.com/css?family=Anonymous+Pro');
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+
+body {
+  font-family: "Quicksand", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
+  font-family: "Quicksand", "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+}
+
+pre, code {
+  font-family: "Inconsolata", Consolas, monospace;
+}
+
+.navbar-default {
+  background-color: #1B243C;
+  border-color: #1B243C;
+  color: #fff;
+}
+
+.label-danger {
+    background-color: #3E7BAA;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+    color: #ffffff;
+    background-color: #273457;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+    color: #ffffff;
+    background-color: #273457;
+}
+
+a {
+    color: #3E7BAA;
+    text-decoration: none;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+    color: #ffffff;
+    background-color: #3E7BAA;
+}
+
+.navbar-default .dropdown-menu {
+    background-color: #1B243C;
+}
+
+.navbar-default .navbar-nav>.open>a {
+    background-color: #1B243C;
+    color: #ffffff;
+}
+
+.navbar-default .navbar-nav>.open>a:hover {
+    background-color: #273457;
+    color: #ffffff;
+}
+
+.navbar-default .navbar-nav>li>a:hover,.navbar-default .navbar-nav>li>a:focus{
+    color: #ffffff;
+    background-color: #273457;
+}
+.navbar-default .navbar-nav>.active>a,.navbar-default .navbar-nav>.active>a:hover,.navbar-default .navbar-nav>.active>a:focus{
+    color: #ffffff;
+    background-color: #1B243C;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus{
+    background-color: #273457;
+    color: #ffffff;
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu>li>a:hover {
+    color: #ffffff;
+    background-color: #273457;
+}
+
+code {
+    font-size: 100%;
+}
+
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu>li>a{
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover,.navbar-default .navbar-nav .open .dropdown-menu>li>a:focus{
+        color: #ffffff;
+        background-color: #1B243C;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu>.active>a,.navbar-default .navbar-nav .open .dropdown-menu>.active>a:hover,.navbar-default .navbar-nav .open .dropdown-menu>.active>a:focus{
+        color: #ffffff;
+        background-color: #1B243C;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu>.disabled>a,.navbar-default .navbar-nav .open .dropdown-menu>.disabled>a:hover,.navbar-default .navbar-nav .open .dropdown-menu>.disabled>a:focus{
+        color: #ffffff;
+        background-color: transparent;
+    }
+}

@@ -2,16 +2,29 @@
 % Please edit documentation in R/phyloseq.R
 \name{pick_new_outgroup}
 \alias{pick_new_outgroup}
-\title{Pick New Outgroup}
+\title{Pick Outgroup for Tree}
 \usage{
 pick_new_outgroup(unrooted_tree)
 }
 \arguments{
-\item{unrooted_tree}{DESCRIPTION.}
+\item{unrooted_tree}{An unrooted tree object.}
 }
 \value{
-RETURN_DESCRIPTION
+A new tree with the longest bracnh as the outgroup.
 }
 \description{
-The tree rooting functions inspired by recent comments in https://github.com/joey711/phyloseq/issues/597
+Pick an outgroup for rooting a phylogenetic tree.
 }
+\details{
+This function preprocess a phylogenetic tree for rooting by the longest edge.
+Please see this issue for more details \url{https://github.com/joey711/phyloseq/issues/597}.
+}
+\seealso{
+\code{\link[data.table]{data.table}}
+
+\code{\link[ape]{summary.phylo}}
+
+Other Phylogenetic Tree Manipulators: \code{\link{root_by_longest_edge}},
+  \code{\link{root_phyloseq_tree}}
+}
+\concept{Phylogenetic Tree Manipulators}

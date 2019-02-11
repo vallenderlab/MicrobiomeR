@@ -1,0 +1,208 @@
+---
+title: "Filtering Data"
+author: "Robert Gilmore"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Filtering}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(MicrobiomeR)
+pkg.data <- MicrobiomeR:::pkg.private
+```
+
+# Data Wrangling
+
+```{r message=FALSE, warning=FALSE}
+# Get the data files from package
+input_files <- pkg.data$input_files
+biom_file <- input_files$biom_files$silva # Path to silva biom file
+tree_file <- input_files$tree_files$silva # Path to silva tree file
+metadata_file <- input_files$metadata$two_groups # Path to Nephele metadata
+parse_func <- parse_taxonomy_silva_128 # A custom phyloseq parsing function for silva annotations
+
+# Get the phyloseq object
+phy_obj <- create_phyloseq(biom_file = biom_file, 
+                           tree_file = tree_file, 
+                           metadata_file = metadata_file,
+                           parse_func = parse_func)
+
+# Get the taxmap object in the raw format
+raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
+```
+
+# Taxmap Filtering
+
+Metacoder is a highly useful package that comes with tons of features right out of the box.  Functions
+such as `metacoder::filter_ambiguous_taxa()`, `taxa::filter_taxa()`, and `taxa::filter_obs()` for instance
+can almost always be used in your workflow.  
+
+```{r message=FALSE, warning=FALSE}
+# Remove Archaea from the metacoder object
+metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
+                                   taxon_names == "Archaea",
+                                   subtaxa = TRUE,
+                                   invert = TRUE)
+
+# Ambiguous Annotation Filter - Remove taxonomies with ambiguous names
+metacoder_obj <- metacoder::filter_ambiguous_taxa(metacoder_obj, 
+                                                  subtaxa = TRUE)
+```
+
+# Basic Filtering
+
+Three functions are provided by MicrobiomeR that do some basic filtering:
+
+* `sample_id_filter()` for filtering samples.
+* `taxon_id_filter()` for filtering by taxon_id, which includes intermediate taxa.
+* `otu_id_filter()` for filtering by otu_id, which only includes leaf taxa.
+
+These functions all take the same parameters, most noteably a transformation function (.f_transform),
+a filtering function (.f_filter), and a coditional function (.f_condition).
+
+```{r message=FALSE, warning=FALSE}
+# Low Sample Filter - Remove the low samples
+# The sample filter should generally be implemented first
+metacoder_obj <- sample_id_filter(obj = metacoder_obj,
+                               .f_filter = ~sum(.),
+                               .f_condition = ~.>= 20, 
+                               validated = TRUE)
+```
+
+# Advanced Filtering
+
+The advanced filtering functions available with MicrobiomeR do several things.  They wrap the basic 
+filtering functions mentioned above, they wrap common metacoder and taxa functions, and they mimic 
+the tools found in the phyloseq package.  Below I've mentioned some of them and how they relate to 
+the phyloseq package:
+
+* `agglomerate_metacoder()` is equivalent to `phyloseq::tax_glom()`.
+* `otu_proportion_filter()` is seen in the first step in phyloseq's [preprocessing](http://joey711.github.io/phyloseq/preprocess.html#preprocessing) vignette.
+* `Prevalence Filtering`  functions filter observations by thier prevelance across samples.
+    * (Unsupervised) `otu_prevelance_filter()` is seen in phyloseq's [prevalence
+    filtering](http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#prevalence_filtering) vignette.
+    * (Supervised) `taxa_prevalence_filter()` is seen in phyloseq's [taxonomic filtering](http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#taxonomic_filtering) vignette.
+* `cov_filter()` is seen in the nineth step in phyloseq's [preprocessing](http://joey711.github.io/phyloseq/preprocess.html#preprocessing) vignette.
+
+```{r message=FALSE, warning=FALSE}
+# Master Threshold Filter - Add the otu_proportions table and then filter OTUs based on min %
+metacoder_obj <- otu_proportion_filter(obj = metacoder_obj,
+                                       otu_percentage = 0.00001)
+
+# Taxon Prevalence Filter - Add taxa_abundance and taxa_proportions and then filter OTUs that do not
+# appear more than a certian amount of times in a certain percentage of samples at the specified
+# agglomerated rank.  This is considered a supervised method, because it relies on intermediate
+# taxonomies to filter the data.
+# The default minimum abundance is 5 and the sample percentage is 0.5 (5%).
+# Phylum
+metacoder_obj <- taxa_prevalence_filter(obj = metacoder_obj,
+                                        rank = "Phylum")
+# Class
+metacoder_obj <- taxa_prevalence_filter(obj = metacoder_obj,
+                                        rank = "Class", 
+                                        validated = TRUE)
+# Order
+metacoder_obj <- taxa_prevalence_filter(obj = metacoder_obj,
+                                        rank = "Order", 
+                                        validated = TRUE)
+
+# OTU Prevalence Filter - Filter OTUs that do not appear more than a certian amount of times in a
+# certain percentage of samples.  This is considered an unsupervised method, because it relies only
+# on the leaf OTU ids to filter the data.
+metacoder_obj <- otu_prevalence_filter(obj = metacoder_obj, 
+                                       validated = TRUE)
+
+# Coefficient of Variation Filter - Filter OTUs based on the coefficient of variation
+metacoder_obj <- cov_filter(obj = metacoder_obj,
+                            coefficient_of_variation = 3, 
+                            validated = TRUE)
+```
+
+# Other Filtering
+
+As mentioned previously taxmap filtering can be done in any way that fits your needs with the `taxa`
+and `metacoder` packages.  However, MicrobiomeR also provides some utility based function for 
+filtering/manipulating your _observation_ data by hand.  Observation data can be accessed within
+the metacoder object.  Make sure you don't manipulate existing data inside of your taxmap object
+unless you're absolutely sure you know what you're doing.
+
+## Transposing
+
+```{r message=FALSE, warning=FALSE}
+# Get the abundance tables from the taxmap object
+taxa_abund <- metacoder_obj$data$taxa_abundance
+otu_abund <- metacoder_obj$data$otu_abundance
+
+# Transposing with one ID (taxon_id)
+taxa_abund %>% transposer(ids = "taxon_id", header_name = "samples")
+
+# Re-Transposing with one ID (taxon_id)
+taxa_abund %>% 
+  transposer("taxon_id", "samples") %>% 
+  transposer("samples", "taxon_id")
+
+# Transposing with two IDs (taxon_id, otu_id)
+# The column headers will be a combination of the categorical data that will
+# be parsed and split back into individual columns if retransposed.
+otu_abund %>% 
+  transposer("otu_id", "samples")
+
+# Re-Transposing with two IDs (taxon_id, otu_id)
+# When you transpose categorical data, the column headers are lost.
+# To re-transpose you have to supply these headers
+otu_abund %>% 
+  transposer("otu_id", "samples") %>% 
+  transposer("samples", "otu_id", 
+             separated_categories = c("taxon_id", "otu_id"))
+```
+
+## Transforming
+
+```{r message=FALSE, warning=FALSE}
+# Transforming to proportions/percentages by COLUMN
+taxa_abund %>% 
+  transformer(func = ~./sum(.))
+
+# Transforming by ROW is also possible
+# This function will transpose/retranspose so other information is needed
+taxa_abund %>% 
+  transformer(by = "row", 
+              func = ~./sum(.), 
+              ids = "taxon_id", 
+              header_name = "samples", 
+              separated_categories = c("taxon_id"))
+```
+
+## Excel-Like VLookup
+
+This function was # borrowed from \url{https://www.r-bloggers.com/an-r-vlookup-not-so-silly-idea/}.
+
+```{r message=FALSE, warning=FALSE}
+# Get analyzed Data
+metacoder_obj <- as_MicrobiomeR_format(obj = metacoder_obj, format = "analyzed_format")
+
+# Create agglomerated taxmaps for phylum/class
+phylum_mo <- agglomerate_metacoder(obj = metacoder_obj, rank = "Phylum")
+class_mo <- agglomerate_metacoder(obj = metacoder_obj, rank = "Class")
+# Get some observation data
+phylum_data <- phylum_mo$data$stats_tax_data
+class_data <- class_mo$data$stats_tax_data
+
+# Take the Phylum in the "phylum_data" and cross reference these in the "class_data".
+# Reutrn the "wilcox_p_value" of the class_data.
+class_p_value <- vlookup(lookup_vector = phylum_data$Phylum, 
+                         df = class_data, 
+                         match_var = "Phylum", 
+                         return_var = "wilcox_p_value")
+
+# Create a new column in the phylum_data.
+new_data <- phylum_data %>% dplyr::mutate(class_p_value = class_p_value)
+new_data[c("taxon_id", "Phylum", "Class", "class_p_value", "wilcox_p_value")]
+```

@@ -1,0 +1,119 @@
+---
+title: "Using Color Palettes"
+author: "Rob Gilmore & Shaurita Hutchins"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Color Palettes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(MicrobiomeR)
+pkg.data <- MicrobiomeR:::pkg.private
+```
+
+# Introduction
+
+The color palette workflow created for MicrobiomeR are based on the 
+`get_color_palette(pal_func = ...)` with a palette function that returns
+`grDevices::colorRampPalette(...)` (called), `grDevices::colorRampPalette` (not called),
+or a color palette function that returns a character vector.  Several palette funcitons
+come built with MicrobiomeR and are used in the plotting functions.
+
+## Getting a Color Palette
+
+Getting a color palette is simple.  You can toggle the palette preview with `display=FALSE`.
+
+```{r message=FALSE, warning=FALSE}
+analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+data <- analyzed_silva$data$stats_tax_data$Phylum
+data_len <- length(unique(data))
+custom_pal <- get_color_palette(color_no=data_len)
+print(custom_pal)
+
+```
+
+## Scico
+
+We have built in support for the [scico](https://github.com/thomasp85/scico) package.
+
+```{r message=FALSE, warning=FALSE}
+basic_pal <- scico_palette(scico_palette="hawaii")(25)
+pie(rep(1, length(basic_pal)), col=basic_pal)
+print(basic_pal)
+better_pal <- get_color_palette(pal_func = scico_palette, color_no = 25)
+print(better_pal)
+```
+
+## Viridis
+
+We also provide support for the [viridis](https://github.com/sjmgarnier/viridis) package.
+
+Typically, you'd use the viridis palette like we do below.
+```{r message=FALSE, warning=FALSE}
+basic_pal <- viridis::viridis(n=25, option="magma")
+pie(rep(1, length(basic_pal)), col=basic_pal)
+print(basic_pal)
+```
+
+With `MicrobiomeR`, the viridis palette can be optimized.
+```{r message=FALSE, warning=FALSE}
+better_pal <- get_color_palette(pal_func = viridis_palette, color_no = 25)
+pie(rep(1, length(better_pal)), col=better_pal)
+print(better_pal)
+```
+
+## Combinging Color Palettes
+
+Here is a useful functionality.  Combining color palettes can help with situations
+where you need something more custom.  This can be especially helpful if you are using
+more than 20 colors.  The `combination_palette` function can take a dynamic number of 
+arguments, must be named and the value must be a `list`.  The list members can contain members with the following names:  
+
+> You can use any name for your arguments, but the values must be a named list.
+  palette:  This is a palette function that returns a vector of colors.
+  args:  This is another named list used for the palette function parameters.
+  range:  This is a range (1:10) used to subset the color palette vector.
+  rev:  This is a logical (TRUE/FALSE)used to reverse the color palette.
+
+```{r message=FALSE, warning=FALSE}
+# This is the code for MicrobiomeR::viridis_magma_palette, but
+# it's also a useful example for understanding how this works.
+ viridis_magma_palette <- function(viridis_number = 800, 
+                                   viridis_range = 300:viridis_number,
+                                   viridis_rev = TRUE,
+                                   magma_number = 500, 
+                                   magma_range = 0:magma_number, 
+                                   magma_rev = FALSE, 
+                                   ...) {
+   # Get the arguments for both functions
+   if (!missing(...)){
+       v_args = list(n=viridis_number, ...)
+       m_args = list(n=magma_number, ...)
+   } else {
+       v_args = list(n=viridis_number)
+       m_args = list(n=magma_number)
+   }
+   # Get combo palette
+   crp <- combination_palette(viridis =
+                                 list(palette = viridis::viridis,
+                                       args = v_args,
+                                       range = viridis_range,
+                                       rev = viridis_rev),
+                                magma =
+                                  list(palette = viridis::magma,
+                                       args = m_args,
+                                       range = magma_range,
+                                       rev = magma_rev)
+                                )
+     return(crp)
+ }
+combo_palette <- get_color_palette(pal_func = viridis_magma_palette)
+combo_palette
+```
