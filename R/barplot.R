@@ -166,7 +166,7 @@ save_stacked_barplots <- function(sb_plots, format = "tiff", start_path = "outpu
   full_path <- output_dir(start_path = start_path, plot_type = "stacked_barplots", ...)
   message(glue::glue(crayon::yellow("Saving Stacked Barplots to the following directory: \n", "\r\t{full_path}")))
   # Iterate the plot list and save them in the proper directory
-  for (rank in names(plots)) {
+  for (rank in names(sb_plots)) {
     if (rank != "metacoder_object") {
       message(crayon::green("Saving the {rank} stacked barplot."))
       ggplot2::ggsave(
