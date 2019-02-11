@@ -16,8 +16,8 @@
 #' @export
 #' @rdname alpha_diversity_measures
 #' @seealso
-#'  View \code{\link[microbiome]{diversities}},\code{\link[microbiome]{meta}} to learn more about generating diversity measures with the microbiome package.
-#' @importFrom microbiome diversities meta
+#'  View \code{\link[microbiome]{alpha}},\code{\link[microbiome]{meta}} to learn more about generating diversity measures with the microbiome package.
+#' @importFrom microbiome alpha meta
 #' @importFrom metacoder as_phyloseq
 #' @importFrom utils combn
 alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
@@ -30,7 +30,7 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
   phyloseq_object <- metacoder::as_phyloseq(metacoder_object, otu_table = "otu_abundance", phy_tree = "phy_tree")
 
   # Get all of the diversities.
-  divs <- microbiome::diversity(phyloseq_object, index = "all")
+  divs <- microbiome::alpha(phyloseq_object, index = "all")
   phyloseq_object.meta <- microbiome::meta(phyloseq_object)
   phyloseq_object.meta$Shannon <- divs$shannon
   phyloseq_object.meta$InverseSimpson <- divs$inverse_simpson
@@ -77,6 +77,7 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' @importFrom ggpubr stat_compare_means ggviolin
 #' @importFrom ggthemes theme_pander
 #' @importFrom utils combn
+#' @importFrom vegan diversity
 alpha_diversity_plot <- function(obj, measure = "shannon", group = "TreatmentGroup", select_otu_table = "otu_proportions", title = NULL) {
   # Validate data format
   metacoder_object <- validate_MicrobiomeR_format(

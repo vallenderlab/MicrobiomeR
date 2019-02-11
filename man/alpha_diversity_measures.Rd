@@ -28,5 +28,5 @@ if (interactive()) {
 }
 }
 \seealso{
-View \code{\link[microbiome]{diversities}},\code{\link[microbiome]{meta}} to learn more about generating diversity measures with the microbiome package.
+View \code{\link[microbiome]{alpha}},\code{\link[microbiome]{meta}} to learn more about generating diversity measures with the microbiome package.
 }
