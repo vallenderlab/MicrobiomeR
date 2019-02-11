@@ -44,7 +44,6 @@ Imports:
     ggthemes,
     crayon,
     biomformat,
-    microbiome,
     forcats,
     ggrepel,
     scales,
