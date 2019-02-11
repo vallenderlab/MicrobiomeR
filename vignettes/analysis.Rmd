@@ -175,6 +175,8 @@ names(sb_plots)
 # Save plots with a custom output path
 save_heat_tree_plots(htrees = heat_tree_plots, custom_path = heat_tree_path)
 save_correlation_plots(corr = corr_plots, custom_path = corr_plot_path)
+save_stacked_barplots(sb_plots = sb_plots, custom_path = sb_plot_path)
+save_ordination_plots(ord_plots = ordination, custom_path = ord_plot_path)
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=8}
