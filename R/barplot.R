@@ -160,7 +160,7 @@ stacked_barplots <- function(obj, tax_levels = c("Phylum", "Class", "Order"), gr
 #' @importFrom ggplot2 ggsave
 #' @importFrom crayon yellow green
 #' @importFrom glue glue
-save_stacked_barplots <- function(plots, format = "tiff", start_path = "output", ...) {
+save_stacked_barplots <- function(sb_plots, format = "tiff", start_path = "output", ...) {
   # Create the relative path to the heat_tree plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
   # With the parameters set the full path will be <pwd>/output/<experiment>/heat_trees/<extra_path>.
   full_path <- output_dir(start_path = start_path, plot_type = "stacked_barplots", ...)
