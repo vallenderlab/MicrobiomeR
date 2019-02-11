@@ -141,7 +141,7 @@ save_ordination_plots <- function(plots, format = "tiff", start_path = "output",
   full_path <- output_dir(start_path = start_path, plot_type = "ordination", ...)
   message(glue::glue(crayon::yellow("Saving Ordination plots to the following directory: \n", "\r\t{full_path}")))
   # Iterate the plot list and save them in the proper directory
-  for (method in names(plots)) {
+  for (method in names(ord_plots)) {
     if (method != "metacoder_object") {
       message(crayon::green("Saving the {method} ordination plot."))
       ggplot2::ggsave(filename = sprintf("%s_ordination.%s", method, format), plot = ord_plots[[method]], device = format, path = full_path, dpi = 500)
