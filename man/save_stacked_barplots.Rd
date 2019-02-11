@@ -4,11 +4,11 @@
 \alias{save_stacked_barplots}
 \title{Save Stacked Barplots}
 \usage{
-save_stacked_barplots(plots, format = "tiff", start_path = "output",
+save_stacked_barplots(sb_plots, format = "tiff", start_path = "output",
   ...)
 }
 \arguments{
-\item{plots}{A named list of stacked barplots.}
+\item{sb_plots}{A named list of stacked barplots.}
 
 \item{format}{The format of the output image.  Default: 'tiff'}
 

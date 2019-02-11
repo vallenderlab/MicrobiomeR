@@ -130,7 +130,7 @@ stacked_barplots <- function(obj, tax_levels = c("Phylum", "Class", "Order"), gr
 
 #' @title Save Stacked Barplots
 #' @description This function saves stacked barplot stored in a list object to an output folder.
-#' @param plots A named list of stacked barplots.
+#' @param sb_plots A named list of stacked barplots.
 #' @param format The format of the output image.  Default: 'tiff'
 #' @param start_path The starting path of the output directory.  Default: 'output'
 #' @param ... An optional list of parameters to use in the output_dir function.
@@ -161,8 +161,8 @@ stacked_barplots <- function(obj, tax_levels = c("Phylum", "Class", "Order"), gr
 #' @importFrom crayon yellow green
 #' @importFrom glue glue
 save_stacked_barplots <- function(sb_plots, format = "tiff", start_path = "output", ...) {
-  # Create the relative path to the heat_tree plots.  By default the path will be <pwd>/output/<experiment>/heat_trees/<format(Sys.time(), "%Y-%m-%d_%s")>
-  # With the parameters set the full path will be <pwd>/output/<experiment>/heat_trees/<extra_path>.
+  # Create the relative path to the stacked barplots.  By default the path will be <pwd>/output/<experiment>/stacked_barplots/<format(Sys.time(), "%Y-%m-%d_%s")>
+  # With the parameters set the full path will be <pwd>/output/<experiment>/stacked_barplots/<extra_path>.
   full_path <- output_dir(start_path = start_path, plot_type = "stacked_barplots", ...)
   message(glue::glue(crayon::yellow("Saving Stacked Barplots to the following directory: \n", "\r\t{full_path}")))
   # Iterate the plot list and save them in the proper directory

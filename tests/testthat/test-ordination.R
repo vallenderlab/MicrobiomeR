@@ -23,6 +23,18 @@ test_that("creating multiple ordination plots works", {
   expect_true(!is.null(ordination_plots(obj = data, methods = c("PCoA", "NMDS"), distances = NULL)))
 })
 
+plots <- ordination_plots(obj = data)
+save_ordination_plots(ord_plots = plots, custom_path = "output/")
+
+test_that("ordination plots exist", {
+  expect_true(file.exists("output/pcoa_wunifrac_ordination.tiff"))
+  expect_true(file.exists("output/pcoa_unifrac_ordination.tiff"))
+  expect_true(file.exists("output/pcoa_bray_ordination.tiff"))
+  expect_true(file.exists("output/nmds_wunifrac_ordination.tiff"))
+  expect_true(file.exists("output/nmds_unifrac_ordination.tiff"))
+  expect_true(file.exists("output/nmds_bray_ordination.tiff"))
+})
+
 # Remove file created by test
 if (file.exists("Rplots.pdf")) {
   file.remove("Rplots.pdf")

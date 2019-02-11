@@ -26,7 +26,7 @@ test_that("creating multiple alpha diversity plots works", {
 })
 
 plots <- alpha_diversity_plots(obj = data)
-save_alpha_diversity_plots(plots = plots, custom_path = "output/")
+save_alpha_diversity_plots(alpha_div_plots = plots, custom_path = "output/")
 
 test_that("alpha diversity plots exist", {
   expect_true(file.exists("output/shannon_alpha_diversity.tiff"))

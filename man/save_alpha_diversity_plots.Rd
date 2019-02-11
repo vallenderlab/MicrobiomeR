@@ -4,11 +4,11 @@
 \alias{save_alpha_diversity_plots}
 \title{Save Alpha Diversity Plots}
 \usage{
-save_alpha_diversity_plots(plots, format = "tiff",
+save_alpha_diversity_plots(alpha_div_plots, format = "tiff",
   start_path = "output", ...)
 }
 \arguments{
-\item{plots}{A named list of alpha diversity plots.}
+\item{alpha_div_plots}{A named list of alpha diversity plots.}
 
 \item{format}{The format of the output image.  Default: 'tiff'}
 
@@ -35,7 +35,7 @@ if (interactive()) {
   analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
   alpha_div_plots <- alpha_diversity_plots(analyzed_silva)
   # Save to \\emph{./output/alpha_diversity} folder.
-  save_alpha_diversity_plot(salpha_div_plots)
+  save_alpha_diversity_plot(alpha_div_plots)
 }
 }
 }

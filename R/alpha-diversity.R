@@ -139,7 +139,7 @@ alpha_diversity_plots <- function(obj, measures = c("shannon", "simpson", "invsi
 
 #' @title Save Alpha Diversity Plots
 #' @description This function saves alpha diversity plots stored in a list object to an output folder.
-#' @param plots A named list of alpha diversity plots.
+#' @param alpha_div_plots A named list of alpha diversity plots.
 #' @param format The format of the output image.  Default: 'tiff'
 #' @param start_path The starting path of the output directory.  Default: 'output'
 #' @param ... An optional list of parameters to use in the output_dir function.
@@ -169,16 +169,16 @@ alpha_diversity_plots <- function(obj, measures = c("shannon", "simpson", "invsi
 #' @importFrom ggplot2 ggsave
 #' @importFrom crayon yellow green
 #' @importFrom glue glue
-save_alpha_diversity_plots <- function(plots, format = "tiff", start_path = "output", ...) {
+save_alpha_diversity_plots <- function(alpha_div_plots, format = "tiff", start_path = "output", ...) {
   # Create the relative path to the alpha diversity plots.  By default the path will be <pwd>/output/<experiment>/alpha_diversity/<format(Sys.time(), "%Y-%m-%d_%s")>
   # With the parameters set the full path will be <pwd>/output/<experiment>/alpha_diversity/<extra_path>.
   full_path <- output_dir(start_path = start_path, plot_type = "alpha_diversity", ...)
   message(glue::glue(crayon::yellow("Saving Alpha Diversity plots to the following directory: \n", "\r\t{full_path}")))
   # Iterate the plot list and save them in the proper directory
-  for (measure in names(plots)) {
+  for (measure in names(alpha_div_plots)) {
     if (measure != "metacoder_object") {
       message(crayon::green("Saving the {measure} alpha aiversity plot."))
-      ggplot2::ggsave(filename = sprintf("%s_alpha_diversity.%s", measure, format), plot = plots[[measure]], device = format, path = full_path, dpi = 500)
+      ggplot2::ggsave(filename = sprintf("%s_alpha_diversity.%s", measure, format), plot = alpha_div_plots[[measure]], device = format, path = full_path, dpi = 500)
     }
   }
 }

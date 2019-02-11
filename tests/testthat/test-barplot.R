@@ -17,7 +17,7 @@ test_that("creating multiple stacked barplots works", {
 })
 
 plots <- stacked_barplots(obj = data)
-save_stacked_barplots(plots = plots, custom_path = "output/")
+save_stacked_barplots(sb_plots = plots, custom_path = "output/")
 
 test_that("stacked barplots exist", {
   expect_true(file.exists("output/phylum_stacked_barplot.tiff"))
