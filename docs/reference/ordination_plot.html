@@ -152,7 +152,7 @@ Generate plots for a list of ordination methods and distances." />
 
 <span class='fu'>ordination_plots</span>(<span class='no'>obj</span>, <span class='kw'>methods</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"PCoA"</span>, <span class='st'>"NMDS"</span>),
   <span class='kw'>distances</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"wunifrac"</span>, <span class='st'>"unifrac"</span>, <span class='st'>"bray"</span>),
-  <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"TreatmentGroup"</span>, <span class='kw'>select_otu_table</span> <span class='kw'>=</span> <span class='st'>"otu_proportions"</span>)</pre>
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"TreatmentGroup"</span>, <span class='kw'>select_otu_table</span> <span class='kw'>=</span> <span class='st'>"otu_proportions"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -186,16 +186,12 @@ Generate plots for a list of ordination methods and distances." />
       <td><p>A list of ordination methods, Default: 'c("PCoA", "NMDS")'</p></td>
     </tr>
     <tr>
-      <th>select_otu_table</th>
-      <td><p>Choose an otu table to analyze, Default: 'otu_proportions'</p></td>
+      <th>distances</th>
+      <td><p>A list of distance methods, Default: 'c("wunifrac", "unifrac", "bray")'</p></td>
     </tr>
     <tr>
       <th>obj</th>
       <td><p>An object to be converted to a metacoder object with <code><a href='create_metacoder.html'>create_metacoder</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>distancse</th>
-      <td><p>A list of distance methods, Default: 'c("wunifrac", "unifrac", "bray")'</p></td>
     </tr>
     </table>
     

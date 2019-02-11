@@ -39,3 +39,8 @@ test_that("ordination plots exist", {
 if (file.exists("Rplots.pdf")) {
   file.remove("Rplots.pdf")
 }
+
+# Remove directory created by test
+if (dir.exists("output")) {
+  unlink("output", recursive = TRUE)
+}

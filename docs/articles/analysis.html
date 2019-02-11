@@ -102,7 +102,7 @@
       <h1>Data Analysis</h1>
                         <h4 class="author">Rob Gilmore &amp; Shaurita Hutchins</h4>
             
-            <h4 class="date">2019-02-08</h4>
+            <h4 class="date">2019-02-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vallenderlab/MicrobiomeR/blob/master/vignettes/analysis.Rmd"><code>vignettes/analysis.Rmd</code></a></small>
       <div class="hidden name"><code>analysis.Rmd</code></div>
@@ -190,7 +190,9 @@
 <p>Analysis is primarily done with metacoder, MicrobiomeR, and ggplot2. Before beginning the analysis it’s wise to create an output directory. Use <code>end_path=FALSE</code> with MicrobiomeR’s <code><a href="../reference/output_dir.html">output_dir()</a></code> function to avoid the creation of a date formatted directory.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Create a directory for whichever plot you want to save</span></a>
 <a class="sourceLine" id="cb3-2" title="2">heat_tree_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/output_dir.html">output_dir</a></span>(<span class="dt">end_path =</span> <span class="ot">FALSE</span>, <span class="dt">start_path =</span> <span class="st">"output"</span>, <span class="dt">plot_type =</span> <span class="st">"heat_tree"</span>)</a>
-<a class="sourceLine" id="cb3-3" title="3">corr_plot_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/output_dir.html">output_dir</a></span>(<span class="dt">end_path =</span> <span class="ot">FALSE</span>, <span class="dt">start_path =</span> <span class="st">"output"</span>, <span class="dt">plot_type =</span> <span class="st">"correlation"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb3-3" title="3">corr_plot_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/output_dir.html">output_dir</a></span>(<span class="dt">end_path =</span> <span class="ot">FALSE</span>, <span class="dt">start_path =</span> <span class="st">"output"</span>, <span class="dt">plot_type =</span> <span class="st">"correlation"</span>)</a>
+<a class="sourceLine" id="cb3-4" title="4">sb_plot_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/output_dir.html">output_dir</a></span>(<span class="dt">end_path =</span> <span class="ot">FALSE</span>, <span class="dt">start_path =</span> <span class="st">"output"</span>, <span class="dt">plot_type =</span> <span class="st">"stacked_barplot"</span>)</a>
+<a class="sourceLine" id="cb3-5" title="5">ord_plot_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/output_dir.html">output_dir</a></span>(<span class="dt">end_path =</span> <span class="ot">FALSE</span>, <span class="dt">start_path =</span> <span class="st">"output"</span>, <span class="dt">plot_type =</span> <span class="st">"ordination"</span>)</a></code></pre></div>
 <div id="statistical-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#statistical-analysis" class="anchor"></a>Statistical Analysis</h2>
@@ -266,7 +268,9 @@ MicrobiomeR also uses ggplot2 to create <code><a href="../reference/correlation_
 <a class="sourceLine" id="cb8-19" title="19"><span class="co">#&gt; [1] "Phylum" "Class"  "Order"</span></a></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># Save plots with a custom output path</span></a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="kw"><a href="../reference/save_heat_tree_plots.html">save_heat_tree_plots</a></span>(<span class="dt">htrees =</span> heat_tree_plots, <span class="dt">custom_path =</span> heat_tree_path)</a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="kw"><a href="../reference/save_correlation_plots.html">save_correlation_plots</a></span>(<span class="dt">corr =</span> corr_plots, <span class="dt">custom_path =</span> corr_plot_path)</a></code></pre></div>
+<a class="sourceLine" id="cb9-3" title="3"><span class="kw"><a href="../reference/save_correlation_plots.html">save_correlation_plots</a></span>(<span class="dt">corr =</span> corr_plots, <span class="dt">custom_path =</span> corr_plot_path)</a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="kw"><a href="../reference/save_stacked_barplots.html">save_stacked_barplots</a></span>(<span class="dt">sb_plots =</span> sb_plots, <span class="dt">custom_path =</span> sb_plot_path)</a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="kw"><a href="../reference/save_ordination_plots.html">save_ordination_plots</a></span>(<span class="dt">ord_plots =</span> ordination, <span class="dt">custom_path =</span> ord_plot_path)</a></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># View the Phylum level heat tree</span></a>
 <a class="sourceLine" id="cb10-2" title="2">heat_trees &lt;-<span class="st"> </span>heat_tree_plots<span class="op">$</span>heat_trees</a>
 <a class="sourceLine" id="cb10-3" title="3">heat_trees<span class="op">$</span>Phylum</a></code></pre></div>

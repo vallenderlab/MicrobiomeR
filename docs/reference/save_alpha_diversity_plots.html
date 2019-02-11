@@ -145,14 +145,14 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>save_alpha_diversity_plots</span>(<span class='no'>plots</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"tiff"</span>,
+    <pre class="usage"><span class='fu'>save_alpha_diversity_plots</span>(<span class='no'>alpha_div_plots</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"tiff"</span>,
   <span class='kw'>start_path</span> <span class='kw'>=</span> <span class='st'>"output"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>plots</th>
+      <th>alpha_div_plots</th>
       <td><p>A named list of alpha diversity plots.</p></td>
     </tr>
     <tr>
@@ -206,7 +206,7 @@ plots.</p>
   <span class='no'>analyzed_silva</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_MicrobiomeR_format.html'>as_MicrobiomeR_format</a></span>(<span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/MicrobiomeR/topics/raw_silva_2'>raw_silva_2</a></span>, <span class='st'>"analyzed_format"</span>)
   <span class='no'>alpha_div_plots</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='alpha_diversity_plot.html'>alpha_diversity_plots</a></span>(<span class='no'>analyzed_silva</span>)
   <span class='co'># Save to \emph{./output/alpha_diversity} folder.</span>
-  <span class='fu'>save_alpha_diversity_plot</span>(<span class='no'>salpha_div_plots</span>)
+  <span class='fu'>save_alpha_diversity_plot</span>(<span class='no'>alpha_div_plots</span>)
 }
 <span class='co'># }</span></pre>
   </div>
