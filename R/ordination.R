@@ -144,7 +144,7 @@ save_ordination_plots <- function(plots, format = "tiff", start_path = "output",
   for (method in names(plots)) {
     if (method != "metacoder_object") {
       message(crayon::green("Saving the {method} ordination plot."))
-      ggplot2::ggsave(filename = sprintf("%s_ordination.%s", method, format), plot = plots[[method]], device = format, path = full_path, dpi = 500)
+      ggplot2::ggsave(filename = sprintf("%s_ordination.%s", method, format), plot = ord_plots[[method]], device = format, path = full_path, dpi = 500)
     }
   }
 }
