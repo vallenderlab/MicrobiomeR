@@ -170,7 +170,7 @@ save_stacked_barplots <- function(sb_plots, format = "tiff", start_path = "outpu
     if (rank != "metacoder_object") {
       message(crayon::green("Saving the {rank} stacked barplot."))
       ggplot2::ggsave(
-        filename = sprintf("%s_stacked_barplot.%s", tolower(rank), format), plot = plots[[rank]], device = format, path = full_path,
+        filename = sprintf("%s_stacked_barplot.%s", tolower(rank), format), plot = sb_plots[[rank]], device = format, path = full_path,
         width = 8, height = 5, units = "in", dpi = 500
       )
     }
