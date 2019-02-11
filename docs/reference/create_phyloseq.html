@@ -68,7 +68,7 @@ pipeline." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.0</span>
       </span>
     </div>
 
@@ -107,21 +107,21 @@ pipeline." />
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-<li>
-  <a href="../articles/about.html">About</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/vallenderlab/MicrobiomeR">
-    <span class="fa fa-github"></span>
-     
-  </a>
+  <a href="../articles/about.html">About</a>
 </li>
 <li>
   <a href="https://twitter.com/datasnakes">
     <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/vallenderlab/MicrobiomeR">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -216,7 +216,8 @@ column in your metadata file.</p>
 
     <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/phyloseq/topics/import_biom'>import_biom</a></code>, <code><a href='https://www.rdocumentation.org/packages/phyloseq/topics/sample_data-methods'>phyloseq::sample_data()</a></code>, <code><a href='https://www.rdocumentation.org/packages/phyloseq/topics/phy_tree-methods'>phyloseq::phy_tree()</a></code>, <code><a href='https://www.rdocumentation.org/packages/phyloseq/topics/import_qiime_sample_data'>import_qiime_sample_data</a></code>, <code><a href='https://www.rdocumentation.org/packages/phyloseq/topics/merge_phyloseq'>merge_phyloseq</a></code></p>
 <p><code><a href='https://www.rdocumentation.org/packages/ape/topics/root'>root</a></code>, <code><a href='https://www.rdocumentation.org/packages/ape/topics/root'>is.rooted</a></code>, <code><a href='https://www.rdocumentation.org/packages/ape/topics/read.tree'>read.tree</a></code>, <code><a href='https://www.rdocumentation.org/packages/ape/topics/write.tree'>write.tree</a></code></p>
-<p><code><a href='root_by_longest_edge.html'>root_by_longest_edge</a></code></p></div>
+<p><code><a href='root_by_longest_edge.html'>root_by_longest_edge</a></code></p>
+<p>Other Data Importers: <code><a href='create_metacoder.html'>create_metacoder</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -226,10 +227,11 @@ column in your metadata file.</p>
 <span class='co'># Get the datafiles from the package</span>
 <span class='no'>biom_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"silva_OTU.biom"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"MicrobiomeR"</span>)
 <span class='no'>tree_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"silva.tre"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"MicrobiomeR"</span>)
-<span class='no'>md_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"nephele_metadata.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"MicrobiomeR"</span>)
+<span class='no'>md_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"nephele_metadata2.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"MicrobiomeR"</span>)
+<span class='no'>parse_func</span> <span class='kw'>&lt;-</span> <span class='no'>parse_parse_taxonomy_silva_128</span>
 }
 <span class='co'># Create a phyloseq object from the data files.</span>
-<span class='no'>phy_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>create_phyloseq</span>(<span class='kw'>biom_file</span> <span class='kw'>=</span> <span class='no'>biome_file</span>, <span class='kw'>tree_file</span> <span class='kw'>=</span> <span class='no'>tree_file</span>, <span class='kw'>metadata_file</span> <span class='kw'>=</span> <span class='no'>md_file</span>)
+<span class='no'>phy_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>create_phyloseq</span>(<span class='kw'>biom_file</span> <span class='kw'>=</span> <span class='no'>biom_file</span>, <span class='kw'>tree_file</span> <span class='kw'>=</span> <span class='no'>tree_file</span>, <span class='kw'>metadata_file</span> <span class='kw'>=</span> <span class='no'>md_file</span>, <span class='kw'>parse_func</span> <span class='kw'>=</span> <span class='no'>parse_func</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -255,7 +257,7 @@ column in your metadata file.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>

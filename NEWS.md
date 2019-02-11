@@ -1,3 +1,20 @@
+# MicrobiomeR 0.4.0
+
+## Renamed functions
+
+* `get_alpha_diversity_measures` to `alpha_diversity_measures`
+  
+## Added functions
+
+* Added `stacked_barplots`, `alpha_diversity_plots`, `ordination_plots`
+* Added `save_stacked_barplots`, `save_alpha_diversity_plots`, `save_ordination_plots`
+
+## Deprecated functions
+
+* Removed `save_barplot`
+
+* Updated vignettes.
+
 # MicrobiomeR 0.3.1
 
 * Added code coverage.

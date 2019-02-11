@@ -1,6 +1,6 @@
 ---
-title: "MicrobiomeR: Analysis"
-author: "Vignette Author"
+title: "Data Analysis"
+author: "Rob Gilmore & Shaurita Hutchins"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -18,7 +18,9 @@ library(MicrobiomeR)
 pkg.data <- MicrobiomeR:::pkg.private
 ```
 
-# Data Wrangling
+# Data Import & Wrangling
+
+Beginning an microbiome analysis starts with importing data and wrangling it into a proper format.
 
 ```{r message=FALSE, warning=FALSE}
 # Get the data files from package
@@ -38,7 +40,9 @@ phy_obj <- create_phyloseq(biom_file = biom_file,
 raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
 ```
 
-# Filtering
+# Filtering Data
+
+After importing data and formatting it, data should be filtered to reduce noise and if desired, to subset data.
 
 ```{r message=FALSE, warning=FALSE}
 # Remove Archaea from the metacoder object
@@ -101,9 +105,11 @@ function to avoid the creation of a date formatted directory.
 # Create a directory for whichever plot you want to save
 heat_tree_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "heat_tree")
 corr_plot_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "correlation")
+sb_plot_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "stacked_barplot")
+ord_plot_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "ordination")
 ```
 
-## Statistics
+## Statistical Analysis
 
 Statistical analysis is primarily done with the help of metacoder style functions such as the 
 `calc_*()` group of functions, and `compare_groups()`.  The taxa function `taxonomy_table()` is also 
@@ -115,15 +121,35 @@ tables with `as_MicrobiomeR_format(format = "analyzed_format", ...)`.
 metacoder_obj <- as_MicrobiomeR_format(obj = metacoder_obj, format = "analyzed_format")
 ```
 
-## Visualization
+In addition to standard statistical analysis provided by metacoder, `MicrobiomeR` simplifies alpha diversity, ordination, and [PERMANOVA](https://onlinelibrary.wiley.com/doi/10.1002/9781118445112.stat07841) analysis.
 
-Visualization of taxmap objects can be done in several ways.  The metacoder package primarily 
-produces `heat_tree()`s for visualization, which can be used for any taxmap object.  MicrobiomeR 
+```{r message=FALSE, warning=FALSE}
+# Generate alpha diversity measures
+measures <- alpha_diversity_measures(obj = metacoder_obj)
+measures$Shannon
+```
+
+
+```{r message=FALSE, warning=FALSE}
+# Get only ordination data for the first Axis based on principal coordinates analysis using weighted unifrac.
+ordination <- ordination_plot(obj = metacoder_obj, method = "PCoA", distance = "wunifrac", only_data = TRUE)
+ordination$Axis.1
+```
+
+
+```{r message=FALSE, warning=FALSE}
+# Generate permanova statistics for data
+permanova <- permanova(obj = metacoder_obj, group = "TreatmentGroup")
+permanova$permanova$aov.tab
+```
+
+## Data Visualization
+
+Visualization of taxmap objects can be done in several ways, and `MicrobiomeR` offers the most complete visualizations of any other existing microbiome package.  The metacoder package primarily produces `heat_tree()`s for visualization, which can be used for any taxmap object.  MicrobiomeR 
 does this as well, but takes care of creating default values that we enjoyed in our heat tree plots.  
-MicrobiomeR also uses ggplot2 to create 
-`correlation_plot()`s.
+MicrobiomeR also uses ggplot2 to create `correlation_plot()`s. 
 
-### Two Treatment Groups
+## Analyzing Two "Treatment" Groups
 
 ```{r message=FALSE, warning=FALSE}
 # Generate heat_trees
@@ -133,31 +159,45 @@ heat_tree_plots <- heat_tree_plots(metacoder_obj,
                                        node_label_size = 2,
                                        node_label_color = c("darkgreen"))
 names(heat_tree_plots)
+
 # Generate correlation_plots
 corr_plots <- correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
 names(corr_plots)
+
+
+# Generate stacked_barplots
+sb_plots <- stacked_barplots(metacoder_obj, tax_levels = c("Phylum", "Class", "Order"))
+names(sb_plots)
 ```
+
+
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 # Save plots with a custom output path
 save_heat_tree_plots(htrees = heat_tree_plots, custom_path = heat_tree_path)
 save_correlation_plots(corr = corr_plots, custom_path = corr_plot_path)
+save_stacked_barplots(sb_plots = sb_plots, custom_path = sb_plot_path)
+save_ordination_plots(ord_plots = ordination, custom_path = ord_plot_path)
 ```
+
 ```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=8}
-# Heat Trees
+# View the Phylum level heat tree
 heat_trees <- heat_tree_plots$heat_trees
 heat_trees$Phylum
-heat_trees$Class
-heat_trees$Order
+
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=5.3}
-# Correlation Plots
+# View the Phylum level correlation plot
 corr_plots$Phylum
-corr_plots$Class
-corr_plots$Order
 ```
 
-### Two or More Treatment Groups
+```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=5.3}
+# View the Phylum level stacked barplot
+sb_plots$Phylum
+```
+
+
+## Analyzing More than 2 "Treatment" Groups
 
 ```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=8}
 # Heat Trees
@@ -234,8 +274,7 @@ heat_tree_plots <- heat_tree_plots(metacoder_obj,
 
 heat_trees <- heat_tree_plots$heat_trees
 heat_trees$Phylum
-heat_trees$Class
-heat_trees$Order
+
 
 # Generate Correlation plots
 corr_plots <- correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))

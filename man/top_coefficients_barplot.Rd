@@ -38,9 +38,10 @@ Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{heat_tree_plots}},
   \code{\link{melt_metacoder}},
   \code{\link{ordination_plot}}, \code{\link{plot_limits}},
-  \code{\link{save_barplot}},
+  \code{\link{save_alpha_diversity_plots}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},
-  \code{\link{save_ordination_plots}}
+  \code{\link{save_ordination_plots}},
+  \code{\link{save_stacked_barplots}}
 }
 \concept{Visualizations}

@@ -1,6 +1,3 @@
-#' @title Melt Metacoder Object
-#' @description Melt the metacoder or phyloseq tables into a dataframe.
-#' @return Returns a melted dataframe.
 #' @importFrom dplyr right_join setdiff
 #' @importFrom tidyr gather_
 #' @family Formatting
@@ -17,10 +14,7 @@ melt_metacoder <- function(obj) {
     rename(OTU = `otu_id`)
 }
 
-#' @title Convert Proportions
-#' @description Convert the dataframe abundance values to percent 100.
 #' @param melted_df A "melted" dataframe from the metacoder object's data.
-#' @return Returns a transformed dataframe.
 #' @importFrom dplyr filter group_by summarize mutate enquo quo_name
 #' @importFrom stats na.omit
 #' @family Data Manipulators
@@ -38,14 +32,15 @@ convert_proportions <- function(melted_df, tax_level) {
 }
 
 #' @title Stacked Barplot
-#' @description Create a stacked barplot to show relative abundance of taxa.
+#' @description Create a stacked barplot to show relative abundance of taxa. `convert_proportions` converts the dataframe abundance values to percent 100 and returns a transformed dataframe.
+#' `melt_metacoder` melts the metacoder or phyloseq tables into a dataframe and returns a melted dataframe. `stacked_barplots` creates a stacked barplots for multiple taxonomic levels and returns a list of stacked barplots.
 #' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
 #' @param tax_level The taxonomic level, Default: 'Phylum'
 #' @param fill The taxonomic level by which the bars are filled, Default: 'Phylum'
 #' @param xlabel The label of the x axis, Default: 'Samples'
 #' @param faceted A boolean to determine if the barplot should be faceted by TreatmentGroup
 #' @param title The title or name of the plot.
-#' @param palette_values A list of the colors to input to be mapped to the plot palette.
+#' @param palette_values A list of the colors to input to be mapped to the plot palette, Default: 'NULL'
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
@@ -63,11 +58,12 @@ convert_proportions <- function(melted_df, tax_level) {
 #' @import scales
 #' @import vegan
 #'
-#' @inheritParams transform_metacoder
+#' @inheritParams convert_proportions
 #' @family Visualizations
+#' @rdname stacked_barplot
 #' @return Returns a stacked barplot.
 #' @export
-stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel = "Samples", faceted = FALSE, title = NULL, palette_values) {
+stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel = "Samples", faceted = FALSE, title = NULL, palette_values = NULL) {
   metacoder_object <- validate_MicrobiomeR_format(
     obj = create_metacoder(obj),
     valid_formats = c("analyzed_format")
@@ -82,13 +78,12 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
   p <- ggplot2::ggplot(mdf, aes(x = SampleID, y = Relative.Abundance, fill = !!sym(fill)), fill = fill)
 
   # Add the bar geometric object. Creates a basic graphic. Basis for the rest.
-  # Test weather additional
   p <- p + ggplot2::geom_bar(stat = "identity", position = "stack")
 
-  # Add a title, if given
-  if (!is.null(palette_values)) {
+  # Add a palette if default not given.
+  if (is.null(palette_values)) {
     # Dynamically change palette colors based on number of taxa being input.
-    palette_values <- get_color_palette(display = FALSE)
+    palette_values <- get_color_palette(pal_func = scico_palette(), color_no = length(unique(mdf[[fill]])), display = FALSE)
   }
 
   # Create the theme
@@ -98,7 +93,6 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
     strip.background = ggplot2::element_rect(fill = "white"), strip.text = ggplot2::element_text(colour = "black"), panel.background = ggplot2::element_blank()
   ) +
     ggplot2::xlab(xlabel) +
-    ggplot2::annotate("segment", x = Inf, xend = -Inf, y = Inf, yend = Inf, color = "black", lwd = 1) +
     ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(n = 4))
 
   # Add faceting, if true
@@ -109,33 +103,76 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
 
   # Add a title, if given
   if (!is.null(title)) {
-    p <- p + ggplot2::ggtitle(title)
+    p <- p + ggplot2::annotate("segment", x = Inf, xend = -Inf, y = Inf, yend = Inf, color = "black", lwd = 1) + ggplot2::ggtitle(title)
   }
 
   return(p)
 }
 
-#' @title Save Barplot
-#' @description Save a stacked barplot.
-#' @param plot The plot object.
-#' @param filename The name of the file. (an extension should not be included)
+
+#' @param tax_levels The taxonomic levels, Default: 'c("Phylum", "Class", "Order")'
+#' @family Visualizations
+#' @rdname stacked_barplot
+#' @export
+stacked_barplots <- function(obj, tax_levels = c("Phylum", "Class", "Order"), group = "TreatmentGroup", select_otu_table = "otu_proportions") {
+  if (is.null(tax_levels)) {
+    tax_levels <- c("Phylum", "Class", "Order")
+  } else if (length(tax_levels) < 2) {
+    stop("Use the stacked_plot function for generating a plot for 1 taxonomic level.")
+  }
+  stacked_barplots <- list()
+  for (t in tax_levels) {
+    stacked_barplots[[t]] <- stacked_barplot(obj = obj, tax_level = t, fill = t)
+  }
+
+  return(stacked_barplots)
+}
+
+#' @title Save Stacked Barplots
+#' @description This function saves stacked barplot stored in a list object to an output folder.
+#' @param sb_plots A named list of stacked barplots.
+#' @param format The format of the output image.  Default: 'tiff'
+#' @param start_path The starting path of the output directory.  Default: 'output'
+#' @param ... An optional list of parameters to use in the output_dir function.
+#' @return An output directory that contains stacked barplot.
+#' @pretty_print TRUE
+#' @details This function creates an appropriate output directory, where it saves publication ready
+#' plots.
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
+#'   # This example uses data that are no longer available in the MicrobiomeR package,
+#'   # however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
 #'   library(MicrobiomeR)
-#'   save_barplot(plot = plot, filename = "stacked_bar_phylum")
+#'   analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+#'   alpha_div_plots <- alpha_diversity_plots(analyzed_silva)
+#'   # Save to \emph{./output/alpha_diversity} folder.
+#'   save_alpha_diversity_plot(salpha_div_plots)
 #' }
 #' }
 #' @export
 #' @family Visualizations
-#' @rdname save_barplot
+#' @rdname save_stacked_barplots
+#' @seealso
+#'  \code{\link[MicrobiomeR]{output_dir}}
+#'
+#'  \code{\link[ggplot2]{ggsave}}
 #' @importFrom ggplot2 ggsave
-save_barplot <- function(plot, filename) {
-  if (is.null(filename)) {
-    filename <- plot
+#' @importFrom crayon yellow green
+#' @importFrom glue glue
+save_stacked_barplots <- function(sb_plots, format = "tiff", start_path = "output", ...) {
+  # Create the relative path to the stacked barplots.  By default the path will be <pwd>/output/<experiment>/stacked_barplots/<format(Sys.time(), "%Y-%m-%d_%s")>
+  # With the parameters set the full path will be <pwd>/output/<experiment>/stacked_barplots/<extra_path>.
+  full_path <- output_dir(start_path = start_path, plot_type = "stacked_barplots", ...)
+  message(glue::glue(crayon::yellow("Saving Stacked Barplots to the following directory: \n", "\r\t{full_path}")))
+  # Iterate the plot list and save them in the proper directory
+  for (rank in names(sb_plots)) {
+    if (rank != "metacoder_object") {
+      message(crayon::green("Saving the {rank} stacked barplot."))
+      ggplot2::ggsave(
+        filename = sprintf("%s_stacked_barplot.%s", tolower(rank), format), plot = sb_plots[[rank]], device = format, path = full_path,
+        width = 8, height = 5, units = "in", dpi = 500
+      )
+    }
   }
-  ggplot2::ggsave(paste0("output/", filename, ".tiff"),
-    plot = plot, device = "tiff",
-    width = 8, height = 5, units = "in", dpi = 500
-  )
 }
