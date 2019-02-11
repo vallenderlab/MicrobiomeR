@@ -32,11 +32,11 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
   # Get all of the diversities.
   divs <- microbiome::alpha(phyloseq_object, index = "all")
   phyloseq_object.meta <- microbiome::meta(phyloseq_object)
-  phyloseq_object.meta$Shannon <- divs$shannon
-  phyloseq_object.meta$InverseSimpson <- divs$inverse_simpson
-  phyloseq_object.meta$GiniSimpson <- divs$gini_simpson
-  phyloseq_object.meta$Fisher <- divs$fisher
-  phyloseq_object.meta$Coverage <- divs$coverage
+  phyloseq_object.meta$Shannon <- divs$diversity_shannon
+  phyloseq_object.meta$InverseSimpson <- divs$diversity_inverse_simpson
+  phyloseq_object.meta$GiniSimpson <- divs$diversity_gini_simpson
+  phyloseq_object.meta$Fisher <- divs$diversity_fisher
+  phyloseq_object.meta$Coverage <- divs$diversity_coverage
 
   # create a list of pairwise comaprisons
   groups <- levels(as.factor(phyloseq_object.meta[[group]])) # get the variables
