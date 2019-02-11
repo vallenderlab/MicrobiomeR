@@ -105,6 +105,8 @@ function to avoid the creation of a date formatted directory.
 # Create a directory for whichever plot you want to save
 heat_tree_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "heat_tree")
 corr_plot_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "correlation")
+sb_plot_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "stacked_barplot")
+ord_plot_path <- output_dir(end_path = FALSE, start_path = "output", plot_type = "ordination")
 ```
 
 ## Statistical Analysis
