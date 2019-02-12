@@ -98,7 +98,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
       ggplot2::labs(title = glue::glue("{primary_rank} ({comp_title})"), x = glue::glue("Mean Abundance Before {treatments[1]}"), y = glue::glue("Mean Abundance After {treatments[1]}")) +
       ggplot2::scale_y_log10(limits = plot_limits) + ggplot2::scale_x_log10(limits = plot_limits) +
       ggplot2::scale_shape_manual(name = glue::glue("Abundance After {treatments[1]}:"), values = c("Significant Increase" = 16, "Significant Decrease" = 15, "Insignificant Change" = 4)) +
-      ggplot2::scale_fill_manual(values = c("red", "blue", myPal), guide = FALSE) +
+      ggplot2::scale_fill_manual(values = c("#d53e4f", "#3288bd", myPal), guide = FALSE) +
       ggplot2::scale_color_manual(values = c(myPal), name = sprintf("%s:", c(secondary_rank)), guide = ggplot2::guide_legend(ncol = 2)) +
       ggplot2::geom_abline(slope = 1, intercept = 0, linetype = "dashed")
     message(crayon::green(sprintf("Generating Correlation Plot comparing %s for %s with color based on %s", crayon::bgWhite(comp_title), crayon::bgWhite(primary_rank), crayon::bgWhite(secondary_rank))))
