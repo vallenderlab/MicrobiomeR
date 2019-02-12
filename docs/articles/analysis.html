@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.1</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@
       <h1>Data Analysis</h1>
                         <h4 class="author">Rob Gilmore &amp; Shaurita Hutchins</h4>
             
-            <h4 class="date">2019-02-11</h4>
+            <h4 class="date">2019-02-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vallenderlab/MicrobiomeR/blob/master/vignettes/analysis.Rmd"><code>vignettes/analysis.Rmd</code></a></small>
       <div class="hidden name"><code>analysis.Rmd</code></div>
@@ -355,7 +355,7 @@ MicrobiomeR also uses ggplot2 to create <code><a href="../reference/correlation_
 <a class="sourceLine" id="cb13-66" title="66"><span class="co"># Generate heat_trees</span></a>
 <a class="sourceLine" id="cb13-67" title="67">heat_tree_plots &lt;-<span class="st"> </span><span class="kw"><a href="../reference/heat_tree_plots.html">heat_tree_plots</a></span>(metacoder_obj,</a>
 <a class="sourceLine" id="cb13-68" title="68">                                       <span class="dt">rank_list =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>),</a>
-<a class="sourceLine" id="cb13-69" title="69">                                       <span class="dt">node_label =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(wilcox_p_value <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.05</span>, taxon_ids, <span class="ot">NA</span>),</a>
+<a class="sourceLine" id="cb13-69" title="69">                                       <span class="dt">node_label =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(wilcox_p_value <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>, taxon_ids, <span class="ot">NA</span>),</a>
 <a class="sourceLine" id="cb13-70" title="70">                                       <span class="dt">node_label_size =</span> <span class="dv">2</span>,</a>
 <a class="sourceLine" id="cb13-71" title="71">                                       <span class="dt">node_label_color =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"darkgreen"</span>))</a>
 <a class="sourceLine" id="cb13-72" title="72"></a>
