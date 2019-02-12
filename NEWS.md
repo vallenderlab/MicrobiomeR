@@ -1,3 +1,8 @@
+# MicrobiomeR 0.4.1
+
+* Fixed wilcoxon pvalue in analysis vignette.
+* Updated background colors in correlation plots.
+
 # MicrobiomeR 0.4.0
 
 ## Renamed functions
