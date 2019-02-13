@@ -35,7 +35,7 @@
 #' @importFrom ggrepel geom_label_repel
 #' @importFrom crayon yellow
 correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
-                             wp_value = 0.05, pal_func = NULL) {
+                             wp_value = 0.05, pal_func = NULL, trans = "logit") {
   metacoder_object <- create_taxmap(obj)
   metacoder_object <- validate_MicrobiomeR_format(obj = metacoder_object,
                                                   valid_formats = c("analyzed_format"))
@@ -71,9 +71,21 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
     # Get the limits of the plot based on the data
     plot_limits <- plot_limits(primary_data$mean_treat1, primary_data$mean_treat2)
     # Create a dataframe for background color
-    background_limits <- data.frame(id = c("1", "1", "1", "2", "2", "2"), x = c(0, Inf, 0, 0, Inf, Inf), y = c(0, Inf, Inf, 0, 0, Inf))
+    #background_limits <- data.frame(id = c("1", "1", "1", "2", "2", "2"), x = c(0, Inf, 0, 0, Inf, Inf), y = c(0, Inf, Inf, 0, 0, Inf))
     # Get a color palette
     secondary_taxa <- length(unique(primary_data[[(secondary_rank)]]))
+
+    # Get the mean significant increase and mean significant decrease for x and y
+    # sig_decrease <- dplyr::filter(significant_data, Abundance == "Significant Decrease")
+    # sig_increase <- dplyr::filter(significant_data, Abundance == "Significant Increase")
+    # x_inc <- mean(sig_increase$mean_treat1)
+    # x_dec <- mean(sig_decrease$mean_treat1)
+    # y_inc <- mean(sig_increase$mean_treat2)
+    # y_dec <- mean(sig_decrease$mean_treat2)
+    # y_pos <- max(primary_data$mean_treat2)
+    # x_pos <- max(primary_data$mean_treat1)
+    x_avg <- mean(significant_data$mean_treat1)
+    y_avg <- mean(significant_data$mean_treat2)
 
     if (is.null(pal_func)) {
       pal_func <- combination_palette(
@@ -89,14 +101,21 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 
     # Start ggplot2 workflow
     corr <- ggplot2::ggplot(primary_data, ggplot2::aes(x = mean_treat1, y = mean_treat2)) +
-      ggplot2::geom_polygon(background_limits, mapping = ggplot2::aes(x = x, y = y, fill = id), alpha = 0.07, show.legend = FALSE) +
+      #ggplot2::geom_polygon(background_limits, mapping = ggplot2::aes(x = x, y = y, fill = id), alpha = 0.07, show.legend = FALSE) +
+      ggplot2::geom_vline(xintercept = x_avg, show.legend = TRUE, linetype = "dotted") +
+      # ggplot2::geom_vline(xintercept = x_dec, show.legend = TRUE, linetype = "dotted") +
+      # ggplot2::geom_hline(yintercept = y_inc, show.legend = TRUE, linetype = "dotted") +
+      ggplot2::geom_hline(yintercept = y_avg, show.legend = TRUE, linetype = "dotted") +
+      # ggplot2::annotate("text", x=c(x_inc, x_dec, x_pos, x_pos), y = c(y_pos, y_pos, y_inc, y_dec), label = c("+", "-", "+", "-"), color = "darkred", size=5) +
       ggplot2::geom_point(data = significant_data, ggplot2::aes(shape = Abundance), size = 3.2, color = "black", stroke = 2, show.legend = FALSE) +
       ggplot2::geom_point(data = primary_data, ggplot2::aes(shape = Abundance, color = forcats::fct_reorder(primary_data[[secondary_rank]], color_wilcox_p_value, min)), size = 2.5, stroke = 1.5) +
       ggrepel::geom_label_repel(
         mapping = ggplot2::aes(label = rank_label), size = 3, segment.size = 0.15, point.padding = 0.5, box.padding = 0.6, alpha = 0.65, force = 45, max.iter = 10000, min.segment.length = 0.1, seed = 2289,
         nudge_x = ifelse(primary_data$mean_treat1 < primary_data$mean_treat2, -2, 2.5), nudge_y = ifelse(primary_data$mean_treat2 < primary_data$mean_treat1, -1.9, 2)) +
       ggplot2::labs(title = glue::glue("{primary_rank} ({comp_title})"), x = glue::glue("Mean Abundance Before {treatments[1]}"), y = glue::glue("Mean Abundance After {treatments[1]}")) +
-      ggplot2::scale_y_log10(limits = plot_limits) + ggplot2::scale_x_log10(limits = plot_limits) +
+      ggplot2::scale_x_continuous(trans=trans, label=percent) +
+      ggplot2::scale_y_continuous(trans=trans, label = percent) +
+      ggplot2::theme(axis.text.x = element_text(angle=45)) +
       ggplot2::scale_shape_manual(name = glue::glue("Abundance After {treatments[1]}:"), values = c("Significant Increase" = 16, "Significant Decrease" = 15, "Insignificant Change" = 4)) +
       ggplot2::scale_fill_manual(values = c("red", "blue", myPal), guide = FALSE) +
       ggplot2::scale_color_manual(values = c(myPal), name = sprintf("%s:", c(secondary_rank)), guide = ggplot2::guide_legend(ncol = 2)) +
@@ -241,8 +260,8 @@ correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_value 
       dplyr::mutate(label = ifelse(Significance == TRUE, ifelse(sign(log2_mean_ratio) == 1, TRUE, TRUE), FALSE))
 
     # Update points with 0 values so they look good on the plot
-    p_d$mean_treat1[p_d$mean_treat1 == 0] <- 0.000000001
-    p_d$mean_treat2[p_d$mean_treat2 == 0] <- 0.000000001
+    #p_d$mean_treat1[p_d$mean_treat1 == 0] <- 0.000000001
+    #p_d$mean_treat2[p_d$mean_treat2 == 0] <- 0.000000001
 
     # Create a label for the legend
     rank_label <- sprintf("%s_label", primary_rank)
