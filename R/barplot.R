@@ -55,6 +55,7 @@ convert_proportions <- function(melted_df, tax_level) {
 #' @importFrom ggplot2 ggplot aes annotate geom_bar ylab element_blank element_rect xlab annotate
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
+#' @importFrom shades scalefac saturation
 #' @import scales
 #' @import vegan
 #'
@@ -81,9 +82,15 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
   p <- p + ggplot2::geom_bar(stat = "identity", position = "stack")
 
   # Add a palette if default not given.
+  # Dynamically change palette colors based on number of taxa being input.
   if (is.null(palette_values)) {
-    # Dynamically change palette colors based on number of taxa being input.
-    palette_values <- get_color_palette(pal_func = scico_palette(), color_no = length(unique(mdf[[fill]])), display = FALSE)
+    pal_func <- combination_palette(
+      magma = list(palette = viridis::magma, args = list(n=500), range=450:500, rev=TRUE),
+      inferno = list(palette = viridis::inferno, args = list(n=500), range=100:400, rev=TRUE),
+      cividis = list(palette = viridis::cividis, args = list(n=500), range=100:200, rev=TRUE),
+      viridis = list(palette = viridis::viridis, args = list(n=500), range=100:480))
+    palette_values <- shades::saturation(get_color_palette(pal_func = pal_func, color_no = length(unique(mdf[[fill]])), display = FALSE),
+                                         shades::scalefac(.6))
   }
 
   # Create the theme
