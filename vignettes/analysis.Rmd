@@ -268,7 +268,7 @@ metacoder_obj <- as_MicrobiomeR_format(obj = metacoder_obj, format = "analyzed_f
 # Generate heat_trees
 heat_tree_plots <- heat_tree_plots(metacoder_obj,
                                        rank_list = c("Phylum", "Class", "Order"),
-                                       node_label = ifelse(wilcox_p_value > 0.05, taxon_ids, NA),
+                                       node_label = ifelse(wilcox_p_value < 0.05, taxon_ids, NA),
                                        node_label_size = 2,
                                        node_label_color = c("darkgreen"))
 

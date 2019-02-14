@@ -87,6 +87,7 @@ ordination_plot <- function(obj, method = "PCoA", distance = "wunifrac", color =
 #' @return Returns a melted dataframe.
 #' @family Visualizations
 #' @rdname ordination_plot
+#' @export
 ordination_plots <- function(obj, methods = c("PCoA", "NMDS"), distances = c("wunifrac", "unifrac", "bray"),
                              color = "TreatmentGroup", select_otu_table = "otu_proportions") {
   if (is.null(methods)) {
