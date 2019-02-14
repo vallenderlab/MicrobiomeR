@@ -15,7 +15,8 @@ Remotes:
     github::ropensci/taxa,
     github::grunwaldlab/metacoder,
     github::joey711/phyloseq,
-    github::microbiome/microbiome
+    github::microbiome/microbiome,
+    github::jonclayden/shades
 Imports:
     ape,
     DT,
