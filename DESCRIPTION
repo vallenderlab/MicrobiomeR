@@ -51,7 +51,8 @@ Imports:
     scales,
     vegan,
     leaflet,
-    htmlwidgets
+    htmlwidgets,
+    shades
 Suggests:
     knitr,
     testthat,
