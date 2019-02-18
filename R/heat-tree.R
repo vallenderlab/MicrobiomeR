@@ -73,7 +73,7 @@ heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, ...) {
       } else if (is.character(title)) {
         title_param <- glue::glue(title)
       }
-      message(crayon::green(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(title))))
+      message(crayon::green(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(title_param))))
       treatment_no <- length(unique(filtered_obj$data$sample_data$TreatmentGroup))
       default_heat_tree_parameters <- heat_tree_parameters(obj = filtered_obj, title = title_param, treatment_no = treatment_no, ...)
       # Filter by Taxonomy Rank and then create a heat tree.
