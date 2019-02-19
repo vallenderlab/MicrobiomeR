@@ -9,7 +9,7 @@ as_analyzed_format(obj, cols = NULL, groups = NULL,
   comp_func = metacoder_comp_func_1)
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
+\item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
 
 \item{cols}{Column names used for \code{\link[metacoder]{calc_taxon_abund}}.  Default: NULL}
 
@@ -22,10 +22,10 @@ as_analyzed_format(obj, cols = NULL, groups = NULL,
 \item{comp_func}{A Comparison based function used in \code{\link[metacoder]{compare_groups}}.  Default: NULL}
 }
 \value{
-A Taxmap/metacoder object in the "analyzed_format".
+A Taxmap object in the "analyzed_format".
 }
 \description{
-Converts a metacoder object to the analyzed_format.
+Converts a Taxmap object to the analyzed_format.
 }
 \details{
 See the \link{MicrobiomeR_Formats} documentation.
@@ -42,8 +42,7 @@ Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_basic_format}},
   \code{\link{as_custom_format}},
   \code{\link{as_phyloseq_format}},
-  \code{\link{as_raw_format}},
-  \code{\link{melt_metacoder}},
+  \code{\link{as_raw_format}}, \code{\link{melt_taxmap}},
   \code{\link{treatment_matrix}}
 }
 \concept{Formatting}

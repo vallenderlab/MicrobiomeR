@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Melt Metacoder Object — melt_metacoder • MicrobiomeR</title>
+<title>Melt Taxmap Object — melt_taxmap • MicrobiomeR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,7 +32,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Melt Metacoder Object — melt_metacoder" />
+<meta property="og:title" content="Melt Taxmap Object — melt_taxmap" />
 
 <meta property="og:description" content="Melt the metacoder or phyloseq tables into a dataframe.
 Convert the dataframe abundance values to percent 100.
@@ -67,7 +67,7 @@ Create a stacked barplot to show relative abundance of taxa." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -101,7 +101,10 @@ Create a stacked barplot to show relative abundance of taxa." />
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
+</li>
+<li>
+  <a href="../articles/paper.html">Publication</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -136,7 +139,7 @@ Create a stacked barplot to show relative abundance of taxa." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Melt Metacoder Object</h1>
+    <h1>Melt Taxmap Object</h1>
     <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/barplot.R'><code>R/barplot.R</code></a></small>
     <div class="hidden name"><code>stacked_barplot.Rd</code></div>
     </div>
@@ -149,7 +152,7 @@ Create a stacked barplot to show relative abundance of taxa." />
     
     </div>
 
-    <pre class="usage"><span class='fu'>melt_metacoder</span>(<span class='no'>obj</span>)
+    <pre class="usage"><span class='fu'>melt_taxmap</span>(<span class='no'>obj</span>)
 
 <span class='fu'>convert_proportions</span>(<span class='no'>melted_df</span>, <span class='no'>tax_level</span>)
 
@@ -161,11 +164,11 @@ Create a stacked barplot to show relative abundance of taxa." />
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>An object to be converted to a metacoder object with <code><a href='object_handler.html'>object_handler</a></code>.</p></td>
+      <td><p>An object to be converted to a Taxmap object with <code><a href='create_taxmap.html'>create_taxmap</a></code>.</p></td>
     </tr>
     <tr>
       <th>melted_df</th>
-      <td><p>A "melted" dataframe from the metacoder object's data.</p></td>
+      <td><p>A "melted" dataframe from the Taxmap object's data.</p></td>
     </tr>
     <tr>
       <th>tax_level</th>
@@ -208,18 +211,17 @@ Create a stacked barplot to show relative abundance of taxa." />
   <code><a href='as_custom_format.html'>as_custom_format</a></code>,
   <code><a href='as_phyloseq_format.html'>as_phyloseq_format</a></code>,
   <code><a href='as_raw_format.html'>as_raw_format</a></code>,
-  <code><a href='get_treatment_matrix.html'>get_treatment_matrix</a></code></p>
+  <code><a href='treatment_matrix.html'>treatment_matrix</a></code></p>
 <p>Other Data Manipulators: <code><a href='metacoder_comp_func_1.html'>metacoder_comp_func_1</a></code>,
   <code><a href='transformer.html'>transformer</a></code>, <code><a href='transposer.html'>transposer</a></code>,
   <code><a href='vlookup.html'>vlookup</a></code></p>
 <p>Other Visualizations: <code><a href='alpha_diversity_plot.html'>alpha_diversity_plot</a></code>,
+  <code><a href='correlation_data.html'>correlation_data</a></code>,
+  <code><a href='correlation_plots.html'>correlation_plots</a></code>,
   <code><a href='correlation_plot.html'>correlation_plot</a></code>,
-  <code><a href='get_correlation_data.html'>get_correlation_data</a></code>,
-  <code><a href='get_correlation_plots.html'>get_correlation_plots</a></code>,
-  <code><a href='get_heat_tree_parameters.html'>get_heat_tree_parameters</a></code>,
-  <code><a href='get_heat_tree_plots.html'>get_heat_tree_plots</a></code>,
-  <code><a href='get_plot_limits.html'>get_plot_limits</a></code>,
-  <code><a href='ordination_plot.html'>ordination_plot</a></code>,
+  <code><a href='heat_tree_parameters.html'>heat_tree_parameters</a></code>,
+  <code><a href='heat_tree_plots.html'>heat_tree_plots</a></code>,
+  <code><a href='ordination_plot.html'>ordination_plot</a></code>, <code><a href='plot_limits.html'>plot_limits</a></code>,
   <code><a href='save_barplot.html'>save_barplot</a></code>,
   <code><a href='save_correlation_plots.html'>save_correlation_plots</a></code>,
   <code><a href='save_heat_tree_plots.html'>save_heat_tree_plots</a></code>,

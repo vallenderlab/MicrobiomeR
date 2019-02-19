@@ -71,6 +71,6 @@ phy_obj <- create_phyloseq(biom_file = biom_file, tree_file = tree_file, metadat
 
 \code{\link[MicrobiomeR]{root_by_longest_edge}}
 
-Other Data Importers: \code{\link{create_metacoder}}
+Other Data Importers: \code{\link{create_taxmap}}
 }
 \concept{Data Importers}

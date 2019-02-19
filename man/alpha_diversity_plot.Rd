@@ -8,7 +8,7 @@ alpha_diversity_plot(obj, measure = "shannon",
   select_otu_table = "otu_proportions")
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
+\item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
 
 \item{measure}{Select an alpha diversity measure such as shannon, gini simpson, and inverse simpson, Default: 'shannon'}
 
@@ -41,8 +41,7 @@ Other Visualizations: \code{\link{correlation_data}},
   \code{\link{correlation_plots}},
   \code{\link{correlation_plot}},
   \code{\link{heat_tree_parameters}},
-  \code{\link{heat_tree_plots}},
-  \code{\link{melt_metacoder}},
+  \code{\link{heat_tree_plots}}, \code{\link{melt_taxmap}},
   \code{\link{ordination_plot}}, \code{\link{plot_limits}},
   \code{\link{save_barplot}},
   \code{\link{save_correlation_plots}},

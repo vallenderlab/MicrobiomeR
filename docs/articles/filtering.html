@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -65,7 +65,10 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
+</li>
+<li>
+  <a href="../articles/paper.html">Publication</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -102,7 +105,7 @@
       <h1>MicrobiomeR: Filtering</h1>
                         <h4 class="author">Robert Gilmore</h4>
             
-            <h4 class="date">2019-01-17</h4>
+            <h4 class="date">2019-02-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vallenderlab/MicrobiomeR/blob/master/vignettes/filtering.Rmd"><code>vignettes/filtering.Rmd</code></a></small>
       <div class="hidden name"><code>filtering.Rmd</code></div>
@@ -134,7 +137,7 @@ raw_metacoder &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 <h1 class="hasAnchor">
 <a href="#taxmap-filtering" class="anchor"></a>Taxmap Filtering</h1>
 <p>Metacoder is a highly useful package that comes with tons of features right out of the box. Functions such as <code><a href="https://www.rdocumentation.org/packages/metacoder/topics/filter_ambiguous_taxa">metacoder::filter_ambiguous_taxa()</a></code>, <code><a href="https://www.rdocumentation.org/packages/taxa/topics/filter_taxa">taxa::filter_taxa()</a></code>, and <code><a href="https://www.rdocumentation.org/packages/taxa/topics/filter_obs">taxa::filter_obs()</a></code> for instance can almost always be used in your workflow.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Remove Archaea from the metacoder object</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Remove Archaea from the taxmap object</span>
 metacoder_obj &lt;-<span class="st"> </span>taxa<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/taxa/topics/filter_taxa">filter_taxa</a></span>(<span class="dt">obj =</span> raw_metacoder,
                                    taxon_names <span class="op">==</span><span class="st"> "Archaea"</span>,
                                    <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>,
@@ -170,7 +173,7 @@ metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 <p>The advanced filtering functions available with MicrobiomeR do several things. They wrap the basic filtering functions mentioned above, they wrap common metacoder and taxa functions, and they mimic the tools found in the phyloseq package. Below I’ve mentioned some of them and how they relate to the phyloseq package:</p>
 <ul>
 <li>
-<code><a href="../reference/agglomerate_metacoder.html">agglomerate_metacoder()</a></code> is equivalent to <code><a href="https://www.rdocumentation.org/packages/phyloseq/topics/tax_glom">phyloseq::tax_glom()</a></code>.</li>
+<code><a href="../reference/agglomerate_taxmap.html">agglomerate_taxmap()</a></code> is equivalent to <code><a href="https://www.rdocumentation.org/packages/phyloseq/topics/tax_glom">phyloseq::tax_glom()</a></code>.</li>
 <li>
 <code><a href="../reference/otu_proportion_filter.html">otu_proportion_filter()</a></code> is seen in the first step in phyloseq’s <a href="http://joey711.github.io/phyloseq/preprocess.html#preprocessing">preprocessing</a> vignette.</li>
 <li>
@@ -218,7 +221,7 @@ metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 <div id="other-filtering" class="section level1">
 <h1 class="hasAnchor">
 <a href="#other-filtering" class="anchor"></a>Other Filtering</h1>
-<p>As mentioned previously taxmap filtering can be done in any way that fits your needs with the <code>taxa</code> and <code>metacoder</code> packages. However, MicrobiomeR also provides some utility based function for filtering/manipulating your <em>observation</em> data by hand. Observation data can be accessed within the metacoder object. Make sure you don’t manipulate existing data inside of your taxmap object unless you’re absolutely sure you know what you’re doing.</p>
+<p>As mentioned previously taxmap filtering can be done in any way that fits your needs with the <code>taxa</code> and <code>metacoder</code> packages. However, MicrobiomeR also provides some utility based function for filtering/manipulating your <em>observation</em> data by hand. Observation data can be accessed within the taxmap object. Make sure you don’t manipulate existing data inside of your taxmap object unless you’re absolutely sure you know what you’re doing.</p>
 <div id="transposing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#transposing" class="anchor"></a>Transposing</h2>
@@ -476,8 +479,8 @@ taxa_abund <span class="op">%&gt;%</span><span class="st"> </span>
 metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as_MicrobiomeR_format.html">as_MicrobiomeR_format</a></span>(<span class="dt">obj =</span> metacoder_obj, <span class="dt">format =</span> <span class="st">"analyzed_format"</span>)
 
 <span class="co"># Create agglomerated taxmaps for phylum/class</span>
-phylum_mo &lt;-<span class="st"> </span><span class="kw"><a href="../reference/agglomerate_metacoder.html">agglomerate_metacoder</a></span>(<span class="dt">obj =</span> metacoder_obj, <span class="dt">rank =</span> <span class="st">"Phylum"</span>)
-class_mo &lt;-<span class="st"> </span><span class="kw"><a href="../reference/agglomerate_metacoder.html">agglomerate_metacoder</a></span>(<span class="dt">obj =</span> metacoder_obj, <span class="dt">rank =</span> <span class="st">"Class"</span>)
+phylum_mo &lt;-<span class="st"> </span><span class="kw"><a href="../reference/agglomerate_taxmap.html">agglomerate_taxmap</a></span>(<span class="dt">obj =</span> metacoder_obj, <span class="dt">rank =</span> <span class="st">"Phylum"</span>)
+class_mo &lt;-<span class="st"> </span><span class="kw"><a href="../reference/agglomerate_taxmap.html">agglomerate_taxmap</a></span>(<span class="dt">obj =</span> metacoder_obj, <span class="dt">rank =</span> <span class="st">"Class"</span>)
 <span class="co"># Get some observation data</span>
 phylum_data &lt;-<span class="st"> </span>phylum_mo<span class="op">$</span>data<span class="op">$</span>stats_tax_data
 class_data &lt;-<span class="st"> </span>class_mo<span class="op">$</span>data<span class="op">$</span>stats_tax_data

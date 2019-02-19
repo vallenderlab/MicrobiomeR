@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -65,7 +65,10 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
+</li>
+<li>
+  <a href="../articles/paper.html">Publication</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -102,7 +105,7 @@
       <h1>MicrobiomeR: Analysis</h1>
                         <h4 class="author">Vignette Author</h4>
             
-            <h4 class="date">2019-01-17</h4>
+            <h4 class="date">2019-02-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vallenderlab/MicrobiomeR/blob/master/vignettes/analysis.Rmd"><code>vignettes/analysis.Rmd</code></a></small>
       <div class="hidden name"><code>analysis.Rmd</code></div>
@@ -133,7 +136,7 @@ raw_metacoder &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 <div id="filtering" class="section level1">
 <h1 class="hasAnchor">
 <a href="#filtering" class="anchor"></a>Filtering</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Remove Archaea from the metacoder object</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Remove Archaea from the taxmap object</span>
 metacoder_obj &lt;-<span class="st"> </span>taxa<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/taxa/topics/filter_taxa">filter_taxa</a></span>(<span class="dt">obj =</span> raw_metacoder,
                                    taxon_names <span class="op">==</span><span class="st"> "Archaea"</span>,
                                    <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>,
@@ -185,10 +188,10 @@ metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 <div id="analysis" class="section level1">
 <h1 class="hasAnchor">
 <a href="#analysis" class="anchor"></a>Analysis</h1>
-<p>Analysis is primarily done with metacoder, MicrobiomeR, and ggplot2. Before beginning the analysis it’s wise to create an output directory. Use <code>end_path=FALSE</code> with MicrobiomeR’s <code><a href="../reference/get_output_dir.html">get_output_dir()</a></code> function to avoid the creation of a date formatted directory.</p>
+<p>Analysis is primarily done with metacoder, MicrobiomeR, and ggplot2. Before beginning the analysis it’s wise to create an output directory. Use <code>end_path=FALSE</code> with MicrobiomeR’s <code><a href="../reference/output_dir.html">output_dir()</a></code> function to avoid the creation of a date formatted directory.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a directory for whichever plot you want to save</span>
-heat_tree_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_output_dir.html">get_output_dir</a></span>(<span class="dt">end_path =</span> <span class="ot">FALSE</span>, <span class="dt">start_path =</span> <span class="st">"output"</span>, <span class="dt">plot_type =</span> <span class="st">"heat_tree"</span>)
-corr_plot_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_output_dir.html">get_output_dir</a></span>(<span class="dt">end_path =</span> <span class="ot">FALSE</span>, <span class="dt">start_path =</span> <span class="st">"output"</span>, <span class="dt">plot_type =</span> <span class="st">"correlation"</span>)</code></pre></div>
+heat_tree_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/output_dir.html">output_dir</a></span>(<span class="dt">end_path =</span> <span class="ot">FALSE</span>, <span class="dt">start_path =</span> <span class="st">"output"</span>, <span class="dt">plot_type =</span> <span class="st">"heat_tree"</span>)
+corr_plot_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/output_dir.html">output_dir</a></span>(<span class="dt">end_path =</span> <span class="ot">FALSE</span>, <span class="dt">start_path =</span> <span class="st">"output"</span>, <span class="dt">plot_type =</span> <span class="st">"correlation"</span>)</code></pre></div>
 <div id="statistics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#statistics" class="anchor"></a>Statistics</h2>
@@ -205,7 +208,7 @@ MicrobiomeR also uses ggplot2 to create <code><a href="../reference/correlation_
 <h3 class="hasAnchor">
 <a href="#two-treatment-groups" class="anchor"></a>Two Treatment Groups</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Generate heat_trees</span>
-heat_tree_plots &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_heat_tree_plots.html">get_heat_tree_plots</a></span>(metacoder_obj,
+heat_tree_plots &lt;-<span class="st"> </span><span class="kw"><a href="../reference/heat_tree_plots.html">heat_tree_plots</a></span>(metacoder_obj,
                                        <span class="dt">rank_list =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>),
                                        <span class="dt">node_label =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(wilcox_p_value <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.05</span>, taxon_ids, <span class="ot">NA</span>),
                                        <span class="dt">node_label_size =</span> <span class="dv">2</span>,
@@ -213,7 +216,7 @@ heat_tree_plots &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(heat_tree_plots)
 <span class="co">#&gt; [1] "metacoder_object" "heat_trees"       "taxmaps"</span>
 <span class="co"># Generate correlation_plots</span>
-corr_plots &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_correlation_plots.html">get_correlation_plots</a></span>(metacoder_obj, <span class="dt">primary_ranks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>))
+corr_plots &lt;-<span class="st"> </span><span class="kw"><a href="../reference/correlation_plots.html">correlation_plots</a></span>(metacoder_obj, <span class="dt">primary_ranks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>))
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(corr_plots)
 <span class="co">#&gt; [1] "Phylum" "Class"  "Order"</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Save plots with a custom output path</span>
@@ -259,7 +262,7 @@ phy_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cre
 
 <span class="co"># Get the taxmap object in the raw format</span>
 raw_metacoder &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as_MicrobiomeR_format.html">as_MicrobiomeR_format</a></span>(<span class="dt">obj =</span> phy_obj, <span class="dt">format =</span> <span class="st">"raw_format"</span>)
-<span class="co"># Remove Archaea from the metacoder object</span>
+<span class="co"># Remove Archaea from the taxmap object</span>
 metacoder_obj &lt;-<span class="st"> </span>taxa<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/taxa/topics/filter_taxa">filter_taxa</a></span>(<span class="dt">obj =</span> raw_metacoder,
                                    taxon_names <span class="op">==</span><span class="st"> "Archaea"</span>,
                                    <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>,
@@ -310,7 +313,7 @@ metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as_MicrobiomeR_format.html">as_MicrobiomeR_format</a></span>(<span class="dt">obj =</span> metacoder_obj, <span class="dt">format =</span> <span class="st">"analyzed_format"</span>)
 
 <span class="co"># Generate heat_trees</span>
-heat_tree_plots &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_heat_tree_plots.html">get_heat_tree_plots</a></span>(metacoder_obj,
+heat_tree_plots &lt;-<span class="st"> </span><span class="kw"><a href="../reference/heat_tree_plots.html">heat_tree_plots</a></span>(metacoder_obj,
                                        <span class="dt">rank_list =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>),
                                        <span class="dt">node_label =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(wilcox_p_value <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.05</span>, taxon_ids, <span class="ot">NA</span>),
                                        <span class="dt">node_label_size =</span> <span class="dv">2</span>,
@@ -325,7 +328,7 @@ heat_trees<span class="op">$</span>Phylum</code></pre></div>
 <p><img src="analysis_files/figure-html/unnamed-chunk-9-3.png" width="768" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 <span class="co"># Generate Correlation plots</span>
-corr_plots &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_correlation_plots.html">get_correlation_plots</a></span>(metacoder_obj, <span class="dt">primary_ranks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>))
+corr_plots &lt;-<span class="st"> </span><span class="kw"><a href="../reference/correlation_plots.html">correlation_plots</a></span>(metacoder_obj, <span class="dt">primary_ranks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>))
 
 corr_plots<span class="op">$</span>Class<span class="op">$</span>Phylum<span class="op">$</span><span class="st">`</span><span class="dt">Exp_Var2-vs-Exp_Var1</span><span class="st">`</span></code></pre></div>
 <p><img src="analysis_files/figure-html/unnamed-chunk-9-4.png" width="768" style="display: block; margin: auto;"></p>

@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -96,7 +96,10 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
+</li>
+<li>
+  <a href="../articles/paper.html">Publication</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -226,21 +229,21 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="get_treatment_matrix.html">get_treatment_matrix()</a></code> </p>
-        </td>
-        <td><p>Get Treatment Matrix</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="MicrobiomeR_Formats.html">MicrobiomeR_Formats</a></code> </p>
         </td>
         <td><p>The MicrobiomeR Formats</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="stacked_barplot.html">melt_metacoder()</a></code> <code><a href="stacked_barplot.html">convert_proportions()</a></code> <code><a href="stacked_barplot.html">stacked_barplot()</a></code> </p>
+          <p><code><a href="stacked_barplot.html">melt_taxmap()</a></code> <code><a href="stacked_barplot.html">convert_proportions()</a></code> <code><a href="stacked_barplot.html">stacked_barplot()</a></code> </p>
         </td>
-        <td><p>Melt Metacoder Object</p></td>
+        <td><p>Melt Taxmap Object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="treatment_matrix.html">treatment_matrix()</a></code> </p>
+        </td>
+        <td><p>Get Treatment Matrix</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -276,12 +279,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="object_handler.html">object_handler()</a></code> </p>
-        </td>
-        <td><p>Object handler</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="order_metacoder_data.html">order_metacoder_data()</a></code> </p>
         </td>
         <td><p>Order Metacoder Observation Data</p></td>
@@ -310,19 +307,19 @@
         <td>
           <p><code><a href="otu_id_filter.html">otu_id_filter()</a></code> </p>
         </td>
-        <td><p>Filter OTU Ids from Metacoder Objects</p></td>
+        <td><p>Filter OTU Ids from Taxmap Objects</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="sample_id_filter.html">sample_id_filter()</a></code> </p>
         </td>
-        <td><p>Filter Samples Ids from Metacoder Objects</p></td>
+        <td><p>Filter Samples Ids from Taxmap Objects</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="taxon_id_filter.html">taxon_id_filter()</a></code> </p>
         </td>
-        <td><p>Filter Taxon Ids from Metacoder Objects</p></td>
+        <td><p>Filter Taxon Ids from Taxmap Objects</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -334,9 +331,9 @@
       <tr>
         
         <td>
-          <p><code><a href="agglomerate_metacoder.html">agglomerate_metacoder()</a></code> </p>
+          <p><code><a href="agglomerate_taxmap.html">agglomerate_taxmap()</a></code> </p>
         </td>
-        <td><p>Agglomerate Metacoder Objects</p></td>
+        <td><p>Agglomerate taxmap Objects</p></td>
       </tr><tr>
         
         <td>
@@ -378,9 +375,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="stacked_barplot.html">melt_metacoder()</a></code> <code><a href="stacked_barplot.html">convert_proportions()</a></code> <code><a href="stacked_barplot.html">stacked_barplot()</a></code> </p>
+          <p><code><a href="stacked_barplot.html">melt_taxmap()</a></code> <code><a href="stacked_barplot.html">convert_proportions()</a></code> <code><a href="stacked_barplot.html">stacked_barplot()</a></code> </p>
         </td>
-        <td><p>Melt Metacoder Object</p></td>
+        <td><p>Melt Taxmap Object</p></td>
       </tr><tr>
         
         <td>
@@ -410,7 +407,7 @@
       <tr>
         
         <td>
-          <p><code><a href="get_output_dir.html">get_output_dir()</a></code> </p>
+          <p><code><a href="output_dir.html">output_dir()</a></code> </p>
         </td>
         <td><p>Create an Output Directory</p></td>
       </tr><tr>
@@ -422,45 +419,45 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="correlation_data.html">correlation_data()</a></code> </p>
+        </td>
+        <td><p>Get Correlation Plot Data</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="correlation_plot.html">correlation_plot()</a></code> </p>
         </td>
         <td><p>Correlation Plot</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_correlation_data.html">get_correlation_data()</a></code> </p>
-        </td>
-        <td><p>Get Correlation Plot Data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_correlation_plots.html">get_correlation_plots()</a></code> </p>
+          <p><code><a href="correlation_plots.html">correlation_plots()</a></code> </p>
         </td>
         <td><p>Get Multiple Correlation Plots</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_heat_tree_parameters.html">get_heat_tree_parameters()</a></code> </p>
+          <p><code><a href="heat_tree_parameters.html">heat_tree_parameters()</a></code> </p>
         </td>
         <td><p>Get Heat Tree Parameters</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_heat_tree_plots.html">get_heat_tree_plots()</a></code> </p>
+          <p><code><a href="heat_tree_plots.html">heat_tree_plots()</a></code> </p>
         </td>
         <td><p>Get Heat Tree Plots</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_plot_limits.html">get_plot_limits()</a></code> </p>
-        </td>
-        <td><p>Get Plot Limits</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="ordination_plot.html">ordination_plot()</a></code> </p>
         </td>
         <td><p>Ordination Plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_limits.html">plot_limits()</a></code> </p>
+        </td>
+        <td><p>Get Plot Limits</p></td>
       </tr><tr>
         
         <td>
@@ -488,9 +485,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="stacked_barplot.html">melt_metacoder()</a></code> <code><a href="stacked_barplot.html">convert_proportions()</a></code> <code><a href="stacked_barplot.html">stacked_barplot()</a></code> </p>
+          <p><code><a href="stacked_barplot.html">melt_taxmap()</a></code> <code><a href="stacked_barplot.html">convert_proportions()</a></code> <code><a href="stacked_barplot.html">stacked_barplot()</a></code> </p>
         </td>
-        <td><p>Melt Metacoder Object</p></td>
+        <td><p>Melt Taxmap Object</p></td>
       </tr><tr>
         
         <td>

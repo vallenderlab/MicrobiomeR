@@ -7,7 +7,7 @@
 correlation_plots(obj, primary_ranks, secondary_ranks = TRUE, ...)
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
+\item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
 
 \item{primary_ranks}{A vector of primary ranks used to label the points.}
 
@@ -44,8 +44,7 @@ Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{correlation_data}},
   \code{\link{correlation_plot}},
   \code{\link{heat_tree_parameters}},
-  \code{\link{heat_tree_plots}},
-  \code{\link{melt_metacoder}},
+  \code{\link{heat_tree_plots}}, \code{\link{melt_taxmap}},
   \code{\link{ordination_plot}}, \code{\link{plot_limits}},
   \code{\link{save_barplot}},
   \code{\link{save_correlation_plots}},

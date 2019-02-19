@@ -7,13 +7,13 @@
 which_format(obj)
 }
 \arguments{
-\item{obj}{A Taxmap/metacoder object.}
+\item{obj}{A Taxmap object.}
 }
 \value{
 If the format is verified it returns a character string denoting the identified format.
 }
 \description{
-A function for looking at a metacoder object and returning the identified MicrobiomeR format.
+A function for looking at a Taxmap object and returning the identified MicrobiomeR format.
 }
 \details{
 This function is used to get basic information about the format of the taxmap object

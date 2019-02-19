@@ -7,17 +7,17 @@
 as_basic_format(obj, cols = NULL, out_names = NULL)
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
+\item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
 
 \item{cols}{Column names used for \code{\link[metacoder]{calc_taxon_abund}}.  Default: NULL}
 
 \item{out_names}{Column names of the output used for \code{\link[metacoder]{calc_obs_props}}.  Default: NULL}
 }
 \value{
-A Taxmap/metacoder object in the "basic_format".
+A Taxmap object in the "basic_format".
 }
 \description{
-Converts a metacoder object to the basic_format.
+Converts a Taxmap object to the basic_format.
 }
 \details{
 See the \link{MicrobiomeR_Formats} documentation.
@@ -32,8 +32,7 @@ Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_analyzed_format}},
   \code{\link{as_custom_format}},
   \code{\link{as_phyloseq_format}},
-  \code{\link{as_raw_format}},
-  \code{\link{melt_metacoder}},
+  \code{\link{as_raw_format}}, \code{\link{melt_taxmap}},
   \code{\link{treatment_matrix}}
 }
 \concept{Formatting}

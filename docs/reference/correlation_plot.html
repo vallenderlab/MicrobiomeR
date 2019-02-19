@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -99,7 +99,10 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
+</li>
+<li>
+  <a href="../articles/paper.html">Publication</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -146,14 +149,14 @@
     </div>
 
     <pre class="usage"><span class='fu'>correlation_plot</span>(<span class='no'>obj</span>, <span class='no'>primary_rank</span>, <span class='kw'>secondary_rank</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>wp_value</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>pal_func</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>wp_value</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>pal_func</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"logit"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>An object to be converted to a metacoder object with <code><a href='object_handler.html'>object_handler</a></code>.</p></td>
+      <td><p>An object to be converted to a Taxmap object with <code><a href='create_taxmap.html'>create_taxmap</a></code>.</p></td>
     </tr>
     <tr>
       <th>primary_rank</th>
@@ -184,18 +187,16 @@ the number of supertaxon ranks above the primary rank or the name of a supertaxo
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='object_handler.html'>object_handler</a></code>,  <code><a href='validate_MicrobiomeR_format.html'>validate_MicrobiomeR_format</a></code>,  <code><a href='get_correlation_data.html'>get_correlation_data</a></code>,  <code><a href='get_plot_limits.html'>get_plot_limits</a></code>,  <code><a href='get_color_palette.html'>get_color_palette</a></code></p>
+    <div class='dont-index'><p><code><a href='create_taxmap.html'>create_taxmap</a></code>,  <code><a href='validate_MicrobiomeR_format.html'>validate_MicrobiomeR_format</a></code>,  <code><a href='correlation_data.html'>correlation_data</a></code>,  <code><a href='plot_limits.html'>plot_limits</a></code>,  <code><a href='get_color_palette.html'>get_color_palette</a></code></p>
 <p><code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></code>,  <code><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></code>,  <code><a href='https://ggplot2.tidyverse.org/reference/geom_polygon.html'>geom_polygon</a></code>,  <code><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></code>,  <code><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></code>,  <code>scale_continuous</code>,  <code>scale_manual</code>,  <code><a href='https://ggplot2.tidyverse.org/reference/guide_legend.html'>guide_legend</a></code>,  <code><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_abline</a></code></p>
 <p><code><a href='https://www.rdocumentation.org/packages/ggrepel/topics/geom_text_repel'>geom_label_repel</a></code></p>
 <p><code><a href='https://forcats.tidyverse.org/reference/fct_reorder.html'>fct_reorder</a></code></p>
 <p>Other Visualizations: <code><a href='alpha_diversity_plot.html'>alpha_diversity_plot</a></code>,
-  <code><a href='get_correlation_data.html'>get_correlation_data</a></code>,
-  <code><a href='get_correlation_plots.html'>get_correlation_plots</a></code>,
-  <code><a href='get_heat_tree_parameters.html'>get_heat_tree_parameters</a></code>,
-  <code><a href='get_heat_tree_plots.html'>get_heat_tree_plots</a></code>,
-  <code><a href='get_plot_limits.html'>get_plot_limits</a></code>,
-  <code><a href='stacked_barplot.html'>melt_metacoder</a></code>,
-  <code><a href='ordination_plot.html'>ordination_plot</a></code>,
+  <code><a href='correlation_data.html'>correlation_data</a></code>,
+  <code><a href='correlation_plots.html'>correlation_plots</a></code>,
+  <code><a href='heat_tree_parameters.html'>heat_tree_parameters</a></code>,
+  <code><a href='heat_tree_plots.html'>heat_tree_plots</a></code>, <code><a href='stacked_barplot.html'>melt_taxmap</a></code>,
+  <code><a href='ordination_plot.html'>ordination_plot</a></code>, <code><a href='plot_limits.html'>plot_limits</a></code>,
   <code><a href='save_barplot.html'>save_barplot</a></code>,
   <code><a href='save_correlation_plots.html'>save_correlation_plots</a></code>,
   <code><a href='save_heat_tree_plots.html'>save_heat_tree_plots</a></code>,

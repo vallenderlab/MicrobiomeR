@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -96,7 +96,10 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
+</li>
+<li>
+  <a href="../articles/paper.html">Publication</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -135,6 +138,81 @@
       <small>Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="microbiomer-0-5-0" class="section level1">
+<h1 class="page-header">
+<a href="#microbiomer-0-5-0" class="anchor"></a>MicrobiomeR 0.5.0</h1>
+<ul>
+<li>Added the JOSS paper</li>
+<li>Changed correlation plots</li>
+<li>Removed color from background</li>
+<li>Removed hard coded plot limits</li>
+<li>Added “1:1” line and Average lines</li>
+<li>Added a <code>trans</code> parameter to transform the x and y axis</li>
+<li>Changed function names</li>
+<li>From <code>create_metacoder</code> to <code>create_taxmap</code>
+</li>
+<li>From <code>agglomerate_metacoder</code> to <code>agglomerate_taxmap</code>
+</li>
+<li>From <code>melt_metacoder</code> to <code>melt_taxmap</code>
+</li>
+<li>Bugs</li>
+<li>Fixed <code>output_dir</code> bug where error should have been a warning</li>
+<li>Fixed correlation plot bug where treatments were on the wrong axis.</li>
+<li>Fixed output message for heat tree plots.</li>
+</ul>
+</div>
+    <div id="microbiomer-0-3-0" class="section level1">
+<h1 class="page-header">
+<a href="#microbiomer-0-3-0" class="anchor"></a>MicrobiomeR 0.3.0</h1>
+<ul>
+<li>Changed function names</li>
+<li>From <code>get_treatment_matrix</code> to <code>treatment_matrix</code>
+</li>
+<li>From <code>get_output_dir</code> to <code>output_dir</code>
+</li>
+<li>From <code>get_correlation_plots</code> to <code>correlation_plots</code>
+</li>
+<li>From <code>get_correlation_data</code> to <code>correlation_data</code>
+</li>
+<li>From <code>get_plot_limits</code> to <code>plot_limits</code>
+</li>
+<li>From <code>get_heat_tree_plots</code> to <code>heat_tree_plots</code>
+</li>
+<li>From <code>get_heat_tree_parameters</code> to <code>heat_tree_parameters</code>
+</li>
+<li>From <code>object_handler</code> to <code>create_metacoder</code>
+</li>
+</ul>
+</div>
+    <div id="microbiomer-0-2-4" class="section level1">
+<h1 class="page-header">
+<a href="#microbiomer-0-2-4" class="anchor"></a>MicrobiomeR 0.2.4</h1>
+<ul>
+<li>Added new tests</li>
+<li>Correlation plot tests</li>
+<li>Heat tree tests</li>
+<li>Metacoder Formatting tests</li>
+<li>Phyloseq tests</li>
+</ul>
+</div>
+    <div id="microbiomer-0-2-3" class="section level1">
+<h1 class="page-header">
+<a href="#microbiomer-0-2-3" class="anchor"></a>MicrobiomeR 0.2.3</h1>
+<div id="documentation-updates" class="section level2">
+<h2 class="hasAnchor">
+<a href="#documentation-updates" class="anchor"></a>Documentation Updates</h2>
+<ul>
+<li>Updated documentation for <code>create_pub_table</code> function.</li>
+</ul>
+</div>
+<div id="tests-added" class="section level2">
+<h2 class="hasAnchor">
+<a href="#tests-added" class="anchor"></a>Tests Added</h2>
+<ul>
+<li>Added tests for utils.R</li>
+</ul>
+</div>
+</div>
     <div id="microbiomer-0-2-2" class="section level1">
 <h1 class="page-header">
 <a href="#microbiomer-0-2-2" class="anchor"></a>MicrobiomeR 0.2.2</h1>
@@ -171,9 +249,9 @@
 <li>Added top_coefficients_barplot for generating a plot of the top coefficients output from the permanova function.</li>
 </ul>
 </div>
-<div id="tests-added" class="section level2">
+<div id="tests-added-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#tests-added" class="anchor"></a>Tests Added</h2>
+<a href="#tests-added-1" class="anchor"></a>Tests Added</h2>
 <ul>
 <li>Added tests for permanova.R.</li>
 </ul>
@@ -182,9 +260,9 @@
     <div id="microbiomer-0-2-0" class="section level1">
 <h1 class="page-header">
 <a href="#microbiomer-0-2-0" class="anchor"></a>MicrobiomeR 0.2.0</h1>
-<div id="documentation-updates" class="section level2">
+<div id="documentation-updates-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#documentation-updates" class="anchor"></a>Documentation Updates</h2>
+<a href="#documentation-updates-1" class="anchor"></a>Documentation Updates</h2>
 <ul>
 <li>Added vignettes to package and pkgdown config.</li>
 <li>About</li>
@@ -269,6 +347,10 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#microbiomer-0-5-0">0.5.0</a></li>
+        <li><a href="#microbiomer-0-3-0">0.3.0</a></li>
+        <li><a href="#microbiomer-0-2-4">0.2.4</a></li>
+        <li><a href="#microbiomer-0-2-3">0.2.3</a></li>
         <li><a href="#microbiomer-0-2-2">0.2.2</a></li>
         <li><a href="#microbiomer-0-2-1">0.2.1</a></li>
         <li><a href="#microbiomer-0-2-0">0.2.0</a></li>

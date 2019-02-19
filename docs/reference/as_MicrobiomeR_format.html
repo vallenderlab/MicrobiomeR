@@ -34,7 +34,7 @@
   
 <meta property="og:title" content="As MicrobiomeR Format — as_MicrobiomeR_format" />
 
-<meta property="og:description" content="Converts a metacoder object to the specified format." />
+<meta property="og:description" content="Converts a Taxmap object to the specified format." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -99,7 +99,10 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
+</li>
+<li>
+  <a href="../articles/paper.html">Publication</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -141,7 +144,7 @@
 
     <div class="ref-description">
     
-    <p>Converts a metacoder object to the specified format.</p>
+    <p>Converts a Taxmap object to the specified format.</p>
     
     </div>
 
@@ -152,7 +155,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>An object to be converted to a metacoder object with <code><a href='object_handler.html'>object_handler</a></code>.</p></td>
+      <td><p>An object to be converted to a Taxmap object with <code><a href='create_taxmap.html'>create_taxmap</a></code>.</p></td>
     </tr>
     <tr>
       <th>format</th>
@@ -167,7 +170,7 @@ by the format parameter.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A Taxmap/metacoder object in the specified format.</p>
+    <p>A Taxmap object in the specified format.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -175,15 +178,14 @@ by the format parameter.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='which_format.html'>which_format</a></code>,  <code><a href='as_raw_format.html'>as_raw_format</a></code>,  <code><a href='as_basic_format.html'>as_basic_format</a></code>,  <code><a href='as_analyzed_format.html'>as_analyzed_format</a></code>,  <code><a href='as_phyloseq_format.html'>as_phyloseq_format</a></code>,  <code><a href='object_handler.html'>object_handler</a></code>,  <code><a href='order_metacoder_data.html'>order_metacoder_data</a></code></p>
+    <div class='dont-index'><p><code><a href='which_format.html'>which_format</a></code>,  <code><a href='as_raw_format.html'>as_raw_format</a></code>,  <code><a href='as_basic_format.html'>as_basic_format</a></code>,  <code><a href='as_analyzed_format.html'>as_analyzed_format</a></code>,  <code><a href='as_phyloseq_format.html'>as_phyloseq_format</a></code>,  <code><a href='create_taxmap.html'>create_taxmap</a></code>,  <code><a href='order_metacoder_data.html'>order_metacoder_data</a></code></p>
 <p>Other Formatting: <code><a href='MicrobiomeR_Formats.html'>MicrobiomeR_Formats</a></code>,
   <code><a href='as_analyzed_format.html'>as_analyzed_format</a></code>,
   <code><a href='as_basic_format.html'>as_basic_format</a></code>,
   <code><a href='as_custom_format.html'>as_custom_format</a></code>,
   <code><a href='as_phyloseq_format.html'>as_phyloseq_format</a></code>,
-  <code><a href='as_raw_format.html'>as_raw_format</a></code>,
-  <code><a href='get_treatment_matrix.html'>get_treatment_matrix</a></code>,
-  <code><a href='stacked_barplot.html'>melt_metacoder</a></code></p></div>
+  <code><a href='as_raw_format.html'>as_raw_format</a></code>, <code><a href='stacked_barplot.html'>melt_taxmap</a></code>,
+  <code><a href='treatment_matrix.html'>treatment_matrix</a></code></p></div>
     
 
   </div>

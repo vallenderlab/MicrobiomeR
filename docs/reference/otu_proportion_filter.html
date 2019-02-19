@@ -66,7 +66,7 @@ based on a minimum proportional mean across samples per OTU." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.0</span>
       </span>
     </div>
 
@@ -100,7 +100,10 @@ based on a minimum proportional mean across samples per OTU." />
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
+</li>
+<li>
+  <a href="../articles/paper.html">Publication</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -154,7 +157,7 @@ based on a minimum proportional mean across samples per OTU.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>A Taxmap/metacoder object.</p></td>
+      <td><p>A Taxmap object.</p></td>
     </tr>
     <tr>
       <th>otu_percentage</th>
@@ -178,7 +181,7 @@ This function must be used conservatively, hence why the default otu_percentage 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='validate_MicrobiomeR_format.html'>validate_MicrobiomeR_format</a></code>,<code><a href='otu_id_filter.html'>otu_id_filter</a></code></p>
-<p>Other Advanced Metacoder Filters: <code><a href='agglomerate_metacoder.html'>agglomerate_metacoder</a></code>,
+<p>Other Advanced Metacoder Filters: <code><a href='agglomerate_taxmap.html'>agglomerate_taxmap</a></code>,
   <code><a href='cov_filter.html'>cov_filter</a></code>,
   <code><a href='otu_prevalence_filter.html'>otu_prevalence_filter</a></code>,
   <code><a href='taxa_prevalence_filter.html'>taxa_prevalence_filter</a></code></p></div>
@@ -192,10 +195,10 @@ This function must be used conservatively, hence why the default otu_percentage 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>metacoder</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>taxa</span>)
 
-<span class='co'># Convert Phyloseq object to metacoder object</span>
+<span class='co'># Convert Phyloseq object to taxmap object</span>
 <span class='no'>metacoder_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_MicrobiomeR_format.html'>as_MicrobiomeR_format</a></span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>phyloseq_obj</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"raw_format"</span>)
 
-<span class='co'># Remove Archaea from the metacoder object</span>
+<span class='co'># Remove Archaea from the Taxmap object</span>
 <span class='no'>metacoder_obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/taxa/topics/filter_taxa'>filter_taxa</a></span>(
   <span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>metacoder_obj</span>,
   <span class='no'>taxon_names</span> <span class='kw'>==</span> <span class='st'>"Archaea"</span>,

@@ -7,7 +7,7 @@
 heat_tree_parameters(obj, title, treatment_no, ...)
 }
 \arguments{
-\item{obj}{A metacoder object.}
+\item{obj}{A Taxmap object.}
 
 \item{title}{The title used in the heat_tree plot.}
 
@@ -17,7 +17,7 @@ heat_tree_parameters(obj, title, treatment_no, ...)
 output is displayed.  However, this function acts as a default list of parameters.  The memebers
 of the default list will be overridden by the dot parameters.  Any variable in obj$data$stats_tax_data
 can be used to manipulate the heat tree parameters.  Function calls from the taxa package must
-be done explicitely on the metacoder object.}
+be done explicitely on the Taxmap object.}
 }
 \value{
 A list used with do.call and the metacoder::heat_tree function.
@@ -38,8 +38,7 @@ Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{correlation_data}},
   \code{\link{correlation_plots}},
   \code{\link{correlation_plot}},
-  \code{\link{heat_tree_plots}},
-  \code{\link{melt_metacoder}},
+  \code{\link{heat_tree_plots}}, \code{\link{melt_taxmap}},
   \code{\link{ordination_plot}}, \code{\link{plot_limits}},
   \code{\link{save_barplot}},
   \code{\link{save_correlation_plots}},
