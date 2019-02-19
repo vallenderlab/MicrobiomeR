@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Agglomerate Metacoder Objects — agglomerate_metacoder • MicrobiomeR</title>
+<title>Get Metacoder Object — create_metacoder • MicrobiomeR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,11 +32,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Agglomerate Metacoder Objects — agglomerate_metacoder" />
+<meta property="og:title" content="Get Metacoder Object — create_metacoder" />
 
-<meta property="og:description" content="A function similar to the phyloseq::tax_glom function,
-that assembles abundance data at a specified rank.  This removes subtaxa and reassigns the
-values at the specified rank." />
+<meta property="og:description" content="A function that handles the conversion of objects to metacoder (taxa::taxmap) objects." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -136,67 +134,55 @@ values at the specified rank." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Agglomerate Metacoder Objects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/metacoder.R'><code>R/metacoder.R</code></a></small>
-    <div class="hidden name"><code>agglomerate_metacoder.Rd</code></div>
+    <h1>Get Metacoder Object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>create_metacoder.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A function similar to the <code><a href='https://www.rdocumentation.org/packages/phyloseq/topics/tax_glom'>phyloseq::tax_glom</a></code> function,
-that assembles abundance data at a specified rank.  This removes subtaxa and reassigns the
-values at the specified rank.</p>
+    <p>A function that handles the conversion of objects to metacoder (<strong>taxa::taxmap</strong>) objects.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>agglomerate_metacoder</span>(<span class='no'>obj</span>, <span class='no'>rank</span>, <span class='kw'>validated</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>create_metacoder</span>(<span class='no'>obj</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>A Taxmap/metacoder object.</p></td>
-    </tr>
-    <tr>
-      <th>rank</th>
-      <td><p>The rank that will be agllomerated to.</p></td>
-    </tr>
-    <tr>
-      <th>validated</th>
-      <td><p>This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE</p></td>
+      <td><p>An object that contains the data being analyzed.  Can be one of the following:</p><dl class='dl-horizontal'>
+<dt>Phyloseq Object</dt><dd><p>An object generated from the phyloseq package.</p></dd>
+<dt>Taxmap Object</dt><dd><p>An object generated from the metacoder or taxa package.</p></dd>
+<dt>RData file</dt><dd><p>An RData file generated from the base::save function.  Can have an extension of .RData or .rda.</p></dd>
+</dl></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A taxmap object that has been agglomerated at the specified rank.</p>
+    <p>The output generated is a <strong>taxa::taxmap</strong> object.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function helps analyzing taxonomic data at intermediate ranks by agglomerating the observation data
-and the taxmap object.</p>
+    <p>This function is used to convert data to metacoder/taxmap objects for <em>microbiome</em> analysis.
+This function is used at the beginning of every other function to support multiple types of input
+for the obj parameter in those functions.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/taxa/topics/filter_taxa'>filter_taxa</a></code></p>
-<p><code><a href='validate_MicrobiomeR_format.html'>validate_MicrobiomeR_format</a></code></p>
-<p>Other Advanced Metacoder Filters: <code><a href='cov_filter.html'>cov_filter</a></code>,
-  <code><a href='otu_prevalence_filter.html'>otu_prevalence_filter</a></code>,
-  <code><a href='otu_proportion_filter.html'>otu_proportion_filter</a></code>,
-  <code><a href='taxa_prevalence_filter.html'>taxa_prevalence_filter</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/metacoder/topics/parse_phyloseq'>parse_phyloseq</a></code></p>
+<p><code>fileutils</code></p>
+<p>Other Data Importers: <code><a href='create_phyloseq.html'>create_phyloseq</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='kw'>if</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()){
-<span class='co'># This example uses data that are no longer available in the MicrobiomeR package,</span>
-<span class='co'># however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
-<span class='no'>basic_silva</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_MicrobiomeR_format.html'>as_MicrobiomeR_format</a></span>(<span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/MicrobiomeR/topics/raw_silva_2'>raw_silva_2</a></span>, <span class='st'>"basic_format"</span>)
-<span class='no'>phylum_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>agglomerate_metacoder</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>basic_silva</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"Phylum"</span>)
-<span class='no'>class_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>agglomerate_metacoder</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>basic_silva</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"Class"</span>)
-<span class='no'>order_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>agglomerate_metacoder</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>basic_silva</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"Order"</span>)
+ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
+ <span class='no'>phy_obj</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/MicrobiomeR/topics/phyloseq_silva_2'>phyloseq_silva_2</a></span>
+ <span class='no'>mc_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>create_metacoder</span>(<span class='no'>phy_obj</span>)
  }
 <span class='co'># }</span></pre>
   </div>

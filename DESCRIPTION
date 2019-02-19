@@ -26,6 +26,8 @@ Imports:
     glue,
     metacoder,
     modes,
+    microbiome (>= 1.5.27),
+    openxlsx,
     phyloseq,
     plotly,
     purrr,
@@ -43,7 +45,6 @@ Imports:
     ggthemes,
     crayon,
     biomformat,
-    microbiome,
     forcats,
     ggrepel,
     scales,
@@ -53,7 +54,8 @@ Imports:
 Suggests:
     knitr,
     testthat,
-    rmarkdown
+    rmarkdown,
+    covr
 Additional_repositories:
     http://bioconductor.org/packages/release/bioc/,
     http://bioconductor.org/packages/release/data/annotation,

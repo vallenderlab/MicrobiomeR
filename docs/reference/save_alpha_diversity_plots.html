@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Agglomerate Metacoder Objects — agglomerate_metacoder • MicrobiomeR</title>
+<title>Save Alpha Diversity Plots — save_alpha_diversity_plots • MicrobiomeR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,11 +32,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Agglomerate Metacoder Objects — agglomerate_metacoder" />
+<meta property="og:title" content="Save Alpha Diversity Plots — save_alpha_diversity_plots" />
 
-<meta property="og:description" content="A function similar to the phyloseq::tax_glom function,
-that assembles abundance data at a specified rank.  This removes subtaxa and reassigns the
-values at the specified rank." />
+<meta property="og:description" content="This function saves alpha diversity plots stored in a list object to an output folder." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -136,68 +134,80 @@ values at the specified rank." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Agglomerate Metacoder Objects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/metacoder.R'><code>R/metacoder.R</code></a></small>
-    <div class="hidden name"><code>agglomerate_metacoder.Rd</code></div>
+    <h1>Save Alpha Diversity Plots</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/alpha-diversity.R'><code>R/alpha-diversity.R</code></a></small>
+    <div class="hidden name"><code>save_alpha_diversity_plots.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A function similar to the <code><a href='https://www.rdocumentation.org/packages/phyloseq/topics/tax_glom'>phyloseq::tax_glom</a></code> function,
-that assembles abundance data at a specified rank.  This removes subtaxa and reassigns the
-values at the specified rank.</p>
+    <p>This function saves alpha diversity plots stored in a list object to an output folder.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>agglomerate_metacoder</span>(<span class='no'>obj</span>, <span class='no'>rank</span>, <span class='kw'>validated</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>save_alpha_diversity_plots</span>(<span class='no'>alpha_div_plots</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"tiff"</span>,
+  <span class='kw'>start_path</span> <span class='kw'>=</span> <span class='st'>"output"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>obj</th>
-      <td><p>A Taxmap/metacoder object.</p></td>
+      <th>alpha_div_plots</th>
+      <td><p>A named list of alpha diversity plots.</p></td>
     </tr>
     <tr>
-      <th>rank</th>
-      <td><p>The rank that will be agllomerated to.</p></td>
+      <th>format</th>
+      <td><p>The format of the output image.  Default: 'tiff'</p></td>
     </tr>
     <tr>
-      <th>validated</th>
-      <td><p>This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE</p></td>
+      <th>start_path</th>
+      <td><p>The starting path of the output directory.  Default: 'output'</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>An optional list of parameters to use in the output_dir function.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A taxmap object that has been agglomerated at the specified rank.</p>
+    <p>An output directory that contains alpha diversity plots.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function helps analyzing taxonomic data at intermediate ranks by agglomerating the observation data
-and the taxmap object.</p>
+    <p>This function creates an appropriate output directory, where it saves publication ready
+plots.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/taxa/topics/filter_taxa'>filter_taxa</a></code></p>
-<p><code><a href='validate_MicrobiomeR_format.html'>validate_MicrobiomeR_format</a></code></p>
-<p>Other Advanced Metacoder Filters: <code><a href='cov_filter.html'>cov_filter</a></code>,
-  <code><a href='otu_prevalence_filter.html'>otu_prevalence_filter</a></code>,
-  <code><a href='otu_proportion_filter.html'>otu_proportion_filter</a></code>,
-  <code><a href='taxa_prevalence_filter.html'>taxa_prevalence_filter</a></code></p></div>
+    <div class='dont-index'><p><code><a href='output_dir.html'>output_dir</a></code></p>
+<p><code><a href='https://ggplot2.tidyverse.org/reference/ggsave.html'>ggsave</a></code></p>
+<p>Other Visualizations: <code><a href='alpha_diversity_plot.html'>alpha_diversity_plot</a></code>,
+  <code><a href='correlation_data.html'>correlation_data</a></code>,
+  <code><a href='correlation_plots.html'>correlation_plots</a></code>,
+  <code><a href='correlation_plot.html'>correlation_plot</a></code>,
+  <code><a href='heat_tree_parameters.html'>heat_tree_parameters</a></code>,
+  <code><a href='heat_tree_plots.html'>heat_tree_plots</a></code>,
+  <code><a href='stacked_barplot.html'>melt_metacoder</a></code>,
+  <code><a href='ordination_plot.html'>ordination_plot</a></code>, <code><a href='plot_limits.html'>plot_limits</a></code>,
+  <code><a href='save_correlation_plots.html'>save_correlation_plots</a></code>,
+  <code><a href='save_heat_tree_plots.html'>save_heat_tree_plots</a></code>,
+  <code><a href='save_ordination_plots.html'>save_ordination_plots</a></code>,
+  <code><a href='save_stacked_barplots.html'>save_stacked_barplots</a></code>,
+  <code><a href='top_coefficients_barplot.html'>top_coefficients_barplot</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='kw'>if</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()){
-<span class='co'># This example uses data that are no longer available in the MicrobiomeR package,</span>
-<span class='co'># however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
-<span class='no'>basic_silva</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_MicrobiomeR_format.html'>as_MicrobiomeR_format</a></span>(<span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/MicrobiomeR/topics/raw_silva_2'>raw_silva_2</a></span>, <span class='st'>"basic_format"</span>)
-<span class='no'>phylum_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>agglomerate_metacoder</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>basic_silva</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"Phylum"</span>)
-<span class='no'>class_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>agglomerate_metacoder</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>basic_silva</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"Class"</span>)
-<span class='no'>order_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>agglomerate_metacoder</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>basic_silva</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"Order"</span>)
- }
+<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
+  <span class='co'># This example uses data that are no longer available in the MicrobiomeR package,</span>
+  <span class='co'># however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
+  <span class='no'>analyzed_silva</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_MicrobiomeR_format.html'>as_MicrobiomeR_format</a></span>(<span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/MicrobiomeR/topics/raw_silva_2'>raw_silva_2</a></span>, <span class='st'>"analyzed_format"</span>)
+  <span class='no'>alpha_div_plots</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='alpha_diversity_plot.html'>alpha_diversity_plots</a></span>(<span class='no'>analyzed_silva</span>)
+  <span class='co'># Save to \emph{./output/alpha_diversity} folder.</span>
+  <span class='fu'>save_alpha_diversity_plot</span>(<span class='no'>alpha_div_plots</span>)
+}
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

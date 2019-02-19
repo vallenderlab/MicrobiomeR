@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Agglomerate Metacoder Objects — agglomerate_metacoder • MicrobiomeR</title>
+<title>Alpha Diveristy Measues — alpha_diversity_measures • MicrobiomeR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,11 +32,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Agglomerate Metacoder Objects — agglomerate_metacoder" />
+<meta property="og:title" content="Alpha Diveristy Measues — alpha_diversity_measures" />
 
-<meta property="og:description" content="A function similar to the phyloseq::tax_glom function,
-that assembles abundance data at a specified rank.  This removes subtaxa and reassigns the
-values at the specified rank." />
+<meta property="og:description" content="This function generates various alpha diversity measures include Shannon, Fisher, Coverage, Gini Simpson, and Inverse Simpson." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -136,68 +134,49 @@ values at the specified rank." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Agglomerate Metacoder Objects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/metacoder.R'><code>R/metacoder.R</code></a></small>
-    <div class="hidden name"><code>agglomerate_metacoder.Rd</code></div>
+    <h1>Alpha Diveristy Measues</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/alpha-diversity.R'><code>R/alpha-diversity.R</code></a></small>
+    <div class="hidden name"><code>alpha_diversity_measures.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A function similar to the <code><a href='https://www.rdocumentation.org/packages/phyloseq/topics/tax_glom'>phyloseq::tax_glom</a></code> function,
-that assembles abundance data at a specified rank.  This removes subtaxa and reassigns the
-values at the specified rank.</p>
+    <p>This function generates various alpha diversity measures include Shannon, Fisher, Coverage, Gini Simpson, and Inverse Simpson.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>agglomerate_metacoder</span>(<span class='no'>obj</span>, <span class='no'>rank</span>, <span class='kw'>validated</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>alpha_diversity_measures</span>(<span class='no'>obj</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"TreatmentGroup"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>A Taxmap/metacoder object.</p></td>
+      <td><p>An object to be converted to a metacoder object with <code><a href='create_metacoder.html'>create_metacoder</a></code>.</p></td>
     </tr>
     <tr>
-      <th>rank</th>
-      <td><p>The rank that will be agllomerated to.</p></td>
-    </tr>
-    <tr>
-      <th>validated</th>
-      <td><p>This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE</p></td>
+      <th>group</th>
+      <td><p>The "TreatmentGroup" or similar grouping from your metadata to denote sample groups, Default: 'TreatmentGroup'</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A taxmap object that has been agglomerated at the specified rank.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This function helps analyzing taxonomic data at intermediate ranks by agglomerating the observation data
-and the taxmap object.</p>
+    <p>Returns a list of alpha diversity measures with metadata.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/taxa/topics/filter_taxa'>filter_taxa</a></code></p>
-<p><code><a href='validate_MicrobiomeR_format.html'>validate_MicrobiomeR_format</a></code></p>
-<p>Other Advanced Metacoder Filters: <code><a href='cov_filter.html'>cov_filter</a></code>,
-  <code><a href='otu_prevalence_filter.html'>otu_prevalence_filter</a></code>,
-  <code><a href='otu_proportion_filter.html'>otu_proportion_filter</a></code>,
-  <code><a href='taxa_prevalence_filter.html'>taxa_prevalence_filter</a></code></p></div>
+    <div class='dont-index'><p>View <code><a href='https://www.rdocumentation.org/packages/microbiome/topics/alpha'>alpha</a></code>,<code><a href='https://www.rdocumentation.org/packages/microbiome/topics/meta'>meta</a></code> to learn more about generating diversity measures with the microbiome package.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='kw'>if</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()){
-<span class='co'># This example uses data that are no longer available in the MicrobiomeR package,</span>
-<span class='co'># however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
-<span class='no'>basic_silva</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_MicrobiomeR_format.html'>as_MicrobiomeR_format</a></span>(<span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/MicrobiomeR/topics/raw_silva_2'>raw_silva_2</a></span>, <span class='st'>"basic_format"</span>)
-<span class='no'>phylum_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>agglomerate_metacoder</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>basic_silva</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"Phylum"</span>)
-<span class='no'>class_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>agglomerate_metacoder</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>basic_silva</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"Class"</span>)
-<span class='no'>order_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>agglomerate_metacoder</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>basic_silva</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"Order"</span>)
- }
+<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
+  <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='no'>analyzed_silva</span>
+  <span class='no'>measures</span> <span class='kw'>&lt;-</span> <span class='fu'>alpha_diversity_measures</span>(<span class='no'>data</span>)
+  <span class='no'>measures</span>$<span class='no'>Shannon</span>
+}
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -206,8 +185,6 @@ and the taxmap object.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

@@ -1,10 +1,10 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "Using Color Palettes"
+author: "Rob Gilmore & Shaurita Hutchins"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Color Palettes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -41,7 +41,7 @@ print(custom_pal)
 
 ## Scico
 
-We have built in support for the [scico](https://github.com/thomasp85/scico) package...
+We have built in support for the [scico](https://github.com/thomasp85/scico) package.
 
 ```{r message=FALSE, warning=FALSE}
 basic_pal <- scico_palette(scico_palette="hawaii")(25)
@@ -53,13 +53,19 @@ print(better_pal)
 
 ## Viridis
 
-...And the [viridis](https://github.com/sjmgarnier/viridis) package.
+We also provide support for the [viridis](https://github.com/sjmgarnier/viridis) package.
 
+Typically, you'd use the viridis palette like we do below.
 ```{r message=FALSE, warning=FALSE}
 basic_pal <- viridis::viridis(n=25, option="magma")
 pie(rep(1, length(basic_pal)), col=basic_pal)
 print(basic_pal)
+```
+
+With `MicrobiomeR`, the viridis palette can be optimized.
+```{r message=FALSE, warning=FALSE}
 better_pal <- get_color_palette(pal_func = viridis_palette, color_no = 25)
+pie(rep(1, length(better_pal)), col=better_pal)
 print(better_pal)
 ```
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Agglomerate Metacoder Objects — agglomerate_metacoder • MicrobiomeR</title>
+<title>Save Stacked Barplot — save_stacked_barplot • MicrobiomeR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,11 +32,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Agglomerate Metacoder Objects — agglomerate_metacoder" />
+<meta property="og:title" content="Save Stacked Barplot — save_stacked_barplot" />
 
-<meta property="og:description" content="A function similar to the phyloseq::tax_glom function,
-that assembles abundance data at a specified rank.  This removes subtaxa and reassigns the
-values at the specified rank." />
+<meta property="og:description" content="Save a stacked barplot." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -67,7 +65,7 @@ values at the specified rank." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.3.1</span>
       </span>
     </div>
 
@@ -106,21 +104,21 @@ values at the specified rank." />
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
+<li>
+  <a href="../articles/about.html">About</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="../articles/about.html">About</a>
-</li>
-<li>
-  <a href="https://twitter.com/datasnakes">
-    <span class="fa fa-twitter"></span>
+  <a href="https://github.com/vallenderlab/MicrobiomeR">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/vallenderlab/MicrobiomeR">
-    <span class="fa fa-github"></span>
+  <a href="https://twitter.com/datasnakes">
+    <span class="fa fa-twitter"></span>
      
   </a>
 </li>
@@ -136,68 +134,56 @@ values at the specified rank." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Agglomerate Metacoder Objects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/metacoder.R'><code>R/metacoder.R</code></a></small>
-    <div class="hidden name"><code>agglomerate_metacoder.Rd</code></div>
+    <h1>Save Stacked Barplot</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/barplot.R'><code>R/barplot.R</code></a></small>
+    <div class="hidden name"><code>save_stacked_barplot.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A function similar to the <code><a href='https://www.rdocumentation.org/packages/phyloseq/topics/tax_glom'>phyloseq::tax_glom</a></code> function,
-that assembles abundance data at a specified rank.  This removes subtaxa and reassigns the
-values at the specified rank.</p>
+    <p>Save a stacked barplot.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>agglomerate_metacoder</span>(<span class='no'>obj</span>, <span class='no'>rank</span>, <span class='kw'>validated</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>save_stacked_barplot</span>(<span class='no'>plot</span>, <span class='no'>filename</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>obj</th>
-      <td><p>A Taxmap/metacoder object.</p></td>
+      <th>plot</th>
+      <td><p>The plot object.</p></td>
     </tr>
     <tr>
-      <th>rank</th>
-      <td><p>The rank that will be agllomerated to.</p></td>
-    </tr>
-    <tr>
-      <th>validated</th>
-      <td><p>This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE</p></td>
+      <th>filename</th>
+      <td><p>The name of the file. (an extension should not be included)</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A taxmap object that has been agglomerated at the specified rank.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This function helps analyzing taxonomic data at intermediate ranks by agglomerating the observation data
-and the taxmap object.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/taxa/topics/filter_taxa'>filter_taxa</a></code></p>
-<p><code><a href='validate_MicrobiomeR_format.html'>validate_MicrobiomeR_format</a></code></p>
-<p>Other Advanced Metacoder Filters: <code><a href='cov_filter.html'>cov_filter</a></code>,
-  <code><a href='otu_prevalence_filter.html'>otu_prevalence_filter</a></code>,
-  <code><a href='otu_proportion_filter.html'>otu_proportion_filter</a></code>,
-  <code><a href='taxa_prevalence_filter.html'>taxa_prevalence_filter</a></code></p></div>
+    <div class='dont-index'><p>Other Visualizations: <code><a href='alpha_diversity_plot.html'>alpha_diversity_plot</a></code>,
+  <code><a href='correlation_data.html'>correlation_data</a></code>,
+  <code><a href='correlation_plots.html'>correlation_plots</a></code>,
+  <code><a href='correlation_plot.html'>correlation_plot</a></code>,
+  <code><a href='heat_tree_parameters.html'>heat_tree_parameters</a></code>,
+  <code><a href='heat_tree_plots.html'>heat_tree_plots</a></code>,
+  <code><a href='stacked_barplot.html'>melt_metacoder</a></code>,
+  <code><a href='ordination_plot.html'>ordination_plot</a></code>, <code><a href='plot_limits.html'>plot_limits</a></code>,
+  <code><a href='save_alpha_diversity_plots.html'>save_alpha_diversity_plots</a></code>,
+  <code><a href='save_correlation_plots.html'>save_correlation_plots</a></code>,
+  <code><a href='save_heat_tree_plots.html'>save_heat_tree_plots</a></code>,
+  <code><a href='save_ordination_plots.html'>save_ordination_plots</a></code>,
+  <code><a href='save_stacked_barplots.html'>save_stacked_barplots</a></code>,
+  <code><a href='top_coefficients_barplot.html'>top_coefficients_barplot</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='kw'>if</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()){
-<span class='co'># This example uses data that are no longer available in the MicrobiomeR package,</span>
-<span class='co'># however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
-<span class='no'>basic_silva</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as_MicrobiomeR_format.html'>as_MicrobiomeR_format</a></span>(<span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/MicrobiomeR/topics/raw_silva_2'>raw_silva_2</a></span>, <span class='st'>"basic_format"</span>)
-<span class='no'>phylum_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>agglomerate_metacoder</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>basic_silva</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"Phylum"</span>)
-<span class='no'>class_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>agglomerate_metacoder</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>basic_silva</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"Class"</span>)
-<span class='no'>order_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>agglomerate_metacoder</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>basic_silva</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"Order"</span>)
- }
+<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
+  <span class='fu'>save_barplot</span>(<span class='kw'>plot</span> <span class='kw'>=</span> <span class='no'>plot</span>, <span class='kw'>filename</span> <span class='kw'>=</span> <span class='st'>"stacked_bar_phylum"</span>)
+}
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -205,10 +191,6 @@ and the taxmap object.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
