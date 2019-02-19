@@ -1,6 +1,6 @@
 # MicrobiomeR 0.5.0
 
-* Added the JOSS paper
+* Added the JOSS paper and draft vignette
 * Changed correlation plots
   * Removed color from background
   * Removed hard coded plot limits
