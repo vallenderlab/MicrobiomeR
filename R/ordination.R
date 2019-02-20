@@ -81,12 +81,14 @@ ordination_plot <- function(obj, method = "PCoA", distance = "wunifrac", color =
 
 #' @title Ordination Plots
 #' @description Generate plots for a list of ordination methods and distances.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param methods A list of ordination methods, Default: 'c("PCoA", "NMDS")'
 #' @param distances A list of distance methods, Default: 'c("wunifrac", "unifrac", "bray")'
+#' @param color Choose the group or factor of which colors will be mapped to, Default: 'TreatmentGroup'
+#' @param select_otu_table The data table to use in the observation data.  Default:  "otu_proportions"
 #' @return Returns a melted dataframe.
 #' @family Visualizations
-#' @rdname ordination_plot
+#' @rdname ordination_plots
 ordination_plots <- function(obj, methods = c("PCoA", "NMDS"), distances = c("wunifrac", "unifrac", "bray"),
                              color = "TreatmentGroup", select_otu_table = "otu_proportions") {
   if (is.null(methods)) {
