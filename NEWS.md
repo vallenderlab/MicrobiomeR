@@ -14,7 +14,7 @@
   * Fixed `output_dir` bug where error should have been a warning
   * Fixed correlation plot bug where treatments were on the wrong axis.
   * Fixed output message for heat tree plots.
-
+* Fixed build-check Notes and Warnings
 
 # MicrobiomeR 0.4.0
 
