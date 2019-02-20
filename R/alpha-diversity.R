@@ -52,7 +52,7 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 
 #' @title Alpha Diversity Plot
 #' @description Plot the alpha diversity using a violin plot. `alpha_diversity_plots` generates plots for all alpha diversity measures.
-#' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create+taxmap}}.
+#' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param measure Select an alpha diversity measure such as shannon, gini simpson, and inverse simpson, Default: 'shannon'
 #' @param group The "TreatmentGroup" or similar grouping or column from your metadata to denote sample groups, Default: 'TreatmentGroup'
 #' @param select_otu_table Choose an otu table to analyze, Default: 'otu_proportions'
@@ -65,7 +65,9 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' if (interactive()) {
 #'   library(MicrobiomeR)
 #'   data <- analyzed_silva
-#'   plot <- alpha_diversity_plot(obj = data, measure = "shannon", select_otu_table = "otu_proportions")
+#'   plot <- alpha_diversity_plot(obj = data,
+#'                                measure = "shannon",
+#'                                select_otu_table = "otu_proportions")
 #'   plot
 #' }
 #' }
