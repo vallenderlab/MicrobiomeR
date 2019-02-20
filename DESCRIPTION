@@ -23,7 +23,7 @@ Imports:
     DT,
     data.table,
     diptest,
-    dplyr,
+    dplyr (0.7.8),
     rlang,
     glue,
     metacoder,
