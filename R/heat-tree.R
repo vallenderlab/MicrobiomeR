@@ -124,7 +124,7 @@ heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, ...) {
 #'  \code{\link[rlang:quotation]{enquos}},  \code{\link[rlang:quosure]{is_quosure}},  \code{\link[rlang]{eval_tidy}}
 #' @importFrom taxa n_obs taxon_names
 #' @importFrom purrr list_modify
-#' @importFrom rlang enquos is_quosure eval_tidy .data
+#' @importFrom rlang enquos is_quosure eval_tidy
 heat_tree_parameters <- function(obj, title, treatment_no, ...) {
   # Clone the taxmap object.
   input <- obj$clone()
