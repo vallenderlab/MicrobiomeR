@@ -34,7 +34,7 @@
   
 <meta property="og:title" content="Alpha Diversity Plot — alpha_diversity_plot" />
 
-<meta property="og:description" content="Plot the alpha diversity using a violin plot." />
+<meta property="og:description" content="Plot the alpha diversity using a violin plot. alpha_diversity_plots generates plots for all alpha diversity measures." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -107,21 +107,21 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-<li>
-  <a href="../articles/about.html">About</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/vallenderlab/MicrobiomeR">
-    <span class="fa fa-github"></span>
-     
-  </a>
+  <a href="../articles/about.html">About</a>
 </li>
 <li>
   <a href="https://twitter.com/datasnakes">
     <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/vallenderlab/MicrobiomeR">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -144,11 +144,16 @@
 
     <div class="ref-description">
     
-    <p>Plot the alpha diversity using a violin plot.</p>
+    <p>Plot the alpha diversity using a violin plot. <code>alpha_diversity_plots</code> generates plots for all alpha diversity measures.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>alpha_diversity_plot</span>(<span class='no'>obj</span>, <span class='kw'>measure</span> <span class='kw'>=</span> <span class='st'>"shannon"</span>,
+  <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"TreatmentGroup"</span>, <span class='kw'>select_otu_table</span> <span class='kw'>=</span> <span class='st'>"otu_proportions"</span>,
+  <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>alpha_diversity_plots</span>(<span class='no'>obj</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"shannon"</span>, <span class='st'>"simpson"</span>,
+  <span class='st'>"invsimpson"</span>), <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"TreatmentGroup"</span>,
   <span class='kw'>select_otu_table</span> <span class='kw'>=</span> <span class='st'>"otu_proportions"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -163,14 +168,27 @@
       <td><p>Select an alpha diversity measure such as shannon, gini simpson, and inverse simpson, Default: 'shannon'</p></td>
     </tr>
     <tr>
+      <th>group</th>
+      <td><p>The "TreatmentGroup" or similar grouping or column from your metadata to denote sample groups, Default: 'TreatmentGroup'</p></td>
+    </tr>
+    <tr>
       <th>select_otu_table</th>
       <td><p>Choose an otu table to analyze, Default: 'otu_proportions'</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>The title of the plot, Default: NULL</p></td>
+    </tr>
+    <tr>
+      <th>measures</th>
+      <td><p>A list of alpha diversity measures such as shannon, gini simpson, and inverse simpson, Default: 'c("shannon", "simpson", "invsimpson")'</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Returns an alpha diversity plot.</p>
+<p>Returns a melted dataframe.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -179,17 +197,36 @@ We prefer to use <code>shannon</code> as it is better for data generated using t
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='get_alpha_diversity_measures.html'>get_alpha_diversity_measures</a></code>, <code><a href='https://www.rdocumentation.org/packages/vegan/topics/diversity'>diversity</a></code>, <code><a href='https://www.rdocumentation.org/packages/ggpubr/topics/ggviolin'>ggviolin</a></code></p>
+    <div class='dont-index'><p><code><a href='alpha_diversity_measures.html'>alpha_diversity_measures</a></code>, <code><a href='https://www.rdocumentation.org/packages/vegan/topics/diversity'>diversity</a></code>, <code><a href='https://www.rdocumentation.org/packages/ggpubr/topics/ggviolin'>ggviolin</a></code></p>
 <p>Other Visualizations: <code><a href='correlation_data.html'>correlation_data</a></code>,
   <code><a href='correlation_plots.html'>correlation_plots</a></code>,
   <code><a href='correlation_plot.html'>correlation_plot</a></code>,
   <code><a href='heat_tree_parameters.html'>heat_tree_parameters</a></code>,
-  <code><a href='heat_tree_plots.html'>heat_tree_plots</a></code>, <code><a href='stacked_barplot.html'>melt_taxmap</a></code>,
+  <code><a href='heat_tree_plots.html'>heat_tree_plots</a></code>,
+  <code><a href='ordination_plots.html'>ordination_plots</a></code>,
   <code><a href='ordination_plot.html'>ordination_plot</a></code>, <code><a href='plot_limits.html'>plot_limits</a></code>,
-  <code><a href='save_barplot.html'>save_barplot</a></code>,
+  <code><a href='save_alpha_diversity_plots.html'>save_alpha_diversity_plots</a></code>,
   <code><a href='save_correlation_plots.html'>save_correlation_plots</a></code>,
   <code><a href='save_heat_tree_plots.html'>save_heat_tree_plots</a></code>,
   <code><a href='save_ordination_plots.html'>save_ordination_plots</a></code>,
+  <code><a href='save_stacked_barplots.html'>save_stacked_barplots</a></code>,
+  <code><a href='stacked_barplots.html'>stacked_barplots</a></code>,
+  <code><a href='stacked_barplot.html'>stacked_barplot</a></code>,
+  <code><a href='top_coefficients_barplot.html'>top_coefficients_barplot</a></code></p>
+<p>Other Visualizations: <code><a href='correlation_data.html'>correlation_data</a></code>,
+  <code><a href='correlation_plots.html'>correlation_plots</a></code>,
+  <code><a href='correlation_plot.html'>correlation_plot</a></code>,
+  <code><a href='heat_tree_parameters.html'>heat_tree_parameters</a></code>,
+  <code><a href='heat_tree_plots.html'>heat_tree_plots</a></code>,
+  <code><a href='ordination_plots.html'>ordination_plots</a></code>,
+  <code><a href='ordination_plot.html'>ordination_plot</a></code>, <code><a href='plot_limits.html'>plot_limits</a></code>,
+  <code><a href='save_alpha_diversity_plots.html'>save_alpha_diversity_plots</a></code>,
+  <code><a href='save_correlation_plots.html'>save_correlation_plots</a></code>,
+  <code><a href='save_heat_tree_plots.html'>save_heat_tree_plots</a></code>,
+  <code><a href='save_ordination_plots.html'>save_ordination_plots</a></code>,
+  <code><a href='save_stacked_barplots.html'>save_stacked_barplots</a></code>,
+  <code><a href='stacked_barplots.html'>stacked_barplots</a></code>,
+  <code><a href='stacked_barplot.html'>stacked_barplot</a></code>,
   <code><a href='top_coefficients_barplot.html'>top_coefficients_barplot</a></code></p></div>
     
 
@@ -198,7 +235,9 @@ We prefer to use <code>shannon</code> as it is better for data generated using t
 <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
   <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='no'>analyzed_silva</span>
-  <span class='no'>plot</span> <span class='kw'>&lt;-</span> <span class='fu'>alpha_diversity_plot</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>measure</span> <span class='kw'>=</span> <span class='st'>"shannon"</span>, <span class='kw'>select_otu_table</span> <span class='kw'>=</span> <span class='st'>"otu_proportions"</span>, <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='no'>plot</span> <span class='kw'>&lt;-</span> <span class='fu'>alpha_diversity_plot</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>data</span>,
+                               <span class='kw'>measure</span> <span class='kw'>=</span> <span class='st'>"shannon"</span>,
+                               <span class='kw'>select_otu_table</span> <span class='kw'>=</span> <span class='st'>"otu_proportions"</span>)
   <span class='no'>plot</span>
 }
 <span class='co'># }</span></pre>

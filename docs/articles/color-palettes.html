@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vignette Title • MicrobiomeR</title>
+<title>Using Color Palettes • MicrobiomeR</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Vignette Title">
+<meta property="og:title" content="Using Color Palettes">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -73,20 +73,20 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-<li>
-  <a href="../articles/about.html">About</a>
-</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/vallenderlab/MicrobiomeR">
-    <span class="fa fa-github"></span>
-     
-  </a>
+  <a href="../articles/about.html">About</a>
 </li>
 <li>
   <a href="https://twitter.com/datasnakes">
     <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/vallenderlab/MicrobiomeR">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -102,10 +102,10 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Vignette Title</h1>
-                        <h4 class="author">Vignette Author</h4>
+      <h1>Using Color Palettes</h1>
+                        <h4 class="author">Rob Gilmore &amp; Shaurita Hutchins</h4>
             
-            <h4 class="date">2019-02-18</h4>
+            <h4 class="date">2019-02-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vallenderlab/MicrobiomeR/blob/master/vignettes/color-palettes.Rmd"><code>vignettes/color-palettes.Rmd</code></a></small>
       <div class="hidden name"><code>color-palettes.Rmd</code></div>
@@ -135,7 +135,7 @@ custom_pal &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 <div id="scico" class="section level2">
 <h2 class="hasAnchor">
 <a href="#scico" class="anchor"></a>Scico</h2>
-<p>We have built in support for the <a href="https://github.com/thomasp85/scico">scico</a> package…</p>
+<p>We have built in support for the <a href="https://github.com/thomasp85/scico">scico</a> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">basic_pal &lt;-<span class="st"> </span><span class="kw"><a href="../reference/scico_palette.html">scico_palette</a></span>(<span class="dt">scico_palette=</span><span class="st">"hawaii"</span>)(<span class="dv">25</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/pie">pie</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(basic_pal)), <span class="dt">col=</span>basic_pal)</code></pre></div>
 <p><img src="color-palettes_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
@@ -155,7 +155,8 @@ better_pal &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 <div id="viridis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#viridis" class="anchor"></a>Viridis</h2>
-<p>…And the <a href="https://github.com/sjmgarnier/viridis">viridis</a> package.</p>
+<p>We also provide support for the <a href="https://github.com/sjmgarnier/viridis">viridis</a> package.</p>
+<p>Typically, you’d use the viridis palette like we do below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">basic_pal &lt;-<span class="st"> </span>viridis<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/viridis/topics/reexports">viridis</a></span>(<span class="dt">n=</span><span class="dv">25</span>, <span class="dt">option=</span><span class="st">"magma"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/pie">pie</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(basic_pal)), <span class="dt">col=</span>basic_pal)</code></pre></div>
 <p><img src="color-palettes_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
@@ -164,9 +165,11 @@ better_pal &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 <span class="co">#&gt;  [6] "#3F0F72FF" "#51127CFF" "#611880FF" "#721F81FF" "#822681FF"</span>
 <span class="co">#&gt; [11] "#932B80FF" "#A5317EFF" "#B63679FF" "#C73D73FF" "#D8456CFF"</span>
 <span class="co">#&gt; [16] "#E65164FF" "#F1605DFF" "#F8735CFF" "#FB8861FF" "#FD9B6BFF"</span>
-<span class="co">#&gt; [21] "#FEAF77FF" "#FEC287FF" "#FED799FF" "#FDEAABFF" "#FCFDBFFF"</span>
-better_pal &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_color_palette.html">get_color_palette</a></span>(<span class="dt">pal_func =</span> viridis_palette, <span class="dt">color_no =</span> <span class="dv">25</span>)</code></pre></div>
-<p><img src="color-palettes_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
+<span class="co">#&gt; [21] "#FEAF77FF" "#FEC287FF" "#FED799FF" "#FDEAABFF" "#FCFDBFFF"</span></code></pre></div>
+<p>With <code>MicrobiomeR</code>, the viridis palette can be optimized.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">better_pal &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_color_palette.html">get_color_palette</a></span>(<span class="dt">pal_func =</span> viridis_palette, <span class="dt">color_no =</span> <span class="dv">25</span>)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/pie">pie</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(better_pal)), <span class="dt">col=</span>better_pal)</code></pre></div>
+<p><img src="color-palettes_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(better_pal)
 <span class="co">#&gt;  [1] "#440154" "#470D60" "#481E6F" "#472B7A" "#443A83" "#3E4A89" "#365B8D"</span>
 <span class="co">#&gt;  [8] "#2E6D8E" "#277F8E" "#21908C" "#1FA187" "#28AE7F" "#39BA76" "#48C16E"</span>
@@ -212,7 +215,7 @@ better_pal &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(crp)
  }
 combo_palette &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_color_palette.html">get_color_palette</a></span>(<span class="dt">pal_func =</span> viridis_magma_palette)</code></pre></div>
-<p><img src="color-palettes_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="color-palettes_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">combo_palette
 <span class="co">#&gt;  [1] "#FDE725" "#D9E319" "#B4DE2B" "#8FD644" "#6DCD58" "#4EC36B" "#2DB27C"</span>
 <span class="co">#&gt;  [8] "#20938C" "#010105" "#110D30" "#2D1161" "#55137D" "#7B2382" "#A3307E"</span>

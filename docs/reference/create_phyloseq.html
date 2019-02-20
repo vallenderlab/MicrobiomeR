@@ -110,21 +110,21 @@ pipeline." />
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-<li>
-  <a href="../articles/about.html">About</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/vallenderlab/MicrobiomeR">
-    <span class="fa fa-github"></span>
-     
-  </a>
+  <a href="../articles/about.html">About</a>
 </li>
 <li>
   <a href="https://twitter.com/datasnakes">
     <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/vallenderlab/MicrobiomeR">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -234,7 +234,10 @@ column in your metadata file.</p>
 <span class='no'>parse_func</span> <span class='kw'>&lt;-</span> <span class='no'>parse_parse_taxonomy_silva_128</span>
 }
 <span class='co'># Create a phyloseq object from the data files.</span>
-<span class='no'>phy_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>create_phyloseq</span>(<span class='kw'>biom_file</span> <span class='kw'>=</span> <span class='no'>biom_file</span>, <span class='kw'>tree_file</span> <span class='kw'>=</span> <span class='no'>tree_file</span>, <span class='kw'>metadata_file</span> <span class='kw'>=</span> <span class='no'>md_file</span>, <span class='kw'>parse_func</span> <span class='kw'>=</span> <span class='no'>parse_func</span>)
+<span class='no'>phy_obj</span> <span class='kw'>&lt;-</span> <span class='fu'>create_phyloseq</span>(<span class='kw'>biom_file</span> <span class='kw'>=</span> <span class='no'>biom_file</span>,
+                           <span class='kw'>tree_file</span> <span class='kw'>=</span> <span class='no'>tree_file</span>,
+                           <span class='kw'>metadata_file</span> <span class='kw'>=</span> <span class='no'>md_file</span>,
+                           <span class='kw'>parse_func</span> <span class='kw'>=</span> <span class='no'>parse_func</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -108,21 +108,21 @@ color palettes together." />
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-<li>
-  <a href="../articles/about.html">About</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/vallenderlab/MicrobiomeR">
-    <span class="fa fa-github"></span>
-     
-  </a>
+  <a href="../articles/about.html">About</a>
 </li>
 <li>
   <a href="https://twitter.com/datasnakes">
     <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/vallenderlab/MicrobiomeR">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -192,8 +192,13 @@ the ability to subset and reverse the palettes that are supplied.</p>
 <span class='kw'>if</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()){
 <span class='co'># Below is the code for the viridis_magma_palette function.</span>
 <span class='co'># It's a good example of how to use the combination_palette function.</span>
-<span class='no'>viridis_magma_palette</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>viridis_number</span> <span class='kw'>=</span> <span class='fl'>800</span>, <span class='no'>viridis_range</span> <span class='kw'>=</span> <span class='fl'>300</span>:<span class='no'>viridis_number</span>, <span class='no'>viridis_rev</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-                                   <span class='no'>magma_number</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='no'>magma_range</span> <span class='kw'>=</span> <span class='fl'>0</span>:<span class='no'>magma_number</span>, <span class='no'>magma_rev</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>) {
+<span class='no'>viridis_magma_palette</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>viridis_number</span> <span class='kw'>=</span> <span class='fl'>800</span>,
+                                  <span class='no'>viridis_range</span> <span class='kw'>=</span> <span class='fl'>300</span>:<span class='no'>viridis_number</span>,
+                                  <span class='no'>viridis_rev</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+                                  <span class='no'>magma_number</span> <span class='kw'>=</span> <span class='fl'>500</span>,
+                                  <span class='no'>magma_range</span> <span class='kw'>=</span> <span class='fl'>0</span>:<span class='no'>magma_number</span>,
+                                  <span class='no'>magma_rev</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+                                  <span class='no'>...</span>) {
     <span class='kw'>if</span> (!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/missing'>missing</a></span>(<span class='no'>...</span>)){
         <span class='no'>v_args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='no'>viridis_number</span>, <span class='no'>...</span>)
         <span class='no'>m_args</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='no'>magma_number</span>, <span class='no'>...</span>)

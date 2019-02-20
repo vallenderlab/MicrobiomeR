@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create Publication Table — create_pub_table • MicrobiomeR</title>
+<title>Stacked Barplots — stacked_barplots • MicrobiomeR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Create Publication Table — create_pub_table" />
+<meta property="og:title" content="Stacked Barplots — stacked_barplots" />
 
-<meta property="og:description" content="Creates an image of a table from a dataframe." />
+<meta property="og:description" content="Stacked Barplots" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -137,53 +137,59 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create Publication Table</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>create_pub_table.Rd</code></div>
+    <h1>Stacked Barplots</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/R/barplot.R'><code>R/barplot.R</code></a></small>
+    <div class="hidden name"><code>stacked_barplots.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Creates an image of a table from a dataframe.</p>
+    <p>Stacked Barplots</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>create_pub_table</span>(<span class='no'>dataframe</span>)</pre>
+    <pre class="usage"><span class='fu'>stacked_barplots</span>(<span class='no'>obj</span>, <span class='kw'>tax_levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Phylum"</span>, <span class='st'>"Class"</span>, <span class='st'>"Order"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>dataframe</th>
-      <td><p>A dataframe object.</p></td>
+      <th>obj</th>
+      <td><p>An object to be converted to a taxmap object with <code><a href='create_taxmap.html'>create_taxmap</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>tax_levels</th>
+      <td><p>The taxonomic levels, Default: 'c("Phylum", "Class", "Order")'</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>The text table as an object that can be saved to png/tiff/jpg/pdf.</p>
+    <div class='dont-index'><p>Other Visualizations: <code><a href='alpha_diversity_plot.html'>alpha_diversity_plot</a></code>,
+  <code><a href='correlation_data.html'>correlation_data</a></code>,
+  <code><a href='correlation_plots.html'>correlation_plots</a></code>,
+  <code><a href='correlation_plot.html'>correlation_plot</a></code>,
+  <code><a href='heat_tree_parameters.html'>heat_tree_parameters</a></code>,
+  <code><a href='heat_tree_plots.html'>heat_tree_plots</a></code>,
+  <code><a href='ordination_plots.html'>ordination_plots</a></code>,
+  <code><a href='ordination_plot.html'>ordination_plot</a></code>, <code><a href='plot_limits.html'>plot_limits</a></code>,
+  <code><a href='save_alpha_diversity_plots.html'>save_alpha_diversity_plots</a></code>,
+  <code><a href='save_correlation_plots.html'>save_correlation_plots</a></code>,
+  <code><a href='save_heat_tree_plots.html'>save_heat_tree_plots</a></code>,
+  <code><a href='save_ordination_plots.html'>save_ordination_plots</a></code>,
+  <code><a href='save_stacked_barplots.html'>save_stacked_barplots</a></code>,
+  <code><a href='stacked_barplot.html'>stacked_barplot</a></code>,
+  <code><a href='top_coefficients_barplot.html'>top_coefficients_barplot</a></code></p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='kw'>if</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()){
-<span class='co'># This example uses data that are no longer available in the MicrobiomeR package,</span>
-<span class='co'># however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.</span>
- <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
- <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>MicrobiomeR</span><span class='kw ns'>::</span><span class='no'>basic_silva</span>$<span class='no'>data</span>$<span class='no'>taxa_abundance</span>
- <span class='fu'>create_pub_table</span>(<span class='no'>data</span>)
- }
-<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      <li><a href="#see-also">See also</a></li>
+          </ul>
 
   </div>
 </div>

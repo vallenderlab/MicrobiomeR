@@ -142,21 +142,21 @@ import functions that deal with taxonomy (e.g. import_qiime)." />
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-<li>
-  <a href="../articles/about.html">About</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/vallenderlab/MicrobiomeR">
-    <span class="fa fa-github"></span>
-     
-  </a>
+  <a href="../articles/about.html">About</a>
 </li>
 <li>
   <a href="https://twitter.com/datasnakes">
     <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/vallenderlab/MicrobiomeR">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -218,10 +218,7 @@ import functions that deal with taxonomy (e.g. <code>import_qiime</code>).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>parse_taxonomy_default</span>(<span class='no'>char.vec</span>)
-<span class='fu'>parse_taxonomy_greengenes</span>(<span class='no'>char.vec</span>)
-<span class='fu'>parse_taxonomy_silva_128</span>(<span class='no'>char.vec</span>)
-<span class='fu'>parse_taxonomy_qiime</span>(<span class='no'>char.vec</span>)</pre>
+    <pre class="usage"><span class='fu'>parse_taxonomy_silva_128</span>(<span class='no'>char.vec</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -261,7 +258,8 @@ then please comment on the GitHub PR to encourage merging this feature.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"># NOT RUN {
- > taxvec1 = c("Root", "k__Bacteria", "p__Firmicutes", "c__Bacilli", "o__Bacillales", "f__Staphylococcaceae")
+ > taxvec1 = c("Root", "k__Bacteria", "p__Firmicutes", "c__Bacilli", "o__Bacillales",
+ "f__Staphylococcaceae")
  > parse_taxonomy_default(taxvec1)
  > parse_taxonomy_greengenes(taxvec1)
  > taxvec2 = c("Root;k__Bacteria;p__Firmicutes;c__Bacilli;o__Bacillales;f__Staphylococcaceae")

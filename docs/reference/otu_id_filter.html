@@ -108,21 +108,21 @@ observations of a MicrobiomeR formatted object." />
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-<li>
-  <a href="../articles/about.html">About</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/vallenderlab/MicrobiomeR">
-    <span class="fa fa-github"></span>
-     
-  </a>
+  <a href="../articles/about.html">About</a>
 </li>
 <li>
   <a href="https://twitter.com/datasnakes">
     <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/vallenderlab/MicrobiomeR">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -210,8 +210,11 @@ The purr packge allows the use of anonymous functions as described in the link b
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>MicrobiomeR</span>)
 <span class='no'>otu_proportion_filter</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>obj</span>, <span class='no'>otu_percentage</span> <span class='kw'>=</span> <span class='fl'>0.00005</span>, <span class='no'>validated</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) {
     <span class='no'>mo_clone</span> <span class='kw'>&lt;-</span> <span class='no'>obj</span>$<span class='fu'>clone</span>()
-    <span class='no'>mo_clone</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='validate_MicrobiomeR_format.html'>validate_MicrobiomeR_format</a></span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>mo_clone</span>, <span class='kw'>valid_formats</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"raw_format"</span>, <span class='st'>"basic_format"</span>),
-        <span class='kw'>force_format</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>validated</span> <span class='kw'>=</span> <span class='no'>validated</span>, <span class='kw'>min_or_max</span> <span class='kw'>=</span> <span class='no'>min</span>)
+    <span class='no'>mo_clone</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='validate_MicrobiomeR_format.html'>validate_MicrobiomeR_format</a></span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>mo_clone</span>,
+                                            <span class='kw'>valid_formats</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"raw_format"</span>, <span class='st'>"basic_format"</span>),
+                                            <span class='kw'>force_format</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+                                            <span class='kw'>validated</span> <span class='kw'>=</span> <span class='no'>validated</span>,
+                                            <span class='kw'>min_or_max</span> <span class='kw'>=</span> <span class='no'>min</span>)
     <span class='co'># Filter OTU ids</span>
     <span class='no'>mo_clone</span> <span class='kw'>&lt;-</span> <span class='fu'>otu_id_filter</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>mo_clone</span>,
                               <span class='kw'>.f_transform</span> <span class='kw'>=</span> ~<span class='no'>.</span>/<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>.</span>),

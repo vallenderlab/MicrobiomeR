@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MicrobiomeR: Analysis • MicrobiomeR</title>
+<title>Data Analysis • MicrobiomeR</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="MicrobiomeR: Analysis">
+<meta property="og:title" content="Data Analysis">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -73,20 +73,20 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-<li>
-  <a href="../articles/about.html">About</a>
-</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/vallenderlab/MicrobiomeR">
-    <span class="fa fa-github"></span>
-     
-  </a>
+  <a href="../articles/about.html">About</a>
 </li>
 <li>
   <a href="https://twitter.com/datasnakes">
     <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/vallenderlab/MicrobiomeR">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -102,10 +102,10 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>MicrobiomeR: Analysis</h1>
-                        <h4 class="author">Vignette Author</h4>
+      <h1>Data Analysis</h1>
+                        <h4 class="author">Rob Gilmore &amp; Shaurita Hutchins</h4>
             
-            <h4 class="date">2019-02-18</h4>
+            <h4 class="date">2019-02-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vallenderlab/MicrobiomeR/blob/master/vignettes/analysis.Rmd"><code>vignettes/analysis.Rmd</code></a></small>
       <div class="hidden name"><code>analysis.Rmd</code></div>
@@ -114,9 +114,10 @@
 
     
     
-<div id="data-wrangling" class="section level1">
+<div id="data-import-wrangling" class="section level1">
 <h1 class="hasAnchor">
-<a href="#data-wrangling" class="anchor"></a>Data Wrangling</h1>
+<a href="#data-import-wrangling" class="anchor"></a>Data Import &amp; Wrangling</h1>
+<p>Beginning an microbiome analysis starts with importing data and wrangling it into a proper format.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the data files from package</span>
 input_files &lt;-<span class="st"> </span>pkg.data<span class="op">$</span>input_files
 biom_file &lt;-<span class="st"> </span>input_files<span class="op">$</span>biom_files<span class="op">$</span>silva <span class="co"># Path to silva biom file</span>
@@ -133,9 +134,10 @@ phy_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cre
 <span class="co"># Get the taxmap object in the raw format</span>
 raw_metacoder &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as_MicrobiomeR_format.html">as_MicrobiomeR_format</a></span>(<span class="dt">obj =</span> phy_obj, <span class="dt">format =</span> <span class="st">"raw_format"</span>)</code></pre></div>
 </div>
-<div id="filtering" class="section level1">
+<div id="filtering-data" class="section level1">
 <h1 class="hasAnchor">
-<a href="#filtering" class="anchor"></a>Filtering</h1>
+<a href="#filtering-data" class="anchor"></a>Filtering Data</h1>
+<p>After importing data and formatting it, data should be filtered to reduce noise and if desired, to subset data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Remove Archaea from the taxmap object</span>
 metacoder_obj &lt;-<span class="st"> </span>taxa<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/taxa/topics/filter_taxa">filter_taxa</a></span>(<span class="dt">obj =</span> raw_metacoder,
                                    taxon_names <span class="op">==</span><span class="st"> "Archaea"</span>,
@@ -191,22 +193,63 @@ metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../referen
 <p>Analysis is primarily done with metacoder, MicrobiomeR, and ggplot2. Before beginning the analysis it’s wise to create an output directory. Use <code>end_path=FALSE</code> with MicrobiomeR’s <code><a href="../reference/output_dir.html">output_dir()</a></code> function to avoid the creation of a date formatted directory.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a directory for whichever plot you want to save</span>
 heat_tree_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/output_dir.html">output_dir</a></span>(<span class="dt">end_path =</span> <span class="ot">FALSE</span>, <span class="dt">start_path =</span> <span class="st">"output"</span>, <span class="dt">plot_type =</span> <span class="st">"heat_tree"</span>)
-corr_plot_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/output_dir.html">output_dir</a></span>(<span class="dt">end_path =</span> <span class="ot">FALSE</span>, <span class="dt">start_path =</span> <span class="st">"output"</span>, <span class="dt">plot_type =</span> <span class="st">"correlation"</span>)</code></pre></div>
-<div id="statistics" class="section level2">
+corr_plot_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/output_dir.html">output_dir</a></span>(<span class="dt">end_path =</span> <span class="ot">FALSE</span>, <span class="dt">start_path =</span> <span class="st">"output"</span>, <span class="dt">plot_type =</span> <span class="st">"correlation"</span>)
+sb_plot_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/output_dir.html">output_dir</a></span>(<span class="dt">end_path =</span> <span class="ot">FALSE</span>, <span class="dt">start_path =</span> <span class="st">"output"</span>, <span class="dt">plot_type =</span> <span class="st">"stacked_barplot"</span>)
+ord_plot_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/output_dir.html">output_dir</a></span>(<span class="dt">end_path =</span> <span class="ot">FALSE</span>, <span class="dt">start_path =</span> <span class="st">"output"</span>, <span class="dt">plot_type =</span> <span class="st">"ordination"</span>)</code></pre></div>
+<div id="statistical-analysis" class="section level2">
 <h2 class="hasAnchor">
-<a href="#statistics" class="anchor"></a>Statistics</h2>
+<a href="#statistical-analysis" class="anchor"></a>Statistical Analysis</h2>
 <p>Statistical analysis is primarily done with the help of metacoder style functions such as the <code>calc_*()</code> group of functions, and <code>compare_groups()</code>. The taxa function <code>taxonomy_table()</code> is also useful for matching stats with the proper taxonomic annotation. MicrobiomeR creates the proper tables with <code><a href="../reference/as_MicrobiomeR_format.html">as_MicrobiomeR_format(format = "analyzed_format", ...)</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the statistical observation data.</span>
 metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as_MicrobiomeR_format.html">as_MicrobiomeR_format</a></span>(<span class="dt">obj =</span> metacoder_obj, <span class="dt">format =</span> <span class="st">"analyzed_format"</span>)</code></pre></div>
+<p>In addition to standard statistical analysis provided by metacoder, <code>MicrobiomeR</code> simplifies alpha diversity, ordination, and <a href="https://onlinelibrary.wiley.com/doi/10.1002/9781118445112.stat07841">PERMANOVA</a> analysis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Generate alpha diversity measures</span>
+measures &lt;-<span class="st"> </span><span class="kw"><a href="../reference/alpha_diversity_measures.html">alpha_diversity_measures</a></span>(<span class="dt">obj =</span> metacoder_obj)
+measures<span class="op">$</span>Shannon
+<span class="co">#&gt;  [1] 5.977645 5.807758 5.924257 5.651563 5.712745 5.677156 6.107177</span>
+<span class="co">#&gt;  [8] 5.263318 6.040767 5.963451 6.011352 6.238364 6.061033 6.213808</span>
+<span class="co">#&gt; [15] 6.111409 5.930385 5.638817 5.670399 5.665353 5.949696 6.213651</span>
+<span class="co">#&gt; [22] 5.674047 6.053098 5.818605 6.134535 6.175986 5.681311 5.892901</span>
+<span class="co">#&gt; [29] 5.561349 6.118321 6.033960 4.994411 6.048751 5.474699 6.004132</span>
+<span class="co">#&gt; [36] 5.720120 5.309873 5.752245 5.526904 5.698600 5.380529 5.641993</span>
+<span class="co">#&gt; [43] 5.469683 5.868113 5.453688 5.777398 5.952376 4.249344</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get only ordination data for the first Axis based on principal coordinates analysis using weighted unifrac.</span>
+ordination &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ordination_plot.html">ordination_plot</a></span>(<span class="dt">obj =</span> metacoder_obj, <span class="dt">method =</span> <span class="st">"PCoA"</span>, <span class="dt">distance =</span> <span class="st">"wunifrac"</span>, <span class="dt">only_data =</span> <span class="ot">TRUE</span>)
+ordination<span class="op">$</span>Axis.<span class="dv">1</span>
+<span class="co">#&gt;  [1]  0.1480991727 -0.0530880826  0.1192335362 -0.1045700493  0.0491129449</span>
+<span class="co">#&gt;  [6]  0.1265867917 -0.0345322993 -0.1174505365 -0.0377552818 -0.0927269385</span>
+<span class="co">#&gt; [11] -0.0235620393  0.0008706629 -0.0723557471 -0.0282243478  0.0740555158</span>
+<span class="co">#&gt; [16] -0.0524377243 -0.1037144750 -0.1418732833 -0.1202257911  0.0617099739</span>
+<span class="co">#&gt; [21] -0.0390451135 -0.0432635870 -0.0058600684 -0.0552540161  0.0415570399</span>
+<span class="co">#&gt; [26] -0.0462610529  0.2380605736  0.1145329575  0.0690412299 -0.0336046151</span>
+<span class="co">#&gt; [31] -0.0495665644  0.1856307251 -0.0617423548  0.1775513193  0.2054672317</span>
+<span class="co">#&gt; [36] -0.0777818491  0.0076295756 -0.1458834521  0.0797228129 -0.0696594057</span>
+<span class="co">#&gt; [41] -0.0257490009 -0.1183574855 -0.0721215576  0.0042024229  0.1547426859</span>
+<span class="co">#&gt; [46]  0.1580175051 -0.0155816171 -0.1735763413</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Generate permanova statistics for data</span>
+permanova &lt;-<span class="st"> </span><span class="kw"><a href="../reference/permanova.html">permanova</a></span>(<span class="dt">obj =</span> metacoder_obj, <span class="dt">group =</span> <span class="st">"TreatmentGroup"</span>)
+permanova<span class="op">$</span>permanova<span class="op">$</span>aov.tab
+<span class="co">#&gt; Permutation: free</span>
+<span class="co">#&gt; Number of permutations: 99</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Terms added sequentially (first to last)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;                Df SumsOfSqs MeanSqs F.Model     R2 Pr(&gt;F)   </span>
+<span class="co">#&gt; TreatmentGroup  1    0.7051 0.70506  4.8736 0.0958   0.01 **</span>
+<span class="co">#&gt; Residuals      46    6.6548 0.14467         0.9042          </span>
+<span class="co">#&gt; Total          47    7.3598                 1.0000          </span>
+<span class="co">#&gt; ---</span>
+<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
 </div>
-<div id="visualization" class="section level2">
+<div id="data-visualization" class="section level2">
 <h2 class="hasAnchor">
-<a href="#visualization" class="anchor"></a>Visualization</h2>
-<p>Visualization of taxmap objects can be done in several ways. The metacoder package primarily produces <code>heat_tree()</code>s for visualization, which can be used for any taxmap object. MicrobiomeR does this as well, but takes care of creating default values that we enjoyed in our heat tree plots.<br>
+<a href="#data-visualization" class="anchor"></a>Data Visualization</h2>
+<p>Visualization of taxmap objects can be done in several ways, and <code>MicrobiomeR</code> offers the most complete visualizations of any other existing microbiome package. The metacoder package primarily produces <code>heat_tree()</code>s for visualization, which can be used for any taxmap object. MicrobiomeR does this as well, but takes care of creating default values that we enjoyed in our heat tree plots.<br>
 MicrobiomeR also uses ggplot2 to create <code><a href="../reference/correlation_plot.html">correlation_plot()</a></code>s.</p>
-<div id="two-treatment-groups" class="section level3">
-<h3 class="hasAnchor">
-<a href="#two-treatment-groups" class="anchor"></a>Two Treatment Groups</h3>
+</div>
+<div id="analyzing-two-treatment-groups" class="section level2">
+<h2 class="hasAnchor">
+<a href="#analyzing-two-treatment-groups" class="anchor"></a>Analyzing Two “Treatment” Groups</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Generate heat_trees</span>
 heat_tree_plots &lt;-<span class="st"> </span><span class="kw"><a href="../reference/heat_tree_plots.html">heat_tree_plots</a></span>(metacoder_obj,
                                        <span class="dt">rank_list =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>),
@@ -215,38 +258,38 @@ heat_tree_plots &lt;-<span class="st"> </span><span class="kw"><a href="../refer
                                        <span class="dt">node_label_color =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"darkgreen"</span>))
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(heat_tree_plots)
 <span class="co">#&gt; [1] "metacoder_object" "heat_trees"       "taxmaps"</span>
+
 <span class="co"># Generate correlation_plots</span>
 corr_plots &lt;-<span class="st"> </span><span class="kw"><a href="../reference/correlation_plots.html">correlation_plots</a></span>(metacoder_obj, <span class="dt">primary_ranks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>))
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(corr_plots)
+<span class="co">#&gt; [1] "Phylum" "Class"  "Order"</span>
+
+
+<span class="co"># Generate stacked_barplots</span>
+sb_plots &lt;-<span class="st"> </span><span class="kw"><a href="../reference/stacked_barplots.html">stacked_barplots</a></span>(metacoder_obj, <span class="dt">tax_levels =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>))
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(sb_plots)
 <span class="co">#&gt; [1] "Phylum" "Class"  "Order"</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Save plots with a custom output path</span>
 <span class="kw"><a href="../reference/save_heat_tree_plots.html">save_heat_tree_plots</a></span>(<span class="dt">htrees =</span> heat_tree_plots, <span class="dt">custom_path =</span> heat_tree_path)
-<span class="kw"><a href="../reference/save_correlation_plots.html">save_correlation_plots</a></span>(<span class="dt">corr =</span> corr_plots, <span class="dt">custom_path =</span> corr_plot_path)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Heat Trees</span>
+<span class="kw"><a href="../reference/save_correlation_plots.html">save_correlation_plots</a></span>(<span class="dt">corr =</span> corr_plots, <span class="dt">custom_path =</span> corr_plot_path)
+<span class="kw"><a href="../reference/save_stacked_barplots.html">save_stacked_barplots</a></span>(<span class="dt">sb_plots =</span> sb_plots, <span class="dt">custom_path =</span> sb_plot_path)
+<span class="kw"><a href="../reference/save_ordination_plots.html">save_ordination_plots</a></span>(<span class="dt">ord_plots =</span> ordination, <span class="dt">custom_path =</span> ord_plot_path)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View the Phylum level heat tree</span>
 heat_trees &lt;-<span class="st"> </span>heat_tree_plots<span class="op">$</span>heat_trees
 heat_trees<span class="op">$</span>Phylum</code></pre></div>
-<p><img src="analysis_files/figure-html/unnamed-chunk-7-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heat_trees<span class="op">$</span>Class</code></pre></div>
-<p><img src="analysis_files/figure-html/unnamed-chunk-7-2.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heat_trees<span class="op">$</span>Order</code></pre></div>
-<p><img src="analysis_files/figure-html/unnamed-chunk-7-3.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Correlation Plots</span>
+<p><img src="analysis_files/figure-html/unnamed-chunk-10-1.png" width="768" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View the Phylum level correlation plot</span>
 corr_plots<span class="op">$</span>Phylum
 <span class="co">#&gt; $Kingdom</span>
 <span class="co">#&gt; $Kingdom$`Exp_Var1-vs-Control`</span></code></pre></div>
-<p><img src="analysis_files/figure-html/unnamed-chunk-8-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corr_plots<span class="op">$</span>Class
-<span class="co">#&gt; $Phylum</span>
-<span class="co">#&gt; $Phylum$`Exp_Var1-vs-Control`</span></code></pre></div>
-<p><img src="analysis_files/figure-html/unnamed-chunk-8-2.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corr_plots<span class="op">$</span>Order
-<span class="co">#&gt; $Class</span>
-<span class="co">#&gt; $Class$`Exp_Var1-vs-Control`</span></code></pre></div>
-<p><img src="analysis_files/figure-html/unnamed-chunk-8-3.png" width="768" style="display: block; margin: auto;"></p>
+<p><img src="analysis_files/figure-html/unnamed-chunk-11-1.png" width="768" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View the Phylum level stacked barplot</span>
+sb_plots<span class="op">$</span>Phylum</code></pre></div>
+<p><img src="analysis_files/figure-html/unnamed-chunk-12-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
-<div id="two-or-more-treatment-groups" class="section level3">
-<h3 class="hasAnchor">
-<a href="#two-or-more-treatment-groups" class="anchor"></a>Two or More Treatment Groups</h3>
+<div id="analyzing-more-than-2-treatment-groups" class="section level2">
+<h2 class="hasAnchor">
+<a href="#analyzing-more-than-2-treatment-groups" class="anchor"></a>Analyzing More than 2 “Treatment” Groups</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Heat Trees</span>
 input_files &lt;-<span class="st"> </span>pkg.data<span class="op">$</span>input_files
 metadata_file &lt;-<span class="st"> </span>input_files<span class="op">$</span>metadata<span class="op">$</span>three_groups
@@ -321,22 +364,18 @@ heat_tree_plots &lt;-<span class="st"> </span><span class="kw"><a href="../refer
 
 heat_trees &lt;-<span class="st"> </span>heat_tree_plots<span class="op">$</span>heat_trees
 heat_trees<span class="op">$</span>Phylum</code></pre></div>
-<p><img src="analysis_files/figure-html/unnamed-chunk-9-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heat_trees<span class="op">$</span>Class</code></pre></div>
-<p><img src="analysis_files/figure-html/unnamed-chunk-9-2.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heat_trees<span class="op">$</span>Order</code></pre></div>
-<p><img src="analysis_files/figure-html/unnamed-chunk-9-3.png" width="768" style="display: block; margin: auto;"></p>
+<p><img src="analysis_files/figure-html/unnamed-chunk-13-1.png" width="768" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+
 <span class="co"># Generate Correlation plots</span>
 corr_plots &lt;-<span class="st"> </span><span class="kw"><a href="../reference/correlation_plots.html">correlation_plots</a></span>(metacoder_obj, <span class="dt">primary_ranks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>))
 
 corr_plots<span class="op">$</span>Class<span class="op">$</span>Phylum<span class="op">$</span><span class="st">`</span><span class="dt">Exp_Var2-vs-Exp_Var1</span><span class="st">`</span></code></pre></div>
-<p><img src="analysis_files/figure-html/unnamed-chunk-9-4.png" width="768" style="display: block; margin: auto;"></p>
+<p><img src="analysis_files/figure-html/unnamed-chunk-13-2.png" width="768" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corr_plots<span class="op">$</span>Class<span class="op">$</span>Phylum<span class="op">$</span><span class="st">`</span><span class="dt">Exp_Var2-vs-Control</span><span class="st">`</span></code></pre></div>
-<p><img src="analysis_files/figure-html/unnamed-chunk-9-5.png" width="768" style="display: block; margin: auto;"></p>
+<p><img src="analysis_files/figure-html/unnamed-chunk-13-3.png" width="768" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corr_plots<span class="op">$</span>Class<span class="op">$</span>Phylum<span class="op">$</span><span class="st">`</span><span class="dt">Exp_Var1-vs-Control</span><span class="st">`</span></code></pre></div>
-<p><img src="analysis_files/figure-html/unnamed-chunk-9-6.png" width="768" style="display: block; margin: auto;"></p>
-</div>
+<p><img src="analysis_files/figure-html/unnamed-chunk-13-4.png" width="768" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </div>
@@ -346,12 +385,14 @@ corr_plots<span class="op">$</span>Class<span class="op">$</span>Phylum<span cla
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#data-wrangling">Data Wrangling</a></li>
-      <li><a href="#filtering">Filtering</a></li>
+<li><a href="#data-import-wrangling">Data Import &amp; Wrangling</a></li>
+      <li><a href="#filtering-data">Filtering Data</a></li>
       <li>
 <a href="#analysis">Analysis</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#statistics">Statistics</a></li>
-      <li><a href="#visualization">Visualization</a></li>
+<li><a href="#statistical-analysis">Statistical Analysis</a></li>
+      <li><a href="#data-visualization">Data Visualization</a></li>
+      <li><a href="#analyzing-two-treatment-groups">Analyzing Two “Treatment” Groups</a></li>
+      <li><a href="#analyzing-more-than-2-treatment-groups">Analyzing More than 2 “Treatment” Groups</a></li>
       </ul>
 </li>
       </ul>
