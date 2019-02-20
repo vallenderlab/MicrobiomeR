@@ -9,7 +9,7 @@ basic_silva <- as_MicrobiomeR_format(raw_silva_2, format = "basic_format")
 test_that("output_dir function works", {
   expect_true(!dir.exists(output_dir(start_path="output", experiment="test", mkdir=FALSE)))
   expect_true(dir.exists(output_dir(start_path="output", experiment="test", mkdir=TRUE)))
-  expect_error(output_dir(start_path="output", experiment="test", mkdir=TRUE, overwrite=FALSE), paste0("The directory ", getwd(), "/output/test/", format(Sys.time(), "%Y-%m-%d_%s"), " already exists. And you don't want to overwrite the directory."))
+  expect_warning(output_dir(start_path="output", experiment="test", mkdir=TRUE, overwrite=FALSE), paste0("The directory ", getwd(), "/output/test/", format(Sys.time(), "%Y-%m-%d_%s"), " already exists. And you don't want to overwrite the directory."))
   expect_equal(output_dir(start_path="output", experiment="test", mkdir=FALSE), paste0(getwd(), "/output/test/", format(Sys.time(), "%Y-%m-%d_%s")))
   expect_equal(output_dir(start_path="output", experiment="test", mkdir=FALSE, end_path = "cool"), paste0(getwd(), "/output/test/cool"))
   expect_equal(output_dir(mkdir=FALSE, plot_type = "cool"), paste0(getwd(), "/cool"))
