@@ -35,12 +35,15 @@ Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{correlation_plots}},
   \code{\link{correlation_plot}},
   \code{\link{heat_tree_parameters}},
-  \code{\link{heat_tree_plots}}, \code{\link{melt_taxmap}},
+  \code{\link{heat_tree_plots}},
+  \code{\link{ordination_plots}},
   \code{\link{ordination_plot}}, \code{\link{plot_limits}},
   \code{\link{save_alpha_diversity_plots}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},
   \code{\link{save_ordination_plots}},
-  \code{\link{save_stacked_barplots}}
+  \code{\link{save_stacked_barplots}},
+  \code{\link{stacked_barplots}},
+  \code{\link{stacked_barplot}}
 }
 \concept{Visualizations}

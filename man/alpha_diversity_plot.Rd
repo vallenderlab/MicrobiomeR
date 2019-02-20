@@ -43,7 +43,9 @@ We prefer to use \code{shannon} as it is better for data generated using the QUI
 if (interactive()) {
   library(MicrobiomeR)
   data <- analyzed_silva
-  plot <- alpha_diversity_plot(obj = data, measure = "shannon", select_otu_table = "otu_proportions")
+  plot <- alpha_diversity_plot(obj = data,
+                               measure = "shannon",
+                               select_otu_table = "otu_proportions")
   plot
 }
 }
@@ -56,26 +58,31 @@ Other Visualizations: \code{\link{correlation_data}},
   \code{\link{correlation_plot}},
   \code{\link{heat_tree_parameters}},
   \code{\link{heat_tree_plots}},
-  \code{\link{melt_metacoder}},
+  \code{\link{ordination_plots}},
   \code{\link{ordination_plot}}, \code{\link{plot_limits}},
   \code{\link{save_alpha_diversity_plots}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},
   \code{\link{save_ordination_plots}},
   \code{\link{save_stacked_barplots}},
+  \code{\link{stacked_barplots}},
+  \code{\link{stacked_barplot}},
   \code{\link{top_coefficients_barplot}}
 
 Other Visualizations: \code{\link{correlation_data}},
   \code{\link{correlation_plots}},
   \code{\link{correlation_plot}},
   \code{\link{heat_tree_parameters}},
-  \code{\link{heat_tree_plots}}, \code{\link{melt_taxmap}},
+  \code{\link{heat_tree_plots}},
+  \code{\link{ordination_plots}},
   \code{\link{ordination_plot}}, \code{\link{plot_limits}},
   \code{\link{save_alpha_diversity_plots}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},
   \code{\link{save_ordination_plots}},
   \code{\link{save_stacked_barplots}},
+  \code{\link{stacked_barplots}},
+  \code{\link{stacked_barplot}},
   \code{\link{top_coefficients_barplot}}
 }
 \concept{Visualizations}

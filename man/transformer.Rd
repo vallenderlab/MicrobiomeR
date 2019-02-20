@@ -62,7 +62,7 @@ if(interactive()){
 \code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}}
 \code{\link[purrr]{modify}}
 
-Other Data Manipulators: \code{\link{melt_taxmap}},
+Other Data Manipulators: \code{\link{convert_proportions}},
   \code{\link{metacoder_comp_func_1}},
   \code{\link{transposer}}, \code{\link{vlookup}}
 }
