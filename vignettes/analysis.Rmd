@@ -64,6 +64,17 @@ metacoder_obj <- sample_id_filter(obj = metacoder_obj,
                                .f_condition = ~.>= 20, 
                                validated = TRUE)
 ```
+```{r man_otu_prop}
+otu_percentage = 0.00001
+validated = FALSE
+mo_clone <- metacoder_obj$clone()
+mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
+                                                       force_format = TRUE, validated = validated, min_or_max = min)
+mo_clone <- otu_id_filter(obj = mo_clone, .f_transform = ~./sum(.), .f_filter = ~mean(.), .f_condition = ~.> otu_percentage)
+  message(crayon::green(glue::glue("Filtering OTUs with less than ", crayon::bgWhite("{otu_percentage*100}%"), " across samples.")))
+
+
+```
 ```{r otu_prop}
 # Master Threshold Filter - Add the otu_proportions table and then filter OTUs based on min %
 metacoder_obj <- otu_proportion_filter(obj = metacoder_obj,
