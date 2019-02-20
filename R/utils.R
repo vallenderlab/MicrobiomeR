@@ -167,9 +167,9 @@ output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end_pat
   if (mkdir == TRUE) {
     answer_flag <- FALSE
     if (dir.exists(full_path) && overwrite == FALSE) {
-      message(glue::glue("The directory {full_path} already exists. And you don't want to overwrite the directory."))
+      warning(glue::glue("The directory {full_path} already exists. And you don't want to overwrite the directory."))
     } else if (dir.exists(full_path) && overwrite == TRUE) {
-      message(glue::glue(crayon::yellow("You have chosen to overwrite the directory: {full_path}.")))
+      warning(glue::glue(crayon::yellow("You have chosen to overwrite the directory: {full_path}.")))
       while (answer_flag == FALSE) {
         answer <- readline(prompt = crayon::blue("Are you sure? (Y/N)"))
         if (stringr::str_to_lower(answer) == "y") {
@@ -393,7 +393,6 @@ vlookup <- function(lookup_vector, df, match_var, return_var) {
 #'  }
 #' }
 #' @rdname create_pub_table
-#' @seealso
 #'
 #' @importFrom ggpubr ggtexttable ttheme colnames_style tbody_style
 create_pub_table <- function(dataframe) {
