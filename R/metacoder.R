@@ -188,8 +188,11 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
 #' library(MicrobiomeR)
 #' otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FALSE) {
 #'     mo_clone <- obj$clone()
-#'     mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
-#'         force_format = TRUE, validated = validated, min_or_max = min)
+#'     mo_clone <- validate_MicrobiomeR_format(obj = mo_clone,
+#'                                             valid_formats = c("raw_format", "basic_format"),
+#'                                             force_format = TRUE,
+#'                                             validated = validated,
+#'                                             min_or_max = min)
 #'     # Filter OTU ids
 #'     mo_clone <- otu_id_filter(obj = mo_clone,
 #'                               .f_transform = ~./sum(.),
