@@ -6,6 +6,9 @@
 #' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
 #' @param wp_value The Wilcoxian P-Value used to represent significant points.  Default: 0.05
 #' @param pal_func A palette function that returns grDevices::colorRampPalette.
+#' @param trans Either the name of a transformation object, or the object itself given to \code{\link[ggplot2]{scale_continuous}}.
+#' Built-in transformations include "asn", "atanh", "boxcox", "exp", "identity", "log", "log10", "log1p",
+#' "log2", "logit", "probability", "probit", "reciprocal", "reverse" and "sqrt".
 #' @return A 1:1 correlation plot built with ggplot2.
 #' @pretty_print TRUE
 #' @details Correlation plots help to better explain the heat tree findings.
@@ -34,6 +37,7 @@
 #' @importFrom forcats fct_reorder
 #' @importFrom ggrepel geom_label_repel
 #' @importFrom crayon yellow
+#' @importFrom scales percent
 correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
                              wp_value = 0.05, pal_func = NULL, trans = "logit") {
   metacoder_object <- create_taxmap(obj)
@@ -113,8 +117,8 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
         mapping = ggplot2::aes(label = rank_label), size = 3, segment.size = 0.15, point.padding = 0.5, box.padding = 0.6, alpha = 0.65, force = 45, max.iter = 10000, min.segment.length = 0.1, seed = 2289,
         nudge_x = ifelse(primary_data$mean_treat2 < primary_data$mean_treat1, -2, 2.5), nudge_y = ifelse(primary_data$mean_treat1 < primary_data$mean_treat2, -1.9, 2)) +
       ggplot2::labs(title = glue::glue("{primary_rank} ({comp_title})"), x = glue::glue("Mean Abundance Before {treatments[1]}"), y = glue::glue("Mean Abundance After {treatments[1]}")) +
-      ggplot2::scale_x_continuous(trans=trans, label=percent) +
-      ggplot2::scale_y_continuous(trans=trans, label = percent) +
+      ggplot2::scale_x_continuous(trans=trans, label = scales::percent) +
+      ggplot2::scale_y_continuous(trans=trans, label = scales::percent) +
       ggplot2::theme(axis.text.x = element_text(angle=45)) +
       ggplot2::scale_shape_manual(name = glue::glue("Abundance After {treatments[1]}"), values = c("Significant Increase" = 16, "Significant Decrease" = 15, "Insignificant Change" = 4)) +
       ggplot2::scale_fill_manual(values = c("red", "blue", myPal), guide = FALSE) +
