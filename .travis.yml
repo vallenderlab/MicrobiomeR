@@ -28,8 +28,10 @@ r:
 
 r_github_packages:
   - r-lib/covr
-  - ropensci/taxa
 
 after_success:
   - R CMD INSTALL $PKG_TARBALL
   - Rscript -e 'covr::codecov()'
+
+install:
+- R -e 'devtools::install_deps(dependencies = TRUE, upgrade = "never")'
