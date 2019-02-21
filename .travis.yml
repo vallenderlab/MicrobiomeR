@@ -28,7 +28,6 @@ r:
 
 r_github_packages:
   - r-lib/covr
-  - ropensci/taxa
 
 after_success:
   - R CMD INSTALL $PKG_TARBALL
