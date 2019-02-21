@@ -8,7 +8,7 @@ author:
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Analysis}
+  %\VignetteIndexEntry{Paper}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
   title: 'MicrobiomeR:  An R Package for Simplified and Standardized Microbiome Analysis Workflows'
