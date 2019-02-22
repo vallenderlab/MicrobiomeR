@@ -4,7 +4,7 @@ language: R
 sudo: false
 cache: packages
 warnings_are_errors: false
-cran: http://mirrors.nics.utk.edu/cran/
+cran: http://cran.rstudio.com
 
 branches:
   only:
@@ -19,6 +19,7 @@ env:
     - R_REMOTES_NO_ERRORS_FROM_WARNINGS=true
 
 r:
+- oldrel
 - release
 - devel
 - 3.3.3
