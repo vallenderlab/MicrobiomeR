@@ -219,7 +219,7 @@ heat_tree_parameters <- function(obj, title, treatment_no, ...) {
       ## The node labels are relevant to significant taxon names.
       node_size = n_obs,
       node_color = log2_mean_ratio,
-      node_label = ifelse(wilcox_p_value < 0.05, taxon_names, NA),
+      node_label = ifelse(is_root, taxon_names, ifelse(wilcox_p_value < 0.05, taxon_names, NA)),
       node_label_size = 1,
       ### The color red indicates higher abundance in Treatment_1 animals
       ### The color blue indicates higher abundance in Treatment_2 animals
