@@ -249,7 +249,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
   }
   # Get numeric data (columns)
   if (!is.null(ids)) {
-    num_cols <- input %>% dplyr::select_if(is.numeric) %>% dplyr::select(-ids) %>% colnames()
+    num_cols <- input %>%  dplyr::select(-ids) %>% dplyr::select_if(is.numeric) %>% colnames()
   } else {
     num_cols <- input %>% dplyr::select_if(is.numeric) %>% colnames()
   }
