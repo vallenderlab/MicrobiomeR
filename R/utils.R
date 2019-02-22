@@ -248,11 +248,8 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
     message(crayon::yellow(sprintf("There were no ids given.  Defaulting to the first column: %s", ids)))
   }
   # Get numeric data (columns)
-  if (!is.null(ids)) {
-    num_cols <- input %>%  dplyr::select(-ids) %>% dplyr::select_if(is.numeric) %>% colnames()
-  } else {
-    num_cols <- input %>% dplyr::select_if(is.numeric) %>% colnames()
-  }
+  num_cols <- input %>%  dplyr::select(-ids) %>% dplyr::select_if(is.numeric) %>% colnames()
+
   # Transform
   if (preserved_categories == TRUE) { # All categorical data is preserved
     message(crayon::yellow("Categorical data will be united as a string, which can be tidyr::separated after re-transposing."))
@@ -341,7 +338,7 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
   }
   # Get numeric column names
   if (!is.null(ids)) {
-    num_cols <- input %>% dplyr::select_if(is.numeric) %>% dplyr::select(-ids) %>% colnames()
+    num_cols <- input %>% dplyr::select(-ids) %>% dplyr::select_if(is.numeric) %>% colnames()
   } else {
     num_cols <- input %>% dplyr::select_if(is.numeric) %>% colnames()
   }
