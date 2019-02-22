@@ -17,7 +17,8 @@ Remotes:
     github::grunwaldlab/metacoder,
     github::joey711/phyloseq,
     github::microbiome/microbiome,
-    github::r-lib/covr
+    github::r-lib/covr,
+    cran/dplyr@0.7.8
 Imports:
     ape,
     DT,
