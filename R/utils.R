@@ -232,7 +232,7 @@ output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end_pat
 #'
 #'  \code{\link[stringr]{str_detect}},  \code{\link[stringr]{str_count}}
 #' @importFrom tibble is.tibble
-#' @importFrom dplyr select_if select as_tibble sym one_of
+#' @importFrom dplyr select select as_tibble sym one_of
 #' @importFrom tidyr gather unite spread separate
 #' @importFrom stringr str_detect str_count
 #' @importFrom crayon red yellow silver
@@ -248,7 +248,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
     message(crayon::yellow(sprintf("There were no ids given.  Defaulting to the first column: %s", ids)))
   }
   # Get numeric data (columns)
-  num_cols <- input %>% dplyr::select_if(is.numeric) %>% dplyr::select_if(!names(.) %in% ids) %>% colnames()
+  num_cols <- input %>% dplyr::select_if(is.numeric) %>% dplyr::select(-ids) %>% colnames()
 
   # Transform
   if (preserved_categories == TRUE) { # All categorical data is preserved
@@ -324,7 +324,7 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
 #'  \code{\link[MicrobiomeR]{transposer}}
 #'  \code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}}
 #'  \code{\link[purrr]{modify}}
-#' @importFrom dplyr select_if select
+#' @importFrom dplyr select select
 #' @importFrom purrr modify_at
 #' @importFrom crayon red silver
 transformer <- function(.data, func, by = "column", ids = NULL, header_name = NULL, preserved_categories = TRUE, separated_categories = NULL, ...) {
@@ -337,7 +337,7 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
     input <- input %>% transposer(ids = ids, header_name = header_name, preserved_categories = preserved_categories)
   }
   # Get numeric column names
-  num_cols <- input %>% dplyr::select_if(is.numeric) %>% dplyr::select_if(!names(.) %in% ids) %>% colnames()
+  num_cols <- input %>% dplyr::select_if(is.numeric) %>% dplyr::select(-ids) %>% colnames()
   # Get all other columsn as preserved columns
   preserved_categories <- input %>% dplyr::select(-dplyr::one_of(num_cols)) %>% colnames()
   # Transform data
