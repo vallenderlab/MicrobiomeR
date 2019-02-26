@@ -1,13 +1,13 @@
-#' @title Filter Samples Ids from Metacoder Objects
+#' @title Filter Samples Ids from Taxmap Objects
 #' @description This function provides a flexible way to filter unwanted samples from the
 #' \emph{"otu_abundance"} and \emph{"sample_data"} observations of a MicrobiomeR formatted object.
-#' @param obj A Taxmap/metacoder object.
+#' @param obj A Taxmap object.
 #' @param .f_transform A function used for transforming the data.  Default: NULL
 #' @param .f_filter A function used for summarising the data like 'sum' or 'mean'.  Default: NULL
 #' @param .f_condition A function that takes the summarised data and applied a condition like x > 10000.  Default: NULL
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
 #' @param ... An optional list of parameters to use in the .f_filter function specified
-#' @return Returns a metacoder object with samples that pass the filters.
+#' @return Returns a Taxmap object with samples that pass the filters.
 #' @details Get the samples to keep by using purr and the user supplied transform and filter + condition formulas.
 #' The purr packge allows the use of anonymous functions as described in the link below:
 #'
@@ -19,10 +19,10 @@
 #' library(MicrobiomeR)
 #' library(metacoder)
 #' library(taxa)
-#' # Convert Phyloseq object to metacoder object
+#' # Convert Phyloseq object to Taxmap object
 #' metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_silva_2, format = "raw_format")
 #'
-#' # Remove Archaea from the metacoder object
+#' # Remove Archaea from the Taxmap object
 #' metacoder_obj <- filter_taxa(
 #'   obj = metacoder_obj,
 #'   taxon_names == "Archaea",
@@ -76,7 +76,7 @@ sample_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_cond
       purrr::keep(~ . == TRUE) %>%
       names() # Determine which samples to keep
 
-    # Update the otu_abundance and sample_data in the metacoder object by removing samples
+    # Update the otu_abundance and sample_data in the Taxmap object by removing samples
     other_vars <- abund_data %>% dplyr::select_if(function(x) is.numeric(x) == FALSE) %>% colnames() #%>% purrr::discard(~.=="taxon_id")
     mo_clone$data$otu_abundance  <- dplyr::select(abund_data, c(other_vars, samples_to_keep))
     mo_clone$data$sample_data <- mo_clone$data$sample_data %>% dplyr::filter(sample_id %in% samples_to_keep)
@@ -86,11 +86,11 @@ sample_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_cond
   }
 }
 
-#' @title Filter Taxon Ids from Metacoder Objects
+#' @title Filter Taxon Ids from Taxmap Objects
 #' @description This function provides a flexible way to filter unwanted taxon_ids from the taxmap object and from the
 #' observations of a MicrobiomeR formatted object.
 #' @inheritParams sample_id_filter
-#' @return Returns a metacoder object with taxon_ids that pass the filters.
+#' @return Returns a Taxmap object with taxon_ids that pass the filters.
 #' @pretty_print TRUE
 #' @details Get the taxon_ids to keep by using purr and the user supplied transform and filter + condition formulas.
 #' The purr packge allows the use of anonymous functions as described in the link below:
@@ -102,10 +102,10 @@ sample_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_cond
 #' library(MicrobiomeR)
 #' library(metacoder)
 #' library(taxa)
-#' # Convert Phyloseq object to metacoder object
+#' # Convert Phyloseq object to Taxmap object
 #' metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
 #'
-#' # Remove Archaea from the metacoder object
+#' # Remove Archaea from the Taxmap object
 #' metacoder_obj <- filter_taxa(
 #'   obj = metacoder_obj,
 #'   taxon_names == "Archaea",
@@ -170,11 +170,11 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
   }
 }
 
-#' @title Filter OTU Ids from Metacoder Objects
+#' @title Filter OTU Ids from Taxmap Objects
 #' @description This function provides a flexible way to filter unwanted otu_ids from the taxmap object and from the
 #' observations of a MicrobiomeR formatted object.
 #' @inheritParams sample_id_filter
-#' @return Returns a metacoder object with otu_ids that pass the filters.
+#' @return Returns a taxmap object with otu_ids that pass the filters.
 #' @pretty_print TRUE
 #' @details Get the otu_ids to keep by using purr and the user supplied transform and filter + condition formulas.
 #' The purr packge allows the use of anonymous functions as described in the link below:
@@ -188,8 +188,11 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
 #' library(MicrobiomeR)
 #' otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FALSE) {
 #'     mo_clone <- obj$clone()
-#'     mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
-#'         force_format = TRUE, validated = validated, min_or_max = min)
+#'     mo_clone <- validate_MicrobiomeR_format(obj = mo_clone,
+#'                                             valid_formats = c("raw_format", "basic_format"),
+#'                                             force_format = TRUE,
+#'                                             validated = validated,
+#'                                             min_or_max = min)
 #'     # Filter OTU ids
 #'     mo_clone <- otu_id_filter(obj = mo_clone,
 #'                               .f_transform = ~./sum(.),
@@ -251,11 +254,11 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
   }
 }
 
-#' @title Agglomerate Metacoder Objects
+#' @title Agglomerate taxmap Objects
 #' @description A function similar to the \code{\link[phyloseq:tax_glom]{phyloseq::tax_glom}} function,
 #' that assembles abundance data at a specified rank.  This removes subtaxa and reassigns the
 #' values at the specified rank.
-#' @param obj A Taxmap/metacoder object.
+#' @param obj A Taxmap object.
 #' @param rank The rank that will be agllomerated to.
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
 #' @return A taxmap object that has been agglomerated at the specified rank.
@@ -269,14 +272,14 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #' # however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.
 #' library(MicrobiomeR)
 #' basic_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "basic_format")
-#' phylum_obj <- agglomerate_metacoder(obj = basic_silva, rank = "Phylum")
-#' class_obj <- agglomerate_metacoder(obj = basic_silva, rank = "Class")
-#' order_obj <- agglomerate_metacoder(obj = basic_silva, rank = "Order")
+#' phylum_obj <- agglomerate_taxmap(obj = basic_silva, rank = "Phylum")
+#' class_obj <- agglomerate_taxmap(obj = basic_silva, rank = "Class")
+#' order_obj <- agglomerate_taxmap(obj = basic_silva, rank = "Order")
 #'  }
 #' }
 #' @export
 #' @family Advanced Metacoder Filters
-#' @rdname agglomerate_metacoder
+#' @rdname agglomerate_taxmap
 #' @seealso
 #'  \code{\link[taxa]{filter_taxa}}
 #'
@@ -284,7 +287,7 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #' @importFrom taxa filter_taxa taxon_ranks
 #' @importFrom glue glue
 #' @importFrom crayon silver
-agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
+agglomerate_taxmap <- function(obj, rank, validated = FALSE) {
   mo_clone <- obj$clone()
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format", "analyzed_format"),
                                           force_format = TRUE, validated = validated, min_or_max = min)
@@ -299,7 +302,7 @@ agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
 #' @title OTU Proportion FIlter
 #' @description This function filters OTU values from the observation data and the taxmap object
 #' based on a minimum proportional mean across samples per OTU.
-#' @param obj A Taxmap/metacoder object.
+#' @param obj A Taxmap object.
 #' @param otu_percentage The minimum percentage used to compare against the proportional OTU mean.  Default: 5e-05
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
 #' @return Returns a taxmap object that contains otu_ids that have passed the above filter.
@@ -313,10 +316,10 @@ agglomerate_metacoder <- function(obj, rank, validated = FALSE) {
 #' library(metacoder)
 #' library(taxa)
 #'
-#' # Convert Phyloseq object to metacoder object
+#' # Convert Phyloseq object to taxmap object
 #' metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
 #'
-#' # Remove Archaea from the metacoder object
+#' # Remove Archaea from the Taxmap object
 #' metacoder_obj <- filter_taxa(
 #'   obj = metacoder_obj,
 #'   taxon_names == "Archaea",
@@ -356,7 +359,7 @@ otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FAL
 
 #' @title OTU Prevalence Filter
 #' @description This function filters observations by thier prevelance across samples.
-#' @param obj A Taxmap/metacoder object.
+#' @param obj A Taxmap object.
 #' @param minimum_abundance The minimum abundance needed per observation per sample.  Default: 5
 #' @param rel_sample_percentage The percentage of samples per observation that meet the minimum abundance.  Default: 0.5
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
@@ -372,10 +375,10 @@ otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FAL
 #' library(metacoder)
 #' library(taxa)
 #'
-#' # Convert Phyloseq object to metacoder object
+#' # Convert Phyloseq object to taxmap object
 #' metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
 #'
-#' # Remove Archaea from the metacoder object
+#' # Remove Archaea from the taxmap object
 #' metacoder_obj <- filter_taxa(
 #'   obj = metacoder_obj,
 #'   taxon_names == "Archaea",
@@ -435,7 +438,7 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
 
 #' @title Taxonomic Prevalence Filter (Metacoder)
 #' @description This function filters observations at a specific rank by thier prevelance across samples.
-#' @param obj A Taxmap/metacoder object.
+#' @param obj A Taxmap object.
 #' @param rank The rank being analyzed for prevalence across samples.
 #' @param minimum_abundance The minimum abundance needed per observation per sample.  Default: 5
 #' @param rel_sample_percentage The percentage of samples per observation that meet the minimum abundance.  Default: 0.5
@@ -452,10 +455,10 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
 #' library(metacoder)
 #' library(taxa)
 #'
-#' # Convert Phyloseq object to metacoder object
+#' # Convert Phyloseq object to taxmap object
 #' metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
 #'
-#' # Remove Archaea from the metacoder object
+#' # Remove Archaea from the taxmap object
 #' metacoder_obj <- filter_taxa(
 #'   obj = metacoder_obj,
 #'   taxon_names == "Archaea",
@@ -513,7 +516,7 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
                                           min_or_max = min, valid_formats = c("basic_format"))
   # Calculate the ids that need to be removed based on taxonomic rank
   suppressMessages({
-    ids_to_remove <- agglomerate_metacoder(obj = mo_clone, rank = rank, validated = TRUE) %>% # Agglomeration
+    ids_to_remove <- agglomerate_taxmap(obj = mo_clone, rank = rank, validated = TRUE) %>% # Agglomeration
     metacoder::calc_prop_samples("taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
     dplyr::filter(n_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
   # Taxonomic Prevalence Filtering
@@ -527,7 +530,7 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
 #' @title Coefficient of Variation Filter
 #' @description This function filters OTUs that have a variance higher than the
 #' specified CoV.
-#' @param obj A Taxmap/metacoder object.
+#' @param obj A Taxmap object.
 #' @param coefficient_of_variation The maximum CoV that an OTU can have.
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
 #' @return Returns a taxmap object that contains otu_ids that have passed the above filter.
@@ -542,10 +545,10 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
 #' library(metacoder)
 #' library(taxa)
 #'
-#' # Convert Phyloseq object to metacoder object
+#' # Convert Phyloseq object to taxmap object
 #' metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
 #'
-#' # Remove Archaea from the metacoder object
+#' # Remove Archaea from the taxmap object
 #' metacoder_obj <- filter_taxa(
 #'   obj = metacoder_obj,
 #'   taxon_names == "Archaea",

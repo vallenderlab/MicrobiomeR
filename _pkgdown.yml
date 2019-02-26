@@ -1,3 +1,4 @@
+url: https://microbiomer.vallenderlab.science/
 template:
   params:
     bootswatch: yeti
@@ -28,8 +29,10 @@ navbar:
         href: articles/analysis.html
       - text: "Color Palettes"
         href: articles/color-palettes.html
-    - text: "Reference"
+    - text: "Functions"
       href: reference/index.html
+    - text: "Publication"
+      href: articles/paper.html
     - text: "Changelog"
       href: news/index.html
   right:

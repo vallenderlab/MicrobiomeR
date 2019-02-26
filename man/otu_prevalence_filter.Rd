@@ -8,7 +8,7 @@ otu_prevalence_filter(obj, minimum_abundance = 5,
   rel_sample_percentage = 0.5, validated = FALSE)
 }
 \arguments{
-\item{obj}{A Taxmap/metacoder object.}
+\item{obj}{A Taxmap object.}
 
 \item{minimum_abundance}{The minimum abundance needed per observation per sample.  Default: 5}
 
@@ -34,10 +34,10 @@ library(MicrobiomeR)
 library(metacoder)
 library(taxa)
 
-# Convert Phyloseq object to metacoder object
+# Convert Phyloseq object to taxmap object
 metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
 
-# Remove Archaea from the metacoder object
+# Remove Archaea from the taxmap object
 metacoder_obj <- filter_taxa(
   obj = metacoder_obj,
   taxon_names == "Archaea",
@@ -72,7 +72,7 @@ metacoder_obj <- otu_prevalence_filter(obj = metacoder_obj, validated = TRUE)
 
 \code{\link[taxa]{filter_taxa}}
 
-Other Advanced Metacoder Filters: \code{\link{agglomerate_metacoder}},
+Other Advanced Metacoder Filters: \code{\link{agglomerate_taxmap}},
   \code{\link{cov_filter}},
   \code{\link{otu_proportion_filter}},
   \code{\link{taxa_prevalence_filter}}

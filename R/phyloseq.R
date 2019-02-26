@@ -37,7 +37,10 @@
 #' parse_func <- parse_parse_taxonomy_silva_128
 #' }
 #' # Create a phyloseq object from the data files.
-#' phy_obj <- create_phyloseq(biom_file = biom_file, tree_file = tree_file, metadata_file = md_file, parse_func = parse_func)
+#' phy_obj <- create_phyloseq(biom_file = biom_file,
+#'                            tree_file = tree_file,
+#'                            metadata_file = md_file,
+#'                            parse_func = parse_func)
 #' }
 #' @export
 #' @family Data Importers
@@ -257,7 +260,8 @@ root_by_longest_edge <- function(unrooted_tree) {
 #' then please comment on the GitHub PR to encourage merging this feature.
 #' @examples \dontrun{
 #'
-#'  > taxvec1 = c("Root", "k__Bacteria", "p__Firmicutes", "c__Bacilli", "o__Bacillales", "f__Staphylococcaceae")
+#'  > taxvec1 = c("Root", "k__Bacteria", "p__Firmicutes", "c__Bacilli", "o__Bacillales",
+#'  "f__Staphylococcaceae")
 #'  > parse_taxonomy_default(taxvec1)
 #'  > parse_taxonomy_greengenes(taxvec1)
 #'  > taxvec2 = c("Root;k__Bacteria;p__Firmicutes;c__Bacilli;o__Bacillales;f__Staphylococcaceae")
@@ -266,10 +270,6 @@ root_by_longest_edge <- function(unrooted_tree) {
 #'  > parse_taxonomy_silva_128(taxvec3)
 #'  }
 #' @export
-#' @usage parse_taxonomy_default(char.vec)
-#' parse_taxonomy_greengenes(char.vec)
-#' parse_taxonomy_silva_128(char.vec)
-#' parse_taxonomy_qiime(char.vec)
 #' @rdname parse_taxonomy_silva_128
 #' @seealso
 #'  \code{\link[phyloseq:parseTaxonomy-functions]{parse_taxonomy_default}}

@@ -1,11 +1,14 @@
 #' @title Correlation Plot
 #' @description Create a correlation plot from a metacoder/taxmap object.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param primary_rank The primary rank used to label the points.
 #' @param secondary_rank The secondary rank used to color the points.  Can be an integer specifying
 #' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
 #' @param wp_value The Wilcoxian P-Value used to represent significant points.  Default: 0.05
 #' @param pal_func A palette function that returns grDevices::colorRampPalette.
+#' @param trans Either the name of a transformation object, or the object itself given to \code{\link[ggplot2]{scale_continuous}}.
+#' Built-in transformations include "asn", "atanh", "boxcox", "exp", "identity", "log", "log10", "log1p",
+#' "log2", "logit", "probability", "probit", "reciprocal", "reverse" and "sqrt".
 #' @return A 1:1 correlation plot built with ggplot2.
 #' @pretty_print TRUE
 #' @details Correlation plots help to better explain the heat tree findings.
@@ -23,7 +26,7 @@
 #' @family Visualizations
 #' @rdname correlation_plot
 #' @seealso
-#'  \code{\link[MicrobiomeR]{create_metacoder}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{correlation_data}},  \code{\link[MicrobiomeR]{plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
+#'  \code{\link[MicrobiomeR]{create_taxmap}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{correlation_data}},  \code{\link[MicrobiomeR]{plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
 #'
 #'  \code{\link[ggplot2]{ggplot}},  \code{\link[ggplot2]{aes}},  \code{\link[ggplot2]{geom_polygon}},  \code{\link[ggplot2]{geom_point}},  \code{\link[ggplot2]{labs}},  \code{\link[ggplot2]{scale_continuous}},  \code{\link[ggplot2]{scale_manual}},  \code{\link[ggplot2]{guide_legend}},  \code{\link[ggplot2]{geom_abline}}
 #'
@@ -34,9 +37,10 @@
 #' @importFrom forcats fct_reorder
 #' @importFrom ggrepel geom_label_repel
 #' @importFrom crayon yellow
+#' @importFrom scales percent
 correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
-                             wp_value = 0.05, pal_func = NULL) {
-  metacoder_object <- create_metacoder(obj)
+                             wp_value = 0.05, pal_func = NULL, trans = "logit") {
+  metacoder_object <- create_taxmap(obj)
   metacoder_object <- validate_MicrobiomeR_format(obj = metacoder_object,
                                                   valid_formats = c("analyzed_format"))
   ranks <- pkg.private$ranks
@@ -71,9 +75,21 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
     # Get the limits of the plot based on the data
     plot_limits <- plot_limits(primary_data$mean_treat1, primary_data$mean_treat2)
     # Create a dataframe for background color
-    background_limits <- data.frame(id = c("1", "1", "1", "2", "2", "2"), x = c(0, Inf, 0, 0, Inf, Inf), y = c(0, Inf, Inf, 0, 0, Inf))
+    #background_limits <- data.frame(id = c("1", "1", "1", "2", "2", "2"), x = c(0, Inf, 0, 0, Inf, Inf), y = c(0, Inf, Inf, 0, 0, Inf))
     # Get a color palette
     secondary_taxa <- length(unique(primary_data[[(secondary_rank)]]))
+
+    # Get the mean significant increase and mean significant decrease for x and y
+    # sig_decrease <- dplyr::filter(significant_data, Abundance == "Significant Decrease")
+    # sig_increase <- dplyr::filter(significant_data, Abundance == "Significant Increase")
+    # x_inc <- mean(sig_increase$mean_treat1)
+    # x_dec <- mean(sig_decrease$mean_treat1)
+    # y_inc <- mean(sig_increase$mean_treat2)
+    # y_dec <- mean(sig_decrease$mean_treat2)
+    # y_pos <- max(primary_data$mean_treat2)
+    # x_pos <- max(primary_data$mean_treat1)
+    x_avg <- mean(significant_data$mean_treat2)
+    y_avg <- mean(significant_data$mean_treat1)
 
     if (is.null(pal_func)) {
       pal_func <- combination_palette(
@@ -88,19 +104,30 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
       display = FALSE)
 
     # Start ggplot2 workflow
-    corr <- ggplot2::ggplot(primary_data, ggplot2::aes(x = mean_treat1, y = mean_treat2)) +
-      ggplot2::geom_polygon(background_limits, mapping = ggplot2::aes(x = x, y = y, fill = id), alpha = 0.07, show.legend = FALSE) +
+    corr <- ggplot2::ggplot(primary_data, ggplot2::aes(x = mean_treat2, y = mean_treat1)) +
+      #ggplot2::geom_polygon(background_limits, mapping = ggplot2::aes(x = x, y = y, fill = id), alpha = 0.07, show.legend = FALSE) +
+      #ggplot2::geom_vline(aes(linetype = "dotted"), xintercept = x_avg) +
+      # ggplot2::geom_vline(xintercept = x_dec, show.legend = TRUE, linetype = "dotted") +
+      # ggplot2::geom_hline(yintercept = y_inc, show.legend = TRUE, linetype = "dotted") +
+      #ggplot2::geom_hline(aes(linetype = "dotted"), yintercept = y_avg) +
+      # ggplot2::annotate("text", x=c(x_inc, x_dec, x_pos, x_pos), y = c(y_pos, y_pos, y_inc, y_dec), label = c("+", "-", "+", "-"), color = "darkred", size=5) +
       ggplot2::geom_point(data = significant_data, ggplot2::aes(shape = Abundance), size = 3.2, color = "black", stroke = 2, show.legend = FALSE) +
       ggplot2::geom_point(data = primary_data, ggplot2::aes(shape = Abundance, color = forcats::fct_reorder(primary_data[[secondary_rank]], color_wilcox_p_value, min)), size = 2.5, stroke = 1.5) +
       ggrepel::geom_label_repel(
         mapping = ggplot2::aes(label = rank_label), size = 3, segment.size = 0.15, point.padding = 0.5, box.padding = 0.6, alpha = 0.65, force = 45, max.iter = 10000, min.segment.length = 0.1, seed = 2289,
-        nudge_x = ifelse(primary_data$mean_treat1 < primary_data$mean_treat2, -2, 2.5), nudge_y = ifelse(primary_data$mean_treat2 < primary_data$mean_treat1, -1.9, 2)) +
+        nudge_x = ifelse(primary_data$mean_treat2 < primary_data$mean_treat1, -2, 2.5), nudge_y = ifelse(primary_data$mean_treat1 < primary_data$mean_treat2, -1.9, 2)) +
       ggplot2::labs(title = glue::glue("{primary_rank} ({comp_title})"), x = glue::glue("Mean Abundance Before {treatments[1]}"), y = glue::glue("Mean Abundance After {treatments[1]}")) +
-      ggplot2::scale_y_log10(limits = plot_limits) + ggplot2::scale_x_log10(limits = plot_limits) +
-      ggplot2::scale_shape_manual(name = glue::glue("Abundance After {treatments[1]}:"), values = c("Significant Increase" = 16, "Significant Decrease" = 15, "Insignificant Change" = 4)) +
+      ggplot2::scale_x_continuous(trans=trans, label = scales::percent) +
+      ggplot2::scale_y_continuous(trans=trans, label = scales::percent) +
+      ggplot2::theme(axis.text.x = element_text(angle=45)) +
+      ggplot2::scale_shape_manual(name = glue::glue("Abundance After {treatments[1]}"), values = c("Significant Increase" = 16, "Significant Decrease" = 15, "Insignificant Change" = 4)) +
       ggplot2::scale_fill_manual(values = c("red", "blue", myPal), guide = FALSE) +
-      ggplot2::scale_color_manual(values = c(myPal), name = sprintf("%s:", c(secondary_rank)), guide = ggplot2::guide_legend(ncol = 2)) +
-      ggplot2::geom_abline(slope = 1, intercept = 0, linetype = "dashed")
+      ggplot2::scale_color_manual(values = c(myPal), name = sprintf("%s", c(secondary_rank)), guide = ggplot2::guide_legend(ncol = 2)) +
+      ggplot2::geom_abline(aes(linetype = "dashed", intercept = 0, slope = 1)) +
+      ggplot2::geom_vline(aes(linetype = "dotted", xintercept = x_avg)) +
+      ggplot2::geom_hline(aes(linetype = "dotted", yintercept = y_avg)) +
+      ggplot2::scale_linetype_identity(name = 'Lines',guide = "legend",labels = c("1:1", glue::glue("Average {primary_rank}"))) #+
+      #ggplot2::guide_legend(override.aes = list(linetype = c(2,3)))
     message(crayon::green(sprintf("Generating Correlation Plot comparing %s for %s with color based on %s", crayon::bgWhite(comp_title), crayon::bgWhite(primary_rank), crayon::bgWhite(secondary_rank))))
     corrs[[comp_title]] <- corr
   }
@@ -109,7 +136,7 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 
 #' @title Get Multiple Correlation Plots
 #' @description This function allows the user to create a list of multiple correlation plots.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param primary_ranks A vector of primary ranks used to label the points.
 #' @param secondary_ranks  The secondary rank used to color the points.  Can be an integer specifying
 #' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
@@ -172,7 +199,7 @@ correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ...) {
 
 #' @title Get Correlation Plot Data
 #' @description Get the correlation plot data comparing all of the treatment groups.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param primary_rank A primary rank used to label the points.
 #' @param secondary_rank  The secondary rank used to color the points, Default: TRUE
 #' @param wp_value The wilcoxon p-value cutoff/threshold, Default: 0.05
@@ -189,7 +216,7 @@ correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ...) {
 #' @family Visualizations
 #' @rdname correlation_data
 #' @seealso
-#'  \code{\link[MicrobiomeR]{agglomerate_metacoder}},  \code{\link[MicrobiomeR]{vlookup}}
+#'  \code{\link[MicrobiomeR]{agglomerate_taxmap}},  \code{\link[MicrobiomeR]{vlookup}}
 #'
 #'  \code{\link[dplyr]{tidyeval}},  \code{\link[dplyr]{mutate}},  \code{\link[dplyr]{filter}},  \code{\link[dplyr]{arrange}}
 #'
@@ -201,11 +228,11 @@ correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ...) {
 correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_value = 0.05) {
   # Quotes
   quoted_str <- dplyr::enquo(secondary_rank)
-  # Create the primary metacoder object
-  primary_mo <- agglomerate_metacoder(obj = obj, rank = primary_rank,
+  # Create the primary Taxmap object
+  primary_mo <- agglomerate_taxmap(obj = obj, rank = primary_rank,
                                       validated = TRUE)
-  # Create the secondary metacoder object
-  secondary_mo <- agglomerate_metacoder(obj = obj, rank = secondary_rank,
+  # Create the secondary Taxmap object
+  secondary_mo <- agglomerate_taxmap(obj = obj, rank = secondary_rank,
                                         validated = TRUE)
   # Get the primary and secondary statistical-taxonomy data frame
   primary_data <- primary_mo$data$stats_tax_data
@@ -241,8 +268,8 @@ correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_value 
       dplyr::mutate(label = ifelse(Significance == TRUE, ifelse(sign(log2_mean_ratio) == 1, TRUE, TRUE), FALSE))
 
     # Update points with 0 values so they look good on the plot
-    p_d$mean_treat1[p_d$mean_treat1 == 0] <- 0.000000001
-    p_d$mean_treat2[p_d$mean_treat2 == 0] <- 0.000000001
+    #p_d$mean_treat1[p_d$mean_treat1 == 0] <- 0.000000001
+    #p_d$mean_treat2[p_d$mean_treat2 == 0] <- 0.000000001
 
     # Create a label for the legend
     rank_label <- sprintf("%s_label", primary_rank)

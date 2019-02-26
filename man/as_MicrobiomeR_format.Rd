@@ -7,7 +7,7 @@
 as_MicrobiomeR_format(obj, format, ...)
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
+\item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
 
 \item{format}{The name of the format to convert the object to.}
 
@@ -15,24 +15,23 @@ as_MicrobiomeR_format(obj, format, ...)
 by the format parameter.}
 }
 \value{
-A Taxmap/metacoder object in the specified format.
+A Taxmap object in the specified format.
 }
 \description{
-Converts a metacoder object to the specified format.
+Converts a Taxmap object to the specified format.
 }
 \details{
 See the \link{MicrobiomeR_Formats} documentation.
 }
 \seealso{
-\code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \code{\link[MicrobiomeR]{create_metacoder}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
+\code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \code{\link[MicrobiomeR]{create_taxmap}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
 
 Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_analyzed_format}},
   \code{\link{as_basic_format}},
   \code{\link{as_custom_format}},
   \code{\link{as_phyloseq_format}},
-  \code{\link{as_raw_format}},
-  \code{\link{melt_metacoder}},
+  \code{\link{as_raw_format}}, \code{\link{melt_taxmap}},
   \code{\link{treatment_matrix}}
 }
 \concept{Formatting}

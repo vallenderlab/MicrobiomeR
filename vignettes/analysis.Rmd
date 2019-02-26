@@ -45,7 +45,7 @@ raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
 After importing data and formatting it, data should be filtered to reduce noise and if desired, to subset data.
 
 ```{r message=FALSE, warning=FALSE}
-# Remove Archaea from the metacoder object
+# Remove Archaea from the taxmap object
 metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
                                    taxon_names == "Archaea",
                                    subtaxa = TRUE,
@@ -215,7 +215,7 @@ phy_obj <- create_phyloseq(biom_file = biom_file,
 
 # Get the taxmap object in the raw format
 raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
-# Remove Archaea from the metacoder object
+# Remove Archaea from the taxmap object
 metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
                                    taxon_names == "Archaea",
                                    subtaxa = TRUE,

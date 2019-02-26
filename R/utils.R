@@ -1,5 +1,5 @@
-#' @title Get Metacoder Object
-#' @description A function that handles the conversion of objects to metacoder (\strong{taxa::taxmap}) objects.
+#' @title Get Taxmap Object
+#' @description A function that handles the conversion of objects to Taxmap (\strong{taxa::taxmap}) objects.
 #' @param obj An object that contains the data being analyzed.  Can be one of the following:
 #' \describe{
 #'   \item{Phyloseq Object}{An object generated from the phyloseq package.}
@@ -16,12 +16,12 @@
 #' if(interactive()){
 #'  library(MicrobiomeR)
 #'  phy_obj <- MicrobiomeR::phyloseq_silva_2
-#'  mc_obj <- create_metacoder(phy_obj)
+#'  mc_obj <- create_taxmap(phy_obj)
 #'  }
 #' }
 #' @export
 #' @family Data Importers
-#' @rdname create_metacoder
+#' @rdname create_taxmap
 #' @seealso
 #'  \code{\link[metacoder]{parse_phyloseq}}
 #'
@@ -29,7 +29,7 @@
 #' @importFrom metacoder parse_phyloseq
 #' @importFrom tools file_ext
 #' @importFrom crayon red
-create_metacoder <- function(obj) {
+create_taxmap <- function(obj) {
   if (is.null(obj)) {
     stop(crayon::red("Please use a metacoder/phyloseq object or an rdata file."))
   } else {
@@ -51,7 +51,7 @@ create_metacoder <- function(obj) {
 
 #' @title Get Treatment Matrix
 #' @description A function that returns a matrix with used for comparing treatment data.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @return A matrix with each column representing a comparison to be made.
 #' @pretty_print TRUE
 #' @details Use this when you want to do pairwise comparisons.
@@ -167,9 +167,9 @@ output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end_pat
   if (mkdir == TRUE) {
     answer_flag <- FALSE
     if (dir.exists(full_path) && overwrite == FALSE) {
-      stop(glue::glue("The directory {full_path} already exists. And you don't want to overwrite the directory."))
+      warning(glue::glue("The directory {full_path} already exists. And you don't want to overwrite the directory."))
     } else if (dir.exists(full_path) && overwrite == TRUE) {
-      message(glue::glue(crayon::yellow("You have chosen to overwrite the directory: {full_path}.")))
+      warning(glue::glue(crayon::yellow("You have chosen to overwrite the directory: {full_path}.")))
       while (answer_flag == FALSE) {
         answer <- readline(prompt = crayon::blue("Are you sure? (Y/N)"))
         if (stringr::str_to_lower(answer) == "y") {
@@ -393,7 +393,6 @@ vlookup <- function(lookup_vector, df, match_var, return_var) {
 #'  }
 #' }
 #' @rdname create_pub_table
-#' @seealso
 #'
 #' @importFrom ggpubr ggtexttable ttheme colnames_style tbody_style
 create_pub_table <- function(dataframe) {

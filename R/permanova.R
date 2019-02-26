@@ -1,6 +1,6 @@
 #' @title PERMANOVA
 #' @description Evaluate whether the group(s) has a significant effect on overall gut microbiota composition.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param distance_method  Use a desired distance method, Default: 'bray'
 #' @param group The group or column in the metadata to test upon, Default: 'TreatmentGroup'
 #' @return Returns a list which includes permanova, anova, coefficients, and top coefficients.
@@ -25,12 +25,12 @@
 permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
   # Validate data format
   metacoder_object <- validate_MicrobiomeR_format(
-    obj = create_metacoder(obj),
+    obj = create_taxmap(obj),
     valid_formats = c("analyzed_format")
   )
   permanova <- list()
 
-  # Convert metacoder object to a phyloseq object.
+  # Convert taxmap object to a phyloseq object.
   phyloseq_object <- metacoder::as_phyloseq(metacoder_object, otu_table = "otu_abundance", phy_tree = "phy_tree")
 
   # TODO: Convert this to metacoder strictly.

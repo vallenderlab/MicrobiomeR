@@ -33,7 +33,7 @@ if(interactive()){
 }
 }
 \seealso{
-Other Data Manipulators: \code{\link{melt_metacoder}},
+Other Data Manipulators: \code{\link{convert_proportions}},
   \code{\link{metacoder_comp_func_1}},
   \code{\link{transformer}}, \code{\link{transposer}}
 }

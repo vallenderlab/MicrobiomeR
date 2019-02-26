@@ -7,7 +7,7 @@
 treatment_matrix(obj)
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
+\item{obj}{An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
 }
 \value{
 A matrix with each column representing a comparison to be made.
@@ -32,6 +32,6 @@ Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_basic_format}},
   \code{\link{as_custom_format}},
   \code{\link{as_phyloseq_format}},
-  \code{\link{as_raw_format}}, \code{\link{melt_metacoder}}
+  \code{\link{as_raw_format}}, \code{\link{melt_taxmap}}
 }
 \concept{Formatting}

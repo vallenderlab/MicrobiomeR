@@ -2,13 +2,13 @@
 % Please edit documentation in R/metacoder.R
 \name{otu_id_filter}
 \alias{otu_id_filter}
-\title{Filter OTU Ids from Metacoder Objects}
+\title{Filter OTU Ids from Taxmap Objects}
 \usage{
 otu_id_filter(obj, .f_transform = NULL, .f_filter = NULL,
   .f_condition = NULL, validated = FALSE, ...)
 }
 \arguments{
-\item{obj}{A Taxmap/metacoder object.}
+\item{obj}{A Taxmap object.}
 
 \item{.f_transform}{A function used for transforming the data.  Default: NULL}
 
@@ -21,7 +21,7 @@ otu_id_filter(obj, .f_transform = NULL, .f_filter = NULL,
 \item{...}{An optional list of parameters to use in the .f_filter function specified}
 }
 \value{
-Returns a metacoder object with otu_ids that pass the filters.
+Returns a taxmap object with otu_ids that pass the filters.
 }
 \description{
 This function provides a flexible way to filter unwanted otu_ids from the taxmap object and from the
@@ -41,8 +41,11 @@ if(interactive()){
 library(MicrobiomeR)
 otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FALSE) {
     mo_clone <- obj$clone()
-    mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
-        force_format = TRUE, validated = validated, min_or_max = min)
+    mo_clone <- validate_MicrobiomeR_format(obj = mo_clone,
+                                            valid_formats = c("raw_format", "basic_format"),
+                                            force_format = TRUE,
+                                            validated = validated,
+                                            min_or_max = min)
     # Filter OTU ids
     mo_clone <- otu_id_filter(obj = mo_clone,
                               .f_transform = ~./sum(.),

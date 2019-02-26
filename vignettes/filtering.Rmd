@@ -45,7 +45,7 @@ such as `metacoder::filter_ambiguous_taxa()`, `taxa::filter_taxa()`, and `taxa::
 can almost always be used in your workflow.  
 
 ```{r message=FALSE, warning=FALSE}
-# Remove Archaea from the metacoder object
+# Remove Archaea from the taxmap object
 metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
                                    taxon_names == "Archaea",
                                    subtaxa = TRUE,
@@ -83,7 +83,7 @@ filtering functions mentioned above, they wrap common metacoder and taxa functio
 the tools found in the phyloseq package.  Below I've mentioned some of them and how they relate to 
 the phyloseq package:
 
-* `agglomerate_metacoder()` is equivalent to `phyloseq::tax_glom()`.
+* `agglomerate_taxmap()` is equivalent to `phyloseq::tax_glom()`.
 * `otu_proportion_filter()` is seen in the first step in phyloseq's [preprocessing](http://joey711.github.io/phyloseq/preprocess.html#preprocessing) vignette.
 * `Prevalence Filtering`  functions filter observations by thier prevelance across samples.
     * (Unsupervised) `otu_prevelance_filter()` is seen in phyloseq's [prevalence
@@ -130,7 +130,7 @@ metacoder_obj <- cov_filter(obj = metacoder_obj,
 As mentioned previously taxmap filtering can be done in any way that fits your needs with the `taxa`
 and `metacoder` packages.  However, MicrobiomeR also provides some utility based function for 
 filtering/manipulating your _observation_ data by hand.  Observation data can be accessed within
-the metacoder object.  Make sure you don't manipulate existing data inside of your taxmap object
+the taxmap object.  Make sure you don't manipulate existing data inside of your taxmap object
 unless you're absolutely sure you know what you're doing.
 
 ## Transposing
@@ -189,8 +189,8 @@ This function was # borrowed from \url{https://www.r-bloggers.com/an-r-vlookup-n
 metacoder_obj <- as_MicrobiomeR_format(obj = metacoder_obj, format = "analyzed_format")
 
 # Create agglomerated taxmaps for phylum/class
-phylum_mo <- agglomerate_metacoder(obj = metacoder_obj, rank = "Phylum")
-class_mo <- agglomerate_metacoder(obj = metacoder_obj, rank = "Class")
+phylum_mo <- agglomerate_taxmap(obj = metacoder_obj, rank = "Phylum")
+class_mo <- agglomerate_taxmap(obj = metacoder_obj, rank = "Class")
 # Get some observation data
 phylum_data <- phylum_mo$data$stats_tax_data
 class_data <- class_mo$data$stats_tax_data

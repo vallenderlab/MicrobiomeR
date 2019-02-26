@@ -1,3 +1,21 @@
+# MicrobiomeR 0.5.0
+
+* Added the JOSS paper and draft vignette
+* Changed correlation plots
+  * Removed color from background
+  * Removed hard coded plot limits
+  * Added "1:1" line and Average lines
+  * Added a `trans` parameter to transform the x and y axis
+* Changed function names
+  * From `create_metacoder` to `create_taxmap`
+  * From `agglomerate_metacoder` to `agglomerate_taxmap`
+  * From `melt_metacoder` to `melt_taxmap`
+* Bugs
+  * Fixed `output_dir` bug where error should have been a warning
+  * Fixed correlation plot bug where treatments were on the wrong axis.
+  * Fixed output message for heat tree plots.
+* Fixed build-check Notes and Warnings
+
 # MicrobiomeR 0.4.1
 
 * Fixed wilcoxon pvalue in analysis vignette.
@@ -8,7 +26,7 @@
 ## Renamed functions
 
 * `get_alpha_diversity_measures` to `alpha_diversity_measures`
-  
+
 ## Added functions
 
 * Added `stacked_barplots`, `alpha_diversity_plots`, `ordination_plots`
