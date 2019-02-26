@@ -1,3 +1,14 @@
+# MicrobiomeR 0.5.1
+* A specific bug was introduced that prevented local machines and Travis CI servers from building 
+the package.
+  * This bug is attributed to a dplyr update (0.7.8 -> 0.8.0.1)
+  * See [Joss branch #79](https://github.com/vallenderlab/MicrobiomeR/pull/79)
+  * See [Joss debug branch #82](https://github.com/vallenderlab/MicrobiomeR/pull/82)
+  * See [dplyr issue #4213](https://github.com/tidyverse/dplyr/issues/4213)
+  * See [Travis CI forum post](https://travis-ci.community/t/travis-build-ignoring-r-package-version-in-description/2431)
+* Updated the paper for submission
+  
+
 # MicrobiomeR 0.5.0
 
 * Added the JOSS paper and draft vignette
