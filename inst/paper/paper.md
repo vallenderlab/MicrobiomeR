@@ -13,7 +13,7 @@ authors:
     orcid: 0000-0002-7687-0059
     affiliation: 1
   - name: Xiao Zhang
-    orcid:
+    orcid: 0000-0001-5710-6496
     affiliation: 1
   - name: Eric Vallender
     orcid: 0000-0003-3506-0540
