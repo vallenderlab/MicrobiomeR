@@ -18,7 +18,6 @@ Remotes:
     github::joey711/phyloseq,
     github::microbiome/microbiome,
     github::r-lib/covr,
-    cran/dplyr@0.7.8,
     github::jonclayden/shades
 Imports:
     ape,
