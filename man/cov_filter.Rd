@@ -7,7 +7,7 @@
 cov_filter(obj, coefficient_of_variation, validated = FALSE)
 }
 \arguments{
-\item{obj}{A Taxmap/metacoder object.}
+\item{obj}{A Taxmap object.}
 
 \item{coefficient_of_variation}{The maximum CoV that an OTU can have.}
 
@@ -32,10 +32,10 @@ library(MicrobiomeR)
 library(metacoder)
 library(taxa)
 
-# Convert Phyloseq object to metacoder object
+# Convert Phyloseq object to taxmap object
 metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
 
-# Remove Archaea from the metacoder object
+# Remove Archaea from the taxmap object
 metacoder_obj <- filter_taxa(
   obj = metacoder_obj,
   taxon_names == "Archaea",
@@ -84,7 +84,7 @@ metacoder_obj <- cov_filter(obj = metacoder_obj,
 
 \code{\link[dplyr:summarise_all]{summarise_if}}
 
-Other Advanced Metacoder Filters: \code{\link{agglomerate_metacoder}},
+Other Advanced Metacoder Filters: \code{\link{agglomerate_taxmap}},
   \code{\link{otu_prevalence_filter}},
   \code{\link{otu_proportion_filter}},
   \code{\link{taxa_prevalence_filter}}

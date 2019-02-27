@@ -12,6 +12,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(dplyr)
+if (requireNamespace("htmltools", quietly = TRUE)) {
+  htmlwidgets::setWidgetIdSeed(42)
+}
 ```
 
 The `MicrobiomeR` package was developed at the University of Mississippi Medical Center
@@ -23,12 +27,9 @@ This package is associated with a microbiome study (article to be submitted soon
 
 ```{r, echo=FALSE, warning=FALSE}
 # set seed for reproducible widget id
-if (requireNamespace("htmltools", quietly = TRUE)) {
-  htmlwidgets::setWidgetIdSeed(42)
-}
-library(leaflet)
-leaflet() %>% 
-  setView(lng = -90.1730625, lat = 32.3308125, zoom = 11) %>% 
-  addTiles() %>% 
-  addMarkers(lng = -90.1730625, lat = 32.3308125, popup = "UMMC's Guyton Research Complex")
+
+leaflet::leaflet() %>% 
+  leaflet::setView(lng = -90.1730625, lat = 32.3308125, zoom = 11) %>% 
+  leaflet::addTiles() %>% 
+  leaflet::addMarkers(lng = -90.1730625, lat = 32.3308125, popup = "UMMC's Guyton Research Complex")
 ```

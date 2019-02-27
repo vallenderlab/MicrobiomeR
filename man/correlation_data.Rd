@@ -8,7 +8,7 @@ correlation_data(obj, primary_rank, secondary_rank = TRUE,
   wp_value = 0.05)
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
+\item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
 
 \item{primary_rank}{A primary rank used to label the points.}
 
@@ -33,7 +33,7 @@ if(interactive()){
 }
 }
 \seealso{
-\code{\link[MicrobiomeR]{agglomerate_metacoder}},  \code{\link[MicrobiomeR]{vlookup}}
+\code{\link[MicrobiomeR]{agglomerate_taxmap}},  \code{\link[MicrobiomeR]{vlookup}}
 
 \code{\link[dplyr]{tidyeval}},  \code{\link[dplyr]{mutate}},  \code{\link[dplyr]{filter}},  \code{\link[dplyr]{arrange}}
 
@@ -44,13 +44,15 @@ Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{correlation_plot}},
   \code{\link{heat_tree_parameters}},
   \code{\link{heat_tree_plots}},
-  \code{\link{melt_metacoder}},
+  \code{\link{ordination_plots}},
   \code{\link{ordination_plot}}, \code{\link{plot_limits}},
   \code{\link{save_alpha_diversity_plots}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},
   \code{\link{save_ordination_plots}},
   \code{\link{save_stacked_barplots}},
+  \code{\link{stacked_barplots}},
+  \code{\link{stacked_barplot}},
   \code{\link{top_coefficients_barplot}}
 }
 \concept{Visualizations}

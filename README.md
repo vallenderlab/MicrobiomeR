@@ -16,6 +16,8 @@ library(devtools) # Load the devtools package
 install_github("vallenderlab/MicrobiomeR") # Install the package
 ```
 
+Please visit https://microbiomer.vallenderlab.science/ for extensive documentation of the package.
+
 ## Workflow Features
 
 - Standardization of data wrangling.

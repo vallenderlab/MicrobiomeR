@@ -61,7 +61,10 @@ md_file <- system.file("extdata", "nephele_metadata2.txt", package = "Microbiome
 parse_func <- parse_parse_taxonomy_silva_128
 }
 # Create a phyloseq object from the data files.
-phy_obj <- create_phyloseq(biom_file = biom_file, tree_file = tree_file, metadata_file = md_file, parse_func = parse_func)
+phy_obj <- create_phyloseq(biom_file = biom_file,
+                           tree_file = tree_file,
+                           metadata_file = md_file,
+                           parse_func = parse_func)
 }
 }
 \seealso{
@@ -71,6 +74,6 @@ phy_obj <- create_phyloseq(biom_file = biom_file, tree_file = tree_file, metadat
 
 \code{\link[MicrobiomeR]{root_by_longest_edge}}
 
-Other Data Importers: \code{\link{create_metacoder}}
+Other Data Importers: \code{\link{create_taxmap}}
 }
 \concept{Data Importers}

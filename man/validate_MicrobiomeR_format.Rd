@@ -8,7 +8,7 @@ validate_MicrobiomeR_format(obj, validated = FALSE, valid_formats,
   force_format = FALSE, min_or_max = base::max, ...)
 }
 \arguments{
-\item{obj}{A Taxmap/metacoder object.}
+\item{obj}{A Taxmap object.}
 
 \item{validated}{This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE}
 
@@ -23,10 +23,10 @@ level format, while max will choose the highest level format.  Default: base::ma
 \item{...}{An optional list of parameters to use in \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}.}
 }
 \value{
-If the object is validated, a Taxmap/metacoder object.
+If the object is validated, a Taxmap object.
 }
 \description{
-This funciton validates that taxmap/metacoder objects are in a valid format MicrobiomeR format.
+This funciton validates that Taxmap objects are in a valid format MicrobiomeR format.
 }
 \details{
 This function can provide a way to check if a taxmap object has undergone a

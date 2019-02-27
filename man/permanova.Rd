@@ -7,7 +7,7 @@
 permanova(obj, distance_method = "bray", group = "TreatmentGroup")
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
+\item{obj}{An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
 
 \item{distance_method}{Use a desired distance method, Default: 'bray'}
 

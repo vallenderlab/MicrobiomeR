@@ -7,13 +7,13 @@
 order_metacoder_data(obj)
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
+\item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
 }
 \value{
 A taxmap object with observation data in the proper order for downstream analysis.
 }
 \description{
-A function for changing the order of the observation data in a metacoder object
+A function for changing the order of the observation data in a Taxmap object
 }
 \details{
 Changes the order of the observation tables in \strong{metacoder_object$data} to

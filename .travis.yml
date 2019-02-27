@@ -10,15 +10,15 @@ branches:
   only:
   - master
   - dev-master
-  - build-fixes
-
 
 env:
   global:
     - _R_CHECK_FORCE_SUGGESTS_=false
     - R_REMOTES_NO_ERRORS_FROM_WARNINGS=true
+    - CODECOV_TOKEN=2ff74b01-00e8-4e2f-9cc7-1f90ca17e480
 
 r:
+- oldrel
 - release
 - devel
 

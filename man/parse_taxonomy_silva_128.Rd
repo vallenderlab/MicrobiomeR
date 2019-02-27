@@ -4,10 +4,7 @@
 \alias{parse_taxonomy_silva_128}
 \title{Parse elements of a taxonomy vector}
 \usage{
-parse_taxonomy_default(char.vec)
-parse_taxonomy_greengenes(char.vec)
 parse_taxonomy_silva_128(char.vec)
-parse_taxonomy_qiime(char.vec)
 }
 \arguments{
 \item{char.vec}{(Required). A single character vector of taxonomic
@@ -69,7 +66,8 @@ then please comment on the GitHub PR to encourage merging this feature.
 \examples{
 \dontrun{
 
- > taxvec1 = c("Root", "k__Bacteria", "p__Firmicutes", "c__Bacilli", "o__Bacillales", "f__Staphylococcaceae")
+ > taxvec1 = c("Root", "k__Bacteria", "p__Firmicutes", "c__Bacilli", "o__Bacillales",
+ "f__Staphylococcaceae")
  > parse_taxonomy_default(taxvec1)
  > parse_taxonomy_greengenes(taxvec1)
  > taxvec2 = c("Root;k__Bacteria;p__Firmicutes;c__Bacilli;o__Bacillales;f__Staphylococcaceae")

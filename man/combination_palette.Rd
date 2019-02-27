@@ -35,8 +35,13 @@ the ability to subset and reverse the palettes that are supplied.
 if(interactive()){
 # Below is the code for the viridis_magma_palette function.
 # It's a good example of how to use the combination_palette function.
-viridis_magma_palette <- function(viridis_number = 800, viridis_range = 300:viridis_number, viridis_rev = TRUE,
-                                   magma_number = 500, magma_range = 0:magma_number, magma_rev = FALSE, ...) {
+viridis_magma_palette <- function(viridis_number = 800,
+                                  viridis_range = 300:viridis_number,
+                                  viridis_rev = TRUE,
+                                  magma_number = 500,
+                                  magma_range = 0:magma_number,
+                                  magma_rev = FALSE,
+                                  ...) {
     if (!missing(...)){
         v_args = list(n=viridis_number, ...)
         m_args = list(n=magma_number, ...)

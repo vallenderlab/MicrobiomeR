@@ -9,7 +9,7 @@ as_phyloseq_format(obj, otu_table = "otu_abundance",
   phy_tree = "phy_tree")
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
+\item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
 
 \item{otu_table}{The name of the observation table with OTU data.  Default: NULL}
 
@@ -20,24 +20,23 @@ as_phyloseq_format(obj, otu_table = "otu_abundance",
 \item{phy_tree}{The name of the observation data with the phylogenetic tree.  Default: NULL}
 }
 \value{
-A Taxmap/metacoder object in the phyloseq_format.
+A Taxmap object in the phyloseq_format.
 }
 \description{
-Converts the metacoder object to the phyloseq_format.
+Converts the Taxmap object to the phyloseq_format.
 }
 \details{
 See the \link{MicrobiomeR_Formats} documentation.
 }
 \seealso{
-\code{\link[MicrobiomeR]{create_metacoder}},\code{\link[MicrobiomeR]{order_metacoder_data}}
+\code{\link[MicrobiomeR]{create_taxmap}},\code{\link[MicrobiomeR]{order_metacoder_data}}
 
 Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_MicrobiomeR_format}},
   \code{\link{as_analyzed_format}},
   \code{\link{as_basic_format}},
   \code{\link{as_custom_format}},
-  \code{\link{as_raw_format}},
-  \code{\link{melt_metacoder}},
+  \code{\link{as_raw_format}}, \code{\link{melt_taxmap}},
   \code{\link{treatment_matrix}}
 }
 \concept{Formatting}

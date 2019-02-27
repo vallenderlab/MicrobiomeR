@@ -34,7 +34,7 @@
   
 <meta property="og:title" content="As Basic MicrobiomeR Format — as_basic_format" />
 
-<meta property="og:description" content="Converts a metacoder object to the basic_format." />
+<meta property="og:description" content="Converts a Taxmap object to the basic_format." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.1</span>
       </span>
     </div>
 
@@ -99,7 +99,10 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
+</li>
+<li>
+  <a href="../articles/paper.html">Publication</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -141,7 +144,7 @@
 
     <div class="ref-description">
     
-    <p>Converts a metacoder object to the basic_format.</p>
+    <p>Converts a Taxmap object to the basic_format.</p>
     
     </div>
 
@@ -152,7 +155,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>obj</th>
-      <td><p>An object to be converted to a metacoder object with <code><a href='create_metacoder.html'>create_metacoder</a></code>.</p></td>
+      <td><p>An object to be converted to a Taxmap object with <code><a href='create_taxmap.html'>create_taxmap</a></code>.</p></td>
     </tr>
     <tr>
       <th>cols</th>
@@ -166,7 +169,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A Taxmap/metacoder object in the "basic_format".</p>
+    <p>A Taxmap object in the "basic_format".</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -181,8 +184,7 @@
   <code><a href='as_analyzed_format.html'>as_analyzed_format</a></code>,
   <code><a href='as_custom_format.html'>as_custom_format</a></code>,
   <code><a href='as_phyloseq_format.html'>as_phyloseq_format</a></code>,
-  <code><a href='as_raw_format.html'>as_raw_format</a></code>,
-  <code><a href='stacked_barplot.html'>melt_metacoder</a></code>,
+  <code><a href='as_raw_format.html'>as_raw_format</a></code>, <code><a href='melt_taxmap.html'>melt_taxmap</a></code>,
   <code><a href='treatment_matrix.html'>treatment_matrix</a></code></p></div>
     
 
@@ -208,7 +210,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

@@ -2,13 +2,13 @@
 % Please edit documentation in R/metacoder.R
 \name{sample_id_filter}
 \alias{sample_id_filter}
-\title{Filter Samples Ids from Metacoder Objects}
+\title{Filter Samples Ids from Taxmap Objects}
 \usage{
 sample_id_filter(obj, .f_transform = NULL, .f_filter = NULL,
   .f_condition = NULL, validated = FALSE, ...)
 }
 \arguments{
-\item{obj}{A Taxmap/metacoder object.}
+\item{obj}{A Taxmap object.}
 
 \item{.f_transform}{A function used for transforming the data.  Default: NULL}
 
@@ -21,7 +21,7 @@ sample_id_filter(obj, .f_transform = NULL, .f_filter = NULL,
 \item{...}{An optional list of parameters to use in the .f_filter function specified}
 }
 \value{
-Returns a metacoder object with samples that pass the filters.
+Returns a Taxmap object with samples that pass the filters.
 }
 \description{
 This function provides a flexible way to filter unwanted samples from the
@@ -40,10 +40,10 @@ if(interactive()){
 library(MicrobiomeR)
 library(metacoder)
 library(taxa)
-# Convert Phyloseq object to metacoder object
+# Convert Phyloseq object to Taxmap object
 metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_silva_2, format = "raw_format")
 
-# Remove Archaea from the metacoder object
+# Remove Archaea from the Taxmap object
 metacoder_obj <- filter_taxa(
   obj = metacoder_obj,
   taxon_names == "Archaea",

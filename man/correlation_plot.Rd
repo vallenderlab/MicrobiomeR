@@ -5,10 +5,10 @@
 \title{Correlation Plot}
 \usage{
 correlation_plot(obj, primary_rank, secondary_rank = TRUE,
-  wp_value = 0.05, pal_func = NULL)
+  wp_value = 0.05, pal_func = NULL, trans = "logit")
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
+\item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
 
 \item{primary_rank}{The primary rank used to label the points.}
 
@@ -18,6 +18,10 @@ the number of supertaxon ranks above the primary rank or the name of a supertaxo
 \item{wp_value}{The Wilcoxian P-Value used to represent significant points.  Default: 0.05}
 
 \item{pal_func}{A palette function that returns grDevices::colorRampPalette.}
+
+\item{trans}{Either the name of a transformation object, or the object itself given to \code{\link[ggplot2]{scale_continuous}}.
+Built-in transformations include "asn", "atanh", "boxcox", "exp", "identity", "log", "log10", "log1p",
+"log2", "logit", "probability", "probit", "reciprocal", "reverse" and "sqrt".}
 }
 \value{
 A 1:1 correlation plot built with ggplot2.
@@ -40,7 +44,7 @@ correlation_plot(analyzed_silva, primary_rank = "Class", secondary_rank = "Phylu
 }
 }
 \seealso{
-\code{\link[MicrobiomeR]{create_metacoder}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{correlation_data}},  \code{\link[MicrobiomeR]{plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
+\code{\link[MicrobiomeR]{create_taxmap}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{correlation_data}},  \code{\link[MicrobiomeR]{plot_limits}},  \code{\link[MicrobiomeR]{get_color_palette}}
 
 \code{\link[ggplot2]{ggplot}},  \code{\link[ggplot2]{aes}},  \code{\link[ggplot2]{geom_polygon}},  \code{\link[ggplot2]{geom_point}},  \code{\link[ggplot2]{labs}},  \code{\link[ggplot2]{scale_continuous}},  \code{\link[ggplot2]{scale_manual}},  \code{\link[ggplot2]{guide_legend}},  \code{\link[ggplot2]{geom_abline}}
 
@@ -53,13 +57,15 @@ Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{correlation_plots}},
   \code{\link{heat_tree_parameters}},
   \code{\link{heat_tree_plots}},
-  \code{\link{melt_metacoder}},
+  \code{\link{ordination_plots}},
   \code{\link{ordination_plot}}, \code{\link{plot_limits}},
   \code{\link{save_alpha_diversity_plots}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},
   \code{\link{save_ordination_plots}},
   \code{\link{save_stacked_barplots}},
+  \code{\link{stacked_barplots}},
+  \code{\link{stacked_barplot}},
   \code{\link{top_coefficients_barplot}}
 }
 \concept{Visualizations}

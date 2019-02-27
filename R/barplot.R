@@ -1,8 +1,10 @@
+#' @title Melt Taxmap
+#' @param obj An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @importFrom dplyr right_join setdiff
 #' @importFrom tidyr gather_
 #' @family Formatting
-#' @rdname stacked_barplot
-melt_metacoder <- function(obj) {
+#' @rdname melt_taxmap
+melt_taxmap <- function(obj) {
   sd <- data.frame(obj$data$sample_data)
   TT <- data.frame(obj$data$otu_annotations, stringsAsFactors = FALSE)
   otu.table <- data.frame(obj$data$otu_proportions, check.names = FALSE, stringsAsFactors = FALSE)
@@ -13,12 +15,13 @@ melt_metacoder <- function(obj) {
     rename(SampleID = `X.SampleID`) %>%
     rename(OTU = `otu_id`)
 }
-
+#' @title Convert Proportions
 #' @param melted_df A "melted" dataframe from the metacoder object's data.
+#' @param tax_level The taxonomic level, Default: 'Phylum'
 #' @importFrom dplyr filter group_by summarize mutate enquo quo_name
 #' @importFrom stats na.omit
 #' @family Data Manipulators
-#' @rdname stacked_barplot
+#' @rdname convert_proportions
 convert_proportions <- function(melted_df, tax_level) {
   t <- dplyr::enquo(tax_level)
   tax_level.abund <- paste0(dplyr::quo_name(t), ".Abundance")
@@ -34,7 +37,7 @@ convert_proportions <- function(melted_df, tax_level) {
 #' @title Stacked Barplot
 #' @description Create a stacked barplot to show relative abundance of taxa. `convert_proportions` converts the dataframe abundance values to percent 100 and returns a transformed dataframe.
 #' `melt_metacoder` melts the metacoder or phyloseq tables into a dataframe and returns a melted dataframe. `stacked_barplots` creates a stacked barplots for multiple taxonomic levels and returns a list of stacked barplots.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param tax_level The taxonomic level, Default: 'Phylum'
 #' @param fill The taxonomic level by which the bars are filled, Default: 'Phylum'
 #' @param xlabel The label of the x axis, Default: 'Samples'
@@ -55,8 +58,8 @@ convert_proportions <- function(melted_df, tax_level) {
 #' @importFrom ggplot2 ggplot aes annotate geom_bar ylab element_blank element_rect xlab annotate
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate
+#' @importFrom scales pretty_breaks
 #' @importFrom shades scalefac saturation
-#' @import scales
 #' @import vegan
 #'
 #' @inheritParams convert_proportions
@@ -66,13 +69,13 @@ convert_proportions <- function(melted_df, tax_level) {
 #' @export
 stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel = "Samples", faceted = FALSE, title = NULL, palette_values = NULL) {
   metacoder_object <- validate_MicrobiomeR_format(
-    obj = create_metacoder(obj),
+    obj = create_taxmap(obj),
     valid_formats = c("analyzed_format")
   )
 
   # Start by melting the data in the "standard" way using psmelt.
   # Also, transform the abundance data to relative abundance
-  mdf <- convert_proportions(melt_metacoder(metacoder_object), tax_level)
+  mdf <- convert_proportions(melt_taxmap(metacoder_object), tax_level)
   mdf <- dplyr::mutate(mdf, !!sym(tax_level) := factor(!!sym(tax_level), levels = unique(mdf[[tax_level]])))
 
   # Build the plot data structure
@@ -116,12 +119,13 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
   return(p)
 }
 
-
+#' @title Stacked Barplots
 #' @param tax_levels The taxonomic levels, Default: 'c("Phylum", "Class", "Order")'
+#' @param obj An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @family Visualizations
-#' @rdname stacked_barplot
+#' @rdname stacked_barplots
 #' @export
-stacked_barplots <- function(obj, tax_levels = c("Phylum", "Class", "Order"), group = "TreatmentGroup", select_otu_table = "otu_proportions") {
+stacked_barplots <- function(obj, tax_levels = c("Phylum", "Class", "Order")) {
   if (is.null(tax_levels)) {
     tax_levels <- c("Phylum", "Class", "Order")
   } else if (length(tax_levels) < 2) {
