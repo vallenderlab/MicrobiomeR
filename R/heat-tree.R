@@ -1,7 +1,9 @@
 #' @title Get Heat Tree Plots
 #' @description A function for getting multiple heat_tree plots per rank.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param rank_list A vector of ranks used to generate heat_trees.  Default: NULL
+#' @param title Can be a logical, NULL, or a string.  The string can utilize `{rank}` to dynamically
+#' display the rank in the title via \code{\link[glue]{glue}}.
 #' @param ... Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
 #' output is displayed.  Please see the \code{\link[MicrobiomeR]{heat_tree_parameters}} documentation
 #' for further explanation.
@@ -24,7 +26,7 @@
 #' @seealso
 #'  \code{\link[metacoder]{heat_tree}}
 #'
-#'  \code{\link[MicrobiomeR]{create_metacoder}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{heat_tree_parameters}}
+#'  \code{\link[MicrobiomeR]{create_taxmap}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{heat_tree_parameters}}
 #'
 #'  \code{\link[taxa]{filter_obs}}
 #'
@@ -36,7 +38,8 @@
 #' @importFrom metacoder heat_tree
 #' @importFrom ggplot2 theme element_text ggtitle
 #' @importFrom crayon green bgWhite
-heat_tree_plots <- function(obj, rank_list = NULL, ...) {
+#' @importFrom glue glue
+heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, ...) {
   suppressWarnings({
     rank_index <- pkg.private$rank_index
     if (is.null(rank_list)) {
@@ -45,8 +48,8 @@ heat_tree_plots <- function(obj, rank_list = NULL, ...) {
     returned_data <- list()
     htrees <- list()
     flt_taxmaps <- list()
-    # Create a metacoder object from a phyloseq/metacoder/RData file
-    obj <- create_metacoder(obj)
+    # Create a Taxmap object from a phyloseq/metacoder/RData file
+    obj <- create_taxmap(obj)
     obj <- validate_MicrobiomeR_format(
       obj = obj,
       valid_formats = c("analyzed_format"),
@@ -59,10 +62,20 @@ heat_tree_plots <- function(obj, rank_list = NULL, ...) {
                                                 supertaxa = TRUE,
                                                 reassign_obs = FALSE)
       flt_taxmaps[[rank]] <- filtered_obj
-      title <- sprintf("Bacterial Abundance (%s Level)", rank)
-      message(crayon::green(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(title))))
+      if (is.logical(title)) {
+        if (title == TRUE) {
+          title_param <- sprintf("Bacterial Abundance (%s Level)", rank)
+        } else {
+          title_param <- ""
+        }
+      } else if (is.null(title)) {
+        title_param <- title
+      } else if (is.character(title)) {
+        title_param <- glue::glue(title)
+      }
+      message(crayon::green(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(title_param))))
       treatment_no <- length(unique(filtered_obj$data$sample_data$TreatmentGroup))
-      default_heat_tree_parameters <- heat_tree_parameters(obj = filtered_obj, title = title, treatment_no = treatment_no, ...)
+      default_heat_tree_parameters <- heat_tree_parameters(obj = filtered_obj, title = title_param, treatment_no = treatment_no, ...)
       # Filter by Taxonomy Rank and then create a heat tree.
       if (treatment_no == 2) {
         htrees[[rank]] <- do.call(what = metacoder::heat_tree, args = default_heat_tree_parameters)
@@ -88,14 +101,14 @@ heat_tree_plots <- function(obj, rank_list = NULL, ...) {
 
 #' @title Get Heat Tree Parameters
 #' @description This function get's the parameters used for the heat_tree_plots function.
-#' @param obj A metacoder object.
+#' @param obj A Taxmap object.
 #' @param title The title used in the heat_tree plot.
 #' @param treatment_no The number of treatment groups in the data.
 #' @param ... Any of the heat tree parameters list below can be used to change the way the heat_tree
 #' output is displayed.  However, this function acts as a default list of parameters.  The memebers
 #' of the default list will be overridden by the dot parameters.  Any variable in obj$data$stats_tax_data
 #' can be used to manipulate the heat tree parameters.  Function calls from the taxa package must
-#' be done explicitely on the metacoder object.
+#' be done explicitely on the Taxmap object.
 #' @return A list used with do.call and the metacoder::heat_tree function.
 #' @pretty_print TRUE
 #' @export
@@ -206,7 +219,7 @@ heat_tree_parameters <- function(obj, title, treatment_no, ...) {
       ## The node labels are relevant to significant taxon names.
       node_size = n_obs,
       node_color = log2_mean_ratio,
-      node_label = ifelse(wilcox_p_value < 0.05, taxon_names, NA),
+      node_label = ifelse(is_root, taxon_names, ifelse(wilcox_p_value < 0.05, taxon_names, NA)),
       node_label_size = 1,
       ### The color red indicates higher abundance in Treatment_1 animals
       ### The color blue indicates higher abundance in Treatment_2 animals

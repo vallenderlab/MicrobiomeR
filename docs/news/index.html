@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.1</span>
       </span>
     </div>
 
@@ -96,7 +96,10 @@
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Functions</a>
+</li>
+<li>
+  <a href="../articles/paper.html">Publication</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -135,17 +138,58 @@
       <small>Source: <a href='https://github.com/vallenderlab/MicrobiomeR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="microbiomer-041" class="section level1">
+    <div id="microbiomer-0-5-1" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-041" class="anchor"></a>MicrobiomeR 0.4.1</h1>
+<a href="#microbiomer-0-5-1" class="anchor"></a>MicrobiomeR 0.5.1</h1>
+<ul>
+<li>A specific bug was introduced that prevented local machines and Travis CI servers from building the package.</li>
+<li>This bug is attributed to a dplyr update (0.7.8 -&gt; 0.8.0.1)</li>
+<li>See <a href="https://github.com/vallenderlab/MicrobiomeR/pull/79">Joss branch <a href='https://github.com/vallenderlab/MicrobiomeR/issues/79'>#79</a></a>
+</li>
+<li>See <a href="https://github.com/vallenderlab/MicrobiomeR/pull/82">Joss debug branch <a href='https://github.com/vallenderlab/MicrobiomeR/issues/82'>#82</a></a>
+</li>
+<li>See <a href="https://github.com/tidyverse/dplyr/issues/4213">dplyr issue <a href='https://github.com/vallenderlab/MicrobiomeR/issues/4213'>#4213</a></a>
+</li>
+<li>See <a href="https://travis-ci.community/t/travis-build-ignoring-r-package-version-in-description/2431">Travis CI forum post</a>
+</li>
+<li>Updated the paper for submission</li>
+</ul>
+</div>
+    <div id="microbiomer-0-5-0" class="section level1">
+<h1 class="page-header">
+<a href="#microbiomer-0-5-0" class="anchor"></a>MicrobiomeR 0.5.0</h1>
+<ul>
+<li>Added the JOSS paper and draft vignette</li>
+<li>Changed correlation plots</li>
+<li>Removed color from background</li>
+<li>Removed hard coded plot limits</li>
+<li>Added “1:1” line and Average lines</li>
+<li>Added a <code>trans</code> parameter to transform the x and y axis</li>
+<li>Changed function names</li>
+<li>From <code>create_metacoder</code> to <code>create_taxmap</code>
+</li>
+<li>From <code>agglomerate_metacoder</code> to <code>agglomerate_taxmap</code>
+</li>
+<li>From <code>melt_metacoder</code> to <code>melt_taxmap</code>
+</li>
+<li>Bugs</li>
+<li>Fixed <code>output_dir</code> bug where error should have been a warning</li>
+<li>Fixed correlation plot bug where treatments were on the wrong axis.</li>
+<li>Fixed output message for heat tree plots.</li>
+<li>Fixed build-check Notes and Warnings</li>
+</ul>
+</div>
+    <div id="microbiomer-0-4-1" class="section level1">
+<h1 class="page-header">
+<a href="#microbiomer-0-4-1" class="anchor"></a>MicrobiomeR 0.4.1</h1>
 <ul>
 <li>Fixed wilcoxon pvalue in analysis vignette.</li>
 <li>Updated default color palette for stacked_barplot function.</li>
 </ul>
 </div>
-    <div id="microbiomer-040" class="section level1">
+    <div id="microbiomer-0-4-0" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-040" class="anchor"></a>MicrobiomeR 0.4.0</h1>
+<a href="#microbiomer-0-4-0" class="anchor"></a>MicrobiomeR 0.4.0</h1>
 <div id="renamed-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#renamed-functions" class="anchor"></a>Renamed functions</h2>
@@ -174,19 +218,18 @@
 </ul>
 </div>
 </div>
-    <div id="microbiomer-031" class="section level1">
+    <div id="microbiomer-0-3-1" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-031" class="anchor"></a>MicrobiomeR 0.3.1</h1>
+<a href="#microbiomer-0-3-1" class="anchor"></a>MicrobiomeR 0.3.1</h1>
 <ul>
 <li>Added code coverage.</li>
 </ul>
 </div>
-    <div id="microbiomer-030" class="section level1">
+    <div id="microbiomer-0-3-0" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-030" class="anchor"></a>MicrobiomeR 0.3.0</h1>
+<a href="#microbiomer-0-3-0" class="anchor"></a>MicrobiomeR 0.3.0</h1>
 <ul>
-<li>Changed function names
-<ul>
+<li>Changed function names</li>
 <li>From <code>get_treatment_matrix</code> to <code>treatment_matrix</code>
 </li>
 <li>From <code>get_output_dir</code> to <code>output_dir</code>
@@ -204,26 +247,21 @@
 <li>From <code>object_handler</code> to <code>create_metacoder</code>
 </li>
 </ul>
-</li>
-</ul>
 </div>
-    <div id="microbiomer-024" class="section level1">
+    <div id="microbiomer-0-2-4" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-024" class="anchor"></a>MicrobiomeR 0.2.4</h1>
+<a href="#microbiomer-0-2-4" class="anchor"></a>MicrobiomeR 0.2.4</h1>
 <ul>
-<li>Added new tests
-<ul>
+<li>Added new tests</li>
 <li>Correlation plot tests</li>
 <li>Heat tree tests</li>
 <li>Metacoder Formatting tests</li>
 <li>Phyloseq tests</li>
 </ul>
-</li>
-</ul>
 </div>
-    <div id="microbiomer-023" class="section level1">
+    <div id="microbiomer-0-2-3" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-023" class="anchor"></a>MicrobiomeR 0.2.3</h1>
+<a href="#microbiomer-0-2-3" class="anchor"></a>MicrobiomeR 0.2.3</h1>
 <div id="documentation-updates" class="section level2">
 <h2 class="hasAnchor">
 <a href="#documentation-updates" class="anchor"></a>Documentation Updates</h2>
@@ -239,43 +277,34 @@
 </ul>
 </div>
 </div>
-    <div id="microbiomer-022" class="section level1">
+    <div id="microbiomer-0-2-2" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-022" class="anchor"></a>MicrobiomeR 0.2.2</h1>
+<a href="#microbiomer-0-2-2" class="anchor"></a>MicrobiomeR 0.2.2</h1>
 <div id="functional-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#functional-changes" class="anchor"></a>Functional Changes</h2>
 <ul>
-<li>Added support for multiple treatments for some plots
-<ul>
+<li>Added support for multiple treatments for some plots</li>
 <li>
 <code>get_heat_tree_plots</code> now produces a <code><a href="https://www.rdocumentation.org/packages/metacoder/topics/heat_tree_matrix">metacoder::heat_tree_matrix</a></code>.</li>
 <li>
 <code>correlation_plot</code> now produces multiple plots for data with more that 2 treatments.</li>
 <li>Added the <code>get_treatment_matrix</code> function</li>
 <li>Added the <code>get_correlation_data</code> function</li>
-</ul>
-</li>
 <li>Updated <code>analysis</code> vignette to demonstrate more than 2 treatment groups.</li>
-<li>Updated internal data files.
-<ul>
+<li>Updated internal data files.</li>
 <li>Added new metadata file with 3 treatment groups (<code>nephele_metadata3.txt</code>).</li>
 <li>Formatted Treatment Group metadata.</li>
-</ul>
-</li>
-<li>Updated public datasets.
-<ul>
+<li>Updated public datasets.</li>
 <li>Removed Greengenes datasets.</li>
 <li>Added Silva data with 3 treatment groups.</li>
-</ul>
-</li>
 <li>Added the <code>color-palettes</code> vignette.</li>
 </ul>
 </div>
 </div>
-    <div id="microbiomer-021" class="section level1">
+    <div id="microbiomer-0-2-1" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-021" class="anchor"></a>MicrobiomeR 0.2.1</h1>
+<a href="#microbiomer-0-2-1" class="anchor"></a>MicrobiomeR 0.2.1</h1>
 <div id="features-added" class="section level2">
 <h2 class="hasAnchor">
 <a href="#features-added" class="anchor"></a>Features Added</h2>
@@ -292,32 +321,26 @@
 </ul>
 </div>
 </div>
-    <div id="microbiomer-020" class="section level1">
+    <div id="microbiomer-0-2-0" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-020" class="anchor"></a>MicrobiomeR 0.2.0</h1>
+<a href="#microbiomer-0-2-0" class="anchor"></a>MicrobiomeR 0.2.0</h1>
 <div id="documentation-updates-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#documentation-updates-1" class="anchor"></a>Documentation Updates</h2>
 <ul>
-<li>Added vignettes to package and pkgdown config.
-<ul>
+<li>Added vignettes to package and pkgdown config.</li>
 <li>About</li>
 <li>Introduction</li>
 <li>Data Wrangling</li>
 <li>Filtering</li>
 <li>Analysis</li>
-</ul>
-</li>
-<li>Added reference sections to pkgdown config corresponding to <a href='https://github.com/family'>@family</a> tag.
-<ul>
+<li>Added reference sections to pkgdown config corresponding to <a href='https://github.com/family'>@family</a> tag.</li>
 <li>Import</li>
 <li>Formatting</li>
 <li>Validation</li>
 <li>Filtering (Basic, Advanced, Other)</li>
 <li>Visualization</li>
 <li>Color Palettes</li>
-</ul>
-</li>
 </ul>
 </div>
 <div id="functional-changes-1" class="section level2">
@@ -333,33 +356,33 @@
 </ul>
 </div>
 </div>
-    <div id="microbiomer-013" class="section level1">
+    <div id="microbiomer-0-1-3" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-013" class="anchor"></a>MicrobiomeR 0.1.3</h1>
+<a href="#microbiomer-0-1-3" class="anchor"></a>MicrobiomeR 0.1.3</h1>
 <ul>
 <li>Added custom css for pkgdown.</li>
 <li>Added more sections including authors and vignettes to _pkgdown.yml.</li>
 <li>Fixed <code>@importFrom</code> sections for crayon.</li>
 </ul>
 </div>
-    <div id="microbiomer-012" class="section level1">
+    <div id="microbiomer-0-1-2" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-012" class="anchor"></a>MicrobiomeR 0.1.2</h1>
+<a href="#microbiomer-0-1-2" class="anchor"></a>MicrobiomeR 0.1.2</h1>
 <ul>
 <li>Added <code>ordination.R</code> for ordination plots.</li>
 <li>Added tests for ordination plots.</li>
 </ul>
 </div>
-    <div id="microbiomer-011" class="section level1">
+    <div id="microbiomer-0-1-1" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-011" class="anchor"></a>MicrobiomeR 0.1.1</h1>
+<a href="#microbiomer-0-1-1" class="anchor"></a>MicrobiomeR 0.1.1</h1>
 <ul>
 <li>Added loggging and better warning messages.</li>
 </ul>
 </div>
-    <div id="microbiomer-010" class="section level1">
+    <div id="microbiomer-0-1-0" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-010" class="anchor"></a>MicrobiomeR 0.1.0</h1>
+<a href="#microbiomer-0-1-0" class="anchor"></a>MicrobiomeR 0.1.0</h1>
 <ul>
 <li>Changed to a semantic versioning scheme.</li>
 <li>Added <code>barplot.R</code> file of stacked barplot functions.</li>
@@ -368,16 +391,16 @@
 <li>Added simple tests for <code>stacked_barplot</code> and <code>alpha_diversity_plot</code>.</li>
 </ul>
 </div>
-    <div id="microbiomer-0092" class="section level1">
+    <div id="microbiomer-0-0-9-2" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-0092" class="anchor"></a>MicrobiomeR 0.0.9.2</h1>
+<a href="#microbiomer-0-0-9-2" class="anchor"></a>MicrobiomeR 0.0.9.2</h1>
 <ul>
 <li>Fixes to heat tree plots</li>
 </ul>
 </div>
-    <div id="microbiomer-0091" class="section level1">
+    <div id="microbiomer-0-0-9-1" class="section level1">
 <h1 class="page-header">
-<a href="#microbiomer-0091" class="anchor"></a>MicrobiomeR 0.0.9.1</h1>
+<a href="#microbiomer-0-0-9-1" class="anchor"></a>MicrobiomeR 0.0.9.1</h1>
 <ul>
 <li>Added <code>barplot.R</code> file of stacked barplot functions.</li>
 </ul>
@@ -388,21 +411,23 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#microbiomer-041">0.4.1</a></li>
-        <li><a href="#microbiomer-040">0.4.0</a></li>
-        <li><a href="#microbiomer-031">0.3.1</a></li>
-        <li><a href="#microbiomer-030">0.3.0</a></li>
-        <li><a href="#microbiomer-024">0.2.4</a></li>
-        <li><a href="#microbiomer-023">0.2.3</a></li>
-        <li><a href="#microbiomer-022">0.2.2</a></li>
-        <li><a href="#microbiomer-021">0.2.1</a></li>
-        <li><a href="#microbiomer-020">0.2.0</a></li>
-        <li><a href="#microbiomer-013">0.1.3</a></li>
-        <li><a href="#microbiomer-012">0.1.2</a></li>
-        <li><a href="#microbiomer-011">0.1.1</a></li>
-        <li><a href="#microbiomer-010">0.1.0</a></li>
-        <li><a href="#microbiomer-0092">0.0.9.2</a></li>
-        <li><a href="#microbiomer-0091">0.0.9.1</a></li>
+        <li><a href="#microbiomer-0-5-1">0.5.1</a></li>
+        <li><a href="#microbiomer-0-5-0">0.5.0</a></li>
+        <li><a href="#microbiomer-0-4-1">0.4.1</a></li>
+        <li><a href="#microbiomer-0-4-0">0.4.0</a></li>
+        <li><a href="#microbiomer-0-3-1">0.3.1</a></li>
+        <li><a href="#microbiomer-0-3-0">0.3.0</a></li>
+        <li><a href="#microbiomer-0-2-4">0.2.4</a></li>
+        <li><a href="#microbiomer-0-2-3">0.2.3</a></li>
+        <li><a href="#microbiomer-0-2-2">0.2.2</a></li>
+        <li><a href="#microbiomer-0-2-1">0.2.1</a></li>
+        <li><a href="#microbiomer-0-2-0">0.2.0</a></li>
+        <li><a href="#microbiomer-0-1-3">0.1.3</a></li>
+        <li><a href="#microbiomer-0-1-2">0.1.2</a></li>
+        <li><a href="#microbiomer-0-1-1">0.1.1</a></li>
+        <li><a href="#microbiomer-0-1-0">0.1.0</a></li>
+        <li><a href="#microbiomer-0-0-9-2">0.0.9.2</a></li>
+        <li><a href="#microbiomer-0-0-9-1">0.0.9.1</a></li>
       </ul>
     </div>
   </div>
@@ -415,7 +440,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

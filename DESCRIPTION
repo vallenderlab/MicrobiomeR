@@ -1,9 +1,10 @@
 Package: MicrobiomeR
 Title: Analyze Microbiome Data
-Version: 0.4.1
+Version: 0.5.1
 Authors@R: c(
     person("Robert", "Gilmore", email = "rgilmore@umc.edu", role = "cre"),
     person("Shaurita", "Hutchins", email = "shutchins2@umc.edu", role = "aut"))
+Maintainer: Rob Gilmore <rgilmore@umc.edu>
 License: MIT + file LICENSE
 biocViews: Metagenomics, Microbiome, Sequencing, SystemsBiology
 Description: An R package for microbiome analysis combining functions from phyloseq, metacodeR, 
@@ -16,48 +17,50 @@ Remotes:
     github::grunwaldlab/metacoder,
     github::joey711/phyloseq,
     github::microbiome/microbiome,
+    github::r-lib/covr,
     github::jonclayden/shades
 Imports:
     ape,
+    biomformat,
+    crayon,
     DT,
     data.table,
     diptest,
     dplyr,
-    rlang,
+    forcats,
+    ggplot2,
+    ggpubr,
+    ggthemes,
+    ggrepel,
     glue,
+    htmlwidgets,
+    htmltools,
+    leaflet,
+    magrittr,
     metacoder,
-    modes,
     microbiome (>= 1.5.27),
+    modes,
     openxlsx,
     phyloseq,
     plotly,
     purrr,
+    rlang,
+    rstudioapi,
+    scales,
     scico,
+    shades,
+    stringr,
     taxa,
     tibble,
     tidyr,
-    viridis,
-    yaml,
-    ggplot2,
-    stringr,
-    rstudioapi,
-    magrittr,
-    ggpubr,
-    ggthemes,
-    crayon,
-    biomformat,
-    forcats,
-    ggrepel,
-    scales,
     vegan,
-    leaflet,
-    htmlwidgets,
-    shades
+    viridis,
+    yaml
 Suggests:
+    covr,
     knitr,
-    testthat,
     rmarkdown,
-    covr
+    testthat
 Additional_repositories:
     http://bioconductor.org/packages/release/bioc/,
     http://bioconductor.org/packages/release/data/annotation,
@@ -66,6 +69,6 @@ Additional_repositories:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-URL: https://github.com/vallenderlab/MicrobiomeR
+URL: https://github.com/vallenderlab/MicrobiomeR, https://microbiomer.vallenderlab.science/
 BugReports: https://github.com/vallenderlab/MicrobiomeR/issues
 VignetteBuilder: knitr

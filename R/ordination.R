@@ -1,6 +1,6 @@
 #' @title Ordination Plot
 #' @description This function allows for ordination (which helps us to distinguish beta diversity relationships) to be plotted as well as for the corresponding data to be returned.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param method Choose an ordination method from 'PCoA', 'CCA', 'NMDS' or 'DPCoA', Default: 'PCoA'
 #' @param distance Choose a distance method from 'bray', 'unifrac' or 'wunifrac', Default: 'wunifrac'
 #' @param color Choose the group or factor of which colors will be mapped to, Default: 'TreatmentGroup'
@@ -26,11 +26,11 @@
 #' @importFrom ggplot2 element_text geom_point theme element_blank guide_legend guides ggtitle unit scale_fill_manual labs scale_color_manual
 ordination_plot <- function(obj, method = "PCoA", distance = "wunifrac", color = "TreatmentGroup", title = NULL, only_data = FALSE) {
   metacoder_object <- validate_MicrobiomeR_format(
-    obj = create_metacoder(obj),
+    obj = create_taxmap(obj),
     valid_formats = c("analyzed_format")
   )
 
-  # Convert metacoder object to a phyloseq object.
+  # Convert taxmap object to a phyloseq object.
   phyloseq_object <- metacoder::as_phyloseq(metacoder_object, otu_table = "otu_abundance", phy_tree = "phy_tree")
 
   # Find out how many groups are in the "color" metadata
@@ -81,13 +81,16 @@ ordination_plot <- function(obj, method = "PCoA", distance = "wunifrac", color =
 
 #' @title Ordination Plots
 #' @description Generate plots for a list of ordination methods and distances.
-#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.
+#' @param obj An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param methods A list of ordination methods, Default: 'c("PCoA", "NMDS")'
 #' @param distances A list of distance methods, Default: 'c("wunifrac", "unifrac", "bray")'
+#' @param color Choose the group or factor of which colors will be mapped to, Default: 'TreatmentGroup'
+#' @param select_otu_table The data table to use in the observation data.  Default:  "otu_proportions"
 #' @return Returns a melted dataframe.
-#' @family Visualizations
-#' @rdname ordination_plot
 #' @export
+#' @family Visualizations
+#' @rdname ordination_plots
+#' @rdname ordination_plot
 ordination_plots <- function(obj, methods = c("PCoA", "NMDS"), distances = c("wunifrac", "unifrac", "bray"),
                              color = "TreatmentGroup", select_otu_table = "otu_proportions") {
   if (is.null(methods)) {

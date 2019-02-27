@@ -7,7 +7,7 @@
 is_raw_format(obj)
 }
 \arguments{
-\item{obj}{A Taxmap/metacoder object.}
+\item{obj}{A Taxmap object.}
 }
 \value{
 A logical (TRUE/FALSE).

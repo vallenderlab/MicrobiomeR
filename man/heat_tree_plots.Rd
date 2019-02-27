@@ -4,12 +4,15 @@
 \alias{heat_tree_plots}
 \title{Get Heat Tree Plots}
 \usage{
-heat_tree_plots(obj, rank_list = NULL, ...)
+heat_tree_plots(obj, rank_list = NULL, title = TRUE, ...)
 }
 \arguments{
-\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_metacoder}}.}
+\item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
 
 \item{rank_list}{A vector of ranks used to generate heat_trees.  Default: NULL}
+
+\item{title}{Can be a logical, NULL, or a string.  The string can utilize \code{{rank}} to dynamically
+display the rank in the title via \code{\link[glue]{glue}}.}
 
 \item{...}{Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
 output is displayed.  Please see the \code{\link[MicrobiomeR]{heat_tree_parameters}} documentation
@@ -36,7 +39,7 @@ h_trees$Class
 \seealso{
 \code{\link[metacoder]{heat_tree}}
 
-\code{\link[MicrobiomeR]{create_metacoder}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{heat_tree_parameters}}
+\code{\link[MicrobiomeR]{create_taxmap}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{heat_tree_parameters}}
 
 \code{\link[taxa]{filter_obs}}
 
@@ -49,13 +52,15 @@ Other Visualizations: \code{\link{alpha_diversity_plot}},
   \code{\link{correlation_plots}},
   \code{\link{correlation_plot}},
   \code{\link{heat_tree_parameters}},
-  \code{\link{melt_metacoder}},
+  \code{\link{ordination_plots}},
   \code{\link{ordination_plot}}, \code{\link{plot_limits}},
   \code{\link{save_alpha_diversity_plots}},
   \code{\link{save_correlation_plots}},
   \code{\link{save_heat_tree_plots}},
   \code{\link{save_ordination_plots}},
   \code{\link{save_stacked_barplots}},
+  \code{\link{stacked_barplots}},
+  \code{\link{stacked_barplot}},
   \code{\link{top_coefficients_barplot}}
 }
 \concept{Visualizations}

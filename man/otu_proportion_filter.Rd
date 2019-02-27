@@ -7,7 +7,7 @@
 otu_proportion_filter(obj, otu_percentage = 5e-05, validated = FALSE)
 }
 \arguments{
-\item{obj}{A Taxmap/metacoder object.}
+\item{obj}{A Taxmap object.}
 
 \item{otu_percentage}{The minimum percentage used to compare against the proportional OTU mean.  Default: 5e-05}
 
@@ -32,10 +32,10 @@ library(MicrobiomeR)
 library(metacoder)
 library(taxa)
 
-# Convert Phyloseq object to metacoder object
+# Convert Phyloseq object to taxmap object
 metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
 
-# Remove Archaea from the metacoder object
+# Remove Archaea from the Taxmap object
 metacoder_obj <- filter_taxa(
   obj = metacoder_obj,
   taxon_names == "Archaea",
@@ -61,7 +61,7 @@ metacoder_obj <- otu_proportion_filter(
 \seealso{
 \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},\code{\link[MicrobiomeR]{otu_id_filter}}
 
-Other Advanced Metacoder Filters: \code{\link{agglomerate_metacoder}},
+Other Advanced Metacoder Filters: \code{\link{agglomerate_taxmap}},
   \code{\link{cov_filter}},
   \code{\link{otu_prevalence_filter}},
   \code{\link{taxa_prevalence_filter}}

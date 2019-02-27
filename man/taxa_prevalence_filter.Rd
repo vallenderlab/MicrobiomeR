@@ -8,7 +8,7 @@ taxa_prevalence_filter(obj, rank, minimum_abundance = 5,
   rel_sample_percentage = 0.5, validated = FALSE)
 }
 \arguments{
-\item{obj}{A Taxmap/metacoder object.}
+\item{obj}{A Taxmap object.}
 
 \item{rank}{The rank being analyzed for prevalence across samples.}
 
@@ -36,10 +36,10 @@ library(MicrobiomeR)
 library(metacoder)
 library(taxa)
 
-# Convert Phyloseq object to metacoder object
+# Convert Phyloseq object to taxmap object
 metacoder_obj <- as_MicrobiomeR_format(obj = phyloseq_obj, format = "raw_format")
 
-# Remove Archaea from the metacoder object
+# Remove Archaea from the taxmap object
 metacoder_obj <- filter_taxa(
   obj = metacoder_obj,
   taxon_names == "Archaea",
@@ -84,7 +84,7 @@ metacoder_obj <- taxa_prevalence_filter(
 
 \code{\link[taxa]{filter_taxa}}
 
-Other Advanced Metacoder Filters: \code{\link{agglomerate_metacoder}},
+Other Advanced Metacoder Filters: \code{\link{agglomerate_taxmap}},
   \code{\link{cov_filter}},
   \code{\link{otu_prevalence_filter}},
   \code{\link{otu_proportion_filter}}
