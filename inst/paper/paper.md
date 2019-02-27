@@ -10,7 +10,7 @@ authors:
     orcid: 0000-0001-8096-0180
     affiliation: 1
   - name: Shaurita Hutchins
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0002-7687-0059
     affiliation: 1
   - name: Xiao Zhang
     orcid:
