@@ -50,12 +50,16 @@ After preprocessing the data, statistical analysis can be conducted using Microb
 One of the key advantages in using MicrobiomeR is its “phyloseq-style” filtering functions.  These functions are heavily dependent upon formatting and validation checkpoints to ensure that the proper data is being manipulated.  In Table 1, we describe the “MicrobiomeR formats” used throughout the package and how they are related to phyloseq, metacoder, and each other.
 
 ### Table 1:
-| Name | Description | Data Tables |
-|:--------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------:|
-| PhyloseqFormat | A taxmap object that has just been converted from a phyloseq object with the create_phyloseq() function.  The observation tables represent the phyloseq::otu_table(), phyloseq::tax_table(), phyloseq::sample_data(), and phyloseq::phy_tree(). | otu_table tax_data sample_data phy_tree |
-| Raw Format | A taxmap object that has been processed with the as_raw_format()function.  The otu_table and tax_data observation table from the "phyloseq_format” are renamed. | phyloseq tables otu_abundance otu_annotations |
-| BasicFormat | A taxmap object that has been processed with the as_basic_format() function.  This format is defined by observation data that has been processed with the metacoder::calc_*_() functions. | raw tables taxa_abundance otu_proportions taxa_proportions |
-| AnalyzedFormat | A taxmap object that has been processed with the as_analyzed_format() function.  This format is defined by observation data that has been processed with the metacoder::compare_groups() function. | basic tables statistical_data stats_tax_data |
+\begin{table}[]
+\begin{tabular}{|c|c|c|}
+\hline
+Name & Description & Data Tables \\ \hline
+Phyloseq Format & \begin{tabular}[c]{@{}c@{}}A taxmap object that has just been \\ converted from a phyloseq object with the\\ create\_phyloseq() function. The \\ observation tables represent the \\ phyloseq::otu\_table(), phyloseq::tax\_table(),\\  phyloseq::sample\_data(), and \\ phyloseq::phy\_tree().\end{tabular} & \begin{tabular}[c]{@{}c@{}}otu\_table \\ tax\_data \\ sample\_data \\ phy\_tree\end{tabular} \\ \hline
+Raw Format & \begin{tabular}[c]{@{}c@{}}A taxmap object that has been processed \\ with the as\_raw\_format() function.  The \\ otu\_table and tax\_data observation table \\ from the "phyloseq\_format” are renamed.\end{tabular} & \begin{tabular}[c]{@{}c@{}}phyloseq tables \\ otu\_abundance \\ otu\_annotations\end{tabular} \\ \hline
+Basic Format & \begin{tabular}[c]{@{}c@{}}A taxmap object that has been processed \\ with the as\_basic\_format() function.  This \\ format is defined by observation data that has\\  been processed with the metacoder::calc\_*\_()\\  functions.\end{tabular} & \begin{tabular}[c]{@{}c@{}}raw tables \\ taxa\_abundance \\ otu\_proportions \\ taxa\_proportions\end{tabular} \\ \hline
+Analyzed Format & \begin{tabular}[c]{@{}c@{}}A taxmap object that has been processed \\ with the as\_analyzed\_format() function.  \\ This format is defined by observation data \\ that has been processed with the \\ metacoder::compare\_groups() function.\end{tabular} & \begin{tabular}[c]{@{}c@{}}basic tables \\ statistical\_data \\ stats\_tax\_data\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
 
 Validation is performed internally by most of the preprocessing, analysis, and formatting functions, but it can also be done directly by using the *is_\*_format()* functions.  Furthermore, it is encouraged to explore the taxmap objects in order to view observation and taxonomy data.  Other MicrobiomeR utilities include project management tools for creating and organizing output directories for plots, a set of color palette functions based on *grDevices::colorRampPalette()*, and a taxonomic data parsing function called *parse_taxonomy_silva_128()* used to import data annotated by the SILVA [@silva_1] [@silva_2] database as a phyloseq object.
 
