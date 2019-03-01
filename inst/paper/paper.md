@@ -51,13 +51,13 @@ One of the key advantages in using MicrobiomeR is its “phyloseq-style” filte
 
 ### Table 1:
 | Name | Description | Data Tables |
-|:--------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------:|
+|:--------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------:|
 | PhyloseqFormat | A taxmap object that has just been converted from a phyloseq object with the create_phyloseq() function.  The observation tables represent the phyloseq::otu_table(), phyloseq::tax_table(), phyloseq::sample_data(), and phyloseq::phy_tree(). | otu_table tax_data sample_data phy_tree |
 | Raw Format | A taxmap object that has been processed with the as_raw_format()function.  The otu_table and tax_data observation table from the "phyloseq_format” are renamed. | phyloseq tables otu_abundance otu_annotations |
 | BasicFormat | A taxmap object that has been processed with the as_basic_format() function.  This format is defined by observation data that has been processed with the metacoder::calc_*_() functions. | raw tables taxa_abundance otu_proportions taxa_proportions |
 | AnalyzedFormat | A taxmap object that has been processed with the as_analyzed_format() function.  This format is defined by observation data that has been processed with the metacoder::compare_groups() function. | basic tables statistical_data stats_tax_data |
 
-Validation is performed internally by most of the preprocessing, analysis, and formatting functions, but it can also be done directly by using the *is_\*_format()* functions.  Furthermore, it is encouraged to explore the taxmap objects in order to view observation and taxonomy data.  Other MicrobiomeR utilities include project management tools for creating and organizing output directories for plots, a set of color palette functions based on *grDevices::colorRampPalette()*, and a taxonomic data parsing function called *parse_taxonomy_silva_128()* used to import data annotated by the SILVA [@silva_1] database as a phyloseq object.
+Validation is performed internally by most of the preprocessing, analysis, and formatting functions, but it can also be done directly by using the *is_\*_format()* functions.  Furthermore, it is encouraged to explore the taxmap objects in order to view observation and taxonomy data.  Other MicrobiomeR utilities include project management tools for creating and organizing output directories for plots, a set of color palette functions based on *grDevices::colorRampPalette()*, and a taxonomic data parsing function called *parse_taxonomy_silva_128()* used to import data annotated by the SILVA [@silva_1] [@silva_2] database as a phyloseq object.
 
 # Acknowledgments
 
