@@ -16,11 +16,11 @@ matrix:
   include:
   - r: devel
   - r: release
+    r_github_packages:
+    - r-lib/pkgdown
+    - r-lib/covr
     after_success:
     - Rscript -e 'covr::codecov()'
-    before_deploy:
-    - R CMD INSTALL .
-    - Rscript -e 'remotes::install_cran("pkgdown")'
     deploy:
       provider: script
       script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
