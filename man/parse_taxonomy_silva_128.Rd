@@ -54,7 +54,7 @@ is the name of the phylum to which this OTU belongs.
 Alternatively you can create your own function to parse this data.
 Most importantly, the expectations for these functions described above
 make them compatible to use during data import,
-specifcally the \code{\link{import_biom}} function, but
+specifically the \code{\link{import_biom}} function, but
 it is a flexible structure that will be implemented soon for all phyloseq
 import functions that deal with taxonomy (e.g. \code{\link{import_qiime}}).
 }

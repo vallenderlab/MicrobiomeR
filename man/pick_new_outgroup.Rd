@@ -10,7 +10,7 @@ pick_new_outgroup(unrooted_tree)
 \item{unrooted_tree}{An unrooted tree object.}
 }
 \value{
-A new tree with the longest bracnh as the outgroup.
+A new tree with the longest branch as the outgroup.
 }
 \description{
 Pick an outgroup for rooting a phylogenetic tree.

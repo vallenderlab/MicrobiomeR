@@ -29,7 +29,7 @@ observations of a MicrobiomeR formatted object.
 }
 \details{
 Get the otu_ids to keep by using purr and the user supplied transform and filter + condition formulas.
-The purr packge allows the use of anonymous functions as described in the link below:
+The purr package allows the use of anonymous functions as described in the link below:
 
 \url{https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html#anonymous_function,_formula}
 }

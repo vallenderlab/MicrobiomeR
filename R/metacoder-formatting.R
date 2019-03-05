@@ -211,7 +211,7 @@ order_metacoder_data <- function(obj) {
 }
 
 #' @title Validate MicrobiomeR Format
-#' @description This funciton validates that Taxmap objects are in a valid format MicrobiomeR format.
+#' @description This function validates that Taxmap objects are in a valid format MicrobiomeR format.
 #' @param obj A Taxmap object.
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
 #' @param valid_formats A vector of formats that are used for validation.
@@ -266,7 +266,7 @@ validate_MicrobiomeR_format <- function(obj, validated = FALSE, valid_formats, f
 #' @rdname as_raw_format
 #' @seealso
 #'  \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{is_raw_format}}, \code{\link[MicrobiomeR]{order_metacoder_data}}
-#'  @importFrom crayon silver red greem
+#'  @importFrom crayon silver red green
 as_raw_format <- function(obj) {
   obj <- create_taxmap(obj = obj)
   mo_clone <- obj$clone()

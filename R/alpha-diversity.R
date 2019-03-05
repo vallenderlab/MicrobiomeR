@@ -1,4 +1,4 @@
-#' @title Alpha Diveristy Measues
+#' @title Alpha Diversity Measures
 #' @description This function generates various alpha diversity measures include Shannon, Fisher, Coverage, Gini Simpson, and Inverse Simpson.
 #' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param group The "TreatmentGroup" or similar grouping from your metadata to denote sample groups, Default: 'TreatmentGroup'
@@ -59,7 +59,7 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' @param title The title of the plot, Default: NULL
 #' @return Returns an alpha diversity plot.
 #' @details Alpha diversity helps to determine the species richness (the number of different species in a sample) or evenness (similar abundance level).
-#' We prefer to use `shannon` as it is better for data generated using the QUIIME pipeline.
+#' We prefer to use `shannon` as it is better for data generated using the QIIME pipeline.
 #' @examples
 #' \dontrun{
 #' if (interactive()) {

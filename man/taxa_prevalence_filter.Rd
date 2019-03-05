@@ -19,13 +19,13 @@ taxa_prevalence_filter(obj, rank, minimum_abundance = 5,
 \item{validated}{This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE}
 }
 \value{
-Returns a taxmap object that contains taxon_ids that have passed the above fiter.
+Returns a taxmap object that contains taxon_ids that have passed the above filter.
 }
 \description{
-This function filters observations at a specific rank by thier prevelance across samples.
+This function filters observations at a specific rank by their prevalence across samples.
 }
 \details{
-The taxa_prevalence_filter filters taxon_ids that do not appear more than a certian amount of times (minimum abundance) in a certain percentage of
+The taxa_prevalence_filter filters taxon_ids that do not appear more than a certain amount of times (minimum abundance) in a certain percentage of
 samples (rel_sample_percentage) at the specified agglomerated rank (rank). The \href{http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#filtering}{phyloseq workflow} calls for a minimum abundance of 5 across %50 of the samples.
 This method is considered supervised, because the filtering is done based on taxonomic annotation (taxon_ids), which is assigned based on a reference database (SILVA or GreenGenes).
 }

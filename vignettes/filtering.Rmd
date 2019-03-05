@@ -64,8 +64,8 @@ Three functions are provided by MicrobiomeR that do some basic filtering:
 * `taxon_id_filter()` for filtering by taxon_id, which includes intermediate taxa.
 * `otu_id_filter()` for filtering by otu_id, which only includes leaf taxa.
 
-These functions all take the same parameters, most noteably a transformation function (.f_transform),
-a filtering function (.f_filter), and a coditional function (.f_condition).
+These functions all take the same parameters, most notably a transformation function (.f_transform),
+a filtering function (.f_filter), and a conditional function (.f_condition).
 
 ```{r message=FALSE, warning=FALSE}
 # Low Sample Filter - Remove the low samples
@@ -85,11 +85,11 @@ the phyloseq package:
 
 * `agglomerate_taxmap()` is equivalent to `phyloseq::tax_glom()`.
 * `otu_proportion_filter()` is seen in the first step in phyloseq's [preprocessing](http://joey711.github.io/phyloseq/preprocess.html#preprocessing) vignette.
-* `Prevalence Filtering`  functions filter observations by thier prevelance across samples.
+* `Prevalence Filtering`  functions filter observations by their prevalence across samples.
     * (Unsupervised) `otu_prevelance_filter()` is seen in phyloseq's [prevalence
     filtering](http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#prevalence_filtering) vignette.
     * (Supervised) `taxa_prevalence_filter()` is seen in phyloseq's [taxonomic filtering](http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#taxonomic_filtering) vignette.
-* `cov_filter()` is seen in the nineth step in phyloseq's [preprocessing](http://joey711.github.io/phyloseq/preprocess.html#preprocessing) vignette.
+* `cov_filter()` is seen in the ninth step in phyloseq's [preprocessing](http://joey711.github.io/phyloseq/preprocess.html#preprocessing) vignette.
 
 ```{r message=FALSE, warning=FALSE}
 # Master Threshold Filter - Add the otu_proportions table and then filter OTUs based on min %
