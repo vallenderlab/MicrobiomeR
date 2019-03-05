@@ -29,7 +29,7 @@ The output of this function is another function (grDevoces::colorRampPalette), w
 a number to generate an interpolated color palette as a character vector.
 }
 \description{
-A function that returns a color palette function based off of the veridis package.
+A function that returns a color palette function based off of the viridis package.
 }
 \details{
 The primary purpose of this function is to return a palette-function for generating virdis style

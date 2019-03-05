@@ -2,7 +2,7 @@
 % Please edit documentation in R/metacoder.R
 \name{otu_proportion_filter}
 \alias{otu_proportion_filter}
-\title{OTU Proportion FIlter}
+\title{OTU Proportion Filter}
 \usage{
 otu_proportion_filter(obj, otu_percentage = 5e-05, validated = FALSE)
 }

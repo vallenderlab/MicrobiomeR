@@ -23,7 +23,7 @@ pkg.data <- MicrobiomeR:::pkg.private
 The color palette workflow created for MicrobiomeR are based on the 
 `get_color_palette(pal_func = ...)` with a palette function that returns
 `grDevices::colorRampPalette(...)` (called), `grDevices::colorRampPalette` (not called),
-or a color palette function that returns a character vector.  Several palette funcitons
+or a color palette function that returns a character vector.  Several palette functions
 come built with MicrobiomeR and are used in the plotting functions.
 
 ## Getting a Color Palette
@@ -69,7 +69,7 @@ pie(rep(1, length(better_pal)), col=better_pal)
 print(better_pal)
 ```
 
-## Combinging Color Palettes
+## Combining Color Palettes
 
 Here is a useful functionality.  Combining color palettes can help with situations
 where you need something more custom.  This can be especially helpful if you are using

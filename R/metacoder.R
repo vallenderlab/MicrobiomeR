@@ -9,7 +9,7 @@
 #' @param ... An optional list of parameters to use in the .f_filter function specified
 #' @return Returns a Taxmap object with samples that pass the filters.
 #' @details Get the samples to keep by using purr and the user supplied transform and filter + condition formulas.
-#' The purr packge allows the use of anonymous functions as described in the link below:
+#' The purr package allows the use of anonymous functions as described in the link below:
 #'
 #' \url{https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html#anonymous_function,_formula}
 #' @examples
@@ -93,7 +93,7 @@ sample_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_cond
 #' @return Returns a Taxmap object with taxon_ids that pass the filters.
 #' @pretty_print TRUE
 #' @details Get the taxon_ids to keep by using purr and the user supplied transform and filter + condition formulas.
-#' The purr packge allows the use of anonymous functions as described in the link below:
+#' The purr package allows the use of anonymous functions as described in the link below:
 #'
 #' \url{https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html#anonymous_function,_formula}
 #' @examples
@@ -156,7 +156,7 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
         dplyr::select_if(is.numeric)
     }
     # Get the samples to keep by using purr and the user supplied filter and condition formulas
-    # The purr packge allows the use of anonymous functions as described in the link below:
+    # The purr package allows the use of anonymous functions as described in the link below:
     # https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html#anonymous_function,_formula
     taxon_ids_to_keep <- purrr::map(taxon_id_cols, .f_filter, ...) %>% # Apply a summary function like 'sum' or 'mean'
       purrr::map(.f_condition) %>% # Apply a function to the sample data that does some comparison (f(x)x>10000)
@@ -177,7 +177,7 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
 #' @return Returns a taxmap object with otu_ids that pass the filters.
 #' @pretty_print TRUE
 #' @details Get the otu_ids to keep by using purr and the user supplied transform and filter + condition formulas.
-#' The purr packge allows the use of anonymous functions as described in the link below:
+#' The purr package allows the use of anonymous functions as described in the link below:
 #'
 #' \url{https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html#anonymous_function,_formula}
 #' @examples
@@ -259,7 +259,7 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #' that assembles abundance data at a specified rank.  This removes subtaxa and reassigns the
 #' values at the specified rank.
 #' @param obj A Taxmap object.
-#' @param rank The rank that will be agllomerated to.
+#' @param rank The rank that will be agglomerated to.
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
 #' @return A taxmap object that has been agglomerated at the specified rank.
 #' @pretty_print TRUE
@@ -299,7 +299,7 @@ agglomerate_taxmap <- function(obj, rank, validated = FALSE) {
   return(mo_clone)
 }
 
-#' @title OTU Proportion FIlter
+#' @title OTU Proportion Filter
 #' @description This function filters OTU values from the observation data and the taxmap object
 #' based on a minimum proportional mean across samples per OTU.
 #' @param obj A Taxmap object.
@@ -358,16 +358,16 @@ otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FAL
 }
 
 #' @title OTU Prevalence Filter
-#' @description This function filters observations by thier prevelance across samples.
+#' @description This function filters observations by their prevalence across samples.
 #' @param obj A Taxmap object.
 #' @param minimum_abundance The minimum abundance needed per observation per sample.  Default: 5
 #' @param rel_sample_percentage The percentage of samples per observation that meet the minimum abundance.  Default: 0.5
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
 #' @return Returns a taxmap object that contains taxon_ids that have passed the above filter.
 #' @pretty_print TRUE
-#' @details The otu_prevalence_filter filters taxon_ids that do not appear more than a certian amount of times (minimum abundance) in a certain percentage of
+#' @details The otu_prevalence_filter filters taxon_ids that do not appear more than a certain amount of times (minimum abundance) in a certain percentage of
 #' samples (rel_sample_percentage). The \href{http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#filtering}{phyloseq workflow} calls for a minimum abundance of 5 across %50 of the samples.
-#' This filtering method is considered unsupervised, because it soley relies on the data in this experiment (OTU ids).
+#' This filtering method is considered unsupervised, because it solely relies on the data in this experiment (OTU ids).
 #' @examples
 #' \dontrun{
 #' if(interactive()){
@@ -437,15 +437,15 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
 }
 
 #' @title Taxonomic Prevalence Filter (Metacoder)
-#' @description This function filters observations at a specific rank by thier prevelance across samples.
+#' @description This function filters observations at a specific rank by their prevalence across samples.
 #' @param obj A Taxmap object.
 #' @param rank The rank being analyzed for prevalence across samples.
 #' @param minimum_abundance The minimum abundance needed per observation per sample.  Default: 5
 #' @param rel_sample_percentage The percentage of samples per observation that meet the minimum abundance.  Default: 0.5
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
-#' @return Returns a taxmap object that contains taxon_ids that have passed the above fiter.
+#' @return Returns a taxmap object that contains taxon_ids that have passed the above filter.
 #' @pretty_print TRUE
-#' @details The taxa_prevalence_filter filters taxon_ids that do not appear more than a certian amount of times (minimum abundance) in a certain percentage of
+#' @details The taxa_prevalence_filter filters taxon_ids that do not appear more than a certain amount of times (minimum abundance) in a certain percentage of
 #' samples (rel_sample_percentage) at the specified agglomerated rank (rank). The \href{http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#filtering}{phyloseq workflow} calls for a minimum abundance of 5 across %50 of the samples.
 #' This method is considered supervised, because the filtering is done based on taxonomic annotation (taxon_ids), which is assigned based on a reference database (SILVA or GreenGenes).
 #' @examples

@@ -20,7 +20,7 @@ sure that you have a \strong{sample_id} and \strong{TreatmentGroup} column in yo
 file.  You might otherwise run into problems.  Default: NULL}
 
 \item{treatment_group}{The column number or name in the metadata file that contains the
-treatement group names.  Default: NULL}
+treatment group names.  Default: NULL}
 
 \item{parse_func}{The parse function used to parse taxonomy strings from
 Greengenes or SILVA database.  Default: NULL}
@@ -38,12 +38,12 @@ A phyloseq object, and a phylogenetic tree file if one does not already exist.
 }
 \description{
 Create a phyloseq object using a biom file, phylogenetic tree file, and a
-metadata file. Alternatively, an .Rdata file can be used.  For now this funciton takes
+metadata file. Alternatively, an .Rdata file can be used.  For now this function takes
 output from Qiime.  The data provided by this package was processed by the NIH's Nephele
 pipeline.
 }
 \details{
-This function heavily relys on the phyloseq package to import data into R.
+This function heavily relies on the phyloseq package to import data into R.
 It also requires you to use an absolute or relative path to your data files or for your data files
 to be in the working directory.
 

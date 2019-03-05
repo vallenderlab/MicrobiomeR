@@ -26,7 +26,7 @@ level format, while max will choose the highest level format.  Default: base::ma
 If the object is validated, a Taxmap object.
 }
 \description{
-This funciton validates that Taxmap objects are in a valid format MicrobiomeR format.
+This function validates that Taxmap objects are in a valid format MicrobiomeR format.
 }
 \details{
 This function can provide a way to check if a taxmap object has undergone a
