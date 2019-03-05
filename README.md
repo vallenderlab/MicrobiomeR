@@ -41,7 +41,7 @@ Please visit https://microbiomer.vallenderlab.science/ for extensive documentati
 
 ## Contributing to `MicrobiomeR`
 
-* Our code style based on Google's R style developed by Hadley Wickham.
+* Our code style is based on Google's R style developed by Hadley Wickham.
 * Please note that the `MicrobiomeR` project is released with a [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
 * View our [contributing](.github/CONTRIBUTING.md) documentation for more details.
 
