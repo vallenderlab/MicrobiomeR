@@ -1,4 +1,10 @@
+# MicrobiomeR 0.5.2
+
+* Ran `devtools::spell_check()` on the package to fix spelling.
+* Added deployment of pkgdown site to `.travis.yml`.
+
 # MicrobiomeR 0.5.1
+
 * A specific bug was introduced that prevented local machines and Travis CI servers from building 
 the package.
   * This bug is attributed to a dplyr update (0.7.8 -> 0.8.0.1)
@@ -152,7 +158,7 @@ the package.
 
 # MicrobiomeR 0.1.1
  
-* Added loggging and better warning messages.
+* Added logging and better warning messages.
 
 # MicrobiomeR 0.1.0
  
