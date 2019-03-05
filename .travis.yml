@@ -21,7 +21,7 @@ r_github_packages:
   - r-lib/covr
 
 after_success:
-  - R CMD INSTALL $PKG_TARBALL
+  - R CMD INSTALL $PKG_TARBALL --no-staged-install
   - Rscript -e 'covr::codecov()'
 
 before_deploy:
