@@ -6,11 +6,6 @@ cache: packages
 warnings_are_errors: false
 cran: http://cran.rstudio.com
 
-branches:
-  only:
-  - master
-  - dev-master
-
 env:
   global:
     - _R_CHECK_FORCE_SUGGESTS_=false
