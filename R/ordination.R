@@ -2,7 +2,7 @@
 #' @description This function allows for ordination (which helps us to distinguish beta diversity relationships) to be plotted as well as for the corresponding data to be returned.
 #' @param obj An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param method Choose an ordination method from 'PCoA', 'CCA', 'NMDS' or 'DPCoA', Default: 'PCoA'
-#' @param distance Choose a distance method from 'bray', 'unifrac' or 'wunifrac', Default: 'wunifrac'
+#' @param distance Choose a \code{\link[phyloseq]{distance}} method or use a pre-computed \code{\link{dist}}-class object, Default: 'wunifrac'
 #' @param color Choose the group or factor of which colors will be mapped to, Default: 'TreatmentGroup'
 #' @param title The title of the plot, Default: NULL
 #' @param only_data Allows for only ordination data to be generated, Default: FALSE

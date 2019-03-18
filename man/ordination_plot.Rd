@@ -12,7 +12,7 @@ ordination_plot(obj, method = "PCoA", distance = "wunifrac",
 
 \item{method}{Choose an ordination method from 'PCoA', 'CCA', 'NMDS' or 'DPCoA', Default: 'PCoA'}
 
-\item{distance}{Choose a distance method from 'bray', 'unifrac' or 'wunifrac', Default: 'wunifrac'}
+\item{distance}{Choose a \code{\link[phyloseq]{distance}} method or use a pre-computed \code{\link{dist}}-class object, Default: 'wunifrac'}
 
 \item{color}{Choose the group or factor of which colors will be mapped to, Default: 'TreatmentGroup'}
 
