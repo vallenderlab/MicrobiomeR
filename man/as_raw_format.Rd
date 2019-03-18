@@ -20,7 +20,7 @@ See the \link{MicrobiomeR_Formats} documentation.
 }
 \seealso{
 \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{is_raw_format}}, \code{\link[MicrobiomeR]{order_metacoder_data}}
-@importFrom crayon silver red greem
+@importFrom crayon silver red green
 
 Other Formatting: \code{\link{MicrobiomeR_Formats}},
   \code{\link{as_MicrobiomeR_format}},

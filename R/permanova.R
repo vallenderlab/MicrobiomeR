@@ -107,7 +107,7 @@ top_coefficients_barplot <- function(top_coefficients, title = NULL) {
 #' @param filename The name of the file. (an extension should not be included)
 #' @param format The file format, Default = "tiff"
 #' @param start_path The path of which your output should be saved.
-#' @param ... Additional paramaters.
+#' @param ... Additional parameters.
 #' @examples
 #' \dontrun{
 #' if (interactive()) {

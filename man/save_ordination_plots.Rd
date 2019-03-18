@@ -20,7 +20,7 @@ save_ordination_plots(ord_plots, format = "tiff",
 An output directory that contains ordination plots.
 }
 \description{
-This function saves ordination plots storred in a listlike object to an output folder.
+This function saves ordination plots stored in a listlike object to an output folder.
 }
 \details{
 This function creates an appropriate output directory, where it saves publication ready

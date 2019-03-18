@@ -20,7 +20,7 @@ save_correlation_plots(corr, format = "tiff", start_path = "output",
 An output directory that contains correlation plots.
 }
 \description{
-This function saves correlation plots storred in a listlike object to an output folder.
+This function saves correlation plots stored in a listlike object to an output folder.
 }
 \details{
 This function creates an appropriate output directory, where it saves publication ready

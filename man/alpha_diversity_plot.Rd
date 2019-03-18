@@ -36,7 +36,7 @@ Plot the alpha diversity using a violin plot. \code{alpha_diversity_plots} gener
 }
 \details{
 Alpha diversity helps to determine the species richness (the number of different species in a sample) or evenness (similar abundance level).
-We prefer to use \code{shannon} as it is better for data generated using the QUIIME pipeline.
+We prefer to use \code{shannon} as it is better for data generated using the QIIME pipeline.
 }
 \examples{
 \dontrun{

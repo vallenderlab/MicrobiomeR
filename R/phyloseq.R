@@ -1,6 +1,6 @@
 #' @title Get Phyloseq Object
 #' @description Create a phyloseq object using a biom file, phylogenetic tree file, and a
-#'  metadata file. Alternatively, an .Rdata file can be used.  For now this funciton takes
+#'  metadata file. Alternatively, an .Rdata file can be used.  For now this function takes
 #'  output from Qiime.  The data provided by this package was processed by the NIH's Nephele
 #'  pipeline.
 #' @param biom_file A file in the \href{http://biom-format.org/}{BIOM format}.  Default: NULL
@@ -10,7 +10,7 @@
 #'  sure that you have a \strong{sample_id} and \strong{TreatmentGroup} column in your metadata
 #'  file.  You might otherwise run into problems.  Default: NULL
 #' @param treatment_group The column number or name in the metadata file that contains the
-#' treatement group names.  Default: NULL
+#' treatment group names.  Default: NULL
 #' @param parse_func The parse function used to parse taxonomy strings from
 #'  Greengenes or SILVA database.  Default: NULL
 #' @param rdata_file A .Rdata file.  Default: NULL
@@ -20,7 +20,7 @@
 #' that don't exist as well.  Default: FALSE
 #' @return A phyloseq object, and a phylogenetic tree file if one does not already exist.
 #' @pretty_print TRUE
-#' @details This function heavily relys on the phyloseq package to import data into R.
+#' @details This function heavily relies on the phyloseq package to import data into R.
 #'  It also requires you to use an absolute or relative path to your data files or for your data files
 #'  to be in the working directory.
 #'
@@ -161,7 +161,7 @@ root_phyloseq_tree <- function(phyloseq_object, tree_path, save_rooted_tree, rec
 #' @title Pick Outgroup for Tree
 #' @description Pick an outgroup for rooting a phylogenetic tree.
 #' @param unrooted_tree An unrooted tree object.
-#' @return A new tree with the longest bracnh as the outgroup.
+#' @return A new tree with the longest branch as the outgroup.
 #' @pretty_print TRUE
 #' @details This function preprocess a phylogenetic tree for rooting by the longest edge.
 #' Please see this issue for more details \url{https://github.com/joey711/phyloseq/issues/597}.
@@ -241,7 +241,7 @@ root_by_longest_edge <- function(unrooted_tree) {
 #' Alternatively you can create your own function to parse this data.
 #' Most importantly, the expectations for these functions described above
 #' make them compatible to use during data import,
-#' specifcally the \code{\link{import_biom}} function, but
+#' specifically the \code{\link{import_biom}} function, but
 #' it is a flexible structure that will be implemented soon for all phyloseq
 #' import functions that deal with taxonomy (e.g. \code{\link{import_qiime}}).
 #' @param char.vec (Required). A single character vector of taxonomic

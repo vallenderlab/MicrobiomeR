@@ -20,12 +20,12 @@ otu_prevalence_filter(obj, minimum_abundance = 5,
 Returns a taxmap object that contains taxon_ids that have passed the above filter.
 }
 \description{
-This function filters observations by thier prevelance across samples.
+This function filters observations by their prevalence across samples.
 }
 \details{
-The otu_prevalence_filter filters taxon_ids that do not appear more than a certian amount of times (minimum abundance) in a certain percentage of
+The otu_prevalence_filter filters taxon_ids that do not appear more than a certain amount of times (minimum abundance) in a certain percentage of
 samples (rel_sample_percentage). The \href{http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#filtering}{phyloseq workflow} calls for a minimum abundance of 5 across %50 of the samples.
-This filtering method is considered unsupervised, because it soley relies on the data in this experiment (OTU ids).
+This filtering method is considered unsupervised, because it solely relies on the data in this experiment (OTU ids).
 }
 \examples{
 \dontrun{
