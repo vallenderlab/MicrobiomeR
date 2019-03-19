@@ -9,7 +9,7 @@ agglomerate_taxmap(obj, rank, validated = FALSE)
 \arguments{
 \item{obj}{A Taxmap object.}
 
-\item{rank}{The rank that will be agllomerated to.}
+\item{rank}{The rank that will be agglomerated to.}
 
 \item{validated}{This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE}
 }

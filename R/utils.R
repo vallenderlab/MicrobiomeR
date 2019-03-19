@@ -96,7 +96,7 @@ treatment_matrix <- function(obj) {
 #' @param mkdir A logical denoting weather or not the directory should be created or not.  Default: TRUE
 #' @return Creates a directory for output and returns the path as a string.
 #' @pretty_print TRUE
-#' @details This function is increadibly useful on it's own but also for various other plotting/saving functions within the package.
+#' @details This function is incredibly useful on it's own but also for various other plotting/saving functions within the package.
 #'  It helps keep data organized using a standard workflow.
 #' @examples
 #' \dontrun{

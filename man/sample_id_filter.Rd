@@ -29,7 +29,7 @@ This function provides a flexible way to filter unwanted samples from the
 }
 \details{
 Get the samples to keep by using purr and the user supplied transform and filter + condition formulas.
-The purr packge allows the use of anonymous functions as described in the link below:
+The purr package allows the use of anonymous functions as described in the link below:
 
 \url{https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html#anonymous_function,_formula}
 }

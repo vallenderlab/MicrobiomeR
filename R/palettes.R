@@ -209,7 +209,7 @@ combination_palette <- function(...) {
 
 
 #' @title Viridis-Magma Palette Function
-#' @description A function that returns a color palette function based off of the veridis package.
+#' @description A function that returns a color palette function based off of the viridis package.
 #' @param viridis_number The total number of colors used to generate the viridis palette.  Default: 800
 #' @param viridis_range Tne range of colors in the viridis palette to use.  Default: 300:viridis_number
 #' @param viridis_rev A logical for reversing the viridis palette.  Default: TRUE

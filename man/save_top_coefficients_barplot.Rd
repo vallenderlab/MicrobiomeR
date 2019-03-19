@@ -16,7 +16,7 @@ save_top_coefficients_barplot(plot, filename, format = "tiff",
 
 \item{start_path}{The path of which your output should be saved.}
 
-\item{...}{Additional paramaters.}
+\item{...}{Additional parameters.}
 }
 \description{
 Save a top coefficients barplot.

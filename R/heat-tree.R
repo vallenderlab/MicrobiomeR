@@ -100,15 +100,15 @@ heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, ...) {
 
 
 #' @title Get Heat Tree Parameters
-#' @description This function get's the parameters used for the heat_tree_plots function.
+#' @description This function gets the parameters used for the heat_tree_plots function.
 #' @param obj A Taxmap object.
 #' @param title The title used in the heat_tree plot.
 #' @param treatment_no The number of treatment groups in the data.
 #' @param ... Any of the heat tree parameters list below can be used to change the way the heat_tree
-#' output is displayed.  However, this function acts as a default list of parameters.  The memebers
+#' output is displayed.  However, this function acts as a default list of parameters.  The members
 #' of the default list will be overridden by the dot parameters.  Any variable in obj$data$stats_tax_data
 #' can be used to manipulate the heat tree parameters.  Function calls from the taxa package must
-#' be done explicitely on the Taxmap object.
+#' be done explicitly on the Taxmap object.
 #' @return A list used with do.call and the metacoder::heat_tree function.
 #' @pretty_print TRUE
 #' @export
@@ -284,7 +284,7 @@ heat_tree_parameters <- function(obj, title, treatment_no, ...) {
 
 
 #' @title Save Heat Tree Plots
-#' @description This function saves heat tree plots storred in a list object to an output folder.
+#' @description This function saves heat tree plots stored in a list object to an output folder.
 #' @param htrees A named list of heat trees.
 #' @param format The format of the output image.  Default: 'tiff'
 #' @param start_path The starting path of the output directory.  Default: 'output'

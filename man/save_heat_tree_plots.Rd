@@ -20,7 +20,7 @@ save_heat_tree_plots(htrees, format = "tiff", start_path = "output",
 An output directory that contains heat tree plots.
 }
 \description{
-This function saves heat tree plots storred in a list object to an output folder.
+This function saves heat tree plots stored in a list object to an output folder.
 }
 \details{
 This function creates an appropriate output directory, where it saves publication ready

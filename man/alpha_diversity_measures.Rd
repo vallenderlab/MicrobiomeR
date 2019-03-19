@@ -2,7 +2,7 @@
 % Please edit documentation in R/alpha-diversity.R
 \name{alpha_diversity_measures}
 \alias{alpha_diversity_measures}
-\title{Alpha Diveristy Measues}
+\title{Alpha Diversity Measures}
 \usage{
 alpha_diversity_measures(obj, group = "TreatmentGroup")
 }
