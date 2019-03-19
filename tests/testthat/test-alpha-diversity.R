@@ -18,7 +18,7 @@ test_that("alpha diversity measures all exist", {
 })
 
 test_that("base alpha diversity plot works", {
-  expect_true(!is.null(alpha_diversity_plot(obj = data, measure = "shannon", select_otu_table = "otu_proportions")))
+  expect_true(!is.null(alpha_diversity_plot(obj = data, measure = "Shannon")))
 })
 
 test_that("creating multiple alpha diversity plots works", {
@@ -30,8 +30,8 @@ save_alpha_diversity_plots(alpha_div_plots = plots, custom_path = "output/")
 
 test_that("alpha diversity plots exist", {
   expect_true(file.exists("output/shannon_alpha_diversity.tiff"))
-  expect_true(file.exists("output/simpson_alpha_diversity.tiff"))
-  expect_true(file.exists("output/invsimpson_alpha_diversity.tiff"))
+  expect_true(file.exists("output/ginisimpson_alpha_diversity.tiff"))
+  expect_true(file.exists("output/inversesimpson_alpha_diversity.tiff"))
 })
 
 # Remove file created by test

@@ -1,5 +1,5 @@
 #' @title Alpha Diversity Measures
-#' @description This function generates various alpha diversity measures include Shannon, Fisher, Coverage, Gini Simpson, and Inverse Simpson.
+#' @description This function generates various alpha diversity measures include Shannon, Fisher, Coverage, GiniSimpson, and InverseSimpson.
 #' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param group The "TreatmentGroup" or similar grouping from your metadata to denote sample groups, Default: 'TreatmentGroup'
 #' @return Returns a list of alpha diversity measures with metadata.
@@ -53,7 +53,7 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' @title Alpha Diversity Plot
 #' @description Plot the alpha diversity using a violin plot. `alpha_diversity_plots` generates plots for all alpha diversity measures.
 #' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
-#' @param measure Select an alpha diversity measure such as shannon, gini simpson, and inverse simpson, Default: 'shannon'
+#' @param measure Select an alpha diversity measure such as Shannon, Fisher, Coverage, GiniSimpson, and InverseSimpson, Default: 'Shannon'
 #' @param group The "TreatmentGroup" or similar grouping or column from your metadata to denote sample groups, Default: 'TreatmentGroup'
 #' @param select_otu_table Choose an otu table to analyze, Default: 'otu_proportions'
 #' @param title The title of the plot, Default: NULL
@@ -66,7 +66,7 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #'   library(MicrobiomeR)
 #'   data <- analyzed_silva
 #'   plot <- alpha_diversity_plot(obj = data,
-#'                                measure = "shannon",
+#'                                measure = "Shannon",
 #'                                select_otu_table = "otu_proportions")
 #'   plot
 #' }
@@ -80,15 +80,14 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' @importFrom ggthemes theme_pander
 #' @importFrom utils combn
 #' @importFrom vegan diversity
-alpha_diversity_plot <- function(obj, measure = "shannon", group = "TreatmentGroup", select_otu_table = "otu_proportions", title = NULL) {
+alpha_diversity_plot <- function(obj, measure = "Shannon", group = "TreatmentGroup", title = NULL) {
   # Validate data format
   metacoder_object <- validate_MicrobiomeR_format(
     obj = create_taxmap(obj),
     valid_formats = c("analyzed_format")
   )
-  metacoder_object$data$sample_data[[measure]] <- vegan::diversity(metacoder_object$data[[select_otu_table]][, metacoder_object$data$sample_data$X.SampleID],
-    MARGIN = 2, index = measure
-  )
+  measures <- alpha_diversity_measures(obj = metacoder_object, group = group)
+  metacoder_object$data$sample_data[[measure]] <- measures[[measure]]
 
   if (typeof(metacoder_object$data$sample_data$TreatmentGroup) == "character") {
     metacoder_object$data$sample_data[[group]] <- as.factor(metacoder_object$data$sample_data$TreatmentGroup)
@@ -122,19 +121,19 @@ alpha_diversity_plot <- function(obj, measure = "shannon", group = "TreatmentGro
   return(plot)
 }
 
-#' @param measures A list of alpha diversity measures such as shannon, gini simpson, and inverse simpson, Default: 'c("shannon", "simpson", "invsimpson")'
+#' @param measures A list of alpha diversity measures such as Shannon, Fisher, Coverage, GiniSimpson, and InverseSimpson, Default: 'c("Shannon", "GiniSimpson", "InverseSimpson")'
 #' @return Returns a melted dataframe.
 #' @family Visualizations
 #' @rdname alpha_diversity_plot
-alpha_diversity_plots <- function(obj, measures = c("shannon", "simpson", "invsimpson"), group = "TreatmentGroup", select_otu_table = "otu_proportions") {
+alpha_diversity_plots <- function(obj, measures = c("Shannon", "GiniSimpson", "InverseSimpson"), group = "TreatmentGroup") {
   if (is.null(measures)) {
-    measures <- c("shannon", "simpson", "invsimpson")
+    measures <- c("Shannon", "GiniSimpson", "InverseSimpson")
   } else if (length(measures) < 2) {
     stop("Use the alpha_diversity_plot function for generating a plot for 1 alpha diversity index.")
   }
   alpha_div_plots <- list()
   for (m in measures) {
-    alpha_div_plots[[m]] <- alpha_diversity_plot(obj, measure = m, group = group, select_otu_table = select_otu_table, title = m)
+    alpha_div_plots[[m]] <- alpha_diversity_plot(obj, measure = m, group = group, title = m)
   }
 
   return(alpha_div_plots)
