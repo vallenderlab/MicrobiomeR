@@ -55,11 +55,11 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param measure Select an alpha diversity measure such as Shannon, Fisher, Coverage, GiniSimpson, and InverseSimpson, Default: 'Shannon'
 #' @param group The "TreatmentGroup" or similar grouping or column from your metadata to denote sample groups, Default: 'TreatmentGroup'
-#' @param select_otu_table Choose an otu table to analyze, Default: 'otu_proportions'
+#' @param select_otu_table DEPRECATED. Choose an otu table to analyze, Default: 'otu_proportions'
 #' @param title The title of the plot, Default: NULL
 #' @return Returns an alpha diversity plot.
 #' @details Alpha diversity helps to determine the species richness (the number of different species in a sample) or evenness (similar abundance level).
-#' We prefer to use `shannon` as it is better for data generated using the QIIME pipeline.
+#' We prefer to use `Shannon` as it is better for data generated using the QIIME pipeline.
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
@@ -78,7 +78,15 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' @importFrom ggpubr stat_compare_means ggviolin
 #' @importFrom ggthemes theme_pander
 #' @importFrom utils combn
-alpha_diversity_plot <- function(obj, measure = "Shannon", group = "TreatmentGroup", title = NULL) {
+alpha_diversity_plot <- function(obj, measure = "Shannon", group = "TreatmentGroup", select_otu_table = NULL, title = NULL) {
+
+  # Make sure select_otu_table is not being
+  calls <- names(sapply(match.call(), deparse))[-1]
+  if(any("select_otu_table" %in% calls)) {
+    select_otu_table <- NULL
+    warning("select_otu_table parameter has been deprecated.")
+  }
+
   # Validate data format
   metacoder_object <- validate_MicrobiomeR_format(
     obj = create_taxmap(obj),
@@ -98,6 +106,7 @@ alpha_diversity_plot <- function(obj, measure = "Shannon", group = "TreatmentGro
   # make a pairwise list that we want to compare.
   metacoder_object$data$sample_data$group.pairs <- utils::combn(seq_along(groups), num_groups, simplify = FALSE, FUN = function(i) groups[i])
 
+  # Use a palette based on the number of samples.
   if (num_groups == 2) {
     palette <- c("#3288bd", "#d53e4f")
   } else {
@@ -105,6 +114,10 @@ alpha_diversity_plot <- function(obj, measure = "Shannon", group = "TreatmentGro
     palette <- c("#3288bd", "#d53e4f", "#62954C", "#C59144")
   }
 
+  # Create a max height for the stat comparisons.
+  max <- round(max(measures[[measure]]), digits = 1)
+
+  # Create a ggviolin plot to visualize.
   plot <- ggpubr::ggviolin(metacoder_object$data$sample_data,
     x = group, y = measure,
     color = "black",
@@ -113,8 +126,8 @@ alpha_diversity_plot <- function(obj, measure = "Shannon", group = "TreatmentGro
     palette = palette,
     legend.title = title
   ) + ggplot2::xlab(title) + ggplot2::ylab(toupper(measure)) +
-    ggthemes::theme_pander() + ggpubr::stat_compare_means(comparisons = metacoder_object$data$sample_data$group.pairs, label = "p.signif", label.y = 7) +
-    ggpubr::stat_compare_means(label.y = 8)
+    ggthemes::theme_pander() + ggpubr::stat_compare_means(comparisons = metacoder_object$data$sample_data$group.pairs, label = "p.signif", label.y = max + .75) +
+    ggpubr::stat_compare_means(label.y = max + 1.75)
 
   return(plot)
 }
