@@ -6,7 +6,7 @@
 \title{Alpha Diversity Plot}
 \usage{
 alpha_diversity_plot(obj, measure = "Shannon",
-  group = "TreatmentGroup", title = NULL)
+  group = "TreatmentGroup", select_otu_table = NULL, title = NULL)
 
 alpha_diversity_plots(obj, measures = c("Shannon", "GiniSimpson",
   "InverseSimpson"), group = "TreatmentGroup")
@@ -18,11 +18,11 @@ alpha_diversity_plots(obj, measures = c("Shannon", "GiniSimpson",
 
 \item{group}{The "TreatmentGroup" or similar grouping or column from your metadata to denote sample groups, Default: 'TreatmentGroup'}
 
+\item{select_otu_table}{DEPRECATED. Choose an otu table to analyze, Default: 'otu_proportions'}
+
 \item{title}{The title of the plot, Default: NULL}
 
 \item{measures}{A list of alpha diversity measures such as Shannon, Fisher, Coverage, GiniSimpson, and InverseSimpson, Default: 'c("Shannon", "GiniSimpson", "InverseSimpson")'}
-
-\item{select_otu_table}{Choose an otu table to analyze, Default: 'otu_proportions'}
 }
 \value{
 Returns an alpha diversity plot.
@@ -34,7 +34,7 @@ Plot the alpha diversity using a violin plot. \code{alpha_diversity_plots} gener
 }
 \details{
 Alpha diversity helps to determine the species richness (the number of different species in a sample) or evenness (similar abundance level).
-We prefer to use \code{shannon} as it is better for data generated using the QIIME pipeline.
+We prefer to use \code{Shannon} as it is better for data generated using the QIIME pipeline.
 }
 \examples{
 \dontrun{
