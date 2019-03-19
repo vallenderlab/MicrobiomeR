@@ -95,8 +95,9 @@ alpha_diversity_plot <- function(obj, measure = "Shannon", group = "TreatmentGro
   measures <- alpha_diversity_measures(obj = metacoder_object, group = group)
   metacoder_object$data$sample_data[[measure]] <- measures[[measure]]
 
-  if (typeof(metacoder_object$data$sample_data$TreatmentGroup) == "character") {
-    metacoder_object$data$sample_data[[group]] <- as.factor(metacoder_object$data$sample_data$TreatmentGroup)
+  # Ensure your "group" is a factor.
+  if (typeof(metacoder_object$data$sample_data[[group]]) == "character") {
+    metacoder_object$data$sample_data[[group]] <- as.factor(metacoder_object$data$sample_data[[group]])
   } else {
     metacoder_object$data$sample_data[[group]] <- factor(metacoder_object$data$sample_data[[group]], levels = list(unique(metacoder_object$data$sample_data[[group]])))
   }
