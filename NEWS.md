@@ -1,3 +1,11 @@
+# MicrobiomeR 0.5.3
+
+* Improved documentation of ordination methods and distances.
+* Deprecated `select_otu_table` parameter for `alpha_diversity_plot`.
+* Added site deployment key to travis-ci.com
+* Migrated continuous integration to travis-ci.com
+* Fixed height of stat comparisons.
+
 # MicrobiomeR 0.5.2
 
 * Ran `devtools::spell_check()` on the package to fix spelling.

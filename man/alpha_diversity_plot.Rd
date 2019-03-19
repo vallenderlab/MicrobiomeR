@@ -5,26 +5,24 @@
 \alias{alpha_diversity_plots}
 \title{Alpha Diversity Plot}
 \usage{
-alpha_diversity_plot(obj, measure = "shannon",
-  group = "TreatmentGroup", select_otu_table = "otu_proportions",
-  title = NULL)
+alpha_diversity_plot(obj, measure = "Shannon",
+  group = "TreatmentGroup", select_otu_table = NULL, title = NULL)
 
-alpha_diversity_plots(obj, measures = c("shannon", "simpson",
-  "invsimpson"), group = "TreatmentGroup",
-  select_otu_table = "otu_proportions")
+alpha_diversity_plots(obj, measures = c("Shannon", "GiniSimpson",
+  "InverseSimpson"), group = "TreatmentGroup")
 }
 \arguments{
 \item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
 
-\item{measure}{Select an alpha diversity measure such as shannon, gini simpson, and inverse simpson, Default: 'shannon'}
+\item{measure}{Select an alpha diversity measure such as Shannon, Fisher, Coverage, GiniSimpson, and InverseSimpson, Default: 'Shannon'}
 
 \item{group}{The "TreatmentGroup" or similar grouping or column from your metadata to denote sample groups, Default: 'TreatmentGroup'}
 
-\item{select_otu_table}{Choose an otu table to analyze, Default: 'otu_proportions'}
+\item{select_otu_table}{DEPRECATED. Choose an otu table to analyze, Default: 'otu_proportions'}
 
 \item{title}{The title of the plot, Default: NULL}
 
-\item{measures}{A list of alpha diversity measures such as shannon, gini simpson, and inverse simpson, Default: 'c("shannon", "simpson", "invsimpson")'}
+\item{measures}{A list of alpha diversity measures such as Shannon, Fisher, Coverage, GiniSimpson, and InverseSimpson, Default: 'c("Shannon", "GiniSimpson", "InverseSimpson")'}
 }
 \value{
 Returns an alpha diversity plot.
@@ -36,7 +34,7 @@ Plot the alpha diversity using a violin plot. \code{alpha_diversity_plots} gener
 }
 \details{
 Alpha diversity helps to determine the species richness (the number of different species in a sample) or evenness (similar abundance level).
-We prefer to use \code{shannon} as it is better for data generated using the QIIME pipeline.
+We prefer to use \code{Shannon} as it is better for data generated using the QIIME pipeline.
 }
 \examples{
 \dontrun{
@@ -44,8 +42,7 @@ if (interactive()) {
   library(MicrobiomeR)
   data <- analyzed_silva
   plot <- alpha_diversity_plot(obj = data,
-                               measure = "shannon",
-                               select_otu_table = "otu_proportions")
+                               measure = "Shannon")
   plot
 }
 }
