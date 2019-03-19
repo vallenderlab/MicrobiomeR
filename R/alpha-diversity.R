@@ -66,8 +66,7 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #'   library(MicrobiomeR)
 #'   data <- analyzed_silva
 #'   plot <- alpha_diversity_plot(obj = data,
-#'                                measure = "Shannon",
-#'                                select_otu_table = "otu_proportions")
+#'                                measure = "Shannon")
 #'   plot
 #' }
 #' }
@@ -79,7 +78,6 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' @importFrom ggpubr stat_compare_means ggviolin
 #' @importFrom ggthemes theme_pander
 #' @importFrom utils combn
-#' @importFrom vegan diversity
 alpha_diversity_plot <- function(obj, measure = "Shannon", group = "TreatmentGroup", title = NULL) {
   # Validate data format
   metacoder_object <- validate_MicrobiomeR_format(

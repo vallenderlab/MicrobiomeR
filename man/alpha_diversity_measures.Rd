@@ -15,7 +15,7 @@ alpha_diversity_measures(obj, group = "TreatmentGroup")
 Returns a list of alpha diversity measures with metadata.
 }
 \description{
-This function generates various alpha diversity measures include Shannon, Fisher, Coverage, Gini Simpson, and Inverse Simpson.
+This function generates various alpha diversity measures include Shannon, Fisher, Coverage, GiniSimpson, and InverseSimpson.
 }
 \examples{
 \dontrun{
