@@ -1,4 +1,4 @@
-# MicrobiomeR 0.5.3
+# MicrobiomeR 0.6.0
 
 * Improved documentation of ordination methods and distances.
 * Deprecated `select_otu_table` parameter for `alpha_diversity_plot`.
