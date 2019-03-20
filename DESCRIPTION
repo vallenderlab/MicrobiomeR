@@ -1,6 +1,6 @@
 Package: MicrobiomeR
 Title: Analyze Microbiome Data
-Version: 0.5.2
+Version: 0.6.0
 Authors@R: c(
     person("Robert", "Gilmore", email = "rgilmore@umc.edu", role = c("aut", "cre")),
     person("Shaurita", "Hutchins", email = "shutchins2@umc.edu", role = "aut"))
@@ -13,12 +13,11 @@ Roxygen: list(markdown = TRUE)
 Depends:
     R (>= 3.3.0)
 Remotes: 
-    github::ropensci/taxa,
-    github::grunwaldlab/metacoder,
-    github::joey711/phyloseq,
-    github::microbiome/microbiome,
-    github::r-lib/covr,
-    github::jonclayden/shades
+    ropensci/taxa,
+    grunwaldlab/metacoder,
+    joey711/phyloseq,
+    microbiome/microbiome,
+    jonclayden/shades
 Imports:
     ape,
     biomformat,
