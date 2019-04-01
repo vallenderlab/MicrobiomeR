@@ -1,8 +1,9 @@
 [![Build Status](https://travis-ci.com/vallenderlab/MicrobiomeR.svg?branch=master)](https://travis-ci.com/vallenderlab/MicrobiomeR)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Coverage status](https://codecov.io/gh/vallenderlab/MicrobiomeR/branch/master/graph/badge.svg)](https://codecov.io/github/vallenderlab/MicrobiomeR?branch=master)
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.01299/status.svg)](https://doi.org/10.21105/joss.01299)
 
-# MicrobiomeR
+# MicrobiomeR <a href='https://microbiomer.vallenderlab.science/'><img src="man/figures/logo.png" align="right" height=300/></a>
 
 An R package for microbiome analysis that incorporates [phyloseq](https://github.com/joey711/phyloseq), 
 [metacoder](https://github.com/grunwaldlab/metacoder), [taxa](https://github.com/ropensci/taxa), and [microbiome](https://github.com/microbiome/microbiome/) in order to standardize and simplify common microbiome workflows.
