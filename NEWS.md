@@ -1,3 +1,7 @@
+# MicrobiomeR 0.6.1
+
+* Added `StagedInstall: false` to DESCRIPTION file.
+
 # MicrobiomeR 0.6.0
 
 * Improved documentation of ordination methods and distances.
