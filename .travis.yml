@@ -14,8 +14,16 @@ env:
 
 matrix:
   include:
-  - r: devel
-  - r: release
+  - stage: prewarm cache
+    r: oldrel
+    script:
+    - R CMD build .
+  - stage: prewarm cache
+    r: devel
+    script:
+    - R CMD build .
+  - stage: deploy
+    r: release
     r_github_packages:
     - r-lib/pkgdown
     - r-lib/covr
@@ -25,4 +33,3 @@ matrix:
       provider: script
       script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
       skip_cleanup: true
-  - r: oldrel
