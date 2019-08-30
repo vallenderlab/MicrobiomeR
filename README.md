@@ -3,7 +3,7 @@
 [![Coverage status](https://codecov.io/gh/vallenderlab/MicrobiomeR/branch/master/graph/badge.svg)](https://codecov.io/github/vallenderlab/MicrobiomeR?branch=master)
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.01299/status.svg)](https://doi.org/10.21105/joss.01299)
 
-# MicrobiomeR <a href='https://microbiomer.vallenderlab.science/'><img src="man/figures/logo.png" align="right" height=300/></a>
+# MicrobiomeR <a href='https://microbiomer.vallenderlab.org/'><img src="man/figures/logo.png" align="right" height=300/></a>
 
 An R package for microbiome analysis that incorporates [phyloseq](https://github.com/joey711/phyloseq), 
 [metacoder](https://github.com/grunwaldlab/metacoder), [taxa](https://github.com/ropensci/taxa), and [microbiome](https://github.com/microbiome/microbiome/) in order to standardize and simplify common microbiome workflows.
@@ -17,7 +17,7 @@ library(devtools) # Load the devtools package
 install_github("vallenderlab/MicrobiomeR") # Install the package
 ```
 
-Please visit https://microbiomer.vallenderlab.science/ for extensive documentation of the package.
+Please visit https://microbiomer.vallenderlab.org/ for extensive documentation of the package.
 
 ## Workflow Features
 
