@@ -38,7 +38,6 @@ Imports:
     magrittr,
     metacoder,
     microbiome (>= 1.5.27),
-    modes,
     openxlsx,
     phyloseq,
     plotly,
@@ -61,7 +60,7 @@ Suggests:
     rmarkdown,
     testthat
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 LazyData: true
 URL: https://github.com/vallenderlab/MicrobiomeR, https://microbiomer.vallenderlab.science/
 BugReports: https://github.com/vallenderlab/MicrobiomeR/issues
