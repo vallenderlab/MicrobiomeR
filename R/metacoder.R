@@ -427,7 +427,7 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
   # Calculate the ids that need to be removed
   suppressMessages({
     ids_to_remove <- metacoder::calc_prop_samples(mo_clone, "taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
-    dplyr::filter(n_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
+    dplyr::filter(prop_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
   })
   # Prevalence Filtering
   mo_clone <- taxa::filter_taxa(mo_clone, !taxon_ids %in% ids_to_remove$taxon_id, reassign_obs = FALSE)
@@ -518,7 +518,7 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
   suppressMessages({
     ids_to_remove <- agglomerate_taxmap(obj = mo_clone, rank = rank, validated = TRUE) %>% # Agglomeration
     metacoder::calc_prop_samples("taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
-    dplyr::filter(n_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
+    dplyr::filter(prop_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
   # Taxonomic Prevalence Filtering
   mo_clone <- taxa::filter_taxa(mo_clone, !taxon_ids %in% ids_to_remove$taxon_id, reassign_obs = FALSE)
   })
@@ -634,7 +634,6 @@ cov_filter <- function(obj, coefficient_of_variation, validated = FALSE) {
 #'
 #'  \code{\link[modes]{bimodality_coefficient}}
 #' @importFrom diptest dip.test
-#' @importFrom modes bimodality_coefficient
 #' @importFrom stats wilcox.test median
 metacoder_comp_func_1 <- function(abund_1, abund_2) {
   log_med_ratio <- log2(median(abund_1) / median(abund_2))
@@ -661,7 +660,7 @@ metacoder_comp_func_1 <- function(abund_1, abund_2) {
     wilcox_p_value = wilcox.test(abund_1, abund_2)$p.value,
     hartigan_dip_treat1 = diptest::dip.test(abund_1)$p.value,
     hartigan_dip_treat2 = diptest::dip.test(abund_2)$p.value,
-    bimodality_coeff_treat1 = modes::bimodality_coefficient(abund_1),
-    bimodality_coeff_treat2 = modes::bimodality_coefficient(abund_2)
+    bimodality_coeff_treat1 = bimodality_coefficient(abund_1),
+    bimodality_coeff_treat2 = bimodality_coefficient(abund_2)
   )
 }
