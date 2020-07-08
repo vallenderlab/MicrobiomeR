@@ -9,12 +9,12 @@ cache:
   directories:
   - $HOME/.local/share/renv
   - $TRAVIS_BUILD_DIR/renv/library
-repos:
-  BioCsoft: https://bioconductor.org/packages/3.11/bioc
-  BioCann: https://bioconductor.org/packages/3.11/data/annotation
-  BioCexp: https://bioconductor.org/packages/3.11/data/experiment
-  BioCworkflows: https://bioconductor.org/packages/3.11/workflows
-  CRAN: https://cran.rstudio.com
+# repos:
+#   BioCsoft: https://bioconductor.org/packages/3.11/bioc
+#   BioCann: https://bioconductor.org/packages/3.11/data/annotation
+#   BioCexp: https://bioconductor.org/packages/3.11/data/experiment
+#   BioCworkflows: https://bioconductor.org/packages/3.11/workflows
+#   CRAN: https://cran.rstudio.com
 env:
   global:
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
@@ -23,7 +23,7 @@ env:
 install:
   - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
   - Rscript -e "if (!requireNamespace('BiocManager', quietly = TRUE)) renv::install('BiocManager')"
-  - Rscript -e "renv::restore(repos=BiocManager::repositories())"
+  - Rscript -e "renv::restore()"
 matrix:
   include:
   - stage: prewarm cache
