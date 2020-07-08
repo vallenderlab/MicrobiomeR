@@ -2,15 +2,23 @@
 
 language: R
 sudo: false
-cache: packages
+#cache: packages
 warnings_are_errors: false
 cran: http://cran.rstudio.com
+cache:
+  directories:
+  - $HOME/.local/share/renv
+  - $TRAVIS_BUILD_DIR/renv/library
 
 env:
   global:
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
     - R_REMOTES_NO_ERRORS_FROM_WARNINGS=TRUE
     - R_INSTALL_STAGED=FALSE
+
+install:
+  - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
+  - Rscript -e "renv::restore()"
 
 matrix:
   include:
