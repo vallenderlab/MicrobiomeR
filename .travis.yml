@@ -18,7 +18,8 @@ env:
 
 install:
   - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
-  - Rscript -e "renv::restore()"
+  - Rscript -e "if (!requireNamespace('BiocManager', quietly = TRUE)) install.packages('BiocManager')"
+  - Rscript -e "options(repos = BiocManager::repositories()); renv::restore()"
 
 matrix:
   include:
