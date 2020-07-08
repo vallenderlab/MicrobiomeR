@@ -4,14 +4,16 @@
 \name{raw_silva_3}
 \alias{raw_silva_3}
 \title{"raw_format" Data with 3 Treatment Groups}
-\format{An object of class \code{"Taxmap"} with customized observation tables:
+\format{
+An object of class \code{"Taxmap"} with customized observation tables:
 \describe{
 \item{otu_abundance}{An abundance table with otu_id, taxon_id, and Sample_* columns.}
 \item{otu_annotations}{A taxonomy annotations table with otu_id, taxon_id, and multiple rank columns.}
 \item{sample_data}{A metadata table with SampleID, BarcodeSequence, LinkerPrimerSequence,
 ForwardFastqFile, ReverseFastqFile, TreatmentGroup, SampleName, Description}
 \item{phy_tree}{A phylogenetic tree.}
-}}
+}
+}
 \source{
 \href{https://nephele.niaid.nih.gov/user_guide_pipes/#amplicon_pipes}{Nephele-16S Qiime Pipeline}
 }

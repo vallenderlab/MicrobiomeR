@@ -4,8 +4,11 @@
 \alias{scico_palette}
 \title{Scico Palette Function}
 \usage{
-scico_palette(scico_palette = "batlow", scico_number = 800,
-  scico_range = 0:scico_number)
+scico_palette(
+  scico_palette = "batlow",
+  scico_number = 800,
+  scico_range = 0:scico_number
+)
 }
 \arguments{
 \item{scico_palette}{The scico palette to use.  Default: 'batlow'}
@@ -38,9 +41,10 @@ better_pal <- get_color_palette(pal_func = scico_palette, color_no = 25)
 \code{\link[grDevices]{colorRamp}}
 \code{\link[scico]{scico}}
 
-Other Color Palettes: \code{\link{combination_palette}},
-  \code{\link{get_color_palette}},
-  \code{\link{viridis_magma_palette}},
-  \code{\link{viridis_palette}}
+Other Color Palettes: 
+\code{\link{combination_palette}()},
+\code{\link{get_color_palette}()},
+\code{\link{viridis_magma_palette}()},
+\code{\link{viridis_palette}()}
 }
 \concept{Color Palettes}

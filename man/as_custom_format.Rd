@@ -29,12 +29,14 @@ This function is meant to be more helpful for customizing the Taxmap object.
 \seealso{
 \code{\link[MicrobiomeR]{create_taxmap}},  \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{order_metacoder_data}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
 
-Other Formatting: \code{\link{MicrobiomeR_Formats}},
-  \code{\link{as_MicrobiomeR_format}},
-  \code{\link{as_analyzed_format}},
-  \code{\link{as_basic_format}},
-  \code{\link{as_phyloseq_format}},
-  \code{\link{as_raw_format}}, \code{\link{melt_taxmap}},
-  \code{\link{treatment_matrix}}
+Other Formatting: 
+\code{\link{MicrobiomeR_Formats}},
+\code{\link{as_MicrobiomeR_format}()},
+\code{\link{as_analyzed_format}()},
+\code{\link{as_basic_format}()},
+\code{\link{as_phyloseq_format}()},
+\code{\link{as_raw_format}()},
+\code{\link{melt_taxmap}()},
+\code{\link{treatment_matrix}()}
 }
 \concept{Formatting}

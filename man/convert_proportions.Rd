@@ -15,8 +15,10 @@ convert_proportions(melted_df, tax_level)
 Convert Proportions
 }
 \seealso{
-Other Data Manipulators: \code{\link{metacoder_comp_func_1}},
-  \code{\link{transformer}}, \code{\link{transposer}},
-  \code{\link{vlookup}}
+Other Data Manipulators: 
+\code{\link{metacoder_comp_func_1}()},
+\code{\link{transformer}()},
+\code{\link{transposer}()},
+\code{\link{vlookup}()}
 }
 \concept{Data Manipulators}

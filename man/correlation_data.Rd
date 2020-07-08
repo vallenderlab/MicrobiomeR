@@ -4,8 +4,7 @@
 \alias{correlation_data}
 \title{Get Correlation Plot Data}
 \usage{
-correlation_data(obj, primary_rank, secondary_rank = TRUE,
-  wp_value = 0.05)
+correlation_data(obj, primary_rank, secondary_rank = TRUE, wp_value = 0.05)
 }
 \arguments{
 \item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
@@ -39,20 +38,22 @@ if(interactive()){
 
 \code{\link[taxa]{filter_obs}}
 
-Other Visualizations: \code{\link{alpha_diversity_plot}},
-  \code{\link{correlation_plots}},
-  \code{\link{correlation_plot}},
-  \code{\link{heat_tree_parameters}},
-  \code{\link{heat_tree_plots}},
-  \code{\link{ordination_plots}},
-  \code{\link{ordination_plot}}, \code{\link{plot_limits}},
-  \code{\link{save_alpha_diversity_plots}},
-  \code{\link{save_correlation_plots}},
-  \code{\link{save_heat_tree_plots}},
-  \code{\link{save_ordination_plots}},
-  \code{\link{save_stacked_barplots}},
-  \code{\link{stacked_barplots}},
-  \code{\link{stacked_barplot}},
-  \code{\link{top_coefficients_barplot}}
+Other Visualizations: 
+\code{\link{alpha_diversity_plot}()},
+\code{\link{correlation_plots}()},
+\code{\link{correlation_plot}()},
+\code{\link{heat_tree_parameters}()},
+\code{\link{heat_tree_plots}()},
+\code{\link{ordination_plots}()},
+\code{\link{ordination_plot}()},
+\code{\link{plot_limits}()},
+\code{\link{save_alpha_diversity_plots}()},
+\code{\link{save_correlation_plots}()},
+\code{\link{save_heat_tree_plots}()},
+\code{\link{save_ordination_plots}()},
+\code{\link{save_stacked_barplots}()},
+\code{\link{stacked_barplots}()},
+\code{\link{stacked_barplot}()},
+\code{\link{top_coefficients_barplot}()}
 }
 \concept{Visualizations}

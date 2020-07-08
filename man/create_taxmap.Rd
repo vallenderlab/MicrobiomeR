@@ -39,6 +39,7 @@ if(interactive()){
 
 \code{\link[tools]{fileutils}}
 
-Other Data Importers: \code{\link{create_phyloseq}}
+Other Data Importers: 
+\code{\link{create_phyloseq}()}
 }
 \concept{Data Importers}

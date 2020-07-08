@@ -5,11 +5,19 @@
 \alias{alpha_diversity_plots}
 \title{Alpha Diversity Plot}
 \usage{
-alpha_diversity_plot(obj, measure = "Shannon",
-  group = "TreatmentGroup", select_otu_table = NULL, title = NULL)
+alpha_diversity_plot(
+  obj,
+  measure = "Shannon",
+  group = "TreatmentGroup",
+  select_otu_table = NULL,
+  title = NULL
+)
 
-alpha_diversity_plots(obj, measures = c("Shannon", "GiniSimpson",
-  "InverseSimpson"), group = "TreatmentGroup")
+alpha_diversity_plots(
+  obj,
+  measures = c("Shannon", "GiniSimpson", "InverseSimpson"),
+  group = "TreatmentGroup"
+)
 }
 \arguments{
 \item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
@@ -50,36 +58,40 @@ if (interactive()) {
 \seealso{
 \code{\link{alpha_diversity_measures}}, \code{\link[vegan]{diversity}}, \code{\link[ggpubr]{ggviolin}}
 
-Other Visualizations: \code{\link{correlation_data}},
-  \code{\link{correlation_plots}},
-  \code{\link{correlation_plot}},
-  \code{\link{heat_tree_parameters}},
-  \code{\link{heat_tree_plots}},
-  \code{\link{ordination_plots}},
-  \code{\link{ordination_plot}}, \code{\link{plot_limits}},
-  \code{\link{save_alpha_diversity_plots}},
-  \code{\link{save_correlation_plots}},
-  \code{\link{save_heat_tree_plots}},
-  \code{\link{save_ordination_plots}},
-  \code{\link{save_stacked_barplots}},
-  \code{\link{stacked_barplots}},
-  \code{\link{stacked_barplot}},
-  \code{\link{top_coefficients_barplot}}
+Other Visualizations: 
+\code{\link{correlation_data}()},
+\code{\link{correlation_plots}()},
+\code{\link{correlation_plot}()},
+\code{\link{heat_tree_parameters}()},
+\code{\link{heat_tree_plots}()},
+\code{\link{ordination_plots}()},
+\code{\link{ordination_plot}()},
+\code{\link{plot_limits}()},
+\code{\link{save_alpha_diversity_plots}()},
+\code{\link{save_correlation_plots}()},
+\code{\link{save_heat_tree_plots}()},
+\code{\link{save_ordination_plots}()},
+\code{\link{save_stacked_barplots}()},
+\code{\link{stacked_barplots}()},
+\code{\link{stacked_barplot}()},
+\code{\link{top_coefficients_barplot}()}
 
-Other Visualizations: \code{\link{correlation_data}},
-  \code{\link{correlation_plots}},
-  \code{\link{correlation_plot}},
-  \code{\link{heat_tree_parameters}},
-  \code{\link{heat_tree_plots}},
-  \code{\link{ordination_plots}},
-  \code{\link{ordination_plot}}, \code{\link{plot_limits}},
-  \code{\link{save_alpha_diversity_plots}},
-  \code{\link{save_correlation_plots}},
-  \code{\link{save_heat_tree_plots}},
-  \code{\link{save_ordination_plots}},
-  \code{\link{save_stacked_barplots}},
-  \code{\link{stacked_barplots}},
-  \code{\link{stacked_barplot}},
-  \code{\link{top_coefficients_barplot}}
+Other Visualizations: 
+\code{\link{correlation_data}()},
+\code{\link{correlation_plots}()},
+\code{\link{correlation_plot}()},
+\code{\link{heat_tree_parameters}()},
+\code{\link{heat_tree_plots}()},
+\code{\link{ordination_plots}()},
+\code{\link{ordination_plot}()},
+\code{\link{plot_limits}()},
+\code{\link{save_alpha_diversity_plots}()},
+\code{\link{save_correlation_plots}()},
+\code{\link{save_heat_tree_plots}()},
+\code{\link{save_ordination_plots}()},
+\code{\link{save_stacked_barplots}()},
+\code{\link{stacked_barplots}()},
+\code{\link{stacked_barplot}()},
+\code{\link{top_coefficients_barplot}()}
 }
 \concept{Visualizations}

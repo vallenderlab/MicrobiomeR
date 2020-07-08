@@ -22,12 +22,14 @@ See the \link{MicrobiomeR_Formats} documentation.
 \code{\link[MicrobiomeR]{is_phyloseq_format}}, \code{\link[MicrobiomeR]{is_raw_format}}, \code{\link[MicrobiomeR]{order_metacoder_data}}
 @importFrom crayon silver red green
 
-Other Formatting: \code{\link{MicrobiomeR_Formats}},
-  \code{\link{as_MicrobiomeR_format}},
-  \code{\link{as_analyzed_format}},
-  \code{\link{as_basic_format}},
-  \code{\link{as_custom_format}},
-  \code{\link{as_phyloseq_format}},
-  \code{\link{melt_taxmap}}, \code{\link{treatment_matrix}}
+Other Formatting: 
+\code{\link{MicrobiomeR_Formats}},
+\code{\link{as_MicrobiomeR_format}()},
+\code{\link{as_analyzed_format}()},
+\code{\link{as_basic_format}()},
+\code{\link{as_custom_format}()},
+\code{\link{as_phyloseq_format}()},
+\code{\link{melt_taxmap}()},
+\code{\link{treatment_matrix}()}
 }
 \concept{Formatting}

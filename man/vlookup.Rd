@@ -33,8 +33,10 @@ if(interactive()){
 }
 }
 \seealso{
-Other Data Manipulators: \code{\link{convert_proportions}},
-  \code{\link{metacoder_comp_func_1}},
-  \code{\link{transformer}}, \code{\link{transposer}}
+Other Data Manipulators: 
+\code{\link{convert_proportions}()},
+\code{\link{metacoder_comp_func_1}()},
+\code{\link{transformer}()},
+\code{\link{transposer}()}
 }
 \concept{Data Manipulators}

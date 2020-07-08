@@ -4,8 +4,14 @@
 \alias{correlation_plot}
 \title{Correlation Plot}
 \usage{
-correlation_plot(obj, primary_rank, secondary_rank = TRUE,
-  wp_value = 0.05, pal_func = NULL, trans = "logit")
+correlation_plot(
+  obj,
+  primary_rank,
+  secondary_rank = TRUE,
+  wp_value = 0.05,
+  pal_func = NULL,
+  trans = "logit"
+)
 }
 \arguments{
 \item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
@@ -36,7 +42,7 @@ Correlation plots help to better explain the heat tree findings.
 \dontrun{
 if(interactive()){
 # This example uses data that are no longer available in the MicrobiomeR package,
-# however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_analyzed_format}}.
+# however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
 library(MicrobiomeR)
 analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
 correlation_plot(analyzed_silva, primary_rank = "Class", secondary_rank = "Phylum")
@@ -52,20 +58,22 @@ correlation_plot(analyzed_silva, primary_rank = "Class", secondary_rank = "Phylu
 
 \code{\link[forcats]{fct_reorder}}
 
-Other Visualizations: \code{\link{alpha_diversity_plot}},
-  \code{\link{correlation_data}},
-  \code{\link{correlation_plots}},
-  \code{\link{heat_tree_parameters}},
-  \code{\link{heat_tree_plots}},
-  \code{\link{ordination_plots}},
-  \code{\link{ordination_plot}}, \code{\link{plot_limits}},
-  \code{\link{save_alpha_diversity_plots}},
-  \code{\link{save_correlation_plots}},
-  \code{\link{save_heat_tree_plots}},
-  \code{\link{save_ordination_plots}},
-  \code{\link{save_stacked_barplots}},
-  \code{\link{stacked_barplots}},
-  \code{\link{stacked_barplot}},
-  \code{\link{top_coefficients_barplot}}
+Other Visualizations: 
+\code{\link{alpha_diversity_plot}()},
+\code{\link{correlation_data}()},
+\code{\link{correlation_plots}()},
+\code{\link{heat_tree_parameters}()},
+\code{\link{heat_tree_plots}()},
+\code{\link{ordination_plots}()},
+\code{\link{ordination_plot}()},
+\code{\link{plot_limits}()},
+\code{\link{save_alpha_diversity_plots}()},
+\code{\link{save_correlation_plots}()},
+\code{\link{save_heat_tree_plots}()},
+\code{\link{save_ordination_plots}()},
+\code{\link{save_stacked_barplots}()},
+\code{\link{stacked_barplots}()},
+\code{\link{stacked_barplot}()},
+\code{\link{top_coefficients_barplot}()}
 }
 \concept{Visualizations}

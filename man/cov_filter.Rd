@@ -84,9 +84,10 @@ metacoder_obj <- cov_filter(obj = metacoder_obj,
 
 \code{\link[dplyr:summarise_all]{summarise_if}}
 
-Other Advanced Metacoder Filters: \code{\link{agglomerate_taxmap}},
-  \code{\link{otu_prevalence_filter}},
-  \code{\link{otu_proportion_filter}},
-  \code{\link{taxa_prevalence_filter}}
+Other Advanced Metacoder Filters: 
+\code{\link{agglomerate_taxmap}()},
+\code{\link{otu_prevalence_filter}()},
+\code{\link{otu_proportion_filter}()},
+\code{\link{taxa_prevalence_filter}()}
 }
 \concept{Advanced Metacoder Filters}

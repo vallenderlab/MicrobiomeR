@@ -4,8 +4,14 @@
 \alias{ordination_plot}
 \title{Ordination Plot}
 \usage{
-ordination_plot(obj, method = "PCoA", distance = "wunifrac",
-  color = "TreatmentGroup", title = NULL, only_data = FALSE)
+ordination_plot(
+  obj,
+  method = "PCoA",
+  distance = "wunifrac",
+  color = "TreatmentGroup",
+  title = NULL,
+  only_data = FALSE
+)
 }
 \arguments{
 \item{obj}{An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
@@ -40,21 +46,22 @@ if (interactive()) {
 \seealso{
 View \code{\link{save_ordination_plots}} to save your ordination plot or multiple ordination plots.
 
-Other Visualizations: \code{\link{alpha_diversity_plot}},
-  \code{\link{correlation_data}},
-  \code{\link{correlation_plots}},
-  \code{\link{correlation_plot}},
-  \code{\link{heat_tree_parameters}},
-  \code{\link{heat_tree_plots}},
-  \code{\link{ordination_plots}},
-  \code{\link{plot_limits}},
-  \code{\link{save_alpha_diversity_plots}},
-  \code{\link{save_correlation_plots}},
-  \code{\link{save_heat_tree_plots}},
-  \code{\link{save_ordination_plots}},
-  \code{\link{save_stacked_barplots}},
-  \code{\link{stacked_barplots}},
-  \code{\link{stacked_barplot}},
-  \code{\link{top_coefficients_barplot}}
+Other Visualizations: 
+\code{\link{alpha_diversity_plot}()},
+\code{\link{correlation_data}()},
+\code{\link{correlation_plots}()},
+\code{\link{correlation_plot}()},
+\code{\link{heat_tree_parameters}()},
+\code{\link{heat_tree_plots}()},
+\code{\link{ordination_plots}()},
+\code{\link{plot_limits}()},
+\code{\link{save_alpha_diversity_plots}()},
+\code{\link{save_correlation_plots}()},
+\code{\link{save_heat_tree_plots}()},
+\code{\link{save_ordination_plots}()},
+\code{\link{save_stacked_barplots}()},
+\code{\link{stacked_barplots}()},
+\code{\link{stacked_barplot}()},
+\code{\link{top_coefficients_barplot}()}
 }
 \concept{Visualizations}

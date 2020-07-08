@@ -19,7 +19,7 @@ Creates an image of a table from a dataframe.
 \dontrun{
 if(interactive()){
 # This example uses data that are no longer available in the MicrobiomeR package,
-# however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_basic_format}}.
+# however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.
  library(MicrobiomeR)
  data <- MicrobiomeR::basic_silva$data$taxa_abundance
  create_pub_table(data)

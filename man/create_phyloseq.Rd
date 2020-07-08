@@ -4,10 +4,16 @@
 \alias{create_phyloseq}
 \title{Get Phyloseq Object}
 \usage{
-create_phyloseq(biom_file = NULL, tree_file = NULL,
-  metadata_file = NULL, treatment_group = NULL, parse_func = NULL,
-  rdata_file = NULL, save_rooted_tree = FALSE,
-  recursive_save = FALSE)
+create_phyloseq(
+  biom_file = NULL,
+  tree_file = NULL,
+  metadata_file = NULL,
+  treatment_group = NULL,
+  parse_func = NULL,
+  rdata_file = NULL,
+  save_rooted_tree = FALSE,
+  recursive_save = FALSE
+)
 }
 \arguments{
 \item{biom_file}{A file in the \href{http://biom-format.org/}{BIOM format}.  Default: NULL}
@@ -74,6 +80,7 @@ phy_obj <- create_phyloseq(biom_file = biom_file,
 
 \code{\link[MicrobiomeR]{root_by_longest_edge}}
 
-Other Data Importers: \code{\link{create_taxmap}}
+Other Data Importers: 
+\code{\link{create_taxmap}()}
 }
 \concept{Data Importers}

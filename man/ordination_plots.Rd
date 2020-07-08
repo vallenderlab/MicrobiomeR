@@ -4,9 +4,13 @@
 \alias{ordination_plots}
 \title{Ordination Plots}
 \usage{
-ordination_plots(obj, methods = c("PCoA", "NMDS"),
+ordination_plots(
+  obj,
+  methods = c("PCoA", "NMDS"),
   distances = c("wunifrac", "unifrac", "bray"),
-  color = "TreatmentGroup", select_otu_table = "otu_proportions")
+  color = "TreatmentGroup",
+  select_otu_table = "otu_proportions"
+)
 }
 \arguments{
 \item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.}
@@ -26,20 +30,22 @@ Returns a melted dataframe.
 Generate plots for a list of ordination methods and distances.
 }
 \seealso{
-Other Visualizations: \code{\link{alpha_diversity_plot}},
-  \code{\link{correlation_data}},
-  \code{\link{correlation_plots}},
-  \code{\link{correlation_plot}},
-  \code{\link{heat_tree_parameters}},
-  \code{\link{heat_tree_plots}},
-  \code{\link{ordination_plot}}, \code{\link{plot_limits}},
-  \code{\link{save_alpha_diversity_plots}},
-  \code{\link{save_correlation_plots}},
-  \code{\link{save_heat_tree_plots}},
-  \code{\link{save_ordination_plots}},
-  \code{\link{save_stacked_barplots}},
-  \code{\link{stacked_barplots}},
-  \code{\link{stacked_barplot}},
-  \code{\link{top_coefficients_barplot}}
+Other Visualizations: 
+\code{\link{alpha_diversity_plot}()},
+\code{\link{correlation_data}()},
+\code{\link{correlation_plots}()},
+\code{\link{correlation_plot}()},
+\code{\link{heat_tree_parameters}()},
+\code{\link{heat_tree_plots}()},
+\code{\link{ordination_plot}()},
+\code{\link{plot_limits}()},
+\code{\link{save_alpha_diversity_plots}()},
+\code{\link{save_correlation_plots}()},
+\code{\link{save_heat_tree_plots}()},
+\code{\link{save_ordination_plots}()},
+\code{\link{save_stacked_barplots}()},
+\code{\link{stacked_barplots}()},
+\code{\link{stacked_barplot}()},
+\code{\link{top_coefficients_barplot}()}
 }
 \concept{Visualizations}

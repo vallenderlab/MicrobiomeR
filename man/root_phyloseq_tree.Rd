@@ -4,8 +4,12 @@
 \alias{root_phyloseq_tree}
 \title{Root phyloseq tree.}
 \usage{
-root_phyloseq_tree(phyloseq_object, tree_path, save_rooted_tree,
-  recursive = TRUE)
+root_phyloseq_tree(
+  phyloseq_object,
+  tree_path,
+  save_rooted_tree,
+  recursive = TRUE
+)
 }
 \arguments{
 \item{phyloseq_object}{A phyloseq object that contains a phylogenetic tree.}
@@ -44,7 +48,8 @@ if(interactive()){
 
 \code{\link[tools]{fileutils}}
 
-Other Phylogenetic Tree Manipulators: \code{\link{pick_new_outgroup}},
-  \code{\link{root_by_longest_edge}}
+Other Phylogenetic Tree Manipulators: 
+\code{\link{pick_new_outgroup}()},
+\code{\link{root_by_longest_edge}()}
 }
 \concept{Phylogenetic Tree Manipulators}

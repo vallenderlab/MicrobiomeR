@@ -3,7 +3,6 @@
 \docType{package}
 \name{MicrobiomeR}
 \alias{MicrobiomeR}
-\alias{MicrobiomeR-package}
 \title{MicrobiomeR}
 \description{
 A microbiome workflow package using phyloseq for data import, metacoder for data analysis,

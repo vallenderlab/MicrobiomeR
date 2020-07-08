@@ -21,11 +21,12 @@ otu_abundance, otu_annotations, otu_proportions, sample_data, phy_tree, taxa_abu
 taxa_proportions, statistical_data, and stats_tax_data respectively.
 }
 \seealso{
-Other Validation: \code{\link{is_analyzed_format}},
-  \code{\link{is_basic_format}},
-  \code{\link{is_phyloseq_format}},
-  \code{\link{is_raw_format}},
-  \code{\link{validate_MicrobiomeR_format}},
-  \code{\link{which_format}}
+Other Validation: 
+\code{\link{is_analyzed_format}()},
+\code{\link{is_basic_format}()},
+\code{\link{is_phyloseq_format}()},
+\code{\link{is_raw_format}()},
+\code{\link{validate_MicrobiomeR_format}()},
+\code{\link{which_format}()}
 }
 \concept{Validation}

@@ -4,8 +4,13 @@
 \alias{save_top_coefficients_barplot}
 \title{Save Top Coefficients Barplot}
 \usage{
-save_top_coefficients_barplot(plot, filename, format = "tiff",
-  start_path = "output", ...)
+save_top_coefficients_barplot(
+  plot,
+  filename,
+  format = "tiff",
+  start_path = "output",
+  ...
+)
 }
 \arguments{
 \item{plot}{The plot object.}

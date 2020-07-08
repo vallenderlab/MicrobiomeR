@@ -4,8 +4,13 @@
 \alias{taxa_prevalence_filter}
 \title{Taxonomic Prevalence Filter (Metacoder)}
 \usage{
-taxa_prevalence_filter(obj, rank, minimum_abundance = 5,
-  rel_sample_percentage = 0.5, validated = FALSE)
+taxa_prevalence_filter(
+  obj,
+  rank,
+  minimum_abundance = 5,
+  rel_sample_percentage = 0.5,
+  validated = FALSE
+)
 }
 \arguments{
 \item{obj}{A Taxmap object.}
@@ -26,7 +31,7 @@ This function filters observations at a specific rank by their prevalence across
 }
 \details{
 The taxa_prevalence_filter filters taxon_ids that do not appear more than a certain amount of times (minimum abundance) in a certain percentage of
-samples (rel_sample_percentage) at the specified agglomerated rank (rank). The \href{http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#filtering}{phyloseq workflow} calls for a minimum abundance of 5 across %50 of the samples.
+samples (rel_sample_percentage) at the specified agglomerated rank (rank). The \href{http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#filtering}{phyloseq workflow} calls for a minimum abundance of 5 across \%50 of the samples.
 This method is considered supervised, because the filtering is done based on taxonomic annotation (taxon_ids), which is assigned based on a reference database (SILVA or GreenGenes).
 }
 \examples{
@@ -84,9 +89,10 @@ metacoder_obj <- taxa_prevalence_filter(
 
 \code{\link[taxa]{filter_taxa}}
 
-Other Advanced Metacoder Filters: \code{\link{agglomerate_taxmap}},
-  \code{\link{cov_filter}},
-  \code{\link{otu_prevalence_filter}},
-  \code{\link{otu_proportion_filter}}
+Other Advanced Metacoder Filters: 
+\code{\link{agglomerate_taxmap}()},
+\code{\link{cov_filter}()},
+\code{\link{otu_prevalence_filter}()},
+\code{\link{otu_proportion_filter}()}
 }
 \concept{Advanced Metacoder Filters}

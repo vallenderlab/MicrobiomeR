@@ -29,7 +29,7 @@ and the taxmap object.
 \dontrun{
 if(interactive()){
 # This example uses data that are no longer available in the MicrobiomeR package,
-# however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_basic_format}}.
+# however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.
 library(MicrobiomeR)
 basic_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "basic_format")
 phylum_obj <- agglomerate_taxmap(obj = basic_silva, rank = "Phylum")
@@ -43,9 +43,10 @@ order_obj <- agglomerate_taxmap(obj = basic_silva, rank = "Order")
 
 \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
 
-Other Advanced Metacoder Filters: \code{\link{cov_filter}},
-  \code{\link{otu_prevalence_filter}},
-  \code{\link{otu_proportion_filter}},
-  \code{\link{taxa_prevalence_filter}}
+Other Advanced Metacoder Filters: 
+\code{\link{cov_filter}()},
+\code{\link{otu_prevalence_filter}()},
+\code{\link{otu_proportion_filter}()},
+\code{\link{taxa_prevalence_filter}()}
 }
 \concept{Advanced Metacoder Filters}

@@ -4,9 +4,14 @@
 \alias{as_analyzed_format}
 \title{As Analyzed MicrobiomeR Format}
 \usage{
-as_analyzed_format(obj, cols = NULL, groups = NULL,
-  combinations = NULL, out_names = NULL,
-  comp_func = metacoder_comp_func_1)
+as_analyzed_format(
+  obj,
+  cols = NULL,
+  groups = NULL,
+  combinations = NULL,
+  out_names = NULL,
+  comp_func = metacoder_comp_func_1
+)
 }
 \arguments{
 \item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
@@ -37,12 +42,14 @@ See the \link{MicrobiomeR_Formats} documentation.
 
 \code{\link[taxa]{taxonomy_table}},  \code{\link[taxa]{taxon_ids}}
 
-Other Formatting: \code{\link{MicrobiomeR_Formats}},
-  \code{\link{as_MicrobiomeR_format}},
-  \code{\link{as_basic_format}},
-  \code{\link{as_custom_format}},
-  \code{\link{as_phyloseq_format}},
-  \code{\link{as_raw_format}}, \code{\link{melt_taxmap}},
-  \code{\link{treatment_matrix}}
+Other Formatting: 
+\code{\link{MicrobiomeR_Formats}},
+\code{\link{as_MicrobiomeR_format}()},
+\code{\link{as_basic_format}()},
+\code{\link{as_custom_format}()},
+\code{\link{as_phyloseq_format}()},
+\code{\link{as_raw_format}()},
+\code{\link{melt_taxmap}()},
+\code{\link{treatment_matrix}()}
 }
 \concept{Formatting}

@@ -4,8 +4,14 @@
 \alias{otu_id_filter}
 \title{Filter OTU Ids from Taxmap Objects}
 \usage{
-otu_id_filter(obj, .f_transform = NULL, .f_filter = NULL,
-  .f_condition = NULL, validated = FALSE, ...)
+otu_id_filter(
+  obj,
+  .f_transform = NULL,
+  .f_filter = NULL,
+  .f_condition = NULL,
+  validated = FALSE,
+  ...
+)
 }
 \arguments{
 \item{obj}{A Taxmap object.}
@@ -65,7 +71,8 @@ return(mo_clone)
 
 \code{\link[purrr]{map}},  \code{\link[purrr]{keep}}
 
-Other Basic Metacoder Filters: \code{\link{sample_id_filter}},
-  \code{\link{taxon_id_filter}}
+Other Basic Metacoder Filters: 
+\code{\link{sample_id_filter}()},
+\code{\link{taxon_id_filter}()}
 }
 \concept{Basic Metacoder Filters}

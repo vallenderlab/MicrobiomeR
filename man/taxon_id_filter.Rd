@@ -4,8 +4,14 @@
 \alias{taxon_id_filter}
 \title{Filter Taxon Ids from Taxmap Objects}
 \usage{
-taxon_id_filter(obj, .f_transform = NULL, .f_filter = NULL,
-  .f_condition = NULL, validated = FALSE, ...)
+taxon_id_filter(
+  obj,
+  .f_transform = NULL,
+  .f_filter = NULL,
+  .f_condition = NULL,
+  validated = FALSE,
+  ...
+)
 }
 \arguments{
 \item{obj}{A Taxmap object.}
@@ -68,7 +74,8 @@ metacoder_obj <- taxon_id_filter(obj        = metacoder_obj,
 
 \code{\link[purrr]{map}},  \code{\link[purrr]{keep}}
 
-Other Basic Metacoder Filters: \code{\link{otu_id_filter}},
-  \code{\link{sample_id_filter}}
+Other Basic Metacoder Filters: 
+\code{\link{otu_id_filter}()},
+\code{\link{sample_id_filter}()}
 }
 \concept{Basic Metacoder Filters}

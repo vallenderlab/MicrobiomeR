@@ -4,7 +4,9 @@
 \name{phyloseq_silva_3}
 \alias{phyloseq_silva_3}
 \title{Phyloseq Data with 3 Treatment Groups}
-\format{An object of class \code{"phyloseq"}}
+\format{
+An object of class \code{"phyloseq"}
+}
 \source{
 \href{https://nephele.niaid.nih.gov/user_guide_pipes/#amplicon_pipes}{Nephele-16S Qiime Pipeline}
 }

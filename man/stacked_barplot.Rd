@@ -4,9 +4,15 @@
 \alias{stacked_barplot}
 \title{Stacked Barplot}
 \usage{
-stacked_barplot(obj, tax_level = "Phylum", fill = "Phylum",
-  xlabel = "Samples", faceted = FALSE, title = NULL,
-  palette_values = NULL)
+stacked_barplot(
+  obj,
+  tax_level = "Phylum",
+  fill = "Phylum",
+  xlabel = "Samples",
+  faceted = FALSE,
+  title = NULL,
+  palette_values = NULL
+)
 }
 \arguments{
 \item{obj}{An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
@@ -43,20 +49,22 @@ if (interactive()) {
 }
 }
 \seealso{
-Other Visualizations: \code{\link{alpha_diversity_plot}},
-  \code{\link{correlation_data}},
-  \code{\link{correlation_plots}},
-  \code{\link{correlation_plot}},
-  \code{\link{heat_tree_parameters}},
-  \code{\link{heat_tree_plots}},
-  \code{\link{ordination_plots}},
-  \code{\link{ordination_plot}}, \code{\link{plot_limits}},
-  \code{\link{save_alpha_diversity_plots}},
-  \code{\link{save_correlation_plots}},
-  \code{\link{save_heat_tree_plots}},
-  \code{\link{save_ordination_plots}},
-  \code{\link{save_stacked_barplots}},
-  \code{\link{stacked_barplots}},
-  \code{\link{top_coefficients_barplot}}
+Other Visualizations: 
+\code{\link{alpha_diversity_plot}()},
+\code{\link{correlation_data}()},
+\code{\link{correlation_plots}()},
+\code{\link{correlation_plot}()},
+\code{\link{heat_tree_parameters}()},
+\code{\link{heat_tree_plots}()},
+\code{\link{ordination_plots}()},
+\code{\link{ordination_plot}()},
+\code{\link{plot_limits}()},
+\code{\link{save_alpha_diversity_plots}()},
+\code{\link{save_correlation_plots}()},
+\code{\link{save_heat_tree_plots}()},
+\code{\link{save_ordination_plots}()},
+\code{\link{save_stacked_barplots}()},
+\code{\link{stacked_barplots}()},
+\code{\link{top_coefficients_barplot}()}
 }
 \concept{Visualizations}
