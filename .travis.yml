@@ -9,6 +9,9 @@ cache:
   directories:
   - $HOME/.local/share/renv
   - $TRAVIS_BUILD_DIR/renv/library
+bioc_required: true
+bioc_use_devel: true
+bioc-packages: BiocManager
 # repos:
 #   BioCsoft: https://bioconductor.org/packages/3.11/bioc
 #   BioCann: https://bioconductor.org/packages/3.11/data/annotation
@@ -23,7 +26,7 @@ env:
 install:
   - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
   - Rscript -e "if (!requireNamespace('BiocManager', quietly = TRUE)) renv::install('BiocManager')"
-  - Rscript -e "options(repos = BiocManager::repositories()); renv::restore()"
+  - Rscript -e "options(repos = BiocManager::repositories()); renv::consent(provided=TRUE); renv::restore()"
 matrix:
   include:
   - stage: prewarm cache
