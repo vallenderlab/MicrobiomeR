@@ -280,7 +280,6 @@ heat_trees$Phylum
 corr_plots <- correlation_plots(metacoder_obj, primary_ranks = c("Phylum", "Class", "Order"))
 
 corr_plots$Class$Phylum$`Exp_Var2-vs-Exp_Var1`
-corr_plots$Class$Phylum$`Exp_Var2-vs-Control`
 corr_plots$Class$Phylum$`Exp_Var1-vs-Control`
 ```
 
