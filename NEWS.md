@@ -1,3 +1,9 @@
+# MicrobiomeR 0.7.0
+
+* Added `biomodality_coefficient` function from modes.
+* Removed modes from DESCRIPTION and NAMESPACE.
+* Fixed bug from breaking changes in metacoder.
+
 # MicrobiomeR 0.6.1
 
 * Added `StagedInstall: false` to DESCRIPTION file.
