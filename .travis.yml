@@ -25,8 +25,7 @@ env:
     - R_INSTALL_STAGED=FALSE
 install:
   - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
-  - Rscript -e "if (!requireNamespace('BiocManager', quietly = TRUE)) renv::install('BiocManager')"
-  - Rscript -e "options(repos = BiocManager::repositories()); renv::consent(provided=TRUE); renv::restore()"
+  - Rscript -e "renv::restore()"
 matrix:
   include:
   - stage: prewarm cache
