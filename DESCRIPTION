@@ -49,7 +49,7 @@ Imports:
     scico,
     shades,
     stringr,
-    taxa,
+    taxa (<= 0.3.4),
     tibble,
     tidyr,
     vegan,
