@@ -1,0 +1,45 @@
+cff-version: 1.2.0
+message: "If you use MicrobiomeR, please cite the following publication."
+title: "MicrobiomeR"
+version: 1.0.0
+doi: 10.21105/joss.01299
+date-released: 2019-03-31
+url: "https://doi.org/10.21105/joss.01299"
+authors:
+  - family-names: "Gilmore"
+    given-names: "Robert A."
+    orcid: "https://orcid.org/0000-0001-8096-0180"
+  - family-names: "Hutchins"
+    given-names: "Shaurita"
+    orcid: "https://orcid.org/0000-0002-7687-0059"
+  - family-names: "Zhang"
+    given-names: "Xiao"
+    orcid: "https://orcid.org/0000-0001-5710-6496"
+  - family-names: "Vallender"
+    given-names: "Eric"
+    orcid: "https://orcid.org/0000-0003-3506-0540"
+
+preferred-citation:
+  type: article
+  title: "MicrobiomeR: An R Package for Simplified and Standardized Microbiome Analysis Workflows"
+  authors:
+    - family-names: "Gilmore"
+      given-names: "Robert A."
+      orcid: "https://orcid.org/0000-0001-8096-0180"
+    - family-names: "Hutchins"
+      given-names: "Shaurita"
+      orcid: "https://orcid.org/0000-0002-7687-0059"
+    - family-names: "Zhang"
+      given-names: "Xiao"
+      orcid: "https://orcid.org/0000-0001-5710-6496"
+    - family-names: "Vallender"
+      given-names: "Eric"
+      orcid: "https://orcid.org/0000-0003-3506-0540"
+  journal: "Journal of Open Source Software"
+  volume: 4
+  issue: 35
+  start: 1299
+  doi: "10.21105/joss.01299"
+  year: 2019
+  month: 3
+  url: "https://doi.org/10.21105/joss.01299"
