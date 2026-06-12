@@ -532,17 +532,10 @@ as_custom_format <- function(obj, format, change_name_list = NULL, ...) {
   # Create vector of current table names
   obs_tables <- names(mo_clone$data)
 
-  # Logic for getting to the right format
-  if (fmt == format) {
-    mo_clone <- order_metacoder_data(obj = mo_clone)
-    return(mo_clone)
-  } else if (!is.null(change_name_list)) {   # Create a list of tables to change if necessary
-    # Create a list of key/values used to change names
+  if (!is.null(change_name_list)) {
     changed_tables <- change_name_list[names(change_name_list) %in% obs_tables]
-    # Create a list of key/values used to create new tables
     bad_table_names <- change_name_list[!names(change_name_list) %in% obs_tables]
 
-    # Throw errors for bad table names
     if (length(bad_table_names) != 0) {
       if (length(bad_table_names) == length(change_name_list)) {
         rlang::abort(cli::format_inline(
@@ -554,6 +547,13 @@ as_custom_format <- function(obj, format, change_name_list = NULL, ...) {
         ))
       }
     }
+  }
+
+  # Logic for getting to the right format
+  if (fmt == format) {
+    mo_clone <- order_metacoder_data(obj = mo_clone)
+    return(mo_clone)
+  } else if (!is.null(change_name_list)) {   # Create a list of tables to change if necessary
     # Change the table names
     for (current_table in names(changed_tables)) {
       # Create a new table from the data in the current table

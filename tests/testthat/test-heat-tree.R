@@ -11,6 +11,21 @@ test_that("basic heat-tree plot works", {
   expect_true(!is.null(heat_tree_plots(obj = data, rank_list = c("Phylum", "Class"))))
 })
 
+test_that("heat tree node counts are preserved for retained taxa", {
+  filtered_data <- MicrobiomeR:::filter_taxa_compat(
+    obj = data,
+    subset = n_supertaxa < pkg.private$rank_index[["Phylum"]],
+    supertaxa = TRUE,
+    reassign_obs = FALSE
+  )
+  otu_counts <- MicrobiomeR:::get_heat_tree_otu_counts(
+    filtered_obj = filtered_data,
+    source_obj = data
+  )
+
+  expect_true(max(otu_counts) > 0)
+})
+
 test_that("heat_tree_plots is reproducible and preserves RNG state", {
   set.seed(2026)
   seed_before <- .Random.seed

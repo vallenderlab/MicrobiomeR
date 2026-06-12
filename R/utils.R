@@ -31,15 +31,6 @@
 #' @importFrom tools file_ext
 #' @importFrom crayon red
 create_taxmap <- function(obj) {
-  if (is.character(obj) && length(obj) == 1 && file.exists(obj)) {
-    file_extension <- tolower(tools::file_ext(obj))
-    if (!file_extension %in% c("rdata", "rda")) {
-      rlang::abort(cli::format_inline(
-        "Unsupported file extension for {.path {obj}}. Expected {.val .RData} or {.val .rda}."
-      ))
-    }
-  }
-
   if (is.null(obj)) {
     rlang::abort("Please use a metacoder/phyloseq object or an rdata file.")
   } else {
@@ -56,11 +47,27 @@ create_taxmap <- function(obj) {
       )
     } else if (inherits(obj, "Taxmap")) {
       metacoder_object <- obj
-    } else if (is.character(obj) && length(obj) == 1 && file.exists(obj)) {
+    } else if (is.character(obj) && length(obj) == 1) {
+      file_extension <- tolower(tools::file_ext(obj))
+
+      if (!file_extension %in% c("rdata", "rda")) {
+        rlang::abort(cli::format_inline(
+          "Unsupported file extension for {.path {obj}}. Expected {.val .RData} or {.val .rda}."
+        ))
+      }
+
+      if (!file.exists(obj)) {
+        rlang::abort(cli::format_inline(
+          "Could not find {.path {obj}}. Please provide an existing {.val .RData} or {.val .rda} file."
+        ))
+      }
+
       load_env <- new.env(parent = emptyenv())
       load(file = obj, envir = load_env)
       if (!exists("metacoder_object", envir = load_env, inherits = FALSE)) {
-        rlang::abort("Please provide a loadable .RData/.rda file that contains an object called `metacoder_object`.")
+        rlang::abort(
+          "Please provide a loadable .RData/.rda file that contains an object called `metacoder_object`."
+        )
       }
       metacoder_object <- get("metacoder_object", envir = load_env, inherits = FALSE)
     } else {

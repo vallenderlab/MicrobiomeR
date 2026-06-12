@@ -64,6 +64,10 @@ heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, seed = 1, ...) 
         supertaxa = TRUE,
         reassign_obs = FALSE
       )
+      node_otu_counts <- get_heat_tree_otu_counts(
+        filtered_obj = filtered_obj,
+        source_obj = obj
+      )
       flt_taxmaps[[rank]] <- filtered_obj
       if (is.logical(title)) {
         if (title == TRUE) {
@@ -79,6 +83,7 @@ heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, seed = 1, ...) 
       message(crayon::green(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(title_param))))
       treatment_no <- length(unique(filtered_obj$data$sample_data$TreatmentGroup))
       default_heat_tree_parameters <- heat_tree_parameters(obj = filtered_obj, title = title_param, treatment_no = treatment_no, ...)
+      default_heat_tree_parameters$node_size <- node_otu_counts
       rank_seed <- if (is.null(seed)) NULL else as.integer(seed) + rank_level - 1L
       # Filter by Taxonomy Rank and then create a heat tree.
       if (treatment_no == 2) {
@@ -285,6 +290,16 @@ heat_tree_parameters <- function(obj, title, treatment_no, ...) {
     }
   }
   return(param_list)
+}
+
+get_heat_tree_otu_counts <- function(filtered_obj, source_obj, otu_table = "otu_abundance") {
+  source_taxon_ids <- source_obj$taxon_ids()
+  source_otu_counts <- source_obj$n_obs(otu_table)
+  retained_taxon_ids <- filtered_obj$taxon_ids()
+
+  otu_counts <- unname(source_otu_counts[match(retained_taxon_ids, source_taxon_ids)])
+  otu_counts[is.na(otu_counts)] <- 0
+  stats::setNames(otu_counts, retained_taxon_ids)
 }
 
 
