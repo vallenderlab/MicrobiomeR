@@ -6,19 +6,26 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Filtering Data • MicrobiomeR</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- favicons --><link rel="icon" type="image/png" sizes="48x48" href="../favicon-48x48.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Filtering Data">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
+
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.5.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
       </span>
     </div>
 
@@ -41,9 +48,9 @@
   <a href="../index.html">Home</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Vignettes
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -79,15 +86,15 @@
   <a href="../articles/about.html">About</a>
 </li>
 <li>
-  <a href="https://twitter.com/datasnakes">
+  <a href="https://twitter.com/datasnakes" class="external-link">
     <span class="fa fa-twitter"></span>
-     
+
   </a>
 </li>
 <li>
-  <a href="https://github.com/vallenderlab/MicrobiomeR">
+  <a href="https://github.com/vallenderlab/MicrobiomeR" class="external-link">
     <span class="fa fa-github"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -98,457 +105,403 @@
 </div>
 <!--/.navbar -->
 
-      
+
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Filtering Data</h1>
-                        <h4 class="author">Robert Gilmore</h4>
+      <h1 data-toc-skip>Filtering Data</h1>
+                        <h4 data-toc-skip class="author">Robert
+Gilmore</h4>
             
-            <h4 class="date">2019-02-27</h4>
+            <h4 data-toc-skip class="date">2026-06-11</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/vallenderlab/MicrobiomeR/blob/master/vignettes/filtering.Rmd"><code>vignettes/filtering.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/vallenderlab/MicrobiomeR/blob/HEAD/vignettes/filtering.Rmd" class="external-link"><code>vignettes/filtering.Rmd</code></a></small>
       <div class="hidden name"><code>filtering.Rmd</code></div>
 
     </div>
 
     
     
-<div id="data-wrangling" class="section level1">
-<h1 class="hasAnchor">
-<a href="#data-wrangling" class="anchor"></a>Data Wrangling</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the data files from package</span>
-input_files &lt;-<span class="st"> </span>pkg.data<span class="op">$</span>input_files
-biom_file &lt;-<span class="st"> </span>input_files<span class="op">$</span>biom_files<span class="op">$</span>silva <span class="co"># Path to silva biom file</span>
-tree_file &lt;-<span class="st"> </span>input_files<span class="op">$</span>tree_files<span class="op">$</span>silva <span class="co"># Path to silva tree file</span>
-metadata_file &lt;-<span class="st"> </span>input_files<span class="op">$</span>metadata<span class="op">$</span>two_groups <span class="co"># Path to Nephele metadata</span>
-parse_func &lt;-<span class="st"> </span>parse_taxonomy_silva_<span class="dv">128</span> <span class="co"># A custom phyloseq parsing function for silva annotations</span>
-
-<span class="co"># Get the phyloseq object</span>
-phy_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_phyloseq.html">create_phyloseq</a></span>(<span class="dt">biom_file =</span> biom_file, 
-                           <span class="dt">tree_file =</span> tree_file, 
-                           <span class="dt">metadata_file =</span> metadata_file,
-                           <span class="dt">parse_func =</span> parse_func)
-
-<span class="co"># Get the taxmap object in the raw format</span>
-raw_metacoder &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as_MicrobiomeR_format.html">as_MicrobiomeR_format</a></span>(<span class="dt">obj =</span> phy_obj, <span class="dt">format =</span> <span class="st">"raw_format"</span>)</code></pre></div>
+<div class="section level2">
+<h2 id="data-wrangling">Data Wrangling<a class="anchor" aria-label="anchor" href="#data-wrangling"></a>
+</h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Get the data files from package</span></span>
+<span><span class="va">input_files</span> <span class="op">&lt;-</span> <span class="va">pkg.data</span><span class="op">$</span><span class="va">input_files</span></span>
+<span><span class="va">biom_file</span> <span class="op">&lt;-</span> <span class="va">input_files</span><span class="op">$</span><span class="va">biom_files</span><span class="op">$</span><span class="va">silva</span> <span class="co"># Path to silva biom file</span></span>
+<span><span class="va">tree_file</span> <span class="op">&lt;-</span> <span class="va">input_files</span><span class="op">$</span><span class="va">tree_files</span><span class="op">$</span><span class="va">silva</span> <span class="co"># Path to silva tree file</span></span>
+<span><span class="va">metadata_file</span> <span class="op">&lt;-</span> <span class="va">input_files</span><span class="op">$</span><span class="va">metadata</span><span class="op">$</span><span class="va">two_groups</span> <span class="co"># Path to Nephele metadata</span></span>
+<span><span class="va">parse_func</span> <span class="op">&lt;-</span> <span class="va">parse_taxonomy_silva_128</span> <span class="co"># A custom phyloseq parsing function for silva annotations</span></span>
+<span></span>
+<span><span class="co"># Get the phyloseq object</span></span>
+<span><span class="va">phy_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_phyloseq.html">create_phyloseq</a></span><span class="op">(</span>biom_file <span class="op">=</span> <span class="va">biom_file</span>, </span>
+<span>                           tree_file <span class="op">=</span> <span class="va">tree_file</span>, </span>
+<span>                           metadata_file <span class="op">=</span> <span class="va">metadata_file</span>,</span>
+<span>                           parse_func <span class="op">=</span> <span class="va">parse_func</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get the taxmap object in the raw format</span></span>
+<span><span class="va">raw_metacoder</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_MicrobiomeR_format.html">as_MicrobiomeR_format</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">phy_obj</span>, format <span class="op">=</span> <span class="st">"raw_format"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="taxmap-filtering" class="section level1">
-<h1 class="hasAnchor">
-<a href="#taxmap-filtering" class="anchor"></a>Taxmap Filtering</h1>
-<p>Metacoder is a highly useful package that comes with tons of features right out of the box. Functions such as <code><a href="https://www.rdocumentation.org/packages/metacoder/topics/filter_ambiguous_taxa">metacoder::filter_ambiguous_taxa()</a></code>, <code><a href="https://www.rdocumentation.org/packages/taxa/topics/filter_taxa">taxa::filter_taxa()</a></code>, and <code><a href="https://www.rdocumentation.org/packages/taxa/topics/filter_obs">taxa::filter_obs()</a></code> for instance can almost always be used in your workflow.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Remove Archaea from the taxmap object</span>
-metacoder_obj &lt;-<span class="st"> </span>taxa<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/taxa/topics/filter_taxa">filter_taxa</a></span>(<span class="dt">obj =</span> raw_metacoder,
-                                   taxon_names <span class="op">==</span><span class="st"> "Archaea"</span>,
-                                   <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>,
-                                   <span class="dt">invert =</span> <span class="ot">TRUE</span>)
-
-<span class="co"># Ambiguous Annotation Filter - Remove taxonomies with ambiguous names</span>
-metacoder_obj &lt;-<span class="st"> </span>metacoder<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/metacoder/topics/filter_ambiguous_taxa">filter_ambiguous_taxa</a></span>(metacoder_obj, 
-                                                  <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="section level2">
+<h2 id="taxmap-filtering">Taxmap Filtering<a class="anchor" aria-label="anchor" href="#taxmap-filtering"></a>
+</h2>
+<p>Metacoder is a highly useful package that comes with tons of features
+right out of the box. Functions such as
+<code><a href="https://rdrr.io/pkg/metacoder/man/filter_ambiguous_taxa.html" class="external-link">metacoder::filter_ambiguous_taxa()</a></code>,
+<code><a href="https://rdrr.io/pkg/metacoder/man/filter_taxa.html" class="external-link">metacoder::filter_taxa()</a></code>, and
+<code>taxa::filter_obs()</code> for instance can almost always be used
+in your workflow.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Remove Archaea from the taxmap object</span></span>
+<span><span class="va">metacoder_obj</span> <span class="op">&lt;-</span> <span class="fu">metacoder</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/metacoder/man/filter_taxa.html" class="external-link">filter_taxa</a></span><span class="op">(</span></span>
+<span>  obj <span class="op">=</span> <span class="va">raw_metacoder</span>,</span>
+<span>  <span class="va">taxon_names</span> <span class="op">==</span> <span class="st">"Archaea"</span>,</span>
+<span>  subtaxa <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  invert <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Ambiguous Annotation Filter - Remove taxonomies with ambiguous names</span></span>
+<span><span class="va">metacoder_obj</span> <span class="op">&lt;-</span> <span class="fu">metacoder</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/metacoder/man/filter_ambiguous_taxa.html" class="external-link">filter_ambiguous_taxa</a></span><span class="op">(</span><span class="va">metacoder_obj</span>, </span>
+<span>                                                  subtaxa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="basic-filtering" class="section level1">
-<h1 class="hasAnchor">
-<a href="#basic-filtering" class="anchor"></a>Basic Filtering</h1>
-<p>Three functions are provided by MicrobiomeR that do some basic filtering:</p>
+<div class="section level2">
+<h2 id="basic-filtering">Basic Filtering<a class="anchor" aria-label="anchor" href="#basic-filtering"></a>
+</h2>
+<p>Three functions are provided by MicrobiomeR that do some basic
+filtering:</p>
 <ul>
 <li>
 <code><a href="../reference/sample_id_filter.html">sample_id_filter()</a></code> for filtering samples.</li>
 <li>
-<code><a href="../reference/taxon_id_filter.html">taxon_id_filter()</a></code> for filtering by taxon_id, which includes intermediate taxa.</li>
+<code><a href="../reference/taxon_id_filter.html">taxon_id_filter()</a></code> for filtering by taxon_id, which
+includes intermediate taxa.</li>
 <li>
-<code><a href="../reference/otu_id_filter.html">otu_id_filter()</a></code> for filtering by otu_id, which only includes leaf taxa.</li>
+<code><a href="../reference/otu_id_filter.html">otu_id_filter()</a></code> for filtering by otu_id, which only
+includes leaf taxa.</li>
 </ul>
-<p>These functions all take the same parameters, most noteably a transformation function (.f_transform), a filtering function (.f_filter), and a coditional function (.f_condition).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Low Sample Filter - Remove the low samples</span>
-<span class="co"># The sample filter should generally be implemented first</span>
-metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sample_id_filter.html">sample_id_filter</a></span>(<span class="dt">obj =</span> metacoder_obj,
-                               <span class="dt">.f_filter =</span> <span class="op">~</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(.),
-                               <span class="dt">.f_condition =</span> <span class="op">~</span>.<span class="op">&gt;=</span><span class="st"> </span><span class="dv">20</span>, 
-                               <span class="dt">validated =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>These functions all take the same parameters, most notably a
+transformation function (.f_transform), a filtering function
+(.f_filter), and a conditional function (.f_condition).</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Low Sample Filter - Remove the low samples</span></span>
+<span><span class="co"># The sample filter should generally be implemented first</span></span>
+<span><span class="va">metacoder_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sample_id_filter.html">sample_id_filter</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">metacoder_obj</span>,</span>
+<span>                               .f_filter <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,</span>
+<span>                               .f_condition <span class="op">=</span> <span class="op">~</span><span class="va">.</span><span class="op">&gt;=</span> <span class="fl">20</span>, </span>
+<span>                               validated <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="advanced-filtering" class="section level1">
-<h1 class="hasAnchor">
-<a href="#advanced-filtering" class="anchor"></a>Advanced Filtering</h1>
-<p>The advanced filtering functions available with MicrobiomeR do several things. They wrap the basic filtering functions mentioned above, they wrap common metacoder and taxa functions, and they mimic the tools found in the phyloseq package. Below I’ve mentioned some of them and how they relate to the phyloseq package:</p>
+<div class="section level2">
+<h2 id="advanced-filtering">Advanced Filtering<a class="anchor" aria-label="anchor" href="#advanced-filtering"></a>
+</h2>
+<p>The advanced filtering functions available with MicrobiomeR do
+several things. They wrap the basic filtering functions mentioned above,
+they wrap common metacoder and taxa functions, and they mimic the tools
+found in the phyloseq package. Below I’ve mentioned some of them and how
+they relate to the phyloseq package:</p>
 <ul>
 <li>
-<code><a href="../reference/agglomerate_taxmap.html">agglomerate_taxmap()</a></code> is equivalent to <code><a href="https://www.rdocumentation.org/packages/phyloseq/topics/tax_glom">phyloseq::tax_glom()</a></code>.</li>
+<code><a href="../reference/agglomerate_taxmap.html">agglomerate_taxmap()</a></code> is equivalent to
+<code><a href="https://rdrr.io/pkg/phyloseq/man/tax_glom.html" class="external-link">phyloseq::tax_glom()</a></code>.</li>
 <li>
-<code><a href="../reference/otu_proportion_filter.html">otu_proportion_filter()</a></code> is seen in the first step in phyloseq’s <a href="http://joey711.github.io/phyloseq/preprocess.html#preprocessing">preprocessing</a> vignette.</li>
+<code><a href="../reference/otu_proportion_filter.html">otu_proportion_filter()</a></code> is seen in the first step in
+phyloseq’s <a href="http://joey711.github.io/phyloseq/preprocess.html#preprocessing" class="external-link">preprocessing</a>
+vignette.</li>
 <li>
-<code>Prevalence Filtering</code> functions filter observations by thier prevelance across samples.
+<code>Prevalence Filtering</code> functions filter observations by
+their prevalence across samples.
 <ul>
-<li>(Unsupervised) <code>otu_prevelance_filter()</code> is seen in phyloseq’s <a href="http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#prevalence_filtering">prevalence filtering</a> vignette.</li>
-<li>(Supervised) <code><a href="../reference/taxa_prevalence_filter.html">taxa_prevalence_filter()</a></code> is seen in phyloseq’s <a href="http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#taxonomic_filtering">taxonomic filtering</a> vignette.</li>
+<li>(Unsupervised) <code>otu_prevelance_filter()</code> is seen in
+phyloseq’s <a href="http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#prevalence_filtering" class="external-link">prevalence
+filtering</a> vignette.</li>
+<li>(Supervised) <code><a href="../reference/taxa_prevalence_filter.html">taxa_prevalence_filter()</a></code> is seen in
+phyloseq’s <a href="http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#taxonomic_filtering" class="external-link">taxonomic
+filtering</a> vignette.</li>
 </ul>
 </li>
 <li>
-<code><a href="../reference/cov_filter.html">cov_filter()</a></code> is seen in the nineth step in phyloseq’s <a href="http://joey711.github.io/phyloseq/preprocess.html#preprocessing">preprocessing</a> vignette.</li>
+<code><a href="../reference/cov_filter.html">cov_filter()</a></code> is seen in the ninth step in phyloseq’s <a href="http://joey711.github.io/phyloseq/preprocess.html#preprocessing" class="external-link">preprocessing</a>
+vignette.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Master Threshold Filter - Add the otu_proportions table and then filter OTUs based on min %</span>
-metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otu_proportion_filter.html">otu_proportion_filter</a></span>(<span class="dt">obj =</span> metacoder_obj,
-                                       <span class="dt">otu_percentage =</span> <span class="fl">0.00001</span>)
-
-<span class="co"># Taxon Prevalence Filter - Add taxa_abundance and taxa_proportions and then filter OTUs that do not</span>
-<span class="co"># appear more than a certian amount of times in a certain percentage of samples at the specified</span>
-<span class="co"># agglomerated rank.  This is considered a supervised method, because it relies on intermediate</span>
-<span class="co"># taxonomies to filter the data.</span>
-<span class="co"># The default minimum abundance is 5 and the sample percentage is 0.5 (5%).</span>
-<span class="co"># Phylum</span>
-metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/taxa_prevalence_filter.html">taxa_prevalence_filter</a></span>(<span class="dt">obj =</span> metacoder_obj,
-                                        <span class="dt">rank =</span> <span class="st">"Phylum"</span>)
-<span class="co"># Class</span>
-metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/taxa_prevalence_filter.html">taxa_prevalence_filter</a></span>(<span class="dt">obj =</span> metacoder_obj,
-                                        <span class="dt">rank =</span> <span class="st">"Class"</span>, 
-                                        <span class="dt">validated =</span> <span class="ot">TRUE</span>)
-<span class="co"># Order</span>
-metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/taxa_prevalence_filter.html">taxa_prevalence_filter</a></span>(<span class="dt">obj =</span> metacoder_obj,
-                                        <span class="dt">rank =</span> <span class="st">"Order"</span>, 
-                                        <span class="dt">validated =</span> <span class="ot">TRUE</span>)
-
-<span class="co"># OTU Prevalence Filter - Filter OTUs that do not appear more than a certian amount of times in a</span>
-<span class="co"># certain percentage of samples.  This is considered an unsupervised method, because it relies only</span>
-<span class="co"># on the leaf OTU ids to filter the data.</span>
-metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/otu_prevalence_filter.html">otu_prevalence_filter</a></span>(<span class="dt">obj =</span> metacoder_obj, 
-                                       <span class="dt">validated =</span> <span class="ot">TRUE</span>)
-
-<span class="co"># Coefficient of Variation Filter - Filter OTUs based on the coefficient of variation</span>
-metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cov_filter.html">cov_filter</a></span>(<span class="dt">obj =</span> metacoder_obj,
-                            <span class="dt">coefficient_of_variation =</span> <span class="dv">3</span>, 
-                            <span class="dt">validated =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Master Threshold Filter - Add the otu_proportions table and then filter OTUs based on min %</span></span>
+<span><span class="va">metacoder_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/otu_proportion_filter.html">otu_proportion_filter</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">metacoder_obj</span>,</span>
+<span>                                       otu_percentage <span class="op">=</span> <span class="fl">0.00001</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Taxon Prevalence Filter - Add taxa_abundance and taxa_proportions and then filter OTUs that do not</span></span>
+<span><span class="co"># appear more than a certian amount of times in a certain percentage of samples at the specified</span></span>
+<span><span class="co"># agglomerated rank.  This is considered a supervised method, because it relies on intermediate</span></span>
+<span><span class="co"># taxonomies to filter the data.</span></span>
+<span><span class="co"># The default minimum abundance is 5 and the sample percentage is 0.5 (5%).</span></span>
+<span><span class="co"># Phylum</span></span>
+<span><span class="va">metacoder_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/taxa_prevalence_filter.html">taxa_prevalence_filter</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">metacoder_obj</span>,</span>
+<span>                                        rank <span class="op">=</span> <span class="st">"Phylum"</span><span class="op">)</span></span>
+<span><span class="co"># Class</span></span>
+<span><span class="va">metacoder_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/taxa_prevalence_filter.html">taxa_prevalence_filter</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">metacoder_obj</span>,</span>
+<span>                                        rank <span class="op">=</span> <span class="st">"Class"</span>, </span>
+<span>                                        validated <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co"># Order</span></span>
+<span><span class="va">metacoder_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/taxa_prevalence_filter.html">taxa_prevalence_filter</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">metacoder_obj</span>,</span>
+<span>                                        rank <span class="op">=</span> <span class="st">"Order"</span>, </span>
+<span>                                        validated <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># OTU Prevalence Filter - Filter OTUs that do not appear more than a certian amount of times in a</span></span>
+<span><span class="co"># certain percentage of samples.  This is considered an unsupervised method, because it relies only</span></span>
+<span><span class="co"># on the leaf OTU ids to filter the data.</span></span>
+<span><span class="va">metacoder_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/otu_prevalence_filter.html">otu_prevalence_filter</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">metacoder_obj</span>, </span>
+<span>                                       validated <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Coefficient of Variation Filter - Filter OTUs based on the coefficient of variation</span></span>
+<span><span class="va">metacoder_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cov_filter.html">cov_filter</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">metacoder_obj</span>,</span>
+<span>                            coefficient_of_variation <span class="op">=</span> <span class="fl">3</span>, </span>
+<span>                            validated <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="other-filtering" class="section level1">
-<h1 class="hasAnchor">
-<a href="#other-filtering" class="anchor"></a>Other Filtering</h1>
-<p>As mentioned previously taxmap filtering can be done in any way that fits your needs with the <code>taxa</code> and <code>metacoder</code> packages. However, MicrobiomeR also provides some utility based function for filtering/manipulating your <em>observation</em> data by hand. Observation data can be accessed within the taxmap object. Make sure you don’t manipulate existing data inside of your taxmap object unless you’re absolutely sure you know what you’re doing.</p>
-<div id="transposing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#transposing" class="anchor"></a>Transposing</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the abundance tables from the taxmap object</span>
-taxa_abund &lt;-<span class="st"> </span>metacoder_obj<span class="op">$</span>data<span class="op">$</span>taxa_abundance
-otu_abund &lt;-<span class="st"> </span>metacoder_obj<span class="op">$</span>data<span class="op">$</span>otu_abundance
-
-<span class="co"># Transposing with one ID (taxon_id)</span>
-taxa_abund <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/transposer.html">transposer</a></span>(<span class="dt">ids =</span> <span class="st">"taxon_id"</span>, <span class="dt">header_name =</span> <span class="st">"samples"</span>)
-<span class="co">#&gt; # A tibble: 48 x 176</span>
-<span class="co">#&gt;    samples     ac    af    ag    ah    ai    aj    ak    al    an    ao</span>
-<span class="co">#&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 Sample~ 112582 53903  4217  4237    68 46540  1794    11  1524    51</span>
-<span class="co">#&gt;  2 Sample~  88194 56426   480   750    23 30145    17     7    38     0</span>
-<span class="co">#&gt;  3 Sample~  74933 39952   557  7138    21 26932    73     5    49     0</span>
-<span class="co">#&gt;  4 Sample~  80796 41912   629  3234    14 34738   189    12     0     0</span>
-<span class="co">#&gt;  5 Sample~ 116806 51677  1111  1207    13 62301    47    27   109    11</span>
-<span class="co">#&gt;  6 Sample~  90122 33032   350     9     0 56274     0    11     0     0</span>
-<span class="co">#&gt;  7 Sample~ 129778 61153  2346  2882    58 62494    12    24   338   101</span>
-<span class="co">#&gt;  8 Sample~ 113377 45411   332  1369     3 65815   228    31    16     1</span>
-<span class="co">#&gt;  9 Sample~ 134396 52332  3202  1560    44 76700    98    43   143    28</span>
-<span class="co">#&gt; 10 Sample~ 112240 41003  4624   518    54 65317   276    13   300    63</span>
-<span class="co">#&gt; # ... with 38 more rows, and 165 more variables: aq &lt;dbl&gt;, as &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   at &lt;dbl&gt;, av &lt;dbl&gt;, aw &lt;dbl&gt;, ay &lt;dbl&gt;, az &lt;dbl&gt;, ba &lt;dbl&gt;, bb &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   bc &lt;dbl&gt;, bd &lt;dbl&gt;, be &lt;dbl&gt;, bf &lt;dbl&gt;, bg &lt;dbl&gt;, bi &lt;dbl&gt;, bk &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   bl &lt;dbl&gt;, bm &lt;dbl&gt;, bo &lt;dbl&gt;, br &lt;dbl&gt;, bs &lt;dbl&gt;, bu &lt;dbl&gt;, bv &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   bx &lt;dbl&gt;, by &lt;dbl&gt;, bz &lt;dbl&gt;, cb &lt;dbl&gt;, cc &lt;dbl&gt;, ce &lt;dbl&gt;, cf &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   ch &lt;dbl&gt;, ci &lt;dbl&gt;, cj &lt;dbl&gt;, cl &lt;dbl&gt;, co &lt;dbl&gt;, cq &lt;dbl&gt;, cr &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   cs &lt;dbl&gt;, cu &lt;dbl&gt;, cv &lt;dbl&gt;, cz &lt;dbl&gt;, da &lt;dbl&gt;, dc &lt;dbl&gt;, dd &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   de &lt;dbl&gt;, df &lt;dbl&gt;, dh &lt;dbl&gt;, dj &lt;dbl&gt;, dl &lt;dbl&gt;, dn &lt;dbl&gt;, do &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   dq &lt;dbl&gt;, dr &lt;dbl&gt;, dt &lt;dbl&gt;, dx &lt;dbl&gt;, dy &lt;dbl&gt;, dz &lt;dbl&gt;, ea &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   ec &lt;dbl&gt;, ed &lt;dbl&gt;, ee &lt;dbl&gt;, ef &lt;dbl&gt;, ei &lt;dbl&gt;, ej &lt;dbl&gt;, eo &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   ep &lt;dbl&gt;, eq &lt;dbl&gt;, es &lt;dbl&gt;, et &lt;dbl&gt;, eu &lt;dbl&gt;, ex &lt;dbl&gt;, ey &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   fa &lt;dbl&gt;, fe &lt;dbl&gt;, ff &lt;dbl&gt;, fi &lt;dbl&gt;, fj &lt;dbl&gt;, fl &lt;dbl&gt;, fm &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   fn &lt;dbl&gt;, fp &lt;dbl&gt;, fq &lt;dbl&gt;, fr &lt;dbl&gt;, fs &lt;dbl&gt;, ft &lt;dbl&gt;, fu &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   fv &lt;dbl&gt;, fx &lt;dbl&gt;, fy &lt;dbl&gt;, fz &lt;dbl&gt;, ga &lt;dbl&gt;, gb &lt;dbl&gt;, gd &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   ge &lt;dbl&gt;, gf &lt;dbl&gt;, gg &lt;dbl&gt;, gh &lt;dbl&gt;, gj &lt;dbl&gt;, gk &lt;dbl&gt;, gl &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   ...</span>
-
-<span class="co"># Re-Transposing with one ID (taxon_id)</span>
-taxa_abund <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/transposer.html">transposer</a></span>(<span class="st">"taxon_id"</span>, <span class="st">"samples"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/transposer.html">transposer</a></span>(<span class="st">"samples"</span>, <span class="st">"taxon_id"</span>)
-<span class="co">#&gt; # A tibble: 175 x 49</span>
-<span class="co">#&gt;    taxon_id Sample_1 Sample_10 Sample_11 Sample_12 Sample_13 Sample_14</span>
-<span class="co">#&gt;    &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 ac         112582     88194     74933     80796    116806     90122</span>
-<span class="co">#&gt;  2 af          53903     56426     39952     41912     51677     33032</span>
-<span class="co">#&gt;  3 ag           4217       480       557       629      1111       350</span>
-<span class="co">#&gt;  4 ah           4237       750      7138      3234      1207         9</span>
-<span class="co">#&gt;  5 ai             68        23        21        14        13         0</span>
-<span class="co">#&gt;  6 aj          46540     30145     26932     34738     62301     56274</span>
-<span class="co">#&gt;  7 ak           1794        17        73       189        47         0</span>
-<span class="co">#&gt;  8 al             11         7         5        12        27        11</span>
-<span class="co">#&gt;  9 an           1524        38        49         0       109         0</span>
-<span class="co">#&gt; 10 ao             51         0         0         0        11         0</span>
-<span class="co">#&gt; # ... with 165 more rows, and 42 more variables: Sample_15 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_16 &lt;dbl&gt;, Sample_17 &lt;dbl&gt;, Sample_18 &lt;dbl&gt;, Sample_19 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_2 &lt;dbl&gt;, Sample_20 &lt;dbl&gt;, Sample_21 &lt;dbl&gt;, Sample_22 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_23 &lt;dbl&gt;, Sample_24 &lt;dbl&gt;, Sample_25 &lt;dbl&gt;, Sample_26 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_27 &lt;dbl&gt;, Sample_28 &lt;dbl&gt;, Sample_29 &lt;dbl&gt;, Sample_3 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_30 &lt;dbl&gt;, Sample_31 &lt;dbl&gt;, Sample_35 &lt;dbl&gt;, Sample_36 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_4 &lt;dbl&gt;, Sample_40 &lt;dbl&gt;, Sample_41 &lt;dbl&gt;, Sample_45 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_46 &lt;dbl&gt;, Sample_47 &lt;dbl&gt;, Sample_5 &lt;dbl&gt;, Sample_50 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_51 &lt;dbl&gt;, Sample_52 &lt;dbl&gt;, Sample_55 &lt;dbl&gt;, Sample_56 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_57 &lt;dbl&gt;, Sample_58 &lt;dbl&gt;, Sample_59 &lt;dbl&gt;, Sample_6 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_60 &lt;dbl&gt;, Sample_61 &lt;dbl&gt;, Sample_7 &lt;dbl&gt;, Sample_8 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_9 &lt;dbl&gt;</span>
-
-<span class="co"># Transposing with two IDs (taxon_id, otu_id)</span>
-<span class="co"># The column headers will be a combination of the categorical data that will</span>
-<span class="co"># be parsed and split back into individual columns if retransposed.</span>
-otu_abund <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/transposer.html">transposer</a></span>(<span class="st">"otu_id"</span>, <span class="st">"samples"</span>)
-<span class="co">#&gt; # A tibble: 48 x 1,667</span>
-<span class="co">#&gt;    samples `ac&lt;_&gt;DQ797054.~ `af&lt;_&gt;EU510171.~ `af&lt;_&gt;New.Clean~</span>
-<span class="co">#&gt;    &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 Sample~              130                0              108</span>
-<span class="co">#&gt;  2 Sample~                0                4              106</span>
-<span class="co">#&gt;  3 Sample~                0               14              152</span>
-<span class="co">#&gt;  4 Sample~                0               57               71</span>
-<span class="co">#&gt;  5 Sample~              119                3               34</span>
-<span class="co">#&gt;  6 Sample~              443                2                1</span>
-<span class="co">#&gt;  7 Sample~               15                0               74</span>
-<span class="co">#&gt;  8 Sample~               49               14               49</span>
-<span class="co">#&gt;  9 Sample~                0                1               12</span>
-<span class="co">#&gt; 10 Sample~               33                1               55</span>
-<span class="co">#&gt; # ... with 38 more rows, and 1,663 more variables:</span>
-<span class="co">#&gt; #   `af&lt;_&gt;New.CleanUp.ReferenceOTU1675` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `af&lt;_&gt;New.CleanUp.ReferenceOTU1778` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `af&lt;_&gt;New.CleanUp.ReferenceOTU2195` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `af&lt;_&gt;New.CleanUp.ReferenceOTU6283` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `af&lt;_&gt;New.ReferenceOTU1018` &lt;dbl&gt;, `af&lt;_&gt;New.ReferenceOTU1460` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `af&lt;_&gt;New.ReferenceOTU1898` &lt;dbl&gt;, `af&lt;_&gt;New.ReferenceOTU662` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `aq&lt;_&gt;EU462203.1.1270` &lt;dbl&gt;, `aq&lt;_&gt;FJ881207.1.1492` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `bd&lt;_&gt;GQ451183.1.1507` &lt;dbl&gt;, `bd&lt;_&gt;New.CleanUp.ReferenceOTU1` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `bd&lt;_&gt;New.ReferenceOTU307` &lt;dbl&gt;, `bv&lt;_&gt;AF371685.1.1445` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `bv&lt;_&gt;EU462407.1.1376` &lt;dbl&gt;, `bv&lt;_&gt;EU469250.1.1356` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `bv&lt;_&gt;EU777569.1.1267` &lt;dbl&gt;, `bv&lt;_&gt;GQ448792.1.1389` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `bv&lt;_&gt;HQ681868.1.1479` &lt;dbl&gt;, `bv&lt;_&gt;New.CleanUp.ReferenceOTU21` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `bv&lt;_&gt;New.CleanUp.ReferenceOTU82` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `bv&lt;_&gt;New.ReferenceOTU648` &lt;dbl&gt;, `cf&lt;_&gt;AF371949.1.1454` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `cf&lt;_&gt;New.CleanUp.ReferenceOTU19053` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `ch&lt;_&gt;New.CleanUp.ReferenceOTU579` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `cq&lt;_&gt;AB506276.1.1515` &lt;dbl&gt;, `cq&lt;_&gt;EU467330.1.1365` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `cq&lt;_&gt;JQ185323.1.1351` &lt;dbl&gt;, `cq&lt;_&gt;JQ187807.1.1343` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `cq&lt;_&gt;KC163104.1.1515` &lt;dbl&gt;, `cq&lt;_&gt;New.CleanUp.ReferenceOTU45` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `dc&lt;_&gt;FJ753766.1.1449` &lt;dbl&gt;, `dc&lt;_&gt;HQ716634.1.1482` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `dc&lt;_&gt;JQ191107.1.1383` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `dc&lt;_&gt;New.CleanUp.ReferenceOTU5376` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;AB506217.1.1514` &lt;dbl&gt;, `de&lt;_&gt;DQ794395.1.1386` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;DQ801522.1.1389` &lt;dbl&gt;, `de&lt;_&gt;DQ804804.1.1390` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;DQ806210.1.1390` &lt;dbl&gt;, `de&lt;_&gt;DQ806419.1.1375` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;DQ810016.1.1387` &lt;dbl&gt;, `de&lt;_&gt;EF399608.1.1495` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;EF640147.1.1517` &lt;dbl&gt;, `de&lt;_&gt;EF640148.1.1608` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;EU462246.1.1393` &lt;dbl&gt;, `de&lt;_&gt;EU462618.1.1379` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;EU472017.1.1394` &lt;dbl&gt;, `de&lt;_&gt;EU472558.1.1391` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;EU761737.1.1355` &lt;dbl&gt;, `de&lt;_&gt;EU762031.1.1361` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;EU768267.1.1370` &lt;dbl&gt;, `de&lt;_&gt;EU774369.1.1254` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;FJ367054.1.1360` &lt;dbl&gt;, `de&lt;_&gt;FJ368433.1.1378` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;FJ372296.1.1359` &lt;dbl&gt;, `de&lt;_&gt;FJ678233.1.1439` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;FJ678914.1.1380` &lt;dbl&gt;, `de&lt;_&gt;FJ681481.1.1448` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;FJ681993.1.1389` &lt;dbl&gt;, `de&lt;_&gt;FJ681994.1.1392` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;FJ684811.1.1391` &lt;dbl&gt;, `de&lt;_&gt;FJ880611.1.1492` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;GQ135595.1.1382` &lt;dbl&gt;, `de&lt;_&gt;HQ716148.1.1427` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;HQ716567.1.1448` &lt;dbl&gt;, `de&lt;_&gt;HQ775630.1.1451` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;HQ780641.1.1454` &lt;dbl&gt;, `de&lt;_&gt;HQ781391.1.1449` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;HQ785245.1.1449` &lt;dbl&gt;, `de&lt;_&gt;HQ790863.1.1455` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;HQ792930.1.1435` &lt;dbl&gt;, `de&lt;_&gt;HQ808140.1.1436` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;New.CleanUp.ReferenceOTU1867` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;New.CleanUp.ReferenceOTU2137` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;New.CleanUp.ReferenceOTU233` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;New.CleanUp.ReferenceOTU292` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;New.CleanUp.ReferenceOTU3186` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;New.CleanUp.ReferenceOTU4248` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;New.CleanUp.ReferenceOTU446` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;New.CleanUp.ReferenceOTU451` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;New.CleanUp.ReferenceOTU509` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;New.CleanUp.ReferenceOTU574` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;New.CleanUp.ReferenceOTU66` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;New.CleanUp.ReferenceOTU7980` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;New.CleanUp.ReferenceOTU92` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `de&lt;_&gt;New.ReferenceOTU477` &lt;dbl&gt;, `df&lt;_&gt;AB506215.1.1522` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `df&lt;_&gt;DQ796118.1.1378` &lt;dbl&gt;, `df&lt;_&gt;DQ798544.1.1272` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `df&lt;_&gt;DQ809209.1.1280` &lt;dbl&gt;, `df&lt;_&gt;EF401803.1.1493` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `df&lt;_&gt;EU461642.1.1389` &lt;dbl&gt;, `df&lt;_&gt;EU462752.1.1365` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `df&lt;_&gt;EU771433.1.1280` &lt;dbl&gt;, `df&lt;_&gt;EU772441.1.1390` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `df&lt;_&gt;EU776836.1.1286` &lt;dbl&gt;, `df&lt;_&gt;EU777365.1.1388` &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   `df&lt;_&gt;EU777419.1.1375` &lt;dbl&gt;, `df&lt;_&gt;EU778354.1.1387` &lt;dbl&gt;, ...</span>
-
-<span class="co"># Re-Transposing with two IDs (taxon_id, otu_id)</span>
-<span class="co"># When you transpose categorical data, the column headers are lost.</span>
-<span class="co"># To re-transpose you have to supply these headers</span>
-otu_abund <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/transposer.html">transposer</a></span>(<span class="st">"otu_id"</span>, <span class="st">"samples"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/transposer.html">transposer</a></span>(<span class="st">"samples"</span>, <span class="st">"otu_id"</span>, 
-             <span class="dt">separated_categories =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"taxon_id"</span>, <span class="st">"otu_id"</span>))
-<span class="co">#&gt; # A tibble: 1,666 x 50</span>
-<span class="co">#&gt;    taxon_id otu_id Sample_1 Sample_10 Sample_11 Sample_12 Sample_13</span>
-<span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 ac       DQ797~      130         0         0         0       119</span>
-<span class="co">#&gt;  2 af       EU510~        0         4        14        57         3</span>
-<span class="co">#&gt;  3 af       New.C~      108       106       152        71        34</span>
-<span class="co">#&gt;  4 af       New.C~       26         9        52         5         5</span>
-<span class="co">#&gt;  5 af       New.C~        0         0        15        20        10</span>
-<span class="co">#&gt;  6 af       New.C~        1         0        12        42         2</span>
-<span class="co">#&gt;  7 af       New.C~       45        19        17        22         0</span>
-<span class="co">#&gt;  8 af       New.R~       84        23         6         6         4</span>
-<span class="co">#&gt;  9 af       New.R~        1         2        25        58         0</span>
-<span class="co">#&gt; 10 af       New.R~       30        23        80        30         4</span>
-<span class="co">#&gt; # ... with 1,656 more rows, and 43 more variables: Sample_14 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_15 &lt;dbl&gt;, Sample_16 &lt;dbl&gt;, Sample_17 &lt;dbl&gt;, Sample_18 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_19 &lt;dbl&gt;, Sample_2 &lt;dbl&gt;, Sample_20 &lt;dbl&gt;, Sample_21 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_22 &lt;dbl&gt;, Sample_23 &lt;dbl&gt;, Sample_24 &lt;dbl&gt;, Sample_25 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_26 &lt;dbl&gt;, Sample_27 &lt;dbl&gt;, Sample_28 &lt;dbl&gt;, Sample_29 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_3 &lt;dbl&gt;, Sample_30 &lt;dbl&gt;, Sample_31 &lt;dbl&gt;, Sample_35 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_36 &lt;dbl&gt;, Sample_4 &lt;dbl&gt;, Sample_40 &lt;dbl&gt;, Sample_41 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_45 &lt;dbl&gt;, Sample_46 &lt;dbl&gt;, Sample_47 &lt;dbl&gt;, Sample_5 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_50 &lt;dbl&gt;, Sample_51 &lt;dbl&gt;, Sample_52 &lt;dbl&gt;, Sample_55 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_56 &lt;dbl&gt;, Sample_57 &lt;dbl&gt;, Sample_58 &lt;dbl&gt;, Sample_59 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_6 &lt;dbl&gt;, Sample_60 &lt;dbl&gt;, Sample_61 &lt;dbl&gt;, Sample_7 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_8 &lt;dbl&gt;, Sample_9 &lt;dbl&gt;</span></code></pre></div>
+<div class="section level2">
+<h2 id="other-filtering">Other Filtering<a class="anchor" aria-label="anchor" href="#other-filtering"></a>
+</h2>
+<p>As mentioned previously taxmap filtering can be done in any way that
+fits your needs with the <code>taxa</code> and <code>metacoder</code>
+packages. However, MicrobiomeR also provides some utility based function
+for filtering/manipulating your <em>observation</em> data by hand.
+Observation data can be accessed within the taxmap object. Make sure you
+don’t manipulate existing data inside of your taxmap object unless
+you’re absolutely sure you know what you’re doing.</p>
+<div class="section level3">
+<h3 id="transposing">Transposing<a class="anchor" aria-label="anchor" href="#transposing"></a>
+</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Get the abundance tables from the taxmap object</span></span>
+<span><span class="va">taxa_abund</span> <span class="op">&lt;-</span> <span class="va">metacoder_obj</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">taxa_abundance</span></span>
+<span><span class="va">otu_abund</span> <span class="op">&lt;-</span> <span class="va">metacoder_obj</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">otu_abundance</span></span>
+<span></span>
+<span><span class="co"># Transposing with one ID (taxon_id)</span></span>
+<span><span class="va">taxa_abund</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/transposer.html">transposer</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="st">"taxon_id"</span>, header_name <span class="op">=</span> <span class="st">"samples"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 48 × 170</span></span></span>
+<span><span class="co">#&gt;    samples       ac    af    ag    ah    ai    aj    ak    al    an    ao    as</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Sample_1  <span style="text-decoration: underline;">103</span>608 <span style="text-decoration: underline;">48</span>100  <span style="text-decoration: underline;">3</span>019  <span style="text-decoration: underline;">3</span>777    68 <span style="text-decoration: underline;">45</span>715  <span style="text-decoration: underline;">1</span>794     7  <span style="text-decoration: underline;">1</span>003    51    43</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Sample_10  <span style="text-decoration: underline;">76</span>441 <span style="text-decoration: underline;">45</span>727   362   519    23 <span style="text-decoration: underline;">29</span>653    17     6    14     0     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Sample_11  <span style="text-decoration: underline;">60</span>594 <span style="text-decoration: underline;">29</span>687   125  <span style="text-decoration: underline;">4</span>129    21 <span style="text-decoration: underline;">26</span>455    73     5    41     0    35</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Sample_12  <span style="text-decoration: underline;">66</span>558 <span style="text-decoration: underline;">30</span>931   190  <span style="text-decoration: underline;">1</span>221    14 <span style="text-decoration: underline;">33</span>959   189     9     0     0     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Sample_13 <span style="text-decoration: underline;">106</span>672 <span style="text-decoration: underline;">43</span>504   469  <span style="text-decoration: underline;">1</span>092    13 <span style="text-decoration: underline;">61</span>339    33    20   101    11    30</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Sample_14  <span style="text-decoration: underline;">86</span>705 <span style="text-decoration: underline;">30</span>733    53     0     0 <span style="text-decoration: underline;">55</span>911     0     5     0     0     0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Sample_15 <span style="text-decoration: underline;">112</span>084 <span style="text-decoration: underline;">48</span>656  <span style="text-decoration: underline;">1</span>357   368    58 <span style="text-decoration: underline;">61</span>098    12    17   247   101    65</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Sample_16 <span style="text-decoration: underline;">104</span>495 <span style="text-decoration: underline;">38</span>118   186   928     3 <span style="text-decoration: underline;">65</span>070   112    24    14     1    11</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Sample_17 <span style="text-decoration: underline;">123</span>584 <span style="text-decoration: underline;">46</span>148   519  <span style="text-decoration: underline;">1</span>240    44 <span style="text-decoration: underline;">75</span>180    79    27   111    28   173</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Sample_18 <span style="text-decoration: underline;">102</span>949 <span style="text-decoration: underline;">36</span>438  <span style="text-decoration: underline;">2</span>241   287    54 <span style="text-decoration: underline;">63</span>278   276     2   273    63    23</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 38 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 158 more variables: at &lt;dbl&gt;, av &lt;dbl&gt;, aw &lt;dbl&gt;, ay &lt;dbl&gt;, az &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ba &lt;dbl&gt;, bb &lt;dbl&gt;, bc &lt;dbl&gt;, bd &lt;dbl&gt;, be &lt;dbl&gt;, bf &lt;dbl&gt;, bg &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   bi &lt;dbl&gt;, bk &lt;dbl&gt;, bl &lt;dbl&gt;, bm &lt;dbl&gt;, bo &lt;dbl&gt;, br &lt;dbl&gt;, bs &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   bu &lt;dbl&gt;, bv &lt;dbl&gt;, bx &lt;dbl&gt;, by &lt;dbl&gt;, cb &lt;dbl&gt;, cc &lt;dbl&gt;, ce &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ch &lt;dbl&gt;, ci &lt;dbl&gt;, cj &lt;dbl&gt;, cl &lt;dbl&gt;, co &lt;dbl&gt;, cq &lt;dbl&gt;, cr &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   cs &lt;dbl&gt;, cu &lt;dbl&gt;, cv &lt;dbl&gt;, cz &lt;dbl&gt;, da &lt;dbl&gt;, dc &lt;dbl&gt;, dd &lt;dbl&gt;, …</span></span></span>
+<span></span>
+<span><span class="co"># Re-Transposing with one ID (taxon_id)</span></span>
+<span><span class="va">taxa_abund</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/transposer.html">transposer</a></span><span class="op">(</span><span class="st">"taxon_id"</span>, <span class="st">"samples"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/transposer.html">transposer</a></span><span class="op">(</span><span class="st">"samples"</span>, <span class="st">"taxon_id"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 169 × 49</span></span></span>
+<span><span class="co">#&gt;    taxon_id Sample_1 Sample_10 Sample_11 Sample_12 Sample_13 Sample_14 Sample_15</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> ac         <span style="text-decoration: underline;">103</span>608     <span style="text-decoration: underline;">76</span>441     <span style="text-decoration: underline;">60</span>594     <span style="text-decoration: underline;">66</span>558    <span style="text-decoration: underline;">106</span>672     <span style="text-decoration: underline;">86</span>705    <span style="text-decoration: underline;">112</span>084</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> af          <span style="text-decoration: underline;">48</span>100     <span style="text-decoration: underline;">45</span>727     <span style="text-decoration: underline;">29</span>687     <span style="text-decoration: underline;">30</span>931     <span style="text-decoration: underline;">43</span>504     <span style="text-decoration: underline;">30</span>733     <span style="text-decoration: underline;">48</span>656</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> ag           <span style="text-decoration: underline;">3</span>019       362       125       190       469        53      <span style="text-decoration: underline;">1</span>357</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> ah           <span style="text-decoration: underline;">3</span>777       519      <span style="text-decoration: underline;">4</span>129      <span style="text-decoration: underline;">1</span>221      <span style="text-decoration: underline;">1</span>092         0       368</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> ai             68        23        21        14        13         0        58</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> aj          <span style="text-decoration: underline;">45</span>715     <span style="text-decoration: underline;">29</span>653     <span style="text-decoration: underline;">26</span>455     <span style="text-decoration: underline;">33</span>959     <span style="text-decoration: underline;">61</span>339     <span style="text-decoration: underline;">55</span>911     <span style="text-decoration: underline;">61</span>098</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> ak           <span style="text-decoration: underline;">1</span>794        17        73       189        33         0        12</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> al              7         6         5         9        20         5        17</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> an           <span style="text-decoration: underline;">1</span>003        14        41         0       101         0       247</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> ao             51         0         0         0        11         0       101</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 159 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 41 more variables: Sample_16 &lt;dbl&gt;, Sample_17 &lt;dbl&gt;, Sample_18 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_19 &lt;dbl&gt;, Sample_2 &lt;dbl&gt;, Sample_20 &lt;dbl&gt;, Sample_21 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_22 &lt;dbl&gt;, Sample_23 &lt;dbl&gt;, Sample_24 &lt;dbl&gt;, Sample_25 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_26 &lt;dbl&gt;, Sample_27 &lt;dbl&gt;, Sample_28 &lt;dbl&gt;, Sample_29 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_3 &lt;dbl&gt;, Sample_30 &lt;dbl&gt;, Sample_31 &lt;dbl&gt;, Sample_35 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_36 &lt;dbl&gt;, Sample_4 &lt;dbl&gt;, Sample_40 &lt;dbl&gt;, Sample_41 &lt;dbl&gt;, …</span></span></span>
+<span></span>
+<span><span class="co"># Transposing with two IDs (taxon_id, otu_id)</span></span>
+<span><span class="co"># The column headers will be a combination of the categorical data that will</span></span>
+<span><span class="co"># be parsed and split back into individual columns if retransposed.</span></span>
+<span><span class="va">otu_abund</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/transposer.html">transposer</a></span><span class="op">(</span><span class="st">"otu_id"</span>, <span class="st">"samples"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 48 × 1,478</span></span></span>
+<span><span class="co">#&gt;    samples  `bd&lt;_&gt;GQ451183.1.1507` bd&lt;_&gt;New.CleanUp.Ref…¹ bd&lt;_&gt;New.ReferenceOT…²</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Sample_1                      6                     39                     23</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Sample_…                      3                     13                      7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Sample_…                      5                      2                     14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Sample_…                      0                      2                     12</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Sample_…                      0                      5                      8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Sample_…                      0                      0                      0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Sample_…                      4                     13                     41</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Sample_…                      0                      1                      2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Sample_…                      6                     18                     20</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Sample_…                      4                     31                     19</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 38 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated names: ¹​`bd&lt;_&gt;New.CleanUp.ReferenceOTU1`,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ²​`bd&lt;_&gt;New.ReferenceOTU307`</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,474 more variables: `cq&lt;_&gt;AB506276.1.1515` &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   `cq&lt;_&gt;EU464248.1.1379` &lt;dbl&gt;, `cq&lt;_&gt;EU467330.1.1365` &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   `cq&lt;_&gt;JQ185323.1.1351` &lt;dbl&gt;, `cq&lt;_&gt;JQ187807.1.1343` &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   `de&lt;_&gt;AB506217.1.1514` &lt;dbl&gt;, `de&lt;_&gt;EF640147.1.1517` &lt;dbl&gt;, …</span></span></span>
+<span></span>
+<span><span class="co"># Re-Transposing with two IDs (taxon_id, otu_id)</span></span>
+<span><span class="co"># When you transpose categorical data, the column headers are lost.</span></span>
+<span><span class="co"># To re-transpose you have to supply these headers</span></span>
+<span><span class="va">otu_abund</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/transposer.html">transposer</a></span><span class="op">(</span><span class="st">"otu_id"</span>, <span class="st">"samples"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/transposer.html">transposer</a></span><span class="op">(</span><span class="st">"samples"</span>, <span class="st">"otu_id"</span>, </span>
+<span>             separated_categories <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"taxon_id"</span>, <span class="st">"otu_id"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,477 × 50</span></span></span>
+<span><span class="co">#&gt;    taxon_id otu_id    Sample_1 Sample_10 Sample_11 Sample_12 Sample_13 Sample_14</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> bd       GQ451183…        6         3         5         0         0         0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> bd       New.Clea…       39        13         2         2         5         0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> bd       New.Refe…       23         7        14        12         8         0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> cq       AB506276…       66         4        38         0         0         0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> cq       EU464248…      856         0         0         0        10         0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> cq       EU467330…        0         7         3         0        81         0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> cq       JQ185323…       14         2         0         0         7         0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> cq       JQ187807…       67         1         0         0         3         0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> de       AB506217…       36         0         4        16        29         0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> de       EF640147…        0         0        44        23        25         0</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,467 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 42 more variables: Sample_15 &lt;dbl&gt;, Sample_16 &lt;dbl&gt;, Sample_17 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_18 &lt;dbl&gt;, Sample_19 &lt;dbl&gt;, Sample_2 &lt;dbl&gt;, Sample_20 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_21 &lt;dbl&gt;, Sample_22 &lt;dbl&gt;, Sample_23 &lt;dbl&gt;, Sample_24 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_25 &lt;dbl&gt;, Sample_26 &lt;dbl&gt;, Sample_27 &lt;dbl&gt;, Sample_28 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_29 &lt;dbl&gt;, Sample_3 &lt;dbl&gt;, Sample_30 &lt;dbl&gt;, Sample_31 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_35 &lt;dbl&gt;, Sample_36 &lt;dbl&gt;, Sample_4 &lt;dbl&gt;, Sample_40 &lt;dbl&gt;, …</span></span></span></code></pre></div>
 </div>
-<div id="transforming" class="section level2">
-<h2 class="hasAnchor">
-<a href="#transforming" class="anchor"></a>Transforming</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Transforming to proportions/percentages by COLUMN</span>
-taxa_abund <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/transformer.html">transformer</a></span>(<span class="dt">func =</span> <span class="op">~</span>.<span class="op">/</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(.))
-<span class="co">#&gt; # A tibble: 175 x 49</span>
-<span class="co">#&gt;    taxon_id Sample_1 Sample_2 Sample_3 Sample_6 Sample_9 Sample_10</span>
-<span class="co">#&gt;    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 ac        1.73e-1  1.75e-1  1.71e-1  1.69e-1  1.71e-1 0.171    </span>
-<span class="co">#&gt;  2 af        8.27e-2  6.51e-2  8.16e-2  6.78e-2  6.80e-2 0.109    </span>
-<span class="co">#&gt;  3 ag        6.47e-3  2.31e-2  7.75e-4  5.58e-3  1.21e-3 0.000931 </span>
-<span class="co">#&gt;  4 ah        6.50e-3  1.44e-3  9.05e-3  9.40e-4  2.18e-3 0.00146  </span>
-<span class="co">#&gt;  5 ai        1.04e-4  2.70e-5  1.45e-4  1.46e-6  2.59e-5 0.0000446</span>
-<span class="co">#&gt;  6 aj        7.14e-2  8.46e-2  7.64e-2  9.29e-2  9.87e-2 0.0585   </span>
-<span class="co">#&gt;  7 ak        2.75e-3  1.47e-4  3.80e-4  9.21e-5  7.60e-5 0.0000330</span>
-<span class="co">#&gt;  8 al        1.69e-5  8.29e-5  5.47e-5  1.46e-6  3.71e-6 0.0000136</span>
-<span class="co">#&gt;  9 an        2.34e-3  2.28e-4  2.22e-4  7.31e-6  5.74e-5 0.0000737</span>
-<span class="co">#&gt; 10 ao        7.83e-5  1.66e-5  9.02e-5  6.14e-4  2.72e-4 0        </span>
-<span class="co">#&gt; # ... with 165 more rows, and 42 more variables: Sample_13 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_14 &lt;dbl&gt;, Sample_17 &lt;dbl&gt;, Sample_21 &lt;dbl&gt;, Sample_22 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_24 &lt;dbl&gt;, Sample_25 &lt;dbl&gt;, Sample_26 &lt;dbl&gt;, Sample_30 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_50 &lt;dbl&gt;, Sample_59 &lt;dbl&gt;, Sample_60 &lt;dbl&gt;, Sample_61 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_7 &lt;dbl&gt;, Sample_27 &lt;dbl&gt;, Sample_45 &lt;dbl&gt;, Sample_5 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_57 &lt;dbl&gt;, Sample_20 &lt;dbl&gt;, Sample_29 &lt;dbl&gt;, Sample_11 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_12 &lt;dbl&gt;, Sample_15 &lt;dbl&gt;, Sample_16 &lt;dbl&gt;, Sample_18 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_19 &lt;dbl&gt;, Sample_23 &lt;dbl&gt;, Sample_28 &lt;dbl&gt;, Sample_31 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_35 &lt;dbl&gt;, Sample_40 &lt;dbl&gt;, Sample_41 &lt;dbl&gt;, Sample_46 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_47 &lt;dbl&gt;, Sample_51 &lt;dbl&gt;, Sample_55 &lt;dbl&gt;, Sample_56 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_58 &lt;dbl&gt;, Sample_8 &lt;dbl&gt;, Sample_4 &lt;dbl&gt;, Sample_52 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_36 &lt;dbl&gt;</span>
-
-<span class="co"># Transforming by ROW is also possible</span>
-<span class="co"># This function will transpose/retranspose so other information is needed</span>
-taxa_abund <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/transformer.html">transformer</a></span>(<span class="dt">by =</span> <span class="st">"row"</span>, 
-              <span class="dt">func =</span> <span class="op">~</span>.<span class="op">/</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(.), 
-              <span class="dt">ids =</span> <span class="st">"taxon_id"</span>, 
-              <span class="dt">header_name =</span> <span class="st">"samples"</span>, 
-              <span class="dt">separated_categories =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"taxon_id"</span>))
-<span class="co">#&gt; # A tibble: 175 x 49</span>
-<span class="co">#&gt;    taxon_id Sample_1 Sample_10 Sample_11 Sample_12 Sample_13 Sample_14</span>
-<span class="co">#&gt;    &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 ac        0.0241    0.0189    0.0160    0.0173    0.0250  0.0193   </span>
-<span class="co">#&gt;  2 af        0.0279    0.0292    0.0206    0.0217    0.0267  0.0171   </span>
-<span class="co">#&gt;  3 ag        0.0325    0.00370   0.00430   0.00485   0.00857 0.00270  </span>
-<span class="co">#&gt;  4 ah        0.0326    0.00577   0.0549    0.0249    0.00929 0.0000692</span>
-<span class="co">#&gt;  5 ai        0.00688   0.00233   0.00213   0.00142   0.00132 0        </span>
-<span class="co">#&gt;  6 aj        0.0191    0.0124    0.0111    0.0143    0.0256  0.0231   </span>
-<span class="co">#&gt;  7 ak        0.232     0.00220   0.00945   0.0245    0.00608 0        </span>
-<span class="co">#&gt;  8 al        0.00441   0.00281   0.00201   0.00482   0.0108  0.00441  </span>
-<span class="co">#&gt;  9 an        0.285     0.00711   0.00917   0         0.0204  0        </span>
-<span class="co">#&gt; 10 ao        0.00928   0         0         0         0.00200 0        </span>
-<span class="co">#&gt; # ... with 165 more rows, and 42 more variables: Sample_15 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_16 &lt;dbl&gt;, Sample_17 &lt;dbl&gt;, Sample_18 &lt;dbl&gt;, Sample_19 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_2 &lt;dbl&gt;, Sample_20 &lt;dbl&gt;, Sample_21 &lt;dbl&gt;, Sample_22 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_23 &lt;dbl&gt;, Sample_24 &lt;dbl&gt;, Sample_25 &lt;dbl&gt;, Sample_26 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_27 &lt;dbl&gt;, Sample_28 &lt;dbl&gt;, Sample_29 &lt;dbl&gt;, Sample_3 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_30 &lt;dbl&gt;, Sample_31 &lt;dbl&gt;, Sample_35 &lt;dbl&gt;, Sample_36 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_4 &lt;dbl&gt;, Sample_40 &lt;dbl&gt;, Sample_41 &lt;dbl&gt;, Sample_45 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_46 &lt;dbl&gt;, Sample_47 &lt;dbl&gt;, Sample_5 &lt;dbl&gt;, Sample_50 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_51 &lt;dbl&gt;, Sample_52 &lt;dbl&gt;, Sample_55 &lt;dbl&gt;, Sample_56 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_57 &lt;dbl&gt;, Sample_58 &lt;dbl&gt;, Sample_59 &lt;dbl&gt;, Sample_6 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_60 &lt;dbl&gt;, Sample_61 &lt;dbl&gt;, Sample_7 &lt;dbl&gt;, Sample_8 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   Sample_9 &lt;dbl&gt;</span></code></pre></div>
+<div class="section level3">
+<h3 id="transforming">Transforming<a class="anchor" aria-label="anchor" href="#transforming"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Transforming to proportions/percentages by COLUMN</span></span>
+<span><span class="va">taxa_abund</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/transformer.html">transformer</a></span><span class="op">(</span>func <span class="op">=</span> <span class="op">~</span><span class="va">.</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 169 × 49</span></span></span>
+<span><span class="co">#&gt;    taxon_id  Sample_1  Sample_2  Sample_3  Sample_6 Sample_9 Sample_10 Sample_13</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> ac       0.171     0.175     0.169       1.68<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>  1.70<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span> 0.169     0.168    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> af       0.079<span style="text-decoration: underline;">6</span>    0.065<span style="text-decoration: underline;">7</span>    0.079<span style="text-decoration: underline;">6</span>      6.67<span style="color: #949494;">e</span><span style="color: #BB0000;">-2</span>  6.36<span style="color: #949494;">e</span><span style="color: #BB0000;">-2</span> 0.101     0.068<span style="text-decoration: underline;">7</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> ag       0.005<span style="text-decoration: underline;">00</span>   0.011<span style="text-decoration: underline;">7</span>    0.000<span style="text-decoration: underline;">494</span>    4.74<span style="color: #949494;">e</span><span style="color: #BB0000;">-3</span>  1.14<span style="color: #949494;">e</span><span style="color: #BB0000;">-3</span> 0.000<span style="text-decoration: underline;">800</span>  0.000<span style="text-decoration: underline;">741</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> ah       0.006<span style="text-decoration: underline;">25</span>   0.000<span style="text-decoration: underline;">852</span>  0.006<span style="text-decoration: underline;">57</span>     1.69<span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span>  9.79<span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span> 0.001<span style="text-decoration: underline;">15</span>   0.001<span style="text-decoration: underline;">72</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> ai       0.000<span style="text-decoration: underline;">113</span>  0.000<span style="text-decoration: underline;">031</span>3 0.000<span style="text-decoration: underline;">156</span>    1.51<span style="color: #949494;">e</span><span style="color: #BB0000;">-6</span>  2.75<span style="color: #949494;">e</span><span style="color: #BB0000;">-5</span> 0.000<span style="text-decoration: underline;">050</span>8 0.000<span style="text-decoration: underline;">020</span>5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> aj       0.075<span style="text-decoration: underline;">6</span>    0.096<span style="text-decoration: underline;">7</span>    0.081<span style="text-decoration: underline;">0</span>      9.52<span style="color: #949494;">e</span><span style="color: #BB0000;">-2</span>  1.04<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span> 0.065<span style="text-decoration: underline;">5</span>    0.096<span style="text-decoration: underline;">9</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> ak       0.002<span style="text-decoration: underline;">97</span>   0.000<span style="text-decoration: underline;">060</span>2 0.000<span style="text-decoration: underline;">274</span>    9.52<span style="color: #949494;">e</span><span style="color: #BB0000;">-5</span>  8.06<span style="color: #949494;">e</span><span style="color: #BB0000;">-5</span> 0.000<span style="text-decoration: underline;">037</span>6 0.000<span style="text-decoration: underline;">052</span>1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> al       0.000<span style="text-decoration: underline;">011</span>6 0.000<span style="text-decoration: underline;">048</span>2 0.000<span style="text-decoration: underline;">029</span>5   0   <span style="color: #949494;"> </span>    1.97<span style="color: #949494;">e</span><span style="color: #BB0000;">-6</span> 0.000<span style="text-decoration: underline;">013</span>3 0.000<span style="text-decoration: underline;">031</span>6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> an       0.001<span style="text-decoration: underline;">66</span>   0.000<span style="text-decoration: underline;">113</span>  0.000<span style="text-decoration: underline;">223</span>    6.05<span style="color: #949494;">e</span><span style="color: #BB0000;">-6</span>  4.32<span style="color: #949494;">e</span><span style="color: #BB0000;">-5</span> 0.000<span style="text-decoration: underline;">030</span>9 0.000<span style="text-decoration: underline;">160</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> ao       0.000<span style="text-decoration: underline;">084</span>4 0.000<span style="text-decoration: underline;">019</span>3 0.000<span style="text-decoration: underline;">097</span>0   6.35<span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span>  2.89<span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span> 0         0.000<span style="text-decoration: underline;">017</span>4</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 159 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 41 more variables: Sample_14 &lt;dbl&gt;, Sample_17 &lt;dbl&gt;, Sample_21 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_22 &lt;dbl&gt;, Sample_24 &lt;dbl&gt;, Sample_25 &lt;dbl&gt;, Sample_26 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_30 &lt;dbl&gt;, Sample_50 &lt;dbl&gt;, Sample_59 &lt;dbl&gt;, Sample_60 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_61 &lt;dbl&gt;, Sample_7 &lt;dbl&gt;, Sample_27 &lt;dbl&gt;, Sample_45 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_5 &lt;dbl&gt;, Sample_57 &lt;dbl&gt;, Sample_20 &lt;dbl&gt;, Sample_29 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_11 &lt;dbl&gt;, Sample_12 &lt;dbl&gt;, Sample_15 &lt;dbl&gt;, Sample_16 &lt;dbl&gt;, …</span></span></span>
+<span></span>
+<span><span class="co"># Transforming by ROW is also possible</span></span>
+<span><span class="co"># This function will transpose/retranspose so other information is needed</span></span>
+<span><span class="va">taxa_abund</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/transformer.html">transformer</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"row"</span>, </span>
+<span>              func <span class="op">=</span> <span class="op">~</span><span class="va">.</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>, </span>
+<span>              ids <span class="op">=</span> <span class="st">"taxon_id"</span>, </span>
+<span>              header_name <span class="op">=</span> <span class="st">"samples"</span>, </span>
+<span>              separated_categories <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"taxon_id"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 169 × 49</span></span></span>
+<span><span class="co">#&gt;    taxon_id Sample_1 Sample_10 Sample_11 Sample_12 Sample_13 Sample_14 Sample_15</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> ac        0.024<span style="text-decoration: underline;">4</span>    0.018<span style="text-decoration: underline;">0</span>    0.014<span style="text-decoration: underline;">3</span>    0.015<span style="text-decoration: underline;">7</span>    0.025<span style="text-decoration: underline;">2</span>   0.020<span style="text-decoration: underline;">5</span>     0.026<span style="text-decoration: underline;">4</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> af        0.029<span style="text-decoration: underline;">1</span>    0.027<span style="text-decoration: underline;">7</span>    0.018<span style="text-decoration: underline;">0</span>    0.018<span style="text-decoration: underline;">7</span>    0.026<span style="text-decoration: underline;">3</span>   0.018<span style="text-decoration: underline;">6</span>     0.029<span style="text-decoration: underline;">5</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> ag        0.045<span style="text-decoration: underline;">9</span>    0.005<span style="text-decoration: underline;">50</span>   0.001<span style="text-decoration: underline;">90</span>   0.002<span style="text-decoration: underline;">89</span>   0.007<span style="text-decoration: underline;">13</span>  0.000<span style="text-decoration: underline;">806</span>   0.020<span style="text-decoration: underline;">6</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> ah        0.041<span style="text-decoration: underline;">4</span>    0.005<span style="text-decoration: underline;">69</span>   0.045<span style="text-decoration: underline;">2</span>    0.013<span style="text-decoration: underline;">4</span>    0.012<span style="text-decoration: underline;">0</span>   0          0.004<span style="text-decoration: underline;">03</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> ai        0.006<span style="text-decoration: underline;">88</span>   0.002<span style="text-decoration: underline;">33</span>   0.002<span style="text-decoration: underline;">13</span>   0.001<span style="text-decoration: underline;">42</span>   0.001<span style="text-decoration: underline;">32</span>  0          0.005<span style="text-decoration: underline;">87</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> aj        0.019<span style="text-decoration: underline;">1</span>    0.012<span style="text-decoration: underline;">4</span>    0.011<span style="text-decoration: underline;">0</span>    0.014<span style="text-decoration: underline;">2</span>    0.025<span style="text-decoration: underline;">6</span>   0.023<span style="text-decoration: underline;">3</span>     0.025<span style="text-decoration: underline;">5</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> ak        0.352     0.003<span style="text-decoration: underline;">33</span>   0.014<span style="text-decoration: underline;">3</span>    0.037<span style="text-decoration: underline;">1</span>    0.006<span style="text-decoration: underline;">47</span>  0          0.002<span style="text-decoration: underline;">35</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> al        0.005<span style="text-decoration: underline;">10</span>   0.004<span style="text-decoration: underline;">37</span>   0.003<span style="text-decoration: underline;">64</span>   0.006<span style="text-decoration: underline;">56</span>   0.014<span style="text-decoration: underline;">6</span>   0.003<span style="text-decoration: underline;">64</span>    0.012<span style="text-decoration: underline;">4</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> an        0.271     0.003<span style="text-decoration: underline;">79</span>   0.011<span style="text-decoration: underline;">1</span>    0         0.027<span style="text-decoration: underline;">3</span>   0          0.066<span style="text-decoration: underline;">8</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> ao        0.009<span style="text-decoration: underline;">28</span>   0         0         0         0.002<span style="text-decoration: underline;">00</span>  0          0.018<span style="text-decoration: underline;">4</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 159 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 41 more variables: Sample_16 &lt;dbl&gt;, Sample_17 &lt;dbl&gt;, Sample_18 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_19 &lt;dbl&gt;, Sample_2 &lt;dbl&gt;, Sample_20 &lt;dbl&gt;, Sample_21 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_22 &lt;dbl&gt;, Sample_23 &lt;dbl&gt;, Sample_24 &lt;dbl&gt;, Sample_25 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_26 &lt;dbl&gt;, Sample_27 &lt;dbl&gt;, Sample_28 &lt;dbl&gt;, Sample_29 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_3 &lt;dbl&gt;, Sample_30 &lt;dbl&gt;, Sample_31 &lt;dbl&gt;, Sample_35 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Sample_36 &lt;dbl&gt;, Sample_4 &lt;dbl&gt;, Sample_40 &lt;dbl&gt;, Sample_41 &lt;dbl&gt;, …</span></span></span></code></pre></div>
 </div>
-<div id="excel-like-vlookup" class="section level2">
-<h2 class="hasAnchor">
-<a href="#excel-like-vlookup" class="anchor"></a>Excel-Like VLookup</h2>
+<div class="section level3">
+<h3 id="excel-like-vlookup">Excel-Like VLookup<a class="anchor" aria-label="anchor" href="#excel-like-vlookup"></a>
+</h3>
 <p>This function was # borrowed from .</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get analyzed Data</span>
-metacoder_obj &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as_MicrobiomeR_format.html">as_MicrobiomeR_format</a></span>(<span class="dt">obj =</span> metacoder_obj, <span class="dt">format =</span> <span class="st">"analyzed_format"</span>)
-
-<span class="co"># Create agglomerated taxmaps for phylum/class</span>
-phylum_mo &lt;-<span class="st"> </span><span class="kw"><a href="../reference/agglomerate_taxmap.html">agglomerate_taxmap</a></span>(<span class="dt">obj =</span> metacoder_obj, <span class="dt">rank =</span> <span class="st">"Phylum"</span>)
-class_mo &lt;-<span class="st"> </span><span class="kw"><a href="../reference/agglomerate_taxmap.html">agglomerate_taxmap</a></span>(<span class="dt">obj =</span> metacoder_obj, <span class="dt">rank =</span> <span class="st">"Class"</span>)
-<span class="co"># Get some observation data</span>
-phylum_data &lt;-<span class="st"> </span>phylum_mo<span class="op">$</span>data<span class="op">$</span>stats_tax_data
-class_data &lt;-<span class="st"> </span>class_mo<span class="op">$</span>data<span class="op">$</span>stats_tax_data
-
-<span class="co"># Take the Phylum in the "phylum_data" and cross reference these in the "class_data".</span>
-<span class="co"># Reutrn the "wilcox_p_value" of the class_data.</span>
-class_p_value &lt;-<span class="st"> </span><span class="kw"><a href="../reference/vlookup.html">vlookup</a></span>(<span class="dt">lookup_vector =</span> phylum_data<span class="op">$</span>Phylum, 
-                         <span class="dt">df =</span> class_data, 
-                         <span class="dt">match_var =</span> <span class="st">"Phylum"</span>, 
-                         <span class="dt">return_var =</span> <span class="st">"wilcox_p_value"</span>)
-
-<span class="co"># Create a new column in the phylum_data.</span>
-new_data &lt;-<span class="st"> </span>phylum_data <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">class_p_value =</span> class_p_value)
-new_data[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"taxon_id"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"class_p_value"</span>, <span class="st">"wilcox_p_value"</span>)]
-<span class="co">#&gt; # A tibble: 13 x 5</span>
-<span class="co">#&gt;    taxon_id Phylum           Class class_p_value wilcox_p_value</span>
-<span class="co">#&gt;    &lt;chr&gt;    &lt;fct&gt;            &lt;fct&gt;         &lt;dbl&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 ac       &lt;NA&gt;             &lt;NA&gt;      NaN       NaN           </span>
-<span class="co">#&gt;  2 af       Firmicutes       &lt;NA&gt;        3.40e-5   0.0000340   </span>
-<span class="co">#&gt;  3 ag       Proteobacteria   &lt;NA&gt;        3.69e-1   0.369       </span>
-<span class="co">#&gt;  4 ah       Spirochaetae     &lt;NA&gt;        6.65e-2   0.0665      </span>
-<span class="co">#&gt;  5 ai       Verrucomicrobia  &lt;NA&gt;        8.12e-3   0.00812     </span>
-<span class="co">#&gt;  6 aj       Bacteroidetes    &lt;NA&gt;        3.78e-4   0.000378    </span>
-<span class="co">#&gt;  7 ak       Fibrobacteres    &lt;NA&gt;        3.02e-2   0.0302      </span>
-<span class="co">#&gt;  8 al       Actinobacteria   &lt;NA&gt;        9.24e-8   0.0000000924</span>
-<span class="co">#&gt;  9 an       Cyanobacteria    &lt;NA&gt;        6.69e-2   0.0669      </span>
-<span class="co">#&gt; 10 ao       Elusimicrobia    &lt;NA&gt;        3.94e-1   0.394       </span>
-<span class="co">#&gt; 11 aq       Saccharibacteria &lt;NA&gt;       NA         0.000895    </span>
-<span class="co">#&gt; 12 as       Planctomycetes   &lt;NA&gt;        1.48e-3   0.00148     </span>
-<span class="co">#&gt; 13 at       Tenericutes      &lt;NA&gt;        5.46e-1   0.546</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Get analyzed Data</span></span>
+<span><span class="va">metacoder_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_MicrobiomeR_format.html">as_MicrobiomeR_format</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">metacoder_obj</span>, format <span class="op">=</span> <span class="st">"analyzed_format"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create agglomerated taxmaps for phylum/class</span></span>
+<span><span class="va">phylum_mo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/agglomerate_taxmap.html">agglomerate_taxmap</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">metacoder_obj</span>, rank <span class="op">=</span> <span class="st">"Phylum"</span><span class="op">)</span></span>
+<span><span class="va">class_mo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/agglomerate_taxmap.html">agglomerate_taxmap</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">metacoder_obj</span>, rank <span class="op">=</span> <span class="st">"Class"</span><span class="op">)</span></span>
+<span><span class="co"># Get some observation data</span></span>
+<span><span class="va">phylum_data</span> <span class="op">&lt;-</span> <span class="va">phylum_mo</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">stats_tax_data</span></span>
+<span><span class="va">class_data</span> <span class="op">&lt;-</span> <span class="va">class_mo</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">stats_tax_data</span></span>
+<span></span>
+<span><span class="co"># Take the Phylum in the "phylum_data" and cross reference these in the "class_data".</span></span>
+<span><span class="co"># Reutrn the "wilcox_p_value" of the class_data.</span></span>
+<span><span class="va">class_p_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vlookup.html">vlookup</a></span><span class="op">(</span>lookup_vector <span class="op">=</span> <span class="va">phylum_data</span><span class="op">$</span><span class="va">Phylum</span>, </span>
+<span>                         df <span class="op">=</span> <span class="va">class_data</span>, </span>
+<span>                         match_var <span class="op">=</span> <span class="st">"Phylum"</span>, </span>
+<span>                         return_var <span class="op">=</span> <span class="st">"wilcox_p_value"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create a new column in the phylum_data.</span></span>
+<span><span class="va">new_data</span> <span class="op">&lt;-</span> <span class="va">phylum_data</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>class_p_value <span class="op">=</span> <span class="va">class_p_value</span><span class="op">)</span></span>
+<span><span class="va">new_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"taxon_id"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"class_p_value"</span>, <span class="st">"wilcox_p_value"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 5</span></span></span>
+<span><span class="co">#&gt;    taxon_id Phylum          Class class_p_value wilcox_p_value</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> ac       <span style="color: #BB0000;">NA</span>              <span style="color: #BB0000;">NA</span>       0.207          0.207     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> af       Firmicutes      <span style="color: #BB0000;">NA</span>       0.000<span style="text-decoration: underline;">003</span>49     0.000<span style="text-decoration: underline;">003</span>49</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> ag       Proteobacteria  <span style="color: #BB0000;">NA</span>       0.156          0.156     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> ah       Spirochaetae    <span style="color: #BB0000;">NA</span>       0.041<span style="text-decoration: underline;">9</span>         0.041<span style="text-decoration: underline;">9</span>    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> ai       Verrucomicrobia <span style="color: #BB0000;">NA</span>       0.008<span style="text-decoration: underline;">69</span>        0.008<span style="text-decoration: underline;">69</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> aj       Bacteroidetes   <span style="color: #BB0000;">NA</span>       0.000<span style="text-decoration: underline;">936</span>       0.000<span style="text-decoration: underline;">936</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> ak       Fibrobacteres   <span style="color: #BB0000;">NA</span>       0.249          0.249     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> al       Actinobacteria  <span style="color: #BB0000;">NA</span>       0.000<span style="text-decoration: underline;">018</span>8      0.000<span style="text-decoration: underline;">018</span>8 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> an       Cyanobacteria   <span style="color: #BB0000;">NA</span>       0.015<span style="text-decoration: underline;">7</span>         0.015<span style="text-decoration: underline;">7</span>    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> ao       Elusimicrobia   <span style="color: #BB0000;">NA</span>       0.394          0.394     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> as       Planctomycetes  <span style="color: #BB0000;">NA</span>       0.001<span style="text-decoration: underline;">37</span>        0.001<span style="text-decoration: underline;">37</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> at       Tenericutes     <span style="color: #BB0000;">NA</span>       0.490          0.490</span></span></code></pre></div>
 </div>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#data-wrangling">Data Wrangling</a></li>
-      <li><a href="#taxmap-filtering">Taxmap Filtering</a></li>
-      <li><a href="#basic-filtering">Basic Filtering</a></li>
-      <li><a href="#advanced-filtering">Advanced Filtering</a></li>
-      <li>
-<a href="#other-filtering">Other Filtering</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#transposing">Transposing</a></li>
-      <li><a href="#transforming">Transforming</a></li>
-      <li><a href="#excel-like-vlookup">Excel-Like VLookup</a></li>
-      </ul>
-</li>
-      </ul>
-</div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+
       </div>
 
 </div>
 
 
+
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/grabear">Robert Gilmore</a>, <a href="https://www.shauritahutchins.com">Shaurita Hutchins</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://github.com/grabear" class="external-link">Robert Gilmore</a>, <a href="https://www.shauritahutchins.com" class="external-link">Shaurita Hutchins</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
+
       </footer>
 </div>
 
-  
+
+
+
+
 
   </body>
 </html>
