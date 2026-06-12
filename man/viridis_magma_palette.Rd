@@ -4,10 +4,15 @@
 \alias{viridis_magma_palette}
 \title{Viridis-Magma Palette Function}
 \usage{
-viridis_magma_palette(viridis_number = 800,
-  viridis_range = 300:viridis_number, viridis_rev = TRUE,
-  magma_number = 500, magma_range = 50:magma_number,
-  magma_rev = FALSE, ...)
+viridis_magma_palette(
+  viridis_number = 800,
+  viridis_range = 300:viridis_number,
+  viridis_rev = TRUE,
+  magma_number = 500,
+  magma_range = 50:magma_number,
+  magma_rev = FALSE,
+  ...
+)
 }
 \arguments{
 \item{viridis_number}{The total number of colors used to generate the viridis palette.  Default: 800}
@@ -59,9 +64,10 @@ if(interactive()){
 
 \code{\link[grDevices]{colorRamp}}
 
-Other Color Palettes: \code{\link{combination_palette}},
-  \code{\link{get_color_palette}},
-  \code{\link{scico_palette}},
-  \code{\link{viridis_palette}}
+Other Color Palettes: 
+\code{\link{combination_palette}()},
+\code{\link{get_color_palette}()},
+\code{\link{scico_palette}()},
+\code{\link{viridis_palette}()}
 }
 \concept{Color Palettes}

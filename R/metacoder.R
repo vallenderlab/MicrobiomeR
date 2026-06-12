@@ -44,12 +44,12 @@
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{transformer}}
 #'
-#'  \code{\link[taxa]{get_dataset}}
+#'  \code{\link[metacoder]{get_dataset}}
 #'
 #'  \code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}},  \code{\link[dplyr]{filter}}
 #'
 #'  \code{\link[purrr]{map}},  \code{\link[purrr]{keep}}
-#' @importFrom taxa get_dataset
+#' @importFrom metacoder get_dataset
 #' @importFrom dplyr select_if select filter
 #' @importFrom purrr map keep
 #' @importFrom glue glue
@@ -62,7 +62,7 @@ sample_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_cond
     # Validate and get otu_abundance data
     mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
                                             force_format = TRUE, validated = validated, min_or_max = min)
-    abund_data <- taxa::get_dataset(obj = mo_clone, data = "otu_abundance")
+    abund_data <- metacoder::get_dataset(obj = mo_clone, data = "otu_abundance")
 
     #  Get the sample data columns to work with
     if (is.null(.f_transform)) { # Get raw sample data
@@ -79,11 +79,35 @@ sample_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_cond
     # Update the otu_abundance and sample_data in the Taxmap object by removing samples
     other_vars <- abund_data %>% dplyr::select_if(function(x) is.numeric(x) == FALSE) %>% colnames() #%>% purrr::discard(~.=="taxon_id")
     mo_clone$data$otu_abundance  <- dplyr::select(abund_data, c(other_vars, samples_to_keep))
-    mo_clone$data$sample_data <- mo_clone$data$sample_data %>% dplyr::filter(sample_id %in% samples_to_keep)
+    sample_data <- mo_clone$data$sample_data
+    if ("sample_id" %in% names(sample_data)) {
+      sample_data <- dplyr::filter(sample_data, sample_id %in% samples_to_keep)
+    } else if (ncol(sample_data) == 0) {
+      sample_data <- data.frame(row.names = samples_to_keep)
+    } else if (nrow(sample_data) > 0 && !is.null(rownames(sample_data))) {
+      sample_data <- sample_data[rownames(sample_data) %in% samples_to_keep, , drop = FALSE]
+    }
+    mo_clone$data$sample_data <- sample_data
     return(mo_clone)
   } else {
     stop(glue::glue(crayon::red("You have to supply a filter formula ", crayon::bold("AND")," a condition formula.")))
   }
+}
+
+get_sample_ids <- function(sample_data, fallback_ids = NULL) {
+  if ("sample_id" %in% names(sample_data)) {
+    return(sample_data$sample_id)
+  }
+
+  if (nrow(sample_data) > 0 && !is.null(rownames(sample_data)) && ncol(sample_data) > 0) {
+    return(rownames(sample_data))
+  }
+
+  if (!is.null(fallback_ids)) {
+    return(fallback_ids)
+  }
+
+  rlang::abort("Unable to determine sample IDs from sample_data.")
 }
 
 #' @title Filter Taxon Ids from Taxmap Objects
@@ -91,7 +115,6 @@ sample_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_cond
 #' observations of a MicrobiomeR formatted object.
 #' @inheritParams sample_id_filter
 #' @return Returns a Taxmap object with taxon_ids that pass the filters.
-#' @pretty_print TRUE
 #' @details Get the taxon_ids to keep by using purr and the user supplied transform and filter + condition formulas.
 #' The purr package allows the use of anonymous functions as described in the link below:
 #'
@@ -127,12 +150,12 @@ sample_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_cond
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{transposer}},  \code{\link[MicrobiomeR]{transformer}}
 #'
-#'  \code{\link[taxa]{get_dataset}},  \code{\link[taxa]{filter_taxa}}
+#'  \code{\link[metacoder]{get_dataset}},  \code{\link[metacoder]{filter_taxa}}
 #'
 #'  \code{\link[dplyr]{select_all}}
 #'
 #'  \code{\link[purrr]{map}},  \code{\link[purrr]{keep}}
-#' @importFrom taxa get_dataset filter_taxa
+#' @importFrom metacoder get_dataset
 #' @importFrom dplyr select_if
 #' @importFrom purrr map keep
 #' @importFrom glue glue
@@ -145,7 +168,7 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
     # Validate and get taxa_abundance data
     mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("basic_format"),
                                             force_format = TRUE, validated = validated, min_or_max = max)
-    abund_data <- taxa::get_dataset(obj = mo_clone, data = "taxa_abundance")
+    abund_data <- metacoder::get_dataset(obj = mo_clone, data = "taxa_abundance")
     #  Get the taxon_id data columns to work with
     if (is.null(.f_transform)) { # Get raw sample data
       taxon_id_cols <- transposer(abund_data, ids = "taxon_id", header_name = "samples", preserved_categories = FALSE) %>%
@@ -163,7 +186,11 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
       purrr::keep(~ . == TRUE) %>%
       names() # Determine which samples to keep
     # Update the observation data tables and the taxmap object
-    mo_clone <- taxa::filter_taxa(mo_clone, taxon_ids %in% taxon_ids_to_keep, reassign_obs = FALSE)
+    mo_clone <- filter_taxa_compat(
+      mo_clone,
+      taxon_ids %in% taxon_ids_to_keep,
+      reassign_obs = FALSE
+    )
     return(mo_clone)
   } else {
     stop(glue::glue(crayon::red("You have to supply a filter formula ", crayon::bold("AND")," a condition formula.")))
@@ -175,7 +202,6 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
 #' observations of a MicrobiomeR formatted object.
 #' @inheritParams sample_id_filter
 #' @return Returns a taxmap object with otu_ids that pass the filters.
-#' @pretty_print TRUE
 #' @details Get the otu_ids to keep by using purr and the user supplied transform and filter + condition formulas.
 #' The purr package allows the use of anonymous functions as described in the link below:
 #'
@@ -208,12 +234,12 @@ taxon_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_condi
 #' @seealso
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{transposer}},  \code{\link[MicrobiomeR]{transformer}}
 #'
-#'  \code{\link[taxa]{get_dataset}},  \code{\link[taxa]{filter_taxa}}
+#'  \code{\link[metacoder]{get_dataset}},  \code{\link[metacoder]{filter_taxa}}
 #'
 #'  \code{\link[dplyr]{select_all}}
 #'
 #'  \code{\link[purrr]{map}},  \code{\link[purrr]{keep}}
-#' @importFrom taxa get_dataset filter_taxa
+#' @importFrom metacoder get_dataset
 #' @importFrom dplyr select_if
 #' @importFrom purrr map keep
 #' @importFrom glue glue
@@ -226,7 +252,7 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
     mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format"),
                                                          force_format = TRUE, validated = validated, min_or_max = min)
     fmt <- which_format(mo_clone)
-    abund_data <- taxa::get_dataset(obj = mo_clone, data = "otu_abundance")
+    abund_data <- metacoder::get_dataset(obj = mo_clone, data = "otu_abundance")
     #  Get the taxon_id data columns to work with
     if (is.null(.f_transform)) { # Get raw sample data
       otu_id_cols <- transposer(abund_data, ids = "otu_id", header_name = "samples", preserved_categories = FALSE) %>%
@@ -246,7 +272,11 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
     otu_table_list <- otu_table_list[otu_table_list %in% names(mo_clone$data)]
     # Update the observation data tables and the taxmap object
     suppressWarnings({
-      mo_clone <- taxa::filter_obs(mo_clone, otu_table_list, otu_id %in% otu_ids_to_keep, drop_taxa = TRUE)
+      mo_clone <- filter_otu_tables_by_ids(
+        obj = mo_clone,
+        table_names = otu_table_list,
+        otu_ids_to_keep = otu_ids_to_keep
+      )
     })
     return(mo_clone)
   } else {
@@ -262,7 +292,6 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #' @param rank The rank that will be agglomerated to.
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
 #' @return A taxmap object that has been agglomerated at the specified rank.
-#' @pretty_print TRUE
 #' @details This function helps analyzing taxonomic data at intermediate ranks by agglomerating the observation data
 #' and the taxmap object.
 #' @examples
@@ -281,10 +310,9 @@ otu_id_filter <- function(obj, .f_transform = NULL, .f_filter = NULL, .f_conditi
 #' @family Advanced Metacoder Filters
 #' @rdname agglomerate_taxmap
 #' @seealso
-#'  \code{\link[taxa]{filter_taxa}}
+#'  \code{\link[metacoder]{filter_taxa}}
 #'
 #'  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}}
-#' @importFrom taxa filter_taxa taxon_ranks
 #' @importFrom glue glue
 #' @importFrom crayon silver
 agglomerate_taxmap <- function(obj, rank, validated = FALSE) {
@@ -292,8 +320,11 @@ agglomerate_taxmap <- function(obj, rank, validated = FALSE) {
   mo_clone <- validate_MicrobiomeR_format(obj = mo_clone, valid_formats = c("raw_format", "basic_format", "analyzed_format"),
                                           force_format = TRUE, validated = validated, min_or_max = min)
   # Agglomerate
-  mo_clone <- taxa::filter_taxa(mo_clone, taxon_ranks == rank,
-                                supertaxa = TRUE, reassign_obs = FALSE
+  mo_clone <- filter_taxa_compat(
+    mo_clone,
+    taxon_ranks == rank,
+    supertaxa = TRUE,
+    reassign_obs = FALSE
   )
   message(glue::glue(crayon::silver("Agglomerated to {rank}.")))
   return(mo_clone)
@@ -364,7 +395,6 @@ otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FAL
 #' @param rel_sample_percentage The percentage of samples per observation that meet the minimum abundance.  Default: 0.5
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
 #' @return Returns a taxmap object that contains taxon_ids that have passed the above filter.
-#' @pretty_print TRUE
 #' @details The otu_prevalence_filter filters taxon_ids that do not appear more than a certain amount of times (minimum abundance) in a certain percentage of
 #' samples (rel_sample_percentage). The \href{http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#filtering}{phyloseq workflow} calls for a minimum abundance of 5 across %50 of the samples.
 #' This filtering method is considered unsupervised, because it solely relies on the data in this experiment (OTU ids).
@@ -413,10 +443,9 @@ otu_proportion_filter <- function(obj, otu_percentage = 0.00005, validated = FAL
 #'
 #'  \code{\link[dplyr]{filter}}
 #'
-#'  \code{\link[taxa]{filter_taxa}}
+#'  \code{\link[metacoder]{filter_taxa}}
 #' @importFrom metacoder calc_prop_samples
 #' @importFrom dplyr filter
-#' @importFrom taxa filter_taxa
 #' @importFrom glue glue
 #' @importFrom crayon green bgWhite
 otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percentage = 0.5,
@@ -426,11 +455,20 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
                                           force_format = TRUE, validated = validated, min_or_max = min)
   # Calculate the ids that need to be removed
   suppressMessages({
-    ids_to_remove <- metacoder::calc_prop_samples(mo_clone, "taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
-    dplyr::filter(n_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
+    ids_to_remove <- metacoder::calc_prop_samples(
+      mo_clone,
+      "taxa_abundance",
+      more_than = minimum_abundance
+    )
   })
+  prevalence_column <- get_prop_samples_prevalence_column(ids_to_remove)
+  ids_to_remove <- ids_to_remove[ids_to_remove[[prevalence_column]] < rel_sample_percentage, , drop = FALSE]
   # Prevalence Filtering
-  mo_clone <- taxa::filter_taxa(mo_clone, !taxon_ids %in% ids_to_remove$taxon_id, reassign_obs = FALSE)
+  mo_clone <- filter_taxa_compat(
+    mo_clone,
+    !taxon_ids %in% ids_to_remove$taxon_id,
+    reassign_obs = FALSE
+  )
   message(crayon::green(glue::glue("Filtering OTUs with an abundance less than ", crayon::bgWhite({minimum_abundance}),
                                    " in a certain percentage of samples ", crayon::bgWhite("({rel_sample_percentage}%)"), ".")))
   return(mo_clone)
@@ -444,7 +482,6 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
 #' @param rel_sample_percentage The percentage of samples per observation that meet the minimum abundance.  Default: 0.5
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
 #' @return Returns a taxmap object that contains taxon_ids that have passed the above filter.
-#' @pretty_print TRUE
 #' @details The taxa_prevalence_filter filters taxon_ids that do not appear more than a certain amount of times (minimum abundance) in a certain percentage of
 #' samples (rel_sample_percentage) at the specified agglomerated rank (rank). The \href{http://web.stanford.edu/class/bios221/MicrobiomeWorkflowII.html#filtering}{phyloseq workflow} calls for a minimum abundance of 5 across %50 of the samples.
 #' This method is considered supervised, because the filtering is done based on taxonomic annotation (taxon_ids), which is assigned based on a reference database (SILVA or GreenGenes).
@@ -503,10 +540,9 @@ otu_prevalence_filter <- function(obj, minimum_abundance = 5, rel_sample_percent
 #'
 #'  \code{\link[dplyr]{filter}}
 #'
-#'  \code{\link[taxa]{filter_taxa}}
+#'  \code{\link[metacoder]{filter_taxa}}
 #' @importFrom metacoder calc_prop_samples
 #' @importFrom dplyr filter
-#' @importFrom taxa filter_taxa
 #' @importFrom glue glue
 #' @importFrom crayon green bgWhite
 taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_percentage = 0.5,
@@ -516,11 +552,18 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
                                           min_or_max = min, valid_formats = c("basic_format"))
   # Calculate the ids that need to be removed based on taxonomic rank
   suppressMessages({
-    ids_to_remove <- agglomerate_taxmap(obj = mo_clone, rank = rank, validated = TRUE) %>% # Agglomeration
-    metacoder::calc_prop_samples("taxa_abundance", more_than = minimum_abundance) %>% # Calculate sample proportions per taxa with min abundance
-    dplyr::filter(n_samples < rel_sample_percentage) # Filter samples with less than the relative sample percentage
+    ids_to_remove <- agglomerate_taxmap(obj = mo_clone, rank = rank, validated = TRUE) |>
+      metacoder::calc_prop_samples("taxa_abundance", more_than = minimum_abundance)
+  })
+  prevalence_column <- get_prop_samples_prevalence_column(ids_to_remove)
+  ids_to_remove <- ids_to_remove[ids_to_remove[[prevalence_column]] < rel_sample_percentage, , drop = FALSE]
   # Taxonomic Prevalence Filtering
-  mo_clone <- taxa::filter_taxa(mo_clone, !taxon_ids %in% ids_to_remove$taxon_id, reassign_obs = FALSE)
+  suppressMessages({
+    mo_clone <- filter_taxa_compat(
+      mo_clone,
+      !taxon_ids %in% ids_to_remove$taxon_id,
+      reassign_obs = FALSE
+    )
   })
   message(crayon::green(glue::glue("Filtering OTUs at the ", crayon::bgWhite({rank}), " level with an abundance less than ", crayon::bgWhite({minimum_abundance}),
                                    " in a certain percentage of samples ", crayon::bgWhite("({rel_sample_percentage}%)"), ".")))
@@ -534,7 +577,6 @@ taxa_prevalence_filter <- function(obj, rank, minimum_abundance = 5, rel_sample_
 #' @param coefficient_of_variation The maximum CoV that an OTU can have.
 #' @param validated This parameter provides a way to override validation steps.  Use carefully.  Default: FALSE
 #' @return Returns a taxmap object that contains otu_ids that have passed the above filter.
-#' @pretty_print TRUE
 #' @details This function helps remove OTUs that have an unusually high variance using the coefficient
 #' of variation.
 #' @examples
@@ -623,7 +665,6 @@ cov_filter <- function(obj, coefficient_of_variation, validated = FALSE) {
 #' @param abund_1 A character vector of abundances.
 #' @param abund_2 A character vector of abundances.
 #' @return A list of statistical results used to compare groups.
-#' @pretty_print TRUE
 #' @details This function is used by metacoder::compare_groups in order to compare
 #' every combination of treatment groups.
 #' @export
@@ -632,9 +673,7 @@ cov_filter <- function(obj, coefficient_of_variation, validated = FALSE) {
 #' @seealso
 #'  \code{\link[diptest]{dip.test}}
 #'
-#'  \code{\link[modes]{bimodality_coefficient}}
 #' @importFrom diptest dip.test
-#' @importFrom modes bimodality_coefficient
 #' @importFrom stats wilcox.test median
 metacoder_comp_func_1 <- function(abund_1, abund_2) {
   log_med_ratio <- log2(median(abund_1) / median(abund_2))
@@ -661,7 +700,184 @@ metacoder_comp_func_1 <- function(abund_1, abund_2) {
     wilcox_p_value = wilcox.test(abund_1, abund_2)$p.value,
     hartigan_dip_treat1 = diptest::dip.test(abund_1)$p.value,
     hartigan_dip_treat2 = diptest::dip.test(abund_2)$p.value,
-    bimodality_coeff_treat1 = modes::bimodality_coefficient(abund_1),
-    bimodality_coeff_treat2 = modes::bimodality_coefficient(abund_2)
+    bimodality_coeff_treat1 = microbiomer_bimodality_coefficient(abund_1),
+    bimodality_coeff_treat2 = microbiomer_bimodality_coefficient(abund_2)
+  )
+}
+
+# Internal compatibility helper for older MicrobiomeR code paths that used
+# taxa::filter_obs() against taxmap observation tables.
+filter_otu_tables_by_ids <- function(obj, table_names, otu_ids_to_keep) {
+  mo_clone <- obj$clone()
+  for (table_name in table_names) {
+    current_table <- mo_clone$data[[table_name]]
+    if (!"otu_id" %in% names(current_table)) {
+      next
+    }
+    mo_clone$data[[table_name]] <- dplyr::filter(current_table, otu_id %in% otu_ids_to_keep)
+  }
+  mo_clone
+}
+
+# Compatibility wrapper for upstream taxa/metacoder filter helpers that now
+# depend on an unqualified `simplify()` helper missing from some installs.
+# MicrobiomeR only needs logical taxon filtering with optional ancestor or
+# descendant retention, so this implementation stays intentionally narrow.
+filter_taxa_compat <- function(obj, subset, subtaxa = FALSE, supertaxa = FALSE,
+                               reassign_obs = FALSE, invert = FALSE,
+                               keep_order = TRUE) {
+  if (isTRUE(reassign_obs)) {
+    rlang::abort("filter_taxa_compat() does not support reassign_obs = TRUE.")
+  }
+
+  taxon_selection <- eval_taxon_subset(obj = obj, subset = {{ subset }})
+  if (is.logical(subtaxa) && identical(subtaxa, FALSE)) {
+    subtaxa <- 0
+  }
+  if (is.logical(supertaxa) && identical(supertaxa, FALSE)) {
+    supertaxa <- 0
+  }
+
+  taxa_subset <- unique(c(
+    taxon_selection,
+    flatten_taxon_index_list(
+      obj$subtaxa(
+        subset = taxon_selection,
+        recursive = subtaxa,
+        value = "taxon_indexes",
+        include_input = FALSE,
+        simplify = FALSE
+      )
+    ),
+    flatten_taxon_index_list(
+      obj$supertaxa(
+        subset = taxon_selection,
+        recursive = supertaxa,
+        value = "taxon_indexes",
+        na = FALSE,
+        include_input = FALSE,
+        simplify = FALSE
+      )
+    )
+  ))
+
+  if (keep_order) {
+    taxa_subset <- sort(taxa_subset)
+  }
+
+  if (invert) {
+    taxa_subset <- setdiff(seq_len(nrow(obj$edge_list)), taxa_subset)
+  }
+
+  kept_taxon_ids <- obj$taxon_ids()[taxa_subset]
+  obj <- drop_filtered_taxa_observations(obj = obj, kept_taxon_ids = kept_taxon_ids)
+  obj$edge_list <- obj$edge_list[
+    obj$edge_list$to %in% kept_taxon_ids &
+      (is.na(obj$edge_list$from) | obj$edge_list$from %in% kept_taxon_ids),
+    ,
+    drop = FALSE
+  ]
+
+  obj
+}
+
+eval_taxon_subset <- function(obj, subset) {
+  selection_data <- c(
+    obj$data_used(subset),
+    list(
+      taxon_ids = obj$taxon_ids(),
+      taxon_ranks = obj$taxon_ranks(),
+      taxon_names = obj$taxon_names(),
+      n_supertaxa = obj$n_supertaxa()
+    )
+  )
+  selection <- rlang::eval_tidy(rlang::enquo(subset), data = selection_data)
+
+  if (is.logical(selection)) {
+    if (length(selection) != nrow(obj$edge_list)) {
+      rlang::abort("Logical taxon filters must match the number of taxa in the object.")
+    }
+    return(which(selection))
+  }
+
+  if (is.numeric(selection)) {
+    return(as.integer(selection))
+  }
+
+  if (is.character(selection)) {
+    matched_taxa <- match(selection, obj$taxon_ids())
+    return(as.integer(stats::na.omit(matched_taxa)))
+  }
+
+  rlang::abort(
+    "Unsupported taxon filter input. Use a logical, numeric, or character taxon selection."
+  )
+}
+
+flatten_taxon_index_list <- function(index_list) {
+  if (length(index_list) == 0) {
+    return(integer())
+  }
+
+  as.integer(unlist(index_list, recursive = FALSE, use.names = FALSE))
+}
+
+drop_filtered_taxa_observations <- function(obj, kept_taxon_ids) {
+  for (data_index in seq_along(obj$data)) {
+    current_data <- obj$data[[data_index]]
+
+    if (is.data.frame(current_data) && "taxon_id" %in% names(current_data)) {
+      keep_observations <- current_data$taxon_id %in% kept_taxon_ids
+      obj$data[[data_index]] <- current_data[keep_observations, , drop = FALSE]
+    } else if (is.atomic(current_data) && !is.null(names(current_data))) {
+      keep_observations <- names(current_data) %in% kept_taxon_ids
+      obj$data[[data_index]] <- current_data[keep_observations]
+    } else {
+      next
+    }
+  }
+
+  obj
+}
+
+# This reproduces the only modes::bimodality_coefficient() behavior used by
+# MicrobiomeR so the package no longer depends on the archived modes package.
+microbiomer_bimodality_coefficient <- function(x, finite = TRUE) {
+  if (finite) {
+    x <- stats::na.omit(x)
+  }
+
+  sample_size <- length(x)
+  if (sample_size < 4) {
+    return(NA_real_)
+  }
+
+  centered_values <- x - mean(x)
+  sample_sd <- stats::sd(x)
+  if (is.na(sample_sd) || sample_sd == 0) {
+    return(NA_real_)
+  }
+
+  skewness_estimate <- mean((centered_values / sample_sd)^3)
+  excess_kurtosis_estimate <- mean((centered_values / sample_sd)^4) - 3
+  finite_sample_correction <- (3 * ((sample_size - 1)^2)) / ((sample_size - 2) * (sample_size - 3))
+
+  ((skewness_estimate^2) + 1) / (excess_kurtosis_estimate + finite_sample_correction)
+}
+
+# metacoder::calc_prop_samples() has returned different column names across
+# versions, so we resolve the prevalence column dynamically instead of assuming
+# a single upstream schema.
+get_prop_samples_prevalence_column <- function(prop_samples_table) {
+  if ("prop_samples" %in% names(prop_samples_table)) {
+    return("prop_samples")
+  }
+
+  if ("n_samples" %in% names(prop_samples_table)) {
+    return("n_samples")
+  }
+
+  rlang::abort(
+    "calc_prop_samples() did not return a recognized prevalence column."
   )
 }

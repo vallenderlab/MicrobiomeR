@@ -3,7 +3,6 @@
 #' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param group The "TreatmentGroup" or similar grouping from your metadata to denote sample groups, Default: 'TreatmentGroup'
 #' @return Returns a list of alpha diversity measures with metadata.
-#' @pretty_print TRUE
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
@@ -21,6 +20,7 @@
 #' @importFrom metacoder as_phyloseq
 #' @importFrom utils combn
 alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
+  vctrs::vec_assert(group, ptype = character(), size = 1)
   metacoder_object <- validate_MicrobiomeR_format(
     obj = create_taxmap(obj),
     valid_formats = c("analyzed_format")
@@ -43,7 +43,11 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
   num_groups <- length(groups)
 
   # make a pairwise list that we want to compare.
-  group.pairs <- utils::combn(seq_along(groups), num_groups, simplify = FALSE, FUN = function(i) groups[i])
+  group.pairs <- if (num_groups >= 2) {
+    utils::combn(seq_along(groups), 2, simplify = FALSE, FUN = function(i) groups[i])
+  } else {
+    list()
+  }
 
   phyloseq_object.meta$group.pairs <- group.pairs
 
@@ -79,12 +83,16 @@ alpha_diversity_measures <- function(obj, group = "TreatmentGroup") {
 #' @importFrom ggthemes theme_pander
 #' @importFrom utils combn
 alpha_diversity_plot <- function(obj, measure = "Shannon", group = "TreatmentGroup", select_otu_table = NULL, title = NULL) {
+  vctrs::vec_assert(group, ptype = character(), size = 1)
+  vctrs::vec_assert(measure, ptype = character(), size = 1)
 
-  # Make sure select_otu_table is not being
-  calls <- names(sapply(match.call(), deparse))[-1]
-  if(any("select_otu_table" %in% calls)) {
+  if (!is.null(select_otu_table)) {
     select_otu_table <- NULL
-    warning("select_otu_table parameter has been deprecated.")
+    lifecycle::deprecate_warn(
+      when = "0.6.2",
+      what = "alpha_diversity_plot(select_otu_table)",
+      details = "This argument is ignored and will be removed in a future release."
+    )
   }
 
   # Validate data format
@@ -99,13 +107,20 @@ alpha_diversity_plot <- function(obj, measure = "Shannon", group = "TreatmentGro
   if (typeof(metacoder_object$data$sample_data[[group]]) == "character") {
     metacoder_object$data$sample_data[[group]] <- as.factor(metacoder_object$data$sample_data[[group]])
   } else {
-    metacoder_object$data$sample_data[[group]] <- factor(metacoder_object$data$sample_data[[group]], levels = list(unique(metacoder_object$data$sample_data[[group]])))
+    metacoder_object$data$sample_data[[group]] <- factor(
+      metacoder_object$data$sample_data[[group]],
+      levels = unique(metacoder_object$data$sample_data[[group]])
+    )
   }
   groups <- levels(metacoder_object$data$sample_data[[group]]) # get the variables
   num_groups <- length(groups)
 
   # make a pairwise list that we want to compare.
-  metacoder_object$data$sample_data$group.pairs <- utils::combn(seq_along(groups), num_groups, simplify = FALSE, FUN = function(i) groups[i])
+  metacoder_object$data$sample_data$group.pairs <- if (num_groups >= 2) {
+    utils::combn(seq_along(groups), 2, simplify = FALSE, FUN = function(i) groups[i])
+  } else {
+    list()
+  }
 
   # Use a palette based on the number of samples.
   if (num_groups == 2) {
@@ -138,10 +153,14 @@ alpha_diversity_plot <- function(obj, measure = "Shannon", group = "TreatmentGro
 #' @family Visualizations
 #' @rdname alpha_diversity_plot
 alpha_diversity_plots <- function(obj, measures = c("Shannon", "GiniSimpson", "InverseSimpson"), group = "TreatmentGroup") {
+  vctrs::vec_assert(group, ptype = character(), size = 1)
   if (is.null(measures)) {
     measures <- c("Shannon", "GiniSimpson", "InverseSimpson")
   } else if (length(measures) < 2) {
-    stop("Use the alpha_diversity_plot function for generating a plot for 1 alpha diversity index.")
+    vctrs::vec_assert(measures, ptype = character(), size = NULL)
+    rlang::abort("Use alpha_diversity_plot() when plotting a single alpha diversity index.")
+  } else {
+    vctrs::vec_assert(measures, ptype = character(), size = NULL)
   }
   alpha_div_plots <- list()
   for (m in measures) {
@@ -158,7 +177,6 @@ alpha_diversity_plots <- function(obj, measures = c("Shannon", "GiniSimpson", "I
 #' @param start_path The starting path of the output directory.  Default: 'output'
 #' @param ... An optional list of parameters to use in the output_dir function.
 #' @return An output directory that contains alpha diversity plots.
-#' @pretty_print TRUE
 #' @details This function creates an appropriate output directory, where it saves publication ready
 #' plots.
 #' @examples

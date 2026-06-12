@@ -2,8 +2,8 @@
 % Please edit documentation in R/MicrobiomeR-package.R
 \docType{package}
 \name{MicrobiomeR}
-\alias{MicrobiomeR}
 \alias{MicrobiomeR-package}
+\alias{MicrobiomeR}
 \title{MicrobiomeR}
 \description{
 A microbiome workflow package using phyloseq for data import, metacoder for data analysis,
@@ -29,6 +29,16 @@ The \link{MicrobiomeR_Workflow} and \link{MicrobiomeR_Formats} help sections are
 package.
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/vallenderlab/MicrobiomeR}
+  \item \url{https://vallenderlab.github.io/MicrobiomeR/}
+  \item Report bugs at \url{https://github.com/vallenderlab/MicrobiomeR/issues}
+}
+
+}
 \author{
 Rob Gilmore and Shaurita Hutchins
 }
+\keyword{internal}

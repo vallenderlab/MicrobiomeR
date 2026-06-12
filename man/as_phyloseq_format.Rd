@@ -4,9 +4,13 @@
 \alias{as_phyloseq_format}
 \title{As Phyloseq MicrobiomeR Format}
 \usage{
-as_phyloseq_format(obj, otu_table = "otu_abundance",
-  tax_data = "otu_annotations", sample_data = "sample_data",
-  phy_tree = "phy_tree")
+as_phyloseq_format(
+  obj,
+  otu_table = "otu_abundance",
+  tax_data = "otu_annotations",
+  sample_data = "sample_data",
+  phy_tree = "phy_tree"
+)
 }
 \arguments{
 \item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
@@ -31,12 +35,14 @@ See the \link{MicrobiomeR_Formats} documentation.
 \seealso{
 \code{\link[MicrobiomeR]{create_taxmap}},\code{\link[MicrobiomeR]{order_metacoder_data}}
 
-Other Formatting: \code{\link{MicrobiomeR_Formats}},
-  \code{\link{as_MicrobiomeR_format}},
-  \code{\link{as_analyzed_format}},
-  \code{\link{as_basic_format}},
-  \code{\link{as_custom_format}},
-  \code{\link{as_raw_format}}, \code{\link{melt_taxmap}},
-  \code{\link{treatment_matrix}}
+Other Formatting: 
+\code{\link{MicrobiomeR_Formats}},
+\code{\link{as_MicrobiomeR_format}()},
+\code{\link{as_analyzed_format}()},
+\code{\link{as_basic_format}()},
+\code{\link{as_custom_format}()},
+\code{\link{as_raw_format}()},
+\code{\link{melt_taxmap}()},
+\code{\link{treatment_matrix}()}
 }
 \concept{Formatting}

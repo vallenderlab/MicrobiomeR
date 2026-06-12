@@ -19,7 +19,6 @@
 #' @param recursive_save If the directory doesn't exists create the parent directories
 #' that don't exist as well.  Default: FALSE
 #' @return A phyloseq object, and a phylogenetic tree file if one does not already exist.
-#' @pretty_print TRUE
 #' @details This function heavily relies on the phyloseq package to import data into R.
 #'  It also requires you to use an absolute or relative path to your data files or for your data files
 #'  to be in the working directory.
@@ -94,7 +93,6 @@ create_phyloseq <- function(biom_file = NULL, tree_file = NULL, metadata_file = 
 #' @param recursive If the directory doesn't exist, create the parent directories
 #' that don't exist as well, Default: TRUE
 #' @return Returns a phyloseq object with a rooted tree.
-#' @pretty_print TRUE
 #' @details This function is a helper function to get a proper phyloseq object for
 #' downstream analysis.  Some analyses require a rooted tree.  The function saves
 #' the rooted tree in the phyloseq object.  It can also save the tree as a file
@@ -162,7 +160,6 @@ root_phyloseq_tree <- function(phyloseq_object, tree_path, save_rooted_tree, rec
 #' @description Pick an outgroup for rooting a phylogenetic tree.
 #' @param unrooted_tree An unrooted tree object.
 #' @return A new tree with the longest branch as the outgroup.
-#' @pretty_print TRUE
 #' @details This function preprocess a phylogenetic tree for rooting by the longest edge.
 #' Please see this issue for more details \url{https://github.com/joey711/phyloseq/issues/597}.
 #' @export
@@ -192,7 +189,6 @@ pick_new_outgroup <- function(unrooted_tree) {
 #' @description This function roots a phylogenetic tree object by it's longest edge.
 #' @param unrooted_tree An unrooted phylogenetic tree object.
 #' @return A rooted phlogenetic tree object.
-#' @pretty_print TRUE
 #' @details Please see this issue for more details \url{https://github.com/joey711/phyloseq/issues/597}.
 #' @export
 #' @family Phylogenetic Tree Manipulators
@@ -254,7 +250,6 @@ root_by_longest_edge <- function(unrooted_tree) {
 #'  reflect embedded information, naming conventions,
 #'  desired length limits, etc; or in the case of \code{\link{parse_taxonomy_default}},
 #'  not modified at all and given dummy rank names to each element.
-#' @pretty_print TRUE
 #' @details This function is currently under PR review by phyloseq in a well supported
 #' pull request: \url{https://github.com/joey711/phyloseq/pull/854}.  If you use this function,
 #' then please comment on the GitHub PR to encourage merging this feature.

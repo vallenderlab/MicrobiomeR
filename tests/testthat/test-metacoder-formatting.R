@@ -25,3 +25,9 @@ test_that("is_*_format works", {
   expect_false(is_analyzed_format(raw_silva_2))
 })
 
+test_that("as_custom_format rejects unknown rename sources", {
+  expect_error(
+    as_custom_format(raw_silva_2, format = "raw_format", change_name_list = list(not_a_table = "otu_abundance")),
+    "None of the supplied table names were found"
+  )
+})

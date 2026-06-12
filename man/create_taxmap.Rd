@@ -23,7 +23,9 @@ A function that handles the conversion of objects to Taxmap (\strong{taxa::taxma
 \details{
 This function is used to convert data to metacoder/taxmap objects for \emph{microbiome} analysis.
 This function is used at the beginning of every other function to support multiple types of input
-for the obj parameter in those functions.
+for the obj parameter in those functions. For phyloseq inputs, this function
+uses \code{\link[metacoder]{parse_phyloseq}} when possible and falls back to
+an internal parser for known upstream metacoder namespace breakage.
 }
 \examples{
 \dontrun{
@@ -39,6 +41,7 @@ if(interactive()){
 
 \code{\link[tools]{fileutils}}
 
-Other Data Importers: \code{\link{create_phyloseq}}
+Other Data Importers: 
+\code{\link{create_phyloseq}()}
 }
 \concept{Data Importers}

@@ -2,13 +2,28 @@
 % Please edit documentation in R/ordination.R
 \name{ordination_plot}
 \alias{ordination_plot}
+\alias{ordination_plots}
 \title{Ordination Plot}
 \usage{
-ordination_plot(obj, method = "PCoA", distance = "wunifrac",
-  color = "TreatmentGroup", title = NULL, only_data = FALSE)
+ordination_plot(
+  obj,
+  method = "PCoA",
+  distance = "wunifrac",
+  color = "TreatmentGroup",
+  title = NULL,
+  only_data = FALSE
+)
+
+ordination_plots(
+  obj,
+  methods = c("PCoA", "NMDS"),
+  distances = c("wunifrac", "unifrac", "bray"),
+  color = "TreatmentGroup",
+  select_otu_table = "otu_proportions"
+)
 }
 \arguments{
-\item{obj}{An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
+\item{obj}{An object to be converted to a metacoder object with \code{\link[MicrobiomeR]{create_taxmap}}.}
 
 \item{method}{Choose an ordination method from 'PCoA', 'CCA', 'NMDS' or 'DPCoA', Default: 'PCoA'}
 
@@ -19,12 +34,22 @@ ordination_plot(obj, method = "PCoA", distance = "wunifrac",
 \item{title}{The title of the plot, Default: NULL}
 
 \item{only_data}{Allows for only ordination data to be generated, Default: FALSE}
+
+\item{methods}{A list of ordination methods, Default: 'c("PCoA", "NMDS")'}
+
+\item{distances}{A list of distance methods, Default: 'c("wunifrac", "unifrac", "bray")'}
+
+\item{select_otu_table}{The data table to use in the observation data.  Default:  "otu_proportions"}
 }
 \value{
 By default, it returns an ordination plot.
+
+Returns a melted dataframe.
 }
 \description{
 This function allows for ordination (which helps us to distinguish beta diversity relationships) to be plotted as well as for the corresponding data to be returned.
+
+Generate plots for a list of ordination methods and distances.
 }
 \examples{
 \dontrun{
@@ -40,21 +65,38 @@ if (interactive()) {
 \seealso{
 View \code{\link{save_ordination_plots}} to save your ordination plot or multiple ordination plots.
 
-Other Visualizations: \code{\link{alpha_diversity_plot}},
-  \code{\link{correlation_data}},
-  \code{\link{correlation_plots}},
-  \code{\link{correlation_plot}},
-  \code{\link{heat_tree_parameters}},
-  \code{\link{heat_tree_plots}},
-  \code{\link{ordination_plots}},
-  \code{\link{plot_limits}},
-  \code{\link{save_alpha_diversity_plots}},
-  \code{\link{save_correlation_plots}},
-  \code{\link{save_heat_tree_plots}},
-  \code{\link{save_ordination_plots}},
-  \code{\link{save_stacked_barplots}},
-  \code{\link{stacked_barplots}},
-  \code{\link{stacked_barplot}},
-  \code{\link{top_coefficients_barplot}}
+Other Visualizations: 
+\code{\link{alpha_diversity_plot}()},
+\code{\link{correlation_data}()},
+\code{\link{correlation_plot}()},
+\code{\link{correlation_plots}()},
+\code{\link{heat_tree_parameters}()},
+\code{\link{heat_tree_plots}()},
+\code{\link{plot_limits}()},
+\code{\link{save_alpha_diversity_plots}()},
+\code{\link{save_correlation_plots}()},
+\code{\link{save_heat_tree_plots}()},
+\code{\link{save_ordination_plots}()},
+\code{\link{save_stacked_barplots}()},
+\code{\link{stacked_barplot}()},
+\code{\link{stacked_barplots}()},
+\code{\link{top_coefficients_barplot}()}
+
+Other Visualizations: 
+\code{\link{alpha_diversity_plot}()},
+\code{\link{correlation_data}()},
+\code{\link{correlation_plot}()},
+\code{\link{correlation_plots}()},
+\code{\link{heat_tree_parameters}()},
+\code{\link{heat_tree_plots}()},
+\code{\link{plot_limits}()},
+\code{\link{save_alpha_diversity_plots}()},
+\code{\link{save_correlation_plots}()},
+\code{\link{save_heat_tree_plots}()},
+\code{\link{save_ordination_plots}()},
+\code{\link{save_stacked_barplots}()},
+\code{\link{stacked_barplot}()},
+\code{\link{stacked_barplots}()},
+\code{\link{top_coefficients_barplot}()}
 }
 \concept{Visualizations}

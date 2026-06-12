@@ -10,7 +10,6 @@
 #' Built-in transformations include "asn", "atanh", "boxcox", "exp", "identity", "log", "log10", "log1p",
 #' "log2", "logit", "probability", "probit", "reciprocal", "reverse" and "sqrt".
 #' @return A 1:1 correlation plot built with ggplot2.
-#' @pretty_print TRUE
 #' @details Correlation plots help to better explain the heat tree findings.
 #' @examples
 #' \dontrun{
@@ -40,6 +39,7 @@
 #' @importFrom scales percent
 correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
                              wp_value = 0.05, pal_func = NULL, trans = "logit") {
+  vctrs::vec_assert(primary_rank, ptype = character(), size = 1)
   metacoder_object <- create_taxmap(obj)
   metacoder_object <- validate_MicrobiomeR_format(obj = metacoder_object,
                                                   valid_formats = c("analyzed_format"))
@@ -56,8 +56,9 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
       secondary_rank <- secondary_rank
     } else {
       message(crayon::yellow("Your secondary_rank should be a higher rank than the label_taxa.  Their values are being switched."))
-      secondary_rank <- primary_rank
+      original_primary_rank <- primary_rank
       primary_rank <- secondary_rank
+      secondary_rank <- original_primary_rank
     }
   } else if (secondary_rank == FALSE) {
     secondary_rank <- primary_rank
@@ -78,6 +79,18 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
     #background_limits <- data.frame(id = c("1", "1", "1", "2", "2", "2"), x = c(0, Inf, 0, 0, Inf, Inf), y = c(0, Inf, Inf, 0, 0, Inf))
     # Get a color palette
     secondary_taxa <- length(unique(primary_data[[(secondary_rank)]]))
+    secondary_rank_order <- stats::aggregate(
+      primary_data$color_wilcox_p_value,
+      by = list(primary_data[[secondary_rank]]),
+      FUN = min
+    )
+    secondary_rank_levels <- secondary_rank_order$Group.1[
+      order(secondary_rank_order$x, decreasing = FALSE, na.last = TRUE)
+    ]
+    primary_data$secondary_rank_color <- factor(
+      primary_data[[secondary_rank]],
+      levels = secondary_rank_levels
+    )
 
     # Get the mean significant increase and mean significant decrease for x and y
     # sig_decrease <- dplyr::filter(significant_data, Abundance == "Significant Decrease")
@@ -112,7 +125,12 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
       #ggplot2::geom_hline(aes(linetype = "dotted"), yintercept = y_avg) +
       # ggplot2::annotate("text", x=c(x_inc, x_dec, x_pos, x_pos), y = c(y_pos, y_pos, y_inc, y_dec), label = c("+", "-", "+", "-"), color = "darkred", size=5) +
       ggplot2::geom_point(data = significant_data, ggplot2::aes(shape = Abundance), size = 3.2, color = "black", stroke = 2, show.legend = FALSE) +
-      ggplot2::geom_point(data = primary_data, ggplot2::aes(shape = Abundance, color = forcats::fct_reorder(primary_data[[secondary_rank]], color_wilcox_p_value, min)), size = 2.5, stroke = 1.5) +
+      ggplot2::geom_point(
+        data = primary_data,
+        ggplot2::aes(shape = Abundance, color = secondary_rank_color),
+        size = 2.5,
+        stroke = 1.5
+      ) +
       ggrepel::geom_label_repel(
         mapping = ggplot2::aes(label = rank_label), size = 3, segment.size = 0.15, point.padding = 0.5, box.padding = 0.6, alpha = 0.65, force = 45, max.iter = 10000, min.segment.length = 0.1, seed = 2289,
         nudge_x = ifelse(primary_data$mean_treat2 < primary_data$mean_treat1, -2, 2.5), nudge_y = ifelse(primary_data$mean_treat1 < primary_data$mean_treat2, -1.9, 2)) +
@@ -142,7 +160,6 @@ correlation_plot <- function(obj, primary_rank, secondary_rank = TRUE,
 #' the number of supertaxon ranks above the primary rank or the name of a supertaxon rank.  Default: TRUE
 #' @param ... An optional list of parameters to use in the correlation_plot function.
 #' @return A list object containing correlation plots.  A pairwise comparison returns a nested list.
-#' @pretty_print TRUE
 #' @details This function makes it easier to generate multiple correlation plots at once.
 #' @examples
 #' \dontrun{
@@ -204,7 +221,6 @@ correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ...) {
 #' @param secondary_rank  The secondary rank used to color the points, Default: TRUE
 #' @param wp_value The wilcoxon p-value cutoff/threshold, Default: 0.05
 #' @return Data for the correlation plots.
-#' @pretty_print TRUE
 #' @details DETAILS
 #' @examples
 #' \dontrun{
@@ -220,10 +236,8 @@ correlation_plots <- function(obj, primary_ranks, secondary_ranks = TRUE, ...) {
 #'
 #'  \code{\link[dplyr]{tidyeval}},  \code{\link[dplyr]{mutate}},  \code{\link[dplyr]{filter}},  \code{\link[dplyr]{arrange}}
 #'
-#'  \code{\link[taxa]{filter_obs}}
 #' @importFrom dplyr enquo mutate filter arrange
 #' @importFrom utils combn
-#' @importFrom taxa filter_obs
 #' @importFrom glue glue
 correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_value = 0.05) {
   # Quotes
@@ -246,19 +260,17 @@ correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_value 
     treat_a <- combinations[1,i]
     treat_b <- combinations[2,i]
 
-    p_mo <- primary_mo %>%
-      taxa::filter_obs("stats_tax_data",
-                       (treatment_1 == treat_a &
-                          treatment_2 == treat_b) |
-                         (treatment_1 == treat_b &
-                            treatment_2 == treat_a))
+    p_mo <- filter_stats_tax_data_by_treatments(
+      obj = primary_mo,
+      treat_a = treat_a,
+      treat_b = treat_b
+    )
     p_d <- p_mo$data$stats_tax_data
-    s_mo <- secondary_mo %>%
-      taxa::filter_obs("stats_tax_data",
-                       (treatment_1 == treat_a &
-                          treatment_2 == treat_b) |
-                         (treatment_1 == treat_b &
-                            treatment_2 == treat_a))
+    s_mo <- filter_stats_tax_data_by_treatments(
+      obj = secondary_mo,
+      treat_a = treat_a,
+      treat_b = treat_b
+    )
     s_d <- s_mo$data$stats_tax_data
     # Add a P-Value column for color, a Significance column (TRUE/FALSE) for subsetting, an Abundance column for the
     # legend, and a label column (TRUE/FALSE) for subsetting
@@ -287,6 +299,16 @@ correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_value 
   return(corr_data)
 }
 
+filter_stats_tax_data_by_treatments <- function(obj, treat_a, treat_b) {
+  mo_clone <- obj$clone()
+  mo_clone$data$stats_tax_data <- dplyr::filter(
+    mo_clone$data$stats_tax_data,
+    (treatment_1 == treat_a & treatment_2 == treat_b) |
+      (treatment_1 == treat_b & treatment_2 == treat_a)
+  )
+  mo_clone
+}
+
 #' @title Save Correlation Plots
 #' @description This function saves correlation plots stored in a listlike object to an output folder.
 #' @param corr A correlation plot list generated by correlation_plot or correlation_plots.
@@ -294,7 +316,6 @@ correlation_data <- function(obj, primary_rank, secondary_rank = TRUE, wp_value 
 #' @param start_path The starting path of the output directory.  Default: 'output'
 #' @param ... An optional list of parameters to use in the output_dir function.
 #' @return An output directory that contains correlation plots.
-#' @pretty_print TRUE
 #' @details This function creates an appropriate output directory, where it saves publication ready
 #' plots.
 #' @examples
@@ -341,7 +362,6 @@ save_correlation_plots <- function(corr, format = "tiff", start_path = "output",
 #' @param x Data used to plot the x axis.
 #' @param y Data used to plot the y axis.
 #' @return A vector that supplies the overarching x and y limits.
-#' @pretty_print TRUE
 #' @family Visualizations
 #' @rdname plot_limits
 plot_limits <- function(x, y) {

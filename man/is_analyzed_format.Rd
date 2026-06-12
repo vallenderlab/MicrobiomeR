@@ -33,11 +33,12 @@ if(is_analyzed_format(MicrobiomeR::raw_silva_2)){
 }
 }
 \seealso{
-Other Validation: \code{\link{is_basic_format}},
-  \code{\link{is_phyloseq_format}},
-  \code{\link{is_raw_format}},
-  \code{\link{order_metacoder_data}},
-  \code{\link{validate_MicrobiomeR_format}},
-  \code{\link{which_format}}
+Other Validation: 
+\code{\link{is_basic_format}()},
+\code{\link{is_phyloseq_format}()},
+\code{\link{is_raw_format}()},
+\code{\link{order_metacoder_data}()},
+\code{\link{validate_MicrobiomeR_format}()},
+\code{\link{which_format}()}
 }
 \concept{Validation}

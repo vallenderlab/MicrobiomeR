@@ -4,8 +4,13 @@
 \alias{get_color_palette}
 \title{Get a Color Palette}
 \usage{
-get_color_palette(pal_func = viridis_magma_palette, color_no = 20,
-  display = TRUE, rev = FALSE, ...)
+get_color_palette(
+  pal_func = viridis_magma_palette,
+  color_no = 20,
+  display = TRUE,
+  rev = FALSE,
+  ...
+)
 }
 \arguments{
 \item{pal_func}{A function that \emph{returns the output function} from \code{\link[grDevices]{colorRamp}} or
@@ -32,7 +37,7 @@ This function is meant to be a plugin style function for users to created palett
 \dontrun{
 if(interactive()){
 # This example uses data that are no longer available in the MicrobiomeR package,
-# however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_analyzed_format}}.
+# however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
  library(MicrobiomeR)
 analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
  data <- analyzed_silva$data$stats_tax_data$Phylum
@@ -43,9 +48,10 @@ analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_form
 }
 }
 \seealso{
-Other Color Palettes: \code{\link{combination_palette}},
-  \code{\link{scico_palette}},
-  \code{\link{viridis_magma_palette}},
-  \code{\link{viridis_palette}}
+Other Color Palettes: 
+\code{\link{combination_palette}()},
+\code{\link{scico_palette}()},
+\code{\link{viridis_magma_palette}()},
+\code{\link{viridis_palette}()}
 }
 \concept{Color Palettes}

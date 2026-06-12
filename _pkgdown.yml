@@ -1,4 +1,4 @@
-url: https://microbiomer.vallenderlab.org/
+url: https://vallenderlab.github.io/MicrobiomeR/
 template:
   params:
     bootswatch: yeti
@@ -47,11 +47,8 @@ reference:
 - title: Import
   contents:
   - create_phyloseq
-  - create_metacoder
-  - parse_taxonomy_default
+  - create_taxmap
   - parse_taxonomy_silva_128
-  - parse_taxonomy_greengenes
-  - parse_taxonomy_qiime
   - has_concept("Phylogenetic Tree Manipulators")
 
 - title: Formatting
@@ -82,6 +79,7 @@ reference:
 - title: Visualization
   contents:
   - output_dir
+  - save_top_coefficients_barplot
   - has_concept("Visualizations")
 
 - title: Color Palettes
@@ -90,4 +88,12 @@ reference:
 
 - title: Miscellaneous
   contents:
+  - MicrobiomeR_Workflow
   - create_pub_table
+
+- title: Example Data
+  contents:
+  - phyloseq_silva_2
+  - phyloseq_silva_3
+  - raw_silva_2
+  - raw_silva_3

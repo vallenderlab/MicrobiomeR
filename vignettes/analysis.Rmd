@@ -46,10 +46,12 @@ After importing data and formatting it, data should be filtered to reduce noise 
 
 ```{r message=FALSE, warning=FALSE}
 # Remove Archaea from the taxmap object
-metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
-                                   taxon_names == "Archaea",
-                                   subtaxa = TRUE,
-                                   invert = TRUE)
+metacoder_obj <- metacoder::filter_taxa(
+  obj = raw_metacoder,
+  taxon_names == "Archaea",
+  subtaxa = TRUE,
+  invert = TRUE
+)
 
 # Ambiguous Annotation Filter - Remove taxonomies with ambiguous names
 metacoder_obj <- metacoder::filter_ambiguous_taxa(metacoder_obj, 
@@ -129,6 +131,16 @@ measures <- alpha_diversity_measures(obj = metacoder_obj)
 measures$Shannon
 ```
 
+To complement the summary table, `alpha_diversity_plot()` can visualize how the selected
+index differs across treatment groups.
+
+```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=5.3}
+# Plot alpha diversity for the Shannon index
+alpha_diversity_plot(obj = metacoder_obj,
+                     measure = "Shannon",
+                     group = "TreatmentGroup",
+                     title = "Treatment Group")
+```
 
 ```{r message=FALSE, warning=FALSE}
 # Get only ordination data for the first Axis based on principal coordinates analysis using weighted unifrac.
@@ -141,6 +153,15 @@ ordination$Axis.1
 # Generate permanova statistics for data
 permanova <- permanova(obj = metacoder_obj, group = "TreatmentGroup")
 permanova$permanova$aov.tab
+```
+
+`top_coefficients_barplot()` provides a quick visual summary of the taxa that contribute most
+to the separation captured by the PERMANOVA model.
+
+```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=7}
+# Plot the taxa with the largest PERMANOVA coefficients
+top_coefficients_barplot(permanova$top_coefficients,
+                         title = "Top taxa driving PERMANOVA separation")
 ```
 
 ## Data Visualization
@@ -216,10 +237,12 @@ phy_obj <- create_phyloseq(biom_file = biom_file,
 # Get the taxmap object in the raw format
 raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
 # Remove Archaea from the taxmap object
-metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
-                                   taxon_names == "Archaea",
-                                   subtaxa = TRUE,
-                                   invert = TRUE)
+metacoder_obj <- metacoder::filter_taxa(
+  obj = raw_metacoder,
+  taxon_names == "Archaea",
+  subtaxa = TRUE,
+  invert = TRUE
+)
 
 # Ambiguous Annotation Filter - Remove taxonomies with ambiguous names
 metacoder_obj <- metacoder::filter_ambiguous_taxa(metacoder_obj, 
@@ -283,5 +306,3 @@ corr_plots$Class$Phylum$`Exp_Var2-vs-Exp_Var1`
 corr_plots$Class$Phylum$`Exp_Var2-vs-Control`
 corr_plots$Class$Phylum$`Exp_Var1-vs-Control`
 ```
-
-

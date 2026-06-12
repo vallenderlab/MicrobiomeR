@@ -1,3 +1,9 @@
+# MicrobiomeR 0.6.2
+
+* Added compatibility shims for upstream `metacoder`/`taxa` API drift, including
+  a local `parse_phyloseq()` fallback for the upstream `ranks_ref` bug and
+  removal of stale `modes` and `taxa` import paths.
+
 # MicrobiomeR 0.6.1
 
 * Added `StagedInstall: false` to DESCRIPTION file.

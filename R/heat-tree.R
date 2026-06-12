@@ -8,7 +8,6 @@
 #' output is displayed.  Please see the \code{\link[MicrobiomeR]{heat_tree_parameters}} documentation
 #' for further explanation.
 #' @return A list of heat_tree plots.
-#' @pretty_print TRUE
 #' @examples
 #' \dontrun{
 #' if(interactive()){
@@ -33,7 +32,6 @@
 #'  \code{\link[crayon]{crayon}}
 #'
 #'  \code{\link[ggplot2]{theme}},  \code{\link[ggplot2:element]{margin}},  \code{\link[ggplot2]{labs}}
-#' @importFrom taxa filter_obs
 #' @importFrom crayon bgWhite red
 #' @importFrom metacoder heat_tree
 #' @importFrom ggplot2 theme element_text ggtitle
@@ -58,9 +56,12 @@ heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, ...) {
     # Create a list of heat_tree plots for saving
     for (rank in rank_list) {
       rank_level <- rank_index[[rank]]
-      filtered_obj <- obj %>% taxa::filter_taxa(n_supertaxa < rank_level,
-                                                supertaxa = TRUE,
-                                                reassign_obs = FALSE)
+      filtered_obj <- filter_taxa_compat(
+        obj = obj,
+        subset = n_supertaxa < rank_level,
+        supertaxa = TRUE,
+        reassign_obs = FALSE
+      )
       flt_taxmaps[[rank]] <- filtered_obj
       if (is.logical(title)) {
         if (title == TRUE) {
@@ -110,7 +111,6 @@ heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, ...) {
 #' can be used to manipulate the heat tree parameters.  Function calls from the taxa package must
 #' be done explicitly on the Taxmap object.
 #' @return A list used with do.call and the metacoder::heat_tree function.
-#' @pretty_print TRUE
 #' @export
 #' @family Visualizations
 #' @rdname heat_tree_parameters
@@ -122,7 +122,6 @@ heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, ...) {
 #'  \code{\link[purrr]{list_modify}}
 #'
 #'  \code{\link[rlang:quotation]{enquos}},  \code{\link[rlang:quosure]{is_quosure}},  \code{\link[rlang]{eval_tidy}}
-#' @importFrom taxa n_obs taxon_names
 #' @importFrom purrr list_modify
 #' @importFrom rlang enquos is_quosure eval_tidy
 heat_tree_parameters <- function(obj, title, treatment_no, ...) {
@@ -290,7 +289,6 @@ heat_tree_parameters <- function(obj, title, treatment_no, ...) {
 #' @param start_path The starting path of the output directory.  Default: 'output'
 #' @param ... An optional list of parameters to use in the output_dir function.
 #' @return An output directory that contains heat tree plots.
-#' @pretty_print TRUE
 #' @details This function creates an appropriate output directory, where it saves publication ready
 #' plots.
 #' @examples

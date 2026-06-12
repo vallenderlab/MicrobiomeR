@@ -7,10 +7,11 @@
 #'   \item{RData file}{An RData file generated from the base::save function.  Can have an extension of .RData or .rda.}
 #'   }
 #' @return The output generated is a \strong{taxa::taxmap} object.
-#' @pretty_print TRUE
 #' @details This function is used to convert data to metacoder/taxmap objects for \emph{microbiome} analysis.
 #' This function is used at the beginning of every other function to support multiple types of input
-#' for the obj parameter in those functions.
+#' for the obj parameter in those functions. For phyloseq inputs, this function
+#' uses \code{\link[metacoder]{parse_phyloseq}} when possible and falls back to
+#' an internal parser for known upstream metacoder namespace breakage.
 #' @examples
 #' \dontrun{
 #' if(interactive()){
@@ -30,30 +31,140 @@
 #' @importFrom tools file_ext
 #' @importFrom crayon red
 create_taxmap <- function(obj) {
+  if (is.character(obj) && length(obj) == 1 && file.exists(obj)) {
+    file_extension <- tolower(tools::file_ext(obj))
+    if (!file_extension %in% c("rdata", "rda")) {
+      rlang::abort(cli::format_inline(
+        "Unsupported file extension for {.path {obj}}. Expected {.val .RData} or {.val .rda}."
+      ))
+    }
+  }
+
   if (is.null(obj)) {
-    stop(crayon::red("Please use a metacoder/phyloseq object or an rdata file."))
+    rlang::abort("Please use a metacoder/phyloseq object or an rdata file.")
   } else {
     if (inherits(obj, "phyloseq")) {
-      metacoder_object <- metacoder::parse_phyloseq(obj)
+      metacoder_object <- tryCatch(
+        metacoder::parse_phyloseq(obj),
+        error = function(error) {
+          if (is_metacoder_parse_phyloseq_ranks_ref_bug(error)) {
+            parse_phyloseq_fallback(obj)
+          } else {
+            stop(error)
+          }
+        }
+      )
     } else if (inherits(obj, "Taxmap")) {
       metacoder_object <- obj
-    } else if (file.exists(obj)) {
-      if (tools::file_ext(obj) %in% c("RData", ".rda")) {
-        load(file = obj)
-        if (!"metacoder_object" %in% ls()) {
-          stop(crayon::red("Please provide a loadable .RData/.rda file that contains an object called \"metacoder_object\"."))
-        }
+    } else if (is.character(obj) && length(obj) == 1 && file.exists(obj)) {
+      load_env <- new.env(parent = emptyenv())
+      load(file = obj, envir = load_env)
+      if (!exists("metacoder_object", envir = load_env, inherits = FALSE)) {
+        rlang::abort("Please provide a loadable .RData/.rda file that contains an object called `metacoder_object`.")
       }
+      metacoder_object <- get("metacoder_object", envir = load_env, inherits = FALSE)
+    } else {
+      rlang::abort(cli::format_inline(
+        "Unsupported input to create_taxmap(). Supply a phyloseq object, Taxmap object, or existing {.val .RData}/{.val .rda} file."
+      ))
     }
   }
   return(metacoder_object)
+}
+
+# Detect the known upstream metacoder parse_phyloseq() bug before routing to
+# the local compatibility parser.
+is_metacoder_parse_phyloseq_ranks_ref_bug <- function(error) {
+  grepl("object 'ranks_ref' not found", conditionMessage(error), fixed = TRUE)
+}
+
+# Fallback for upstream metacoder parse_phyloseq() builds that reference the
+# missing internal object `ranks_ref` before doing any real work.
+parse_phyloseq_fallback <- function(obj, class_regex = "(.*)", class_key = "taxon_name") {
+  datasets <- list()
+  mappings <- c()
+  sam_data <- NULL
+  phy_tree <- NULL
+
+  tax_data <- as.data.frame(obj@tax_table, stringsAsFactors = FALSE)
+  tax_cols <- colnames(tax_data)
+  tax_data <- cbind(data.frame(otu_id = rownames(tax_data), stringsAsFactors = FALSE), tax_data)
+
+  if (!is.null(obj@otu_table)) {
+    otu_table <- obj@otu_table
+    if (!otu_table@taxa_are_rows) {
+      otu_table <- t(otu_table)
+    }
+    otu_table <- as.data.frame(otu_table, stringsAsFactors = FALSE)
+    otu_table <- cbind(data.frame(otu_id = rownames(otu_table), stringsAsFactors = FALSE), otu_table)
+    datasets <- c(datasets, list(otu_table = otu_table))
+    mappings <- c(mappings, c("{{name}}" = "{{name}}"))
+  }
+
+  if (!is.null(obj@sam_data)) {
+    # Use the accessor so phyloseq sample metadata is preserved as a tabular
+    # object instead of collapsing to an empty list-backed data frame.
+    sam_data <- as.data.frame(phyloseq::sample_data(obj), stringsAsFactors = FALSE)
+    if (!is.null(rownames(sam_data)) && !"sample_id" %in% colnames(sam_data)) {
+      sam_data <- cbind(sample_id = rownames(sam_data), sam_data)
+    }
+    sam_data[] <- lapply(sam_data, as.character)
+    datasets <- c(datasets, list(sample_data = sam_data))
+    mappings <- c(mappings, NA)
+  }
+
+  if (!is.null(obj@phy_tree)) {
+    phy_tree <- obj@phy_tree
+    datasets <- c(datasets, list(phy_tree = obj@phy_tree))
+    mappings <- c(mappings, NA)
+  }
+
+  if (!is.null(obj@refseq)) {
+    refseq <- as.character(obj@refseq)
+    datasets <- c(datasets, list(ref_seq = refseq))
+    mappings <- c(mappings, c("{{name}}" = "{{name}}"))
+  }
+
+  output <- metacoder::parse_tax_data(
+    tax_data = tax_data,
+    datasets = datasets,
+    class_cols = tax_cols,
+    mappings = mappings,
+    named_by_rank = TRUE,
+    class_regex = class_regex,
+    class_key = class_key
+  )
+
+  withCallingHandlers({
+    output <- filter_taxa_compat(output, output$taxon_names() != "NA")
+  }, warning = function(warning_condition) {
+    if (conditionMessage(warning_condition) %in% c(
+      "There is no \"taxon_id\" column in the data set \"3\", so there are no taxon IDs.",
+      "The data set \"4\" is named, but not named by taxon ids."
+    )) {
+      invokeRestart("muffleWarning")
+    }
+  })
+
+  if (!is.null(sam_data)) {
+    output$data$sample_data <- sam_data
+  }
+  if (!is.null(phy_tree)) {
+    output$data$phy_tree <- phy_tree
+  }
+
+  if ("otu_table" %in% names(output$data)) {
+    otu_tab_index <- which(names(output$data) == "otu_table")
+    output$data <- c(output$data[otu_tab_index], output$data[-otu_tab_index])
+  }
+
+  output
 }
 
 #' @title Get Treatment Matrix
 #' @description A function that returns a matrix with used for comparing treatment data.
 #' @param obj An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @return A matrix with each column representing a comparison to be made.
-#' @pretty_print TRUE
 #' @details Use this when you want to do pairwise comparisons.
 #' @examples
 #' \dontrun{
@@ -95,7 +206,6 @@ treatment_matrix <- function(obj) {
 #' @param overwrite A logical denoting that overwriting is acceptable.  Default: FALSE
 #' @param mkdir A logical denoting weather or not the directory should be created or not.  Default: TRUE
 #' @return Creates a directory for output and returns the path as a string.
-#' @pretty_print TRUE
 #' @details This function is incredibly useful on it's own but also for various other plotting/saving functions within the package.
 #'  It helps keep data organized using a standard workflow.
 #' @examples
@@ -124,6 +234,8 @@ treatment_matrix <- function(obj) {
 #' @importFrom crayon yellow blue red green
 output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end_path=NULL, root_path=NULL,
                            custom_path = NULL, overwrite=FALSE, mkdir=TRUE) {
+  vctrs::vec_assert(overwrite, ptype = logical(), size = 1)
+  vctrs::vec_assert(mkdir, ptype = logical(), size = 1)
   # Create the relative path to the plots.  By default the full_path will be <root_path>/output
   # With ONLY the plot_type set the full_path will be <root_path>/<plot_type>
   # With the start_path set the full path will be <root_path>/<start_path>/?experiment?/?plot_type?/<end_path>.
@@ -165,24 +277,11 @@ output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end_pat
   }
   # Directory creation.
   if (mkdir == TRUE) {
-    answer_flag <- FALSE
     if (dir.exists(full_path) && overwrite == FALSE) {
       warning(glue::glue("The directory {full_path} already exists. And you don't want to overwrite the directory."))
     } else if (dir.exists(full_path) && overwrite == TRUE) {
       warning(glue::glue(crayon::yellow("You have chosen to overwrite the directory: {full_path}.")))
-      while (answer_flag == FALSE) {
-        answer <- readline(prompt = crayon::blue("Are you sure? (Y/N)"))
-        if (stringr::str_to_lower(answer) == "y") {
-          dir.create(full_path, recursive = TRUE)
-          answer_flag <- TRUE
-        } else if (stringr::str_to_lower(answer) == "n") {
-          warning(glue::glue(crayon::red("Please set overwrite to FALSE and change the path ({full_path}) with experiment and/or other_path.")))
-          stop(crayon::red("The files haven't been saved.  You have chosen not to overwrite you files."))
-        } else {
-          message(crayon::yellow("Please enter Y for YES or N for NO.  This is not case sensitive."))
-          answer_flag <- FALSE
-        }
-      }
+      dir.create(full_path, recursive = TRUE, showWarnings = FALSE)
     } else if (!dir.exists(full_path)) {
       message(glue::glue(crayon::green("Creating a new directory: {full_path}")))
       dir.create(full_path, recursive = TRUE)
@@ -204,7 +303,6 @@ output_dir <- function(start_path=NULL, experiment=NULL, plot_type=NULL, end_pat
 #' and categorically preserved table.  Retransposing with this set should yield an exact replicate of
 #' the original data.  Default: NULL
 #' @return A transposed data table as a tibble.
-#' @pretty_print TRUE
 #' @details Transposing can help with preforming operations on the rows of your tibbles.
 #' @examples
 #' \dontrun{
@@ -302,7 +400,6 @@ transposer <- function(.data, ids = NULL, header_name, preserved_categories = TR
 #' in the purrr package.  The purr package allows the use of anonymous functions as described in the link below:
 #'
 #' \url{https://jennybc.github.io/purrr-tutorial/ls03_map-function-syntax.html#anonymous_function,_formula}
-#' @pretty_print TRUE
 #' @examples
 #' \dontrun{
 #' if(interactive()){
@@ -357,7 +454,6 @@ transformer <- function(.data, func, by = "column", ids = NULL, header_name = NU
 #' @param match_var The column name to search in the dataframe.
 #' @param return_var The column of data to return when matched.
 #' @return A vector that contains the items of interest.
-#' @pretty_print TRUE
 #' @details A function that works like the VLOOKUP function in excel.  This function was
 #' borrowed from \url{https://www.r-bloggers.com/an-r-vlookup-not-so-silly-idea/}.
 #' @examples
@@ -472,5 +568,3 @@ pkg.private$input_files = list(
     two_groups = system.file("extdata", "nephele_metadata2.txt", package = "MicrobiomeR"),
     three_groups = system.file("extdata", "nephele_metadata3.txt", package = "MicrobiomeR"))
 )
-
-

@@ -62,7 +62,6 @@ convert_proportions <- function(melted_df, tax_level) {
 #' @importFrom shades scalefac saturation
 #' @import vegan
 #'
-#' @inheritParams convert_proportions
 #' @family Visualizations
 #' @rdname stacked_barplot
 #' @return Returns a stacked barplot.
@@ -95,6 +94,7 @@ stacked_barplot <- function(obj, tax_level = "Phylum", fill = "Phylum", xlabel =
     palette_values <- shades::saturation(get_color_palette(pal_func = pal_func, color_no = length(unique(mdf[[fill]])), display = FALSE),
                                          shades::scalefac(.6))
   }
+  palette_values <- as.character(palette_values)
 
   # Create the theme
   p <- p + ggplot2::ylab("Relative Abundance (% 100)") + ggplot2::scale_fill_manual(values = palette_values) + ggplot2::theme(
@@ -146,7 +146,6 @@ stacked_barplots <- function(obj, tax_levels = c("Phylum", "Class", "Order")) {
 #' @param start_path The starting path of the output directory.  Default: 'output'
 #' @param ... An optional list of parameters to use in the output_dir function.
 #' @return An output directory that contains stacked barplot.
-#' @pretty_print TRUE
 #' @details This function creates an appropriate output directory, where it saves publication ready
 #' plots.
 #' @examples

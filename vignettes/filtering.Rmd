@@ -41,15 +41,17 @@ raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
 # Taxmap Filtering
 
 Metacoder is a highly useful package that comes with tons of features right out of the box.  Functions
-such as `metacoder::filter_ambiguous_taxa()`, `taxa::filter_taxa()`, and `taxa::filter_obs()` for instance
+such as `metacoder::filter_ambiguous_taxa()`, `metacoder::filter_taxa()`, and `taxa::filter_obs()` for instance
 can almost always be used in your workflow.  
 
 ```{r message=FALSE, warning=FALSE}
 # Remove Archaea from the taxmap object
-metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
-                                   taxon_names == "Archaea",
-                                   subtaxa = TRUE,
-                                   invert = TRUE)
+metacoder_obj <- metacoder::filter_taxa(
+  obj = raw_metacoder,
+  taxon_names == "Archaea",
+  subtaxa = TRUE,
+  invert = TRUE
+)
 
 # Ambiguous Annotation Filter - Remove taxonomies with ambiguous names
 metacoder_obj <- metacoder::filter_ambiguous_taxa(metacoder_obj, 

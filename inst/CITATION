@@ -1,0 +1,27 @@
+citHeader("To cite MicrobiomeR in publications, please use:")
+
+# Keep this citation aligned with CITATION.cff so R package citations and
+# pkgdown render the same preferred reference.
+citEntry(
+  entry = "Article",
+  title = "MicrobiomeR: An R Package for Simplified and Standardized Microbiome Analysis Workflows",
+  author = personList(
+    person(given = "Robert A.", family = "Gilmore"),
+    person(given = "Shaurita", family = "Hutchins"),
+    person(given = "Xiao", family = "Zhang"),
+    person(given = "Eric", family = "Vallender")
+  ),
+  journal = "Journal of Open Source Software",
+  year = "2019",
+  volume = "4",
+  number = "35",
+  pages = "1299",
+  doi = "10.21105/joss.01299",
+  url = "https://doi.org/10.21105/joss.01299",
+  textVersion = paste(
+    "Gilmore RA, Hutchins S, Zhang X, Vallender E. (2019).",
+    "MicrobiomeR: An R Package for Simplified and Standardized",
+    "Microbiome Analysis Workflows. Journal of Open Source Software,",
+    "4(35), 1299. https://doi.org/10.21105/joss.01299"
+  )
+)

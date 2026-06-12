@@ -31,5 +31,5 @@ if (interactive()) {
 }
 \seealso{
 View \code{\link{top_coefficients_barplot}} to plot the top_coefficients returned from this function.
-See \code{\link[vegan]{adonis}} and \code{\link[vegan]{betadisper}} to understand more about how the permanova data was generated
+See \code{\link[vegan]{adonis2}} and \code{\link[vegan]{betadisper}} to understand more about how the permanova data was generated
 }
