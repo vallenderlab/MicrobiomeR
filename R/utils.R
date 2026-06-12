@@ -72,6 +72,34 @@ create_taxmap <- function(obj) {
   return(metacoder_object)
 }
 
+# Evaluate an expression with an explicit seed while restoring the caller's
+# RNG state on exit so helper functions do not perturb surrounding workflows.
+with_preserved_seed <- function(seed, expr) {
+  expr <- substitute(expr)
+
+  had_seed <- exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)
+  if (had_seed) {
+    old_seed <- get(".Random.seed", envir = .GlobalEnv, inherits = FALSE)
+  }
+
+  on.exit({
+    if (had_seed) {
+      assign(".Random.seed", old_seed, envir = .GlobalEnv)
+    } else if (exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) {
+      rm(".Random.seed", envir = .GlobalEnv)
+    }
+  }, add = TRUE)
+
+  if (!is.null(seed)) {
+    if (!is.numeric(seed) || length(seed) != 1 || is.na(seed) || !is.finite(seed)) {
+      rlang::abort("`seed` must be NULL or a single finite numeric value.")
+    }
+    set.seed(as.integer(seed))
+  }
+
+  eval(expr, envir = parent.frame())
+}
+
 # Detect the known upstream metacoder parse_phyloseq() bug before routing to
 # the local compatibility parser.
 is_metacoder_parse_phyloseq_ranks_ref_bug <- function(error) {

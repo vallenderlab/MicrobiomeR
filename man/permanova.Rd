@@ -4,7 +4,7 @@
 \alias{permanova}
 \title{PERMANOVA}
 \usage{
-permanova(obj, distance_method = "bray", group = "TreatmentGroup")
+permanova(obj, distance_method = "bray", group = "TreatmentGroup", seed = 1)
 }
 \arguments{
 \item{obj}{An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
@@ -12,6 +12,9 @@ permanova(obj, distance_method = "bray", group = "TreatmentGroup")
 \item{distance_method}{Use a desired distance method, Default: 'bray'}
 
 \item{group}{The group or column in the metadata to test upon, Default: 'TreatmentGroup'}
+
+\item{seed}{A single integer seed used to make PERMANOVA permutations reproducible without
+modifying the caller's RNG state. Use \code{NULL} to defer to the current RNG stream.}
 }
 \value{
 Returns a list which includes permanova, anova, coefficients, and top coefficients.

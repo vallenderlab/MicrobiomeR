@@ -4,6 +4,8 @@
 #' @param rank_list A vector of ranks used to generate heat_trees.  Default: NULL
 #' @param title Can be a logical, NULL, or a string.  The string can utilize `{rank}` to dynamically
 #' display the rank in the title via \code{\link[glue]{glue}}.
+#' @param seed A single integer seed used to make heat-tree layouts reproducible without
+#' modifying the caller's RNG state. Use `NULL` to defer to the current RNG stream.
 #' @param ... Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
 #' output is displayed.  Please see the \code{\link[MicrobiomeR]{heat_tree_parameters}} documentation
 #' for further explanation.
@@ -37,7 +39,7 @@
 #' @importFrom ggplot2 theme element_text ggtitle
 #' @importFrom crayon green bgWhite
 #' @importFrom glue glue
-heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, ...) {
+heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, seed = 1, ...) {
   suppressWarnings({
     rank_index <- pkg.private$rank_index
     if (is.null(rank_list)) {
@@ -77,15 +79,19 @@ heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, ...) {
       message(crayon::green(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(title_param))))
       treatment_no <- length(unique(filtered_obj$data$sample_data$TreatmentGroup))
       default_heat_tree_parameters <- heat_tree_parameters(obj = filtered_obj, title = title_param, treatment_no = treatment_no, ...)
+      rank_seed <- if (is.null(seed)) NULL else as.integer(seed) + rank_level - 1L
       # Filter by Taxonomy Rank and then create a heat tree.
       if (treatment_no == 2) {
-        htrees[[rank]] <- do.call(what = metacoder::heat_tree, args = default_heat_tree_parameters)
+        htrees[[rank]] <- with_preserved_seed(
+          rank_seed,
+          do.call(what = metacoder::heat_tree, args = default_heat_tree_parameters)
+        )
       } else if (treatment_no > 2) {
         #return(default_heat_tree_parameters)
         htm <- function(...) {
           do.call(what = metacoder::heat_tree_matrix, args = c(list(obj = filtered_obj, data="statistical_data"), ...))
         }
-        htrees[[rank]] <- htm(default_heat_tree_parameters)
+        htrees[[rank]] <- with_preserved_seed(rank_seed, htm(default_heat_tree_parameters))
       }
       # Made plot title centered
       htrees[[rank]] <- htrees[[rank]] +

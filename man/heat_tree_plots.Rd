@@ -4,7 +4,7 @@
 \alias{heat_tree_plots}
 \title{Get Heat Tree Plots}
 \usage{
-heat_tree_plots(obj, rank_list = NULL, title = TRUE, ...)
+heat_tree_plots(obj, rank_list = NULL, title = TRUE, seed = 1, ...)
 }
 \arguments{
 \item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
@@ -13,6 +13,9 @@ heat_tree_plots(obj, rank_list = NULL, title = TRUE, ...)
 
 \item{title}{Can be a logical, NULL, or a string.  The string can utilize \code{{rank}} to dynamically
 display the rank in the title via \code{\link[glue]{glue}}.}
+
+\item{seed}{A single integer seed used to make heat-tree layouts reproducible without
+modifying the caller's RNG state. Use \code{NULL} to defer to the current RNG stream.}
 
 \item{...}{Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
 output is displayed.  Please see the \code{\link[MicrobiomeR]{heat_tree_parameters}} documentation
