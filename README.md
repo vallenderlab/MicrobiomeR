@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.com/vallenderlab/MicrobiomeR.svg?branch=master)](https://travis-ci.com/vallenderlab/MicrobiomeR)
+[![R-CMD-check](https://github.com/vallenderlab/MicrobiomeR/actions/workflows/r-cmd-check.yaml/badge.svg)](https://github.com/vallenderlab/MicrobiomeR/actions/workflows/r-cmd-check.yaml)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-[![Coverage status](https://codecov.io/gh/vallenderlab/MicrobiomeR/branch/master/graph/badge.svg)](https://codecov.io/github/vallenderlab/MicrobiomeR?branch=master)
+[![Coverage status](https://codecov.io/gh/vallenderlab/MicrobiomeR/branch/main/graph/badge.svg)](https://codecov.io/gh/vallenderlab/MicrobiomeR)
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.01299/status.svg)](https://doi.org/10.21105/joss.01299)
 
 # MicrobiomeR <a href='https://vallenderlab.github.io/MicrobiomeR/'><img src="man/figures/logo.png" align="right" height=300/></a>
