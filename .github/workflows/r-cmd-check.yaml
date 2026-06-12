@@ -2,9 +2,9 @@ name: R-CMD-check
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master , dev-master ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master, dev-master ]
 
 env:
   R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
