@@ -10,6 +10,10 @@ env:
   R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
   GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
@@ -39,6 +43,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          cache: always
           extra-packages: any::rcmdcheck, any::covr
           needs: check
 
