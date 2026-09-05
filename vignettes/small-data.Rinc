@@ -1,0 +1,27 @@
+small_phyloseq_example <- function(
+  phyloseq_object,
+  samples_per_group = 4L,
+  taxa_limit = 100L
+) {
+  sample_metadata <- data.frame(phyloseq::sample_data(phyloseq_object))
+  sample_ids_by_group <- split(
+    rownames(sample_metadata),
+    sample_metadata$TreatmentGroup
+  )
+  selected_sample_ids <- unlist(
+    lapply(sample_ids_by_group, function(sample_ids) {
+      head(sort(sample_ids), samples_per_group)
+    }),
+    use.names = FALSE
+  )
+
+  sample_subset <- phyloseq::prune_samples(selected_sample_ids, phyloseq_object)
+  ranked_taxa <- names(sort(phyloseq::taxa_sums(sample_subset), decreasing = TRUE))
+  taxonomy <- as(phyloseq::tax_table(sample_subset), "matrix")
+  archaea_ids <- rownames(taxonomy)[taxonomy[, "Kingdom"] == "Archaea"]
+  abundant_taxa_limit <- max(taxa_limit - length(archaea_ids), 0L)
+  selected_taxa <- unique(c(head(ranked_taxa, abundant_taxa_limit), archaea_ids))
+
+  # Include Archaea so the documented exclusion step still has data to remove.
+  phyloseq::prune_taxa(head(selected_taxa, taxa_limit), sample_subset)
+}

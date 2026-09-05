@@ -8,6 +8,8 @@
   (#109).
 * Made the `.rda` input-validation test independent of the test working
   directory.
+* Reduced routine test and vignette build time with deterministic, clearly
+  labeled example-data subsets while preserving the full exported datasets.
 
 # MicrobiomeR 0.6.2
 

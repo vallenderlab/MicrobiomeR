@@ -16,11 +16,18 @@ knitr::opts_chunk$set(
 )
 library(MicrobiomeR)
 pkg.data <- MicrobiomeR:::pkg.private
+vignette_path <- knitr::current_input(dir = TRUE)
+source(file.path(dirname(vignette_path), "small-data.Rinc"), local = TRUE)
 ```
 
 # Data Wrangling
 
-```{r message=FALSE, warning=FALSE}
+The complete import workflow is shown below. To keep the installed vignette quick to build,
+the executed examples use a deterministic subset containing four samples from each treatment
+group and the 100 most abundant OTUs. These results illustrate filtering behavior and should
+not be interpreted as estimates from the full study.
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 # Get the data files from package
 input_files <- pkg.data$input_files
 biom_file <- input_files$biom_files$silva # Path to silva biom file
@@ -35,6 +42,11 @@ phy_obj <- create_phyloseq(biom_file = biom_file,
                            parse_func = parse_func)
 
 # Get the taxmap object in the raw format
+raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
+```
+
+```{r example-data, include=FALSE}
+phy_obj <- small_phyloseq_example(MicrobiomeR::phyloseq_silva_2)
 raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
 ```
 
