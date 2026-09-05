@@ -1,10 +1,9 @@
 cff-version: 1.2.0
 message: "If you use MicrobiomeR, please cite the following publication."
 title: "MicrobiomeR"
-version: 1.0.0
-doi: 10.21105/joss.01299
-date-released: 2019-03-31
-url: "https://doi.org/10.21105/joss.01299"
+version: "0.6.3"
+repository-code: "https://github.com/vallenderlab/MicrobiomeR"
+url: "https://vallenderlab.github.io/MicrobiomeR/"
 authors:
   - family-names: "Gilmore"
     given-names: "Robert A."

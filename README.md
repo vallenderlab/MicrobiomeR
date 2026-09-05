@@ -19,6 +19,22 @@ install_github("vallenderlab/MicrobiomeR") # Install the package
 
 Please visit https://vallenderlab.github.io/MicrobiomeR/ for extensive documentation of the package.
 
+## Citation
+
+If you use MicrobiomeR, please cite the associated Journal of Open Source
+Software article:
+
+> Gilmore RA, Hutchins S, Zhang X, Vallender E. (2019). MicrobiomeR: An R
+> Package for Simplified and Standardized Microbiome Analysis Workflows.
+> Journal of Open Source Software, 4(35), 1299.
+> https://doi.org/10.21105/joss.01299
+
+The same citation is available from R:
+
+```r
+citation("MicrobiomeR")
+```
+
 ## Workflow Features
 
 - Standardization of data wrangling.

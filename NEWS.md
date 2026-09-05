@@ -10,6 +10,7 @@
   directory.
 * Reduced routine test and vignette build time with deterministic, clearly
   labeled example-data subsets while preserving the full exported datasets.
+* Completed package citation metadata and usage guidance (#33).
 
 # MicrobiomeR 0.6.2
 
