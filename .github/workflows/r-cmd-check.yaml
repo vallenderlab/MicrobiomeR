@@ -37,9 +37,6 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - uses: r-lib/actions/setup-tinytex@v2
-        if: needs.build-vignettes
-
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck, any::covr
@@ -56,12 +53,24 @@ jobs:
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
           _R_CHECK_FORCE_SUGGESTS_: false
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        run: |
+          rcmdcheck::rcmdcheck(
+            args = c("--no-manual", "--as-cran"),
+            build_args = "--no-manual",
+            error_on = "warning",
+            check_dir = "check"
+          )
         shell: Rscript {0}
 
       - name: Show testthat output
-        if: always()
-        run: find check -name 'testthat.Rout*' -exec cat '{}' \;
+        if: failure()
+        run: |
+          if [[ ! -d check ]]; then
+            echo "No check directory was created; the failure occurred before R CMD check."
+            exit 0
+          fi
+
+          find check -type f -name 'testthat.Rout*' -exec cat '{}' \;
         shell: bash
 
       - name: Upload check results
