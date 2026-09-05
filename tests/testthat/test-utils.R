@@ -19,14 +19,23 @@ test_that("output_dir function works", {
 
 test_that("object handler works", {
   taxmap_from_phyloseq <- create_taxmap(phyloseq_silva_2)
-  raw_rdata_path <- testthat::test_path("../../data/raw_silva_2.rda")
-  readme_path <- testthat::test_path("../../README.md")
+  invalid_rdata_path <- tempfile(fileext = ".rda")
+  object_without_expected_name <- raw_silva_2
+  save(object_without_expected_name, file = invalid_rdata_path)
+  on.exit(unlink(invalid_rdata_path), add = TRUE)
+
   expect_true(!is.null(taxmap_from_phyloseq))
   expect_true("sample_data" %in% names(taxmap_from_phyloseq$data))
   expect_true("TreatmentGroup" %in% names(taxmap_from_phyloseq$data$sample_data))
-  expect_error(create_taxmap(obj = raw_rdata_path), "contains an object called `metacoder_object`")
-  expect_error(create_taxmap(obj = NULL), "Please use a metacoder/phyloseq object or an rdata file.")
-  expect_error(create_taxmap(obj = readme_path), "Unsupported file extension")
+  expect_error(
+    create_taxmap(obj = invalid_rdata_path),
+    "contains an object called `metacoder_object`"
+  )
+  expect_error(
+    create_taxmap(obj = NULL),
+    "Please use a metacoder/phyloseq object or an rdata file."
+  )
+  expect_error(create_taxmap(obj = "README.md"), "Unsupported file extension")
 })
 
 test_that("transposer works", {

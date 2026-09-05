@@ -6,6 +6,8 @@
 * Removed the outdated lab location and improved documentation readability.
 * Restored stacked barplot sample labels and removed y-axis baseline padding
   (#109).
+* Made the `.rda` input-validation test independent of the test working
+  directory.
 
 # MicrobiomeR 0.6.2
 
