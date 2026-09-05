@@ -1,3 +1,10 @@
+# MicrobiomeR 0.6.3
+
+* Fixed heat-tree rank generation so each rank is filtered independently and
+  nodes are sized by retained descendant OTU counts.
+* Clarified the heat-tree node-size interpretation in the package documentation.
+* Removed the outdated lab location and improved documentation readability.
+
 # MicrobiomeR 0.6.2
 
 * Added compatibility shims for upstream `metacoder`/`taxa` API drift, including
