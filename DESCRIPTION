@@ -66,6 +66,7 @@ Suggests:
 Encoding: UTF-8
 RoxygenNote: 7.3.3
 LazyData: true
+LazyDataCompression: xz
 URL: https://github.com/vallenderlab/MicrobiomeR, https://vallenderlab.github.io/MicrobiomeR/
 BugReports: https://github.com/vallenderlab/MicrobiomeR/issues
 VignetteBuilder: knitr

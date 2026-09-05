@@ -18,9 +18,11 @@ with phyloseq at this stage.
 
 \section{Data Manipulation}{
 
-Data is manipulated into a \code{\link[taxa:taxmap]{taxa::taxmap}} object using the \code{\link[metacoder:parse_phyloseq]{metacoder::parse_phyloseq}}
-function.  Custom \link{MicrobiomeR_Formats} are used to validate the data for consistency.  MicrobiomeR and metacoder filtering
-functions can be used to preprocess the data before visualization.
+Data is manipulated into a \code{\link[metacoder:taxmap]{metacoder::taxmap}} object
+using the \code{\link[metacoder:parse_phyloseq]{metacoder::parse_phyloseq}}
+function. Custom \link{MicrobiomeR_Formats} are used to validate the data for consistency.
+MicrobiomeR and metacoder filtering functions can be used to preprocess the data
+before visualization.
 }
 
 \section{Visualizations}{

@@ -33,7 +33,7 @@
 #'
 #'  \code{\link[MicrobiomeR]{create_taxmap}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{heat_tree_parameters}}
 #'
-#'  \code{\link[taxa]{filter_obs}}
+#'  \code{\link[metacoder]{filter_obs}}
 #'
 #'  \code{\link[crayon]{crayon}}
 #'
@@ -135,7 +135,7 @@ heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, seed = 1, ...) 
 #' @seealso
 #'  \code{\link[metacoder]{heat_tree}}
 #'
-#'  \code{\link[taxa]{n_obs}},  \code{\link[taxa]{taxon_names}}
+#'  \code{\link[metacoder]{n_obs}},  \code{\link[metacoder]{taxon_names}}
 #'
 #'  \code{\link[purrr]{list_modify}}
 #'

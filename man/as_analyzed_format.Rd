@@ -40,7 +40,7 @@ See the \link{MicrobiomeR_Formats} documentation.
 
 \code{\link[metacoder]{compare_groups}}
 
-\code{\link[taxa]{taxonomy_table}},  \code{\link[taxa]{taxon_ids}}
+\code{\link[metacoder]{taxonomy_table}},  \code{\link[metacoder]{taxon_ids}}
 
 Other Formatting: 
 \code{\link{MicrobiomeR_Formats}},

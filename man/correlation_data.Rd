@@ -34,7 +34,8 @@ if(interactive()){
 \seealso{
 \code{\link[MicrobiomeR]{agglomerate_taxmap}},  \code{\link[MicrobiomeR]{vlookup}}
 
-\code{\link[dplyr]{tidyeval}},  \code{\link[dplyr]{mutate}},  \code{\link[dplyr]{filter}},  \code{\link[dplyr]{arrange}}
+\code{\link[rlang:topic-data-mask-programming]{data mask programming}},
+\code{\link[dplyr]{mutate}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{arrange}}
 
 Other Visualizations: 
 \code{\link{alpha_diversity_plot}()},

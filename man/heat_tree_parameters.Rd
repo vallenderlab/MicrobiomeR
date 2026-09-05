@@ -28,7 +28,7 @@ This function gets the parameters used for the heat_tree_plots function.
 \seealso{
 \code{\link[metacoder]{heat_tree}}
 
-\code{\link[taxa]{n_obs}},  \code{\link[taxa]{taxon_names}}
+\code{\link[metacoder]{n_obs}},  \code{\link[metacoder]{taxon_names}}
 
 \code{\link[purrr]{list_modify}}
 

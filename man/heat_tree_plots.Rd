@@ -50,7 +50,7 @@ h_trees$Class
 
 \code{\link[MicrobiomeR]{create_taxmap}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{heat_tree_parameters}}
 
-\code{\link[taxa]{filter_obs}}
+\code{\link[metacoder]{filter_obs}}
 
 \code{\link[crayon]{crayon}}
 

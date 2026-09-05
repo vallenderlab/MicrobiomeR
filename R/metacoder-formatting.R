@@ -357,7 +357,7 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
 #'
 #'  \code{\link[metacoder]{compare_groups}}
 #'
-#'  \code{\link[taxa]{taxonomy_table}},  \code{\link[taxa]{taxon_ids}}
+#'  \code{\link[metacoder]{taxonomy_table}},  \code{\link[metacoder]{taxon_ids}}
 #' @importFrom metacoder compare_groups
 #' @importFrom dplyr rename right_join
 #' @importFrom crayon silver red green

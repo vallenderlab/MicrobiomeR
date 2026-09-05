@@ -10,9 +10,11 @@ A microbiome workflow package using phyloseq for data import, metacoder for data
 and ggplot2 for data visualization.
 }
 \details{
-The goal of this package is to enhance the use of the \code{\link[metacoder:metacoder]{metacoder}} package by
-providing tools that mimic the \code{\link[phyloseq:phyloseq-package]{phyloseq}} package.  The only difference being that
-the main data object is a \code{\link[taxa:taxmap]{taxmap object}} instead of a \code{\link[phyloseq:phyloseq-class]{phyloseq object}}.
+The goal of this package is to enhance the use of the
+\code{\link[metacoder:metacoder]{metacoder}} package by providing tools that mimic the
+\code{\link[phyloseq:phyloseq-package]{phyloseq}} package. The main difference is
+that the primary data object is a \code{\link[metacoder:taxmap]{taxmap object}}
+instead of a \code{\link[phyloseq:phyloseq-class]{phyloseq object}}.
 }
 \section{Other Documentation}{
 
