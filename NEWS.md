@@ -1,4 +1,4 @@
-# MicrobiomeR 0.6.3
+# MicrobiomeR 0.8.0
 
 * Fixed heat-tree rank generation so each rank is filtered independently and
   nodes are sized by retained descendant OTU counts.
@@ -6,11 +6,11 @@
 * Removed the outdated lab location and improved documentation readability.
 * Restored stacked barplot sample labels and removed y-axis baseline padding
   (#109).
+* Completed package citation metadata and usage guidance (#33).
 * Made the `.rda` input-validation test independent of the test working
   directory.
 * Reduced routine test and vignette build time with deterministic, clearly
   labeled example-data subsets while preserving the full exported datasets.
-* Completed package citation metadata and usage guidance (#33).
 
 # MicrobiomeR 0.6.2
 
