@@ -12,6 +12,20 @@ test_that("basic stacked barplot works", {
   expect_true(!is.null(stacked_barplot(obj = data)))
 })
 
+test_that("stacked barplot displays sample labels", {
+  plot <- stacked_barplot(obj = data)
+
+  expect_s3_class(plot$theme$axis.text.x, "element_text")
+  expect_equal(plot$theme$axis.text.x$angle, 90)
+})
+
+test_that("stacked barplot removes y-axis baseline padding", {
+  plot <- stacked_barplot(obj = data)
+  y_scale <- plot$scales$get_scales("y")
+
+  expect_equal(y_scale$expand, ggplot2::expansion(mult = c(0, 0)))
+})
+
 test_that("creating multiple stacked barplots works", {
   expect_true(!is.null(stacked_barplots(obj = data)))
 })

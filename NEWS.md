@@ -4,6 +4,8 @@
   nodes are sized by retained descendant OTU counts.
 * Clarified the heat-tree node-size interpretation in the package documentation.
 * Removed the outdated lab location and improved documentation readability.
+* Restored stacked barplot sample labels and removed y-axis baseline padding
+  (#109).
 
 # MicrobiomeR 0.6.2
 
