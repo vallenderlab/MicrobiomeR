@@ -9,6 +9,10 @@
 #' @param ... Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
 #' output is displayed.  Please see the \code{\link[MicrobiomeR]{heat_tree_parameters}} documentation
 #' for further explanation.
+#' @details By default, node size represents the number of retained OTUs assigned
+#' to each taxon or any of its descendants in the source `otu_abundance` table.
+#' Counts are pooled across samples after upstream filtering and do not represent
+#' read abundance.
 #' @return A list of heat_tree plots.
 #' @examples
 #' \dontrun{
@@ -58,8 +62,11 @@ heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, seed = 1, ...) 
     # Create a list of heat_tree plots for saving
     for (rank in rank_list) {
       rank_level <- rank_index[[rank]]
+      # Taxmap uses R6 reference semantics, so each rank needs its own clone.
+      # Otherwise, filtering the first rank also changes the source for later ranks.
+      rank_obj <- obj$clone()
       filtered_obj <- filter_taxa_compat(
-        obj = obj,
+        obj = rank_obj,
         subset = n_supertaxa < rank_level,
         supertaxa = TRUE,
         reassign_obs = FALSE
@@ -173,7 +180,7 @@ heat_tree_parameters <- function(obj, title, treatment_no, ...) {
       node_color_range = c("#3288bd", "#f1f1f1", "#d53e4f"),
       node_color_trans = "linear",
       node_color_interval = c(-4, 4),
-      node_size_axis_label = "Number of OTUs",
+      node_size_axis_label = "Number of retained descendant OTUs",
       node_color_axis_label = glue::glue("Upregulated (red) vs.\n Downregulated (blue)\n"),
       ### The labels are only for significant (pvalue < 0.05) abundance changes
       ### The labels are green to offset the blue/red colors.
@@ -240,7 +247,7 @@ heat_tree_parameters <- function(obj, title, treatment_no, ...) {
       node_color_range = c("#3288bd", "#f1f1f1", "#d53e4f"),
       node_color_trans = "linear",
       node_color_interval = c(-4, 4),
-      node_size_axis_label = "Number of OTUs",
+      node_size_axis_label = "Number of retained descendant OTUs",
       node_color_axis_label = "Upregulated (red) vs.\n Downregulated (blue)\n",
       ### The labels are only for significant (pvalue < 0.05) abundance changes
       ### The labels are green to offset the blue/red colors.

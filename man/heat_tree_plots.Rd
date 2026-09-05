@@ -27,6 +27,12 @@ A list of heat_tree plots.
 \description{
 A function for getting multiple heat_tree plots per rank.
 }
+\details{
+By default, node size represents the number of retained OTUs assigned
+to each taxon or any of its descendants in the source \code{otu_abundance} table.
+Counts are pooled across samples after upstream filtering and do not represent
+read abundance.
+}
 \examples{
 \dontrun{
 if(interactive()){
