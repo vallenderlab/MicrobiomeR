@@ -3,9 +3,9 @@ library(testthat)
 
 context("test-heat-tree")
 
-# Build the expensive fixture once, then clone it within each test because
-# Taxmap objects use reference semantics.
-heat_tree_data <- as_MicrobiomeR_format(raw_silva_2, format = "analyzed_format")
+# Build the reduced fixture once, then clone it within each test because Taxmap
+# objects use reference semantics.
+heat_tree_data <- small_taxmap_fixture("analyzed_format")
 
 
 test_that("basic heat-tree plot works", {

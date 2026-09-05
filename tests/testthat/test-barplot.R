@@ -3,8 +3,8 @@ library(testthat)
 
 context("Testing of stacked barplot")
 
-# Use existing data for test.
-data <- as_MicrobiomeR_format(raw_silva_2, format = "analyzed_format")
+# Use a deterministic subset so routine package checks stay fast.
+data <- small_taxmap_fixture("analyzed_format")
 test_palette <- get_color_palette(color_no = 12)
 
 

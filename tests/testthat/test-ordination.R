@@ -3,8 +3,8 @@ library(testthat)
 
 context("Testing of ordination plots and methods")
 
-# Use existing data for test.
-data <- as_MicrobiomeR_format(raw_silva_2, format = "analyzed_format")
+# Use a deterministic subset so routine package checks stay fast.
+data <- small_taxmap_fixture("analyzed_format")
 
 
 test_that("basic ordination plot works", {

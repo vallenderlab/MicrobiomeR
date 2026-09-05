@@ -3,8 +3,8 @@ library(testthat)
 
 context("Testing of utils.R")
 
-# Use existing data for test.
-basic_silva <- as_MicrobiomeR_format(raw_silva_2, format = "basic_format")
+# Use a deterministic subset so routine package checks stay fast.
+basic_silva <- small_taxmap_fixture("basic_format")
 
 test_that("output_dir function works", {
   expect_true(!dir.exists(output_dir(start_path="output", experiment="test", mkdir=FALSE)))
@@ -18,9 +18,9 @@ test_that("output_dir function works", {
 })
 
 test_that("object handler works", {
-  taxmap_from_phyloseq <- create_taxmap(phyloseq_silva_2)
+  taxmap_from_phyloseq <- create_taxmap(small_phyloseq_fixture())
   invalid_rdata_path <- tempfile(fileext = ".rda")
-  object_without_expected_name <- raw_silva_2
+  object_without_expected_name <- small_taxmap_fixture("raw_format")
   save(object_without_expected_name, file = invalid_rdata_path)
   on.exit(unlink(invalid_rdata_path), add = TRUE)
 
