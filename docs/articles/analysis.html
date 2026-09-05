@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -114,7 +114,7 @@
                         <h4 data-toc-skip class="author">Rob Gilmore
 &amp; Shaurita Hutchins</h4>
             
-            <h4 data-toc-skip class="date">2026-06-11</h4>
+            <h4 data-toc-skip class="date">2026-09-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vallenderlab/MicrobiomeR/blob/HEAD/vignettes/analysis.Rmd" class="external-link"><code>vignettes/analysis.Rmd</code></a></small>
       <div class="hidden name"><code>analysis.Rmd</code></div>
@@ -231,6 +231,10 @@ proper taxonomic annotation. MicrobiomeR creates the proper tables with
 <p>In addition to standard statistical analysis provided by metacoder,
 <code>MicrobiomeR</code> simplifies alpha diversity, ordination, and <a href="https://onlinelibrary.wiley.com/doi/10.1002/9781118445112.stat07841" class="external-link">PERMANOVA</a>
 analysis.</p>
+<p><code><a href="../reference/permanova.html">permanova()</a></code> and <code><a href="../reference/heat_tree_plots.html">heat_tree_plots()</a></code> use a
+reproducible seed by default while restoring the caller’s RNG state on
+exit. Supply <code>seed</code> explicitly when you want the seed
+recorded in your workflow or report.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate alpha diversity measures</span></span>
 <span><span class="va">measures</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/alpha_diversity_measures.html">alpha_diversity_measures</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">metacoder_obj</span><span class="op">)</span></span>
@@ -267,7 +271,7 @@ groups.</p>
 <span><span class="co">#&gt; [46]  0.1614182394 -0.0234372377 -0.1573352126</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate permanova statistics for data</span></span>
-<span><span class="va">permanova</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/permanova.html">permanova</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">metacoder_obj</span>, group <span class="op">=</span> <span class="st">"TreatmentGroup"</span><span class="op">)</span></span>
+<span><span class="va">permanova</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/permanova.html">permanova</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">metacoder_obj</span>, group <span class="op">=</span> <span class="st">"TreatmentGroup"</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">permanova</span><span class="op">$</span><span class="va">permanova</span><span class="op">$</span><span class="va">aov.tab</span></span>
 <span><span class="co">#&gt; Permutation test for adonis under reduced model</span></span>
 <span><span class="co">#&gt; Permutation: free</span></span>
@@ -351,6 +355,12 @@ for any taxmap object. MicrobiomeR does this as well, but takes care of
 creating default values that we enjoyed in our heat tree plots.<br>
 MicrobiomeR also uses ggplot2 to create
 <code><a href="../reference/correlation_plot.html">correlation_plot()</a></code>s.</p>
+<p>In these heat trees, node size represents the number of retained OTUs
+assigned to each taxon or any of its descendants in the source
+<code>otu_abundance</code> table. These counts are pooled across samples
+after filtering and describe retained taxonomic feature richness, not
+read abundance. Node color separately summarizes the between-group
+relative-abundance comparison.</p>
 </div>
 <div class="section level3">
 <h3 id="analyzing-two-treatment-groups">Analyzing Two “Treatment” Groups<a class="anchor" aria-label="anchor" href="#analyzing-two-treatment-groups"></a>
@@ -359,6 +369,7 @@ MicrobiomeR also uses ggplot2 to create
 <code class="sourceCode R"><span><span class="co"># Generate heat_trees</span></span>
 <span><span class="va">heat_tree_plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/heat_tree_plots.html">heat_tree_plots</a></span><span class="op">(</span><span class="va">metacoder_obj</span>,</span>
 <span>                                       rank_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span><span class="op">)</span>,</span>
+<span>                                       seed <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                                       node_label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">wilcox_p_value</span> <span class="op">&gt;</span> <span class="fl">0.05</span>, <span class="va">taxon_ids</span>, <span class="cn">NA</span><span class="op">)</span>,</span>
 <span>                                       node_label_size <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>                                       node_label_color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkgreen"</span><span class="op">)</span><span class="op">)</span></span>
@@ -471,6 +482,7 @@ MicrobiomeR also uses ggplot2 to create
 <span><span class="co"># Generate heat_trees</span></span>
 <span><span class="va">heat_tree_plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/heat_tree_plots.html">heat_tree_plots</a></span><span class="op">(</span><span class="va">metacoder_obj</span>,</span>
 <span>                                       rank_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span><span class="op">)</span>,</span>
+<span>                                       seed <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                                       node_label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">wilcox_p_value</span> <span class="op">&lt;</span> <span class="fl">0.05</span>, <span class="va">taxon_ids</span>, <span class="cn">NA</span><span class="op">)</span>,</span>
 <span>                                       node_label_size <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>                                       node_label_color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkgreen"</span><span class="op">)</span><span class="op">)</span></span>
@@ -511,7 +523,7 @@ MicrobiomeR also uses ggplot2 to create
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">heat_tree_plots</span><span class="op">(</span><span class="va">obj</span>, rank_list <span class="op">=</span> <span class="cn">NULL</span>, title <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">heat_tree_plots</span><span class="op">(</span><span class="va">obj</span>, rank_list <span class="op">=</span> <span class="cn">NULL</span>, title <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -110,6 +110,11 @@
 display the rank in the title via <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></code>.</p></dd>
 
 
+<dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
+<dd><p>A single integer seed used to make heat-tree layouts reproducible without
+modifying the caller's RNG state. Use <code>NULL</code> to defer to the current RNG stream.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Any of the <code><a href="https://rdrr.io/pkg/metacoder/man/heat_tree.html" class="external-link">heat_tree</a></code> parameters can be used to change the way the heat_tree
 output is displayed.  Please see the <code><a href="heat_tree_parameters.html">heat_tree_parameters</a></code> documentation
@@ -119,6 +124,13 @@ for further explanation.</p></dd>
     <div id="value">
     <h2>Value</h2>
     <p>A list of heat_tree plots.</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>By default, node size represents the number of retained OTUs assigned
+to each taxon or any of its descendants in the source <code>otu_abundance</code> table.
+Counts are pooled across samples after upstream filtering and do not represent
+read abundance.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -171,7 +183,7 @@ for further explanation.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer></div>
