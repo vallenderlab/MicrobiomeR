@@ -4,11 +4,16 @@
 #' @param rank_list A vector of ranks used to generate heat_trees.  Default: NULL
 #' @param title Can be a logical, NULL, or a string.  The string can utilize `{rank}` to dynamically
 #' display the rank in the title via \code{\link[glue]{glue}}.
+#' @param seed A single integer seed used to make heat-tree layouts reproducible without
+#' modifying the caller's RNG state. Use `NULL` to defer to the current RNG stream.
 #' @param ... Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
 #' output is displayed.  Please see the \code{\link[MicrobiomeR]{heat_tree_parameters}} documentation
 #' for further explanation.
+#' @details By default, node size represents the number of retained OTUs assigned
+#' to each taxon or any of its descendants in the source `otu_abundance` table.
+#' Counts are pooled across samples after upstream filtering and do not represent
+#' read abundance.
 #' @return A list of heat_tree plots.
-#' @pretty_print TRUE
 #' @examples
 #' \dontrun{
 #' if(interactive()){
@@ -28,18 +33,17 @@
 #'
 #'  \code{\link[MicrobiomeR]{create_taxmap}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{heat_tree_parameters}}
 #'
-#'  \code{\link[taxa]{filter_obs}}
+#'  \code{\link[metacoder]{filter_obs}}
 #'
 #'  \code{\link[crayon]{crayon}}
 #'
 #'  \code{\link[ggplot2]{theme}},  \code{\link[ggplot2:element]{margin}},  \code{\link[ggplot2]{labs}}
-#' @importFrom taxa filter_obs
 #' @importFrom crayon bgWhite red
 #' @importFrom metacoder heat_tree
 #' @importFrom ggplot2 theme element_text ggtitle
 #' @importFrom crayon green bgWhite
 #' @importFrom glue glue
-heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, ...) {
+heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, seed = 1, ...) {
   suppressWarnings({
     rank_index <- pkg.private$rank_index
     if (is.null(rank_list)) {
@@ -58,9 +62,19 @@ heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, ...) {
     # Create a list of heat_tree plots for saving
     for (rank in rank_list) {
       rank_level <- rank_index[[rank]]
-      filtered_obj <- obj %>% taxa::filter_taxa(n_supertaxa < rank_level,
-                                                supertaxa = TRUE,
-                                                reassign_obs = FALSE)
+      # Taxmap uses R6 reference semantics, so each rank needs its own clone.
+      # Otherwise, filtering the first rank also changes the source for later ranks.
+      rank_obj <- obj$clone()
+      filtered_obj <- filter_taxa_compat(
+        obj = rank_obj,
+        subset = n_supertaxa < rank_level,
+        supertaxa = TRUE,
+        reassign_obs = FALSE
+      )
+      node_otu_counts <- get_heat_tree_otu_counts(
+        filtered_obj = filtered_obj,
+        source_obj = obj
+      )
       flt_taxmaps[[rank]] <- filtered_obj
       if (is.logical(title)) {
         if (title == TRUE) {
@@ -76,15 +90,20 @@ heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, ...) {
       message(crayon::green(sprintf("Generating a Heat Tree for %s", crayon::bgWhite(title_param))))
       treatment_no <- length(unique(filtered_obj$data$sample_data$TreatmentGroup))
       default_heat_tree_parameters <- heat_tree_parameters(obj = filtered_obj, title = title_param, treatment_no = treatment_no, ...)
+      default_heat_tree_parameters$node_size <- node_otu_counts
+      rank_seed <- if (is.null(seed)) NULL else as.integer(seed) + rank_level - 1L
       # Filter by Taxonomy Rank and then create a heat tree.
       if (treatment_no == 2) {
-        htrees[[rank]] <- do.call(what = metacoder::heat_tree, args = default_heat_tree_parameters)
+        htrees[[rank]] <- with_preserved_seed(
+          rank_seed,
+          do.call(what = metacoder::heat_tree, args = default_heat_tree_parameters)
+        )
       } else if (treatment_no > 2) {
         #return(default_heat_tree_parameters)
         htm <- function(...) {
           do.call(what = metacoder::heat_tree_matrix, args = c(list(obj = filtered_obj, data="statistical_data"), ...))
         }
-        htrees[[rank]] <- htm(default_heat_tree_parameters)
+        htrees[[rank]] <- with_preserved_seed(rank_seed, htm(default_heat_tree_parameters))
       }
       # Made plot title centered
       htrees[[rank]] <- htrees[[rank]] +
@@ -110,19 +129,17 @@ heat_tree_plots <- function(obj, rank_list = NULL, title = TRUE, ...) {
 #' can be used to manipulate the heat tree parameters.  Function calls from the taxa package must
 #' be done explicitly on the Taxmap object.
 #' @return A list used with do.call and the metacoder::heat_tree function.
-#' @pretty_print TRUE
 #' @export
 #' @family Visualizations
 #' @rdname heat_tree_parameters
 #' @seealso
 #'  \code{\link[metacoder]{heat_tree}}
 #'
-#'  \code{\link[taxa]{n_obs}},  \code{\link[taxa]{taxon_names}}
+#'  \code{\link[metacoder]{n_obs}},  \code{\link[metacoder]{taxon_names}}
 #'
 #'  \code{\link[purrr]{list_modify}}
 #'
 #'  \code{\link[rlang:quotation]{enquos}},  \code{\link[rlang:quosure]{is_quosure}},  \code{\link[rlang]{eval_tidy}}
-#' @importFrom taxa n_obs taxon_names
 #' @importFrom purrr list_modify
 #' @importFrom rlang enquos is_quosure eval_tidy
 heat_tree_parameters <- function(obj, title, treatment_no, ...) {
@@ -163,7 +180,7 @@ heat_tree_parameters <- function(obj, title, treatment_no, ...) {
       node_color_range = c("#3288bd", "#f1f1f1", "#d53e4f"),
       node_color_trans = "linear",
       node_color_interval = c(-4, 4),
-      node_size_axis_label = "Number of OTUs",
+      node_size_axis_label = "Number of retained descendant OTUs",
       node_color_axis_label = glue::glue("Upregulated (red) vs.\n Downregulated (blue)\n"),
       ### The labels are only for significant (pvalue < 0.05) abundance changes
       ### The labels are green to offset the blue/red colors.
@@ -230,7 +247,7 @@ heat_tree_parameters <- function(obj, title, treatment_no, ...) {
       node_color_range = c("#3288bd", "#f1f1f1", "#d53e4f"),
       node_color_trans = "linear",
       node_color_interval = c(-4, 4),
-      node_size_axis_label = "Number of OTUs",
+      node_size_axis_label = "Number of retained descendant OTUs",
       node_color_axis_label = "Upregulated (red) vs.\n Downregulated (blue)\n",
       ### The labels are only for significant (pvalue < 0.05) abundance changes
       ### The labels are green to offset the blue/red colors.
@@ -282,6 +299,16 @@ heat_tree_parameters <- function(obj, title, treatment_no, ...) {
   return(param_list)
 }
 
+get_heat_tree_otu_counts <- function(filtered_obj, source_obj, otu_table = "otu_abundance") {
+  source_taxon_ids <- source_obj$taxon_ids()
+  source_otu_counts <- source_obj$n_obs(otu_table)
+  retained_taxon_ids <- filtered_obj$taxon_ids()
+
+  otu_counts <- unname(source_otu_counts[match(retained_taxon_ids, source_taxon_ids)])
+  otu_counts[is.na(otu_counts)] <- 0
+  stats::setNames(otu_counts, retained_taxon_ids)
+}
+
 
 #' @title Save Heat Tree Plots
 #' @description This function saves heat tree plots stored in a list object to an output folder.
@@ -290,7 +317,6 @@ heat_tree_parameters <- function(obj, title, treatment_no, ...) {
 #' @param start_path The starting path of the output directory.  Default: 'output'
 #' @param ... An optional list of parameters to use in the output_dir function.
 #' @return An output directory that contains heat tree plots.
-#' @pretty_print TRUE
 #' @details This function creates an appropriate output directory, where it saves publication ready
 #' plots.
 #' @examples

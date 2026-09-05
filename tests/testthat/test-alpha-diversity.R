@@ -3,8 +3,8 @@ library(testthat)
 
 context("Testing of alpha diversity measures and plot")
 
-# Use existing data for test.
-data <- as_MicrobiomeR_format(raw_silva_2, format = "analyzed_format")
+# Use a deterministic subset so routine package checks stay fast.
+data <- small_taxmap_fixture("analyzed_format")
 
 
 test_that("alpha diversity measures all exist", {
@@ -15,6 +15,7 @@ test_that("alpha diversity measures all exist", {
   expect_true(!is.null(alpha_diversity_measures(obj = data)$Fisher))
   expect_true(!is.null(alpha_diversity_measures(obj = data)$Coverage))
   expect_true(!is.null(alpha_diversity_measures(obj = data)$group.pairs))
+  expect_true(all(lengths(alpha_diversity_measures(obj = data)$group.pairs) == 2))
 })
 
 test_that("base alpha diversity plot works", {
@@ -23,6 +24,13 @@ test_that("base alpha diversity plot works", {
 
 test_that("creating multiple alpha diversity plots works", {
   expect_true(!is.null(alpha_diversity_plots(obj = data)))
+})
+
+test_that("select_otu_table triggers deprecation warning", {
+  expect_warning(
+    alpha_diversity_plot(obj = data, measure = "Shannon", select_otu_table = "otu_proportions"),
+    "deprecated"
+  )
 })
 
 # plots <- alpha_diversity_plots(obj = data)

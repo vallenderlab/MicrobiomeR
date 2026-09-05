@@ -4,8 +4,14 @@
 \alias{sample_id_filter}
 \title{Filter Samples Ids from Taxmap Objects}
 \usage{
-sample_id_filter(obj, .f_transform = NULL, .f_filter = NULL,
-  .f_condition = NULL, validated = FALSE, ...)
+sample_id_filter(
+  obj,
+  .f_transform = NULL,
+  .f_filter = NULL,
+  .f_condition = NULL,
+  validated = FALSE,
+  ...
+)
 }
 \arguments{
 \item{obj}{A Taxmap object.}
@@ -63,13 +69,14 @@ metacoder_obj <- sample_id_filter(obj          = metacoder_obj,
 \seealso{
 \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{transformer}}
 
-\code{\link[taxa]{get_dataset}}
+\code{\link[metacoder]{get_dataset}}
 
 \code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}},  \code{\link[dplyr]{filter}}
 
 \code{\link[purrr]{map}},  \code{\link[purrr]{keep}}
 
-Other Basic Metacoder Filters: \code{\link{otu_id_filter}},
-  \code{\link{taxon_id_filter}}
+Other Basic Metacoder Filters: 
+\code{\link{otu_id_filter}()},
+\code{\link{taxon_id_filter}()}
 }
 \concept{Basic Metacoder Filters}

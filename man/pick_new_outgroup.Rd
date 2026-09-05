@@ -24,7 +24,8 @@ Please see this issue for more details \url{https://github.com/joey711/phyloseq/
 
 \code{\link[ape]{summary.phylo}}
 
-Other Phylogenetic Tree Manipulators: \code{\link{root_by_longest_edge}},
-  \code{\link{root_phyloseq_tree}}
+Other Phylogenetic Tree Manipulators: 
+\code{\link{root_by_longest_edge}()},
+\code{\link{root_phyloseq_tree}()}
 }
 \concept{Phylogenetic Tree Manipulators}

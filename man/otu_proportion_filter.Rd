@@ -61,9 +61,10 @@ metacoder_obj <- otu_proportion_filter(
 \seealso{
 \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},\code{\link[MicrobiomeR]{otu_id_filter}}
 
-Other Advanced Metacoder Filters: \code{\link{agglomerate_taxmap}},
-  \code{\link{cov_filter}},
-  \code{\link{otu_prevalence_filter}},
-  \code{\link{taxa_prevalence_filter}}
+Other Advanced Metacoder Filters: 
+\code{\link{agglomerate_taxmap}()},
+\code{\link{cov_filter}()},
+\code{\link{otu_prevalence_filter}()},
+\code{\link{taxa_prevalence_filter}()}
 }
 \concept{Advanced Metacoder Filters}

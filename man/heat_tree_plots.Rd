@@ -4,7 +4,7 @@
 \alias{heat_tree_plots}
 \title{Get Heat Tree Plots}
 \usage{
-heat_tree_plots(obj, rank_list = NULL, title = TRUE, ...)
+heat_tree_plots(obj, rank_list = NULL, title = TRUE, seed = 1, ...)
 }
 \arguments{
 \item{obj}{An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.}
@@ -13,6 +13,9 @@ heat_tree_plots(obj, rank_list = NULL, title = TRUE, ...)
 
 \item{title}{Can be a logical, NULL, or a string.  The string can utilize \code{{rank}} to dynamically
 display the rank in the title via \code{\link[glue]{glue}}.}
+
+\item{seed}{A single integer seed used to make heat-tree layouts reproducible without
+modifying the caller's RNG state. Use \code{NULL} to defer to the current RNG stream.}
 
 \item{...}{Any of the \code{\link[metacoder]{heat_tree}} parameters can be used to change the way the heat_tree
 output is displayed.  Please see the \code{\link[MicrobiomeR]{heat_tree_parameters}} documentation
@@ -24,11 +27,17 @@ A list of heat_tree plots.
 \description{
 A function for getting multiple heat_tree plots per rank.
 }
+\details{
+By default, node size represents the number of retained OTUs assigned
+to each taxon or any of its descendants in the source \code{otu_abundance} table.
+Counts are pooled across samples after upstream filtering and do not represent
+read abundance.
+}
 \examples{
 \dontrun{
 if(interactive()){
 # This example uses data that are no longer available in the MicrobiomeR package,
-# however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_analyzed_format}}.
+# however, they can be easily generated with \code{\link{MicrobiomeR}{as_analyzed_format}}.
 library(MicrobiomeR)
 analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
 h_trees <- heat_tree_plots(analyzed_silva, rank_list = c("Phylum", "Class"))
@@ -41,26 +50,27 @@ h_trees$Class
 
 \code{\link[MicrobiomeR]{create_taxmap}},  \code{\link[MicrobiomeR]{validate_MicrobiomeR_format}},  \code{\link[MicrobiomeR]{heat_tree_parameters}}
 
-\code{\link[taxa]{filter_obs}}
+\code{\link[metacoder]{filter_obs}}
 
 \code{\link[crayon]{crayon}}
 
 \code{\link[ggplot2]{theme}},  \code{\link[ggplot2:element]{margin}},  \code{\link[ggplot2]{labs}}
 
-Other Visualizations: \code{\link{alpha_diversity_plot}},
-  \code{\link{correlation_data}},
-  \code{\link{correlation_plots}},
-  \code{\link{correlation_plot}},
-  \code{\link{heat_tree_parameters}},
-  \code{\link{ordination_plots}},
-  \code{\link{ordination_plot}}, \code{\link{plot_limits}},
-  \code{\link{save_alpha_diversity_plots}},
-  \code{\link{save_correlation_plots}},
-  \code{\link{save_heat_tree_plots}},
-  \code{\link{save_ordination_plots}},
-  \code{\link{save_stacked_barplots}},
-  \code{\link{stacked_barplots}},
-  \code{\link{stacked_barplot}},
-  \code{\link{top_coefficients_barplot}}
+Other Visualizations: 
+\code{\link{alpha_diversity_plot}()},
+\code{\link{correlation_data}()},
+\code{\link{correlation_plot}()},
+\code{\link{correlation_plots}()},
+\code{\link{heat_tree_parameters}()},
+\code{\link{ordination_plot}()},
+\code{\link{plot_limits}()},
+\code{\link{save_alpha_diversity_plots}()},
+\code{\link{save_correlation_plots}()},
+\code{\link{save_heat_tree_plots}()},
+\code{\link{save_ordination_plots}()},
+\code{\link{save_stacked_barplots}()},
+\code{\link{stacked_barplot}()},
+\code{\link{stacked_barplots}()},
+\code{\link{top_coefficients_barplot}()}
 }
 \concept{Visualizations}

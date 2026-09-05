@@ -1,17 +1,17 @@
 Package: MicrobiomeR
 Title: Analyze Microbiome Data
-Version: 0.6.1
+Version: 0.8.0
 Authors@R: c(
     person("Robert", "Gilmore", email = "rgilmore@umc.edu", role = c("aut", "cre")),
-    person("Shaurita", "Hutchins", email = "shutchins2@umc.edu", role = "aut"))
-Maintainer: Rob Gilmore <rgilmore@umc.edu>
+    person("Shaurita", "Hutchins", email = "shaurita.hutchins@gmail.com", role = "aut"))
+Maintainer: Shaurita Hutchins <shaurita.hutchins@gmail.com>
 License: MIT + file LICENSE
 biocViews: Metagenomics, Microbiome, Sequencing, SystemsBiology
 Description: An R package for microbiome analysis combining functions from phyloseq, metacodeR, 
     and microbiome into an easy to use and full featured microbiome analysis package.
 Roxygen: list(markdown = TRUE)
 Depends:
-    R (>= 3.3.0)
+    R (>= 4.1.0)
 Remotes: 
     ropensci/taxa,
     grunwaldlab/metacoder,
@@ -21,6 +21,7 @@ Remotes:
 Imports:
     ape,
     biomformat,
+    cli,
     crayon,
     DT,
     data.table,
@@ -35,10 +36,10 @@ Imports:
     htmlwidgets,
     htmltools,
     leaflet,
+    lifecycle,
     magrittr,
     metacoder,
     microbiome (>= 1.5.27),
-    modes,
     openxlsx,
     phyloseq,
     plotly,
@@ -48,11 +49,13 @@ Imports:
     scales,
     scico,
     shades,
+    SparseArray,
     stringr,
     taxa,
     tibble,
     tidyr,
     vegan,
+    vctrs,
     viridis,
     yaml
 Suggests:
@@ -61,9 +64,10 @@ Suggests:
     rmarkdown,
     testthat
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.3.3
 LazyData: true
-URL: https://github.com/vallenderlab/MicrobiomeR, https://microbiomer.vallenderlab.science/
+LazyDataCompression: xz
+URL: https://github.com/vallenderlab/MicrobiomeR, https://vallenderlab.github.io/MicrobiomeR/
 BugReports: https://github.com/vallenderlab/MicrobiomeR/issues
 VignetteBuilder: knitr
 StagedInstall: false

@@ -26,12 +26,14 @@ See the \link{MicrobiomeR_Formats} documentation.
 \seealso{
 \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_raw_format}},  \code{\link[MicrobiomeR]{as_basic_format}},  \code{\link[MicrobiomeR]{as_analyzed_format}},  \code{\link[MicrobiomeR]{as_phyloseq_format}},  \code{\link[MicrobiomeR]{create_taxmap}},  \code{\link[MicrobiomeR]{order_metacoder_data}}
 
-Other Formatting: \code{\link{MicrobiomeR_Formats}},
-  \code{\link{as_analyzed_format}},
-  \code{\link{as_basic_format}},
-  \code{\link{as_custom_format}},
-  \code{\link{as_phyloseq_format}},
-  \code{\link{as_raw_format}}, \code{\link{melt_taxmap}},
-  \code{\link{treatment_matrix}}
+Other Formatting: 
+\code{\link{MicrobiomeR_Formats}},
+\code{\link{as_analyzed_format}()},
+\code{\link{as_basic_format}()},
+\code{\link{as_custom_format}()},
+\code{\link{as_phyloseq_format}()},
+\code{\link{as_raw_format}()},
+\code{\link{melt_taxmap}()},
+\code{\link{treatment_matrix}()}
 }
 \concept{Formatting}

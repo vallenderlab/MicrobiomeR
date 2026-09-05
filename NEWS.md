@@ -1,3 +1,23 @@
+# MicrobiomeR 0.8.0
+
+* Fixed heat-tree rank generation so each rank is filtered independently and
+  nodes are sized by retained descendant OTU counts.
+* Clarified the heat-tree node-size interpretation in the package documentation.
+* Removed the outdated lab location and improved documentation readability.
+* Restored stacked barplot sample labels and removed y-axis baseline padding
+  (#109).
+* Completed package citation metadata and usage guidance (#33).
+* Made the `.rda` input-validation test independent of the test working
+  directory.
+* Reduced routine test and vignette build time with deterministic, clearly
+  labeled example-data subsets while preserving the full exported datasets.
+
+# MicrobiomeR 0.6.2
+
+* Added compatibility shims for upstream `metacoder`/`taxa` API drift, including
+  a local `parse_phyloseq()` fallback for the upstream `ranks_ref` bug and
+  removal of stale `modes` and `taxa` import paths.
+
 # MicrobiomeR 0.6.1
 
 * Added `StagedInstall: false` to DESCRIPTION file.

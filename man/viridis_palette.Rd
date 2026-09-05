@@ -4,8 +4,11 @@
 \alias{viridis_palette}
 \title{Viridis Palette Function}
 \usage{
-viridis_palette(viridis_palette = "viridis", viridis_number = 800,
-  viridis_range = 0:viridis_number)
+viridis_palette(
+  viridis_palette = "viridis",
+  viridis_number = 800,
+  viridis_range = 0:viridis_number
+)
 }
 \arguments{
 \item{viridis_palette}{The viridis palette to use.  Default: 'viridis'}
@@ -39,9 +42,10 @@ better_pal <- get_color_palette(pal_func = viridis_palette, color_no = 25)
 
 \code{\link[viridis:reexports]{viridis}}
 
-Other Color Palettes: \code{\link{combination_palette}},
-  \code{\link{get_color_palette}},
-  \code{\link{scico_palette}},
-  \code{\link{viridis_magma_palette}}
+Other Color Palettes: 
+\code{\link{combination_palette}()},
+\code{\link{get_color_palette}()},
+\code{\link{scico_palette}()},
+\code{\link{viridis_magma_palette}()}
 }
 \concept{Color Palettes}

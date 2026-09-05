@@ -4,9 +4,16 @@
 \alias{transformer}
 \title{Transforming Tidy Data}
 \usage{
-transformer(.data, func, by = "column", ids = NULL,
-  header_name = NULL, preserved_categories = TRUE,
-  separated_categories = NULL, ...)
+transformer(
+  .data,
+  func,
+  by = "column",
+  ids = NULL,
+  header_name = NULL,
+  preserved_categories = TRUE,
+  separated_categories = NULL,
+  ...
+)
 }
 \arguments{
 \item{.data}{A matrix/data_frame/tibble for transforming.}
@@ -46,7 +53,7 @@ in the purrr package.  The purr package allows the use of anonymous functions as
 \dontrun{
 if(interactive()){
 # This example uses data that are no longer available in the MicrobiomeR package,
-# however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_basic_format}}.
+# however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.
  library(MicrobiomeR)
  basic_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "basic_format")
  data <- basic_silva$data$taxa_abundance
@@ -62,8 +69,10 @@ if(interactive()){
 \code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}}
 \code{\link[purrr]{modify}}
 
-Other Data Manipulators: \code{\link{convert_proportions}},
-  \code{\link{metacoder_comp_func_1}},
-  \code{\link{transposer}}, \code{\link{vlookup}}
+Other Data Manipulators: 
+\code{\link{convert_proportions}()},
+\code{\link{metacoder_comp_func_1}()},
+\code{\link{transposer}()},
+\code{\link{vlookup}()}
 }
 \concept{Data Manipulators}

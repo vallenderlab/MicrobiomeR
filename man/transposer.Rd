@@ -4,8 +4,13 @@
 \alias{transposer}
 \title{Transposing Tidy Data}
 \usage{
-transposer(.data, ids = NULL, header_name, preserved_categories = TRUE,
-  separated_categories = NULL)
+transposer(
+  .data,
+  ids = NULL,
+  header_name,
+  preserved_categories = TRUE,
+  separated_categories = NULL
+)
 }
 \arguments{
 \item{.data}{A matrix/data_frame/tibble for transposing.}
@@ -36,7 +41,7 @@ Transposing can help with preforming operations on the rows of your tibbles.
 \dontrun{
 if(interactive()){
 # This example uses data that are no longer available in the MicrobiomeR package,
-# however, they can be easily generated with \\code{\\link{MicrobiomeR}{as_basic_format}}.
+# however, they can be easily generated with \code{\link{MicrobiomeR}{as_basic_format}}.
  library(MicrobiomeR)
  basic_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "basic_format")
  data <- basic_silva$data$taxa_abundance
@@ -50,14 +55,18 @@ if(interactive()){
 \seealso{
 \code{\link[tibble]{is_tibble}}
 
-\code{\link[dplyr]{select_all}},  \code{\link[dplyr]{select}},  \code{\link[dplyr]{reexports}},  \code{\link[dplyr:tidyeval]{sym}},  \code{\link[dplyr:reexports]{one_of}}
+\code{\link[dplyr]{select_all}}, \code{\link[dplyr]{select}},
+\code{\link[dplyr]{reexports}}, \code{\link[rlang]{sym}},
+\code{\link[dplyr:reexports]{one_of}}
 
 \code{\link[tidyr]{gather}},  \code{\link[tidyr]{unite}},  \code{\link[tidyr]{spread}},  \code{\link[tidyr]{separate}}
 
 \code{\link[stringr]{str_detect}},  \code{\link[stringr]{str_count}}
 
-Other Data Manipulators: \code{\link{convert_proportions}},
-  \code{\link{metacoder_comp_func_1}},
-  \code{\link{transformer}}, \code{\link{vlookup}}
+Other Data Manipulators: 
+\code{\link{convert_proportions}()},
+\code{\link{metacoder_comp_func_1}()},
+\code{\link{transformer}()},
+\code{\link{vlookup}()}
 }
 \concept{Data Manipulators}

@@ -4,8 +4,14 @@
 \alias{validate_MicrobiomeR_format}
 \title{Validate MicrobiomeR Format}
 \usage{
-validate_MicrobiomeR_format(obj, validated = FALSE, valid_formats,
-  force_format = FALSE, min_or_max = base::max, ...)
+validate_MicrobiomeR_format(
+  obj,
+  validated = FALSE,
+  valid_formats,
+  force_format = FALSE,
+  min_or_max = base::max,
+  ...
+)
 }
 \arguments{
 \item{obj}{A Taxmap object.}
@@ -35,11 +41,12 @@ This function can provide a way to check if a taxmap object has undergone a
 \seealso{
 \code{\link[MicrobiomeR]{which_format}},  \code{\link[MicrobiomeR]{as_MicrobiomeR_format}}
 
-Other Validation: \code{\link{is_analyzed_format}},
-  \code{\link{is_basic_format}},
-  \code{\link{is_phyloseq_format}},
-  \code{\link{is_raw_format}},
-  \code{\link{order_metacoder_data}},
-  \code{\link{which_format}}
+Other Validation: 
+\code{\link{is_analyzed_format}()},
+\code{\link{is_basic_format}()},
+\code{\link{is_phyloseq_format}()},
+\code{\link{is_raw_format}()},
+\code{\link{order_metacoder_data}()},
+\code{\link{which_format}()}
 }
 \concept{Validation}

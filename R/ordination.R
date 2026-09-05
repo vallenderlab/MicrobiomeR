@@ -89,7 +89,6 @@ ordination_plot <- function(obj, method = "PCoA", distance = "wunifrac", color =
 #' @return Returns a melted dataframe.
 #' @export
 #' @family Visualizations
-#' @rdname ordination_plots
 #' @rdname ordination_plot
 ordination_plots <- function(obj, methods = c("PCoA", "NMDS"), distances = c("wunifrac", "unifrac", "bray"),
                              color = "TreatmentGroup", select_otu_table = "otu_proportions") {
@@ -121,7 +120,6 @@ ordination_plots <- function(obj, methods = c("PCoA", "NMDS"), distances = c("wu
 #' @param start_path The starting path of the output directory.  Default: 'output'
 #' @param ... An optional list of parameters to use in the output_dir function.
 #' @return An output directory that contains ordination plots.
-#' @pretty_print TRUE
 #' @details This function creates an appropriate output directory, where it saves publication ready
 #' plots.
 #' @examples

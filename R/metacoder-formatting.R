@@ -2,7 +2,6 @@
 #' @description A function for looking at a Taxmap object and returning the identified MicrobiomeR format.
 #' @param obj A Taxmap object.
 #' @return If the format is verified it returns a character string denoting the identified format.
-#' @pretty_print TRUE
 #' @details This function is used to get basic information about the format of the taxmap object
 #' that is supplied by the user.
 #' @examples
@@ -61,7 +60,6 @@ which_format <- function(obj) {
 #' @description This function returns a logical based on weather or not the object is in the raw_format.
 #' @param obj A Taxmap object.
 #' @return A logical (TRUE/FALSE).
-#' @pretty_print TRUE
 #' @details The "raw_format" is Level 1. in the [MicrobiomeR_Formats] hierarchy.
 #' @examples
 #' \dontrun{
@@ -92,7 +90,6 @@ is_raw_format <- function(obj) {
 #' @description This function returns a logical based on weather or not the object is in the basic_format.
 #' @param obj A Taxmap object.
 #' @return A logical (TRUE/FALSE).
-#' @pretty_print TRUE
 #' @details The "basic_format" is Level 2. in the [MicrobiomeR_Formats] hierarchy.
 #' @examples
 #' \dontrun{
@@ -123,7 +120,6 @@ is_basic_format <- function(obj) {
 #' @description This function returns a logical based on weather or not the object is in the analyzed_format.
 #' @param obj A Taxmap object.
 #' @return A logical (TRUE/FALSE).
-#' @pretty_print TRUE
 #' @details The "analyzed_format" is Level 3. in the [MicrobiomeR_Formats] hierarchy.
 #' @examples
 #' \dontrun{
@@ -143,11 +139,7 @@ is_basic_format <- function(obj) {
 #' @rdname is_analyzed_format
 is_analyzed_format <- function(obj) {
   fmt <- which_format(obj)
-  if (fmt == "analyzed_format"){
-    return(TRUE)
-  } else {
-    return(FALSE)
-  }
+  identical(fmt, "analyzed_format")
 }
 
 
@@ -155,7 +147,6 @@ is_analyzed_format <- function(obj) {
 #' @description This function returns a logical based on weather or not the object is in the phyloseq_format.
 #' @param obj A Taxmap object.
 #' @return A logical (TRUE/FALSE).
-#' @pretty_print TRUE
 #' @details The "phyloseq_format" is Level 0. in the [MicrobiomeR_Formats] hierarchy.
 #' @examples
 #' \dontrun{
@@ -186,7 +177,6 @@ is_phyloseq_format <- function(obj) {
 #' @description A function for changing the order of the observation data in a Taxmap object
 #' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @return A taxmap object with observation data in the proper order for downstream analysis.
-#' @pretty_print TRUE
 #' @details Changes the order of the observation tables in \strong{metacoder_object$data} to
 #' otu_abundance, otu_annotations, otu_proportions, sample_data, phy_tree, taxa_abundance,
 #' taxa_proportions, statistical_data, and stats_tax_data respectively.
@@ -251,7 +241,9 @@ validate_MicrobiomeR_format <- function(obj, validated = FALSE, valid_formats, f
     mo_clone <- as_MicrobiomeR_format(obj = mo_clone, format = high_rank, ...)
     return(mo_clone)
   } else {
-    stop(glue::glue("The Taxmap object is not in one of the valid formats: {valid_formats}." ))
+    rlang::abort(cli::format_inline(
+      "The Taxmap object is not in one of the valid formats: {.val {valid_formats}}."
+    ))
   }
 }
 
@@ -259,7 +251,6 @@ validate_MicrobiomeR_format <- function(obj, validated = FALSE, valid_formats, f
 #' @description Converts a Taxmap object to the raw_format.
 #' @param obj An object to be converted to a Taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @return A Taxmap object in the "raw_format".
-#' @pretty_print TRUE
 #' @details See the [MicrobiomeR_Formats] documentation.
 #' @export
 #' @family Formatting
@@ -291,7 +282,6 @@ as_raw_format <- function(obj) {
 #' @param cols Column names used for \code{\link[metacoder]{calc_taxon_abund}}.  Default: NULL
 #' @param out_names Column names of the output used for \code{\link[metacoder]{calc_obs_props}}.  Default: NULL
 #' @return A Taxmap object in the "basic_format".
-#' @pretty_print TRUE
 #' @details See the [MicrobiomeR_Formats] documentation.
 #' @export
 #' @family Formatting
@@ -311,7 +301,10 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
   }
   # Get metacoder::calc_* parameters
   if (is.null(cols)) {
-    cols <- mo_clone$data$sample_data$sample_id
+    cols <- get_sample_ids(
+      sample_data = mo_clone$data$sample_data,
+      fallback_ids = names(dplyr::select_if(mo_clone$data$otu_abundance, is.numeric))
+    )
   }
   if (is_raw_format(mo_clone)) {
 
@@ -355,7 +348,6 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
 #' @param combinations Combinations of treatments used in \code{\link[metacoder]{compare_groups}}.  Default: NULL
 #' @param out_names Column names of the output used for \code{\link[metacoder]{calc_obs_props}}.  Default: NULL
 #' @return A Taxmap object in the "analyzed_format".
-#' @pretty_print TRUE
 #' @details See the [MicrobiomeR_Formats] documentation.
 #' @export
 #' @family Formatting
@@ -365,12 +357,14 @@ as_basic_format <- function(obj, cols = NULL, out_names = NULL) {
 #'
 #'  \code{\link[metacoder]{compare_groups}}
 #'
-#'  \code{\link[taxa]{taxonomy_table}},  \code{\link[taxa]{taxon_ids}}
+#'  \code{\link[metacoder]{taxonomy_table}},  \code{\link[metacoder]{taxon_ids}}
 #' @importFrom metacoder compare_groups
-#' @importFrom taxa taxonomy_table taxon_ids
 #' @importFrom dplyr rename right_join
 #' @importFrom crayon silver red green
 as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = NULL, out_names = NULL, comp_func = metacoder_comp_func_1) {
+  if (!is.null(groups)) {
+    vctrs::vec_assert(groups, ptype = character(), size = NULL)
+  }
   obj <- create_taxmap(obj = obj)
   mo_clone <- obj$clone()
   # Convert the Taxmap object up the heirarchy of formants.
@@ -382,7 +376,10 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
   }
   # Get metacoder::compare_groups parameters
   if (is.null(cols)) {
-    cols <- mo_clone$data$sample_data$sample_id
+    cols <- get_sample_ids(
+      sample_data = mo_clone$data$sample_data,
+      fallback_ids = names(dplyr::select_if(mo_clone$data$otu_abundance, is.numeric))
+    )
   }
   if (is.null(groups)) {
     groups <- mo_clone$data$sample_data$TreatmentGroup
@@ -410,10 +407,12 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
     mo_clone$data$stats_tax_data <- dplyr::right_join(x  = tax_table,
                                                       y  = stats_table,
                                                       by = "taxon_id")
-  } else if (is_basic_format(mo_clone)) {
+  } else if (is_analyzed_format(mo_clone)) {
     message(crayon::silver("Converting to the analyzed format:  The object is already in the analyzed format."))
   } else {
-    stop(crayon::red("Converting to the analyzed format:  You have to start in the phyloseq, raw, or basic formats."))
+    rlang::abort(cli::format_inline(
+      "{.pkg MicrobiomeR} can only convert to {.val analyzed_format} from {.val phyloseq_format}, {.val raw_format}, or {.val basic_format}."
+    ))
   }
   # Put data tables in the proper order
   mo_clone <- order_metacoder_data(obj = mo_clone)
@@ -429,7 +428,6 @@ as_analyzed_format <- function(obj, cols = NULL, groups = NULL, combinations = N
 #' @param ... An optional list of parameters to use in the as_*_format function specified
 #' by the format parameter.
 #' @return A Taxmap object in the specified format.
-#' @pretty_print TRUE
 #' @details See the [MicrobiomeR_Formats] documentation.
 #' @export
 #' @family Formatting
@@ -510,7 +508,6 @@ as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_ann
 #' values that are used to change the names of the table.   Default: NULL
 #' @param ... An optional list of parameters to use in the as_*_format function specified
 #' @return A Taxmap object that we have tried to format with all of our heart.
-#' @pretty_print TRUE
 #' @details This function is meant to be more helpful for customizing the Taxmap object.
 #' @export
 #' @family Formatting
@@ -520,6 +517,10 @@ as_phyloseq_format <- function(obj, otu_table="otu_abundance", tax_data="otu_ann
 #' @importFrom glue glue
 #' @importFrom crayon red
 as_custom_format <- function(obj, format, change_name_list = NULL, ...) {
+  format <- rlang::arg_match(
+    arg = format,
+    values = c("phyloseq_format", "raw_format", "basic_format", "analyzed_format")
+  )
 
   # Taxmap Objects
   obj <- create_taxmap(obj = obj)
@@ -531,26 +532,28 @@ as_custom_format <- function(obj, format, change_name_list = NULL, ...) {
   # Create vector of current table names
   obs_tables <- names(mo_clone$data)
 
+  if (!is.null(change_name_list)) {
+    changed_tables <- change_name_list[names(change_name_list) %in% obs_tables]
+    bad_table_names <- change_name_list[!names(change_name_list) %in% obs_tables]
+
+    if (length(bad_table_names) != 0) {
+      if (length(bad_table_names) == length(change_name_list)) {
+        rlang::abort(cli::format_inline(
+          "None of the supplied table names were found in the observation data: {.val {names(bad_table_names)}}."
+        ))
+      } else {
+        rlang::abort(cli::format_inline(
+          "Some supplied table names are not present in the Taxmap object: {.val {names(bad_table_names)}}."
+        ))
+      }
+    }
+  }
+
   # Logic for getting to the right format
   if (fmt == format) {
     mo_clone <- order_metacoder_data(obj = mo_clone)
     return(mo_clone)
   } else if (!is.null(change_name_list)) {   # Create a list of tables to change if necessary
-    # Create a list of key/values used to change names
-    changed_tables <- change_name_list[names(change_name_list) %in% obs_tables]
-    # Create a list of key/values used to create new tables
-    bad_table_names <- change_name_list[!names(change_name_list) %in% obs_tables]
-
-    # Throw errors for bad table names
-    if (length(bad_table_names != 0)) {
-      if (length(bad_table_names) == length(change_name_list)) {
-        stop(glue::glue(crayon::red("None of the parameters that you've given are in your observation data:
-             {bad_table_names}")))
-      } else {
-        stop(glue::glue(crayon::red("You have given some bad table names that aren't in you Taxmap object:
-                       {bad_table_names}")))
-      }
-    }
     # Change the table names
     for (current_table in names(changed_tables)) {
       # Create a new table from the data in the current table
@@ -574,12 +577,9 @@ as_custom_format <- function(obj, format, change_name_list = NULL, ...) {
     } else { # Throw an error if the level is negative (unknown or mixed format)
       warning(glue::glue(crayon::red("Here is a list of your observation data:
                            {changed_obs_tables}")))
-      stop(crayon::red("Your data is in an unknown or mixed format."))
+      rlang::abort("Your data is in an unknown or mixed format.")
     }
   }
   mo_clone <- order_metacoder_data(obj = mo_clone)
   return(mo_clone)
 }
-
-
-

@@ -1,0 +1,101 @@
+name: R-CMD-check
+
+on:
+  push:
+    branches: [ main, master , dev-master ]
+  pull_request:
+    branches: [ main, master, dev-master ]
+
+env:
+  R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+  GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  R-CMD-check:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    env:
+      RSPM: ${{ matrix.config.rspm }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: windows-latest, r: 'release'}
+          - {os: macOS-latest, r: 'release'}
+          - {os: ubuntu-latest, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
+          - {os: ubuntu-latest, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          cache: always
+          extra-packages: any::rcmdcheck, any::covr
+          needs: check
+
+      - name: Session info
+        run: |
+          options(width = 100)
+          pkgs <- installed.packages()[, "Package"]
+          sessioninfo::session_info()
+        shell: Rscript {0}
+
+      - name: Check
+        env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: false
+          _R_CHECK_FORCE_SUGGESTS_: false
+        run: |
+          rcmdcheck::rcmdcheck(
+            args = c("--no-manual", "--as-cran"),
+            build_args = "--no-manual",
+            error_on = "warning",
+            check_dir = "check"
+          )
+        shell: Rscript {0}
+
+      - name: Show testthat output
+        if: failure()
+        run: |
+          if [[ ! -d check ]]; then
+            echo "No check directory was created; the failure occurred before R CMD check."
+            exit 0
+          fi
+
+          find check -type f -name 'testthat.Rout*' -exec cat '{}' \;
+        shell: bash
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          path: check
+
+      - name: Test coverage
+        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
+        run: |
+          cov <- covr::package_coverage()
+          covr::to_cobertura(cov, filename = "coverage.xml")
+        shell: Rscript {0}
+
+      - name: Upload coverage to Codecov
+        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
+        uses: codecov/codecov-action@v5
+        with:
+          files: coverage.xml
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}

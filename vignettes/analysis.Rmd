@@ -16,13 +16,20 @@ knitr::opts_chunk$set(
 )
 library(MicrobiomeR)
 pkg.data <- MicrobiomeR:::pkg.private
+vignette_path <- knitr::current_input(dir = TRUE)
+source(file.path(dirname(vignette_path), "small-data.Rinc"), local = TRUE)
 ```
 
 # Data Import & Wrangling
 
 Beginning an microbiome analysis starts with importing data and wrangling it into a proper format.
 
-```{r message=FALSE, warning=FALSE}
+The complete import workflow is shown below. To keep the installed vignette quick to build,
+the executed results use a deterministic subset containing four samples from each treatment
+group and the 100 most abundant OTUs. These results illustrate the workflow and should not be
+interpreted as estimates from the full study.
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 # Get the data files from package
 input_files <- pkg.data$input_files
 biom_file <- input_files$biom_files$silva # Path to silva biom file
@@ -40,16 +47,23 @@ phy_obj <- create_phyloseq(biom_file = biom_file,
 raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
 ```
 
+```{r two-group-example-data, include=FALSE}
+phy_obj <- small_phyloseq_example(MicrobiomeR::phyloseq_silva_2)
+raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
+```
+
 # Filtering Data
 
 After importing data and formatting it, data should be filtered to reduce noise and if desired, to subset data.
 
 ```{r message=FALSE, warning=FALSE}
 # Remove Archaea from the taxmap object
-metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
-                                   taxon_names == "Archaea",
-                                   subtaxa = TRUE,
-                                   invert = TRUE)
+metacoder_obj <- metacoder::filter_taxa(
+  obj = raw_metacoder,
+  taxon_names == "Archaea",
+  subtaxa = TRUE,
+  invert = TRUE
+)
 
 # Ambiguous Annotation Filter - Remove taxonomies with ambiguous names
 metacoder_obj <- metacoder::filter_ambiguous_taxa(metacoder_obj, 
@@ -123,12 +137,26 @@ metacoder_obj <- as_MicrobiomeR_format(obj = metacoder_obj, format = "analyzed_f
 
 In addition to standard statistical analysis provided by metacoder, `MicrobiomeR` simplifies alpha diversity, ordination, and [PERMANOVA](https://onlinelibrary.wiley.com/doi/10.1002/9781118445112.stat07841) analysis.
 
+`permanova()` and `heat_tree_plots()` use a reproducible seed by default while
+restoring the caller's RNG state on exit. Supply `seed` explicitly when you
+want the seed recorded in your workflow or report.
+
 ```{r message=FALSE, warning=FALSE}
 # Generate alpha diversity measures
 measures <- alpha_diversity_measures(obj = metacoder_obj)
 measures$Shannon
 ```
 
+To complement the summary table, `alpha_diversity_plot()` can visualize how the selected
+index differs across treatment groups.
+
+```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=5.3}
+# Plot alpha diversity for the Shannon index
+alpha_diversity_plot(obj = metacoder_obj,
+                     measure = "Shannon",
+                     group = "TreatmentGroup",
+                     title = "Treatment Group")
+```
 
 ```{r message=FALSE, warning=FALSE}
 # Get only ordination data for the first Axis based on principal coordinates analysis using weighted unifrac.
@@ -139,8 +167,17 @@ ordination$Axis.1
 
 ```{r message=FALSE, warning=FALSE}
 # Generate permanova statistics for data
-permanova <- permanova(obj = metacoder_obj, group = "TreatmentGroup")
+permanova <- permanova(obj = metacoder_obj, group = "TreatmentGroup", seed = 1)
 permanova$permanova$aov.tab
+```
+
+`top_coefficients_barplot()` provides a quick visual summary of the taxa that contribute most
+to the separation captured by the PERMANOVA model.
+
+```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=7}
+# Plot the taxa with the largest PERMANOVA coefficients
+top_coefficients_barplot(permanova$top_coefficients,
+                         title = "Top taxa driving PERMANOVA separation")
 ```
 
 ## Data Visualization
@@ -149,12 +186,18 @@ Visualization of taxmap objects can be done in several ways, and `MicrobiomeR` o
 does this as well, but takes care of creating default values that we enjoyed in our heat tree plots.  
 MicrobiomeR also uses ggplot2 to create `correlation_plot()`s. 
 
+In these heat trees, node size represents the number of retained OTUs assigned to each taxon
+or any of its descendants in the source `otu_abundance` table. These counts are pooled across
+samples after filtering and describe retained taxonomic feature richness, not read abundance.
+Node color separately summarizes the between-group relative-abundance comparison.
+
 ## Analyzing Two "Treatment" Groups
 
 ```{r message=FALSE, warning=FALSE}
 # Generate heat_trees
 heat_tree_plots <- heat_tree_plots(metacoder_obj,
                                        rank_list = c("Phylum", "Class", "Order"),
+                                       seed = 1,
                                        node_label = ifelse(wilcox_p_value > 0.05, taxon_ids, NA),
                                        node_label_size = 2,
                                        node_label_color = c("darkgreen"))
@@ -199,8 +242,9 @@ sb_plots$Phylum
 
 ## Analyzing More than 2 "Treatment" Groups
 
-```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=8}
-# Heat Trees
+The full three-group import is shown here for reproducibility.
+
+```{r three-group-import, message=FALSE, warning=FALSE, eval=FALSE}
 input_files <- pkg.data$input_files
 metadata_file <- input_files$metadata$three_groups
 biom_file <- input_files$biom_files$silva # Path to silva biom file
@@ -212,14 +256,23 @@ phy_obj <- create_phyloseq(biom_file = biom_file,
                                     tree_file = tree_file, 
                                     metadata_file = metadata_file,
                                     parse_func = parse_func)
+```
 
+```{r three-group-example-data, include=FALSE}
+phy_obj <- small_phyloseq_example(MicrobiomeR::phyloseq_silva_3)
+```
+
+```{r message=FALSE, warning=FALSE, fig.align="center", fig.width=8, fig.height=8}
+# Heat Trees
 # Get the taxmap object in the raw format
 raw_metacoder <- as_MicrobiomeR_format(obj = phy_obj, format = "raw_format")
 # Remove Archaea from the taxmap object
-metacoder_obj <- taxa::filter_taxa(obj = raw_metacoder,
-                                   taxon_names == "Archaea",
-                                   subtaxa = TRUE,
-                                   invert = TRUE)
+metacoder_obj <- metacoder::filter_taxa(
+  obj = raw_metacoder,
+  taxon_names == "Archaea",
+  subtaxa = TRUE,
+  invert = TRUE
+)
 
 # Ambiguous Annotation Filter - Remove taxonomies with ambiguous names
 metacoder_obj <- metacoder::filter_ambiguous_taxa(metacoder_obj, 
@@ -268,6 +321,7 @@ metacoder_obj <- as_MicrobiomeR_format(obj = metacoder_obj, format = "analyzed_f
 # Generate heat_trees
 heat_tree_plots <- heat_tree_plots(metacoder_obj,
                                        rank_list = c("Phylum", "Class", "Order"),
+                                       seed = 1,
                                        node_label = ifelse(wilcox_p_value < 0.05, taxon_ids, NA),
                                        node_label_size = 2,
                                        node_label_color = c("darkgreen"))
@@ -283,5 +337,3 @@ corr_plots$Class$Phylum$`Exp_Var2-vs-Exp_Var1`
 corr_plots$Class$Phylum$`Exp_Var2-vs-Control`
 corr_plots$Class$Phylum$`Exp_Var1-vs-Control`
 ```
-
-

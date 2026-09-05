@@ -7,7 +7,6 @@
 #' @param rev A logical that will reverse the order of the color palette.
 #' @param ... Parameters for the \emph{pal_func}.
 #' @return Returns a color palette in the form of a character vector.
-#' @pretty_print TRUE
 #' @details This function is meant to be a plugin style function for users to created palettes.
 #' @examples
 #' \dontrun{
@@ -50,7 +49,6 @@ get_color_palette <- function(pal_func=viridis_magma_palette, color_no=20, displ
 #' @param scico_range The range in the color palette to use.  Default: c(0, scico_number)
 #' @return The output of this function is another function (grDevoces::colorRampPalette), which takes
 #' a number to generate an interpolated color palette as a character vector.
-#' @pretty_print TRUE
 #' @details The purpose of this function is to provide an interpolated scico palette for using with the
 #' get_color_palette function.
 #' @examples
@@ -83,7 +81,6 @@ scico_palette <- function(scico_palette="batlow", scico_number=800, scico_range=
 #' @param viridis_range The range in the color palette to use.  Default: c(0, viridis_number)
 #' @return The output of this function is another function (grDevoces::colorRampPalette), which takes
 #' a number to generate an interpolated color palette as a character vector.
-#' @pretty_print TRUE
 #' @details The purpose of this function is to provide an interpolated viridis palette for using with the
 #' get_color_palette function.
 #' @examples
@@ -126,7 +123,6 @@ viridis_palette <- function(viridis_palette="viridis", viridis_number=800, virid
 #' as you want.
 #' @return The output of this function is another function (grDevoces::colorRampPalette), which takes
 #' a number to generate an interpolated color palette as a character vector.
-#' @pretty_print TRUE
 #' @details This function allows you to combine a varying number of color palettes and gives you
 #' the ability to subset and reverse the palettes that are supplied.
 #' @examples
@@ -219,7 +215,6 @@ combination_palette <- function(...) {
 #' @param ... These dots are optionally used as both the magma and viridis function parameters.
 #' @return The output of this function is another function (grDevoces::colorRampPalette), which takes
 #' a number to generate an interpolated color palette as a character vector.
-#' @pretty_print TRUE
 #' @details The primary purpose of this function is to return a palette-function for generating virdis style
 #' color palettes.  By taking the viridis::viridis() and the viridis::magma() colors, and manipulating
 #' them, this function can help create a unique set of colors that you can distinguish on a busy plot.
@@ -269,4 +264,3 @@ viridis_magma_palette <- function(viridis_number = 800, viridis_range = 300:viri
                                    rev = magma_rev))
   return(crp)
 }
-

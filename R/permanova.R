@@ -3,6 +3,8 @@
 #' @param obj An object to be converted to a taxmap object with \code{\link[MicrobiomeR]{create_taxmap}}.
 #' @param distance_method  Use a desired distance method, Default: 'bray'
 #' @param group The group or column in the metadata to test upon, Default: 'TreatmentGroup'
+#' @param seed A single integer seed used to make PERMANOVA permutations reproducible without
+#' modifying the caller's RNG state. Use `NULL` to defer to the current RNG stream.
 #' @return Returns a list which includes permanova, anova, coefficients, and top coefficients.
 #' @examples
 #' \dontrun{
@@ -16,13 +18,13 @@
 #' @export
 #' @rdname permanova
 #' @seealso View \code{\link{top_coefficients_barplot}} to plot the top_coefficients returned from this function.
-#' See \code{\link[vegan]{adonis}} and \code{\link[vegan]{betadisper}} to understand more about how the permanova data was generated
+#' See \code{\link[vegan]{adonis2}} and \code{\link[vegan]{betadisper}} to understand more about how the permanova data was generated
 #' @importFrom dplyr select
 #' @importFrom microbiome abundances meta
-#' @importFrom vegan adonis vegdist betadisper
+#' @importFrom vegan adonis2 vegdist betadisper
 #' @importFrom phyloseq distance
 #' @importFrom dplyr expr sym enquo
-permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
+permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup", seed = 1) {
   # Validate data format
   metacoder_object <- validate_MicrobiomeR_format(
     obj = create_taxmap(obj),
@@ -42,10 +44,25 @@ permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
   if (distance_method == "wunifrac" | distance_method == "unifrac") {
     dist <- phyloseq::distance(phyloseq_object, method = distance_method)
     dist_formula <- as.formula(paste0("dist ~ ", group))
-    permanova[["permanova"]] <- vegan::adonis(dist_formula, data = meta, permutations = 99)
+    permanova[["permanova"]] <- list(
+      aov.tab = with_preserved_seed(
+        seed,
+        vegan::adonis2(dist_formula, data = meta, permutations = 99)
+      )
+    )
   } else {
     dist_formula <- as.formula(paste0("t(otu) ~ ", group))
-    permanova[["permanova"]] <- vegan::adonis(dist_formula, data = meta, permutations = 99, method = distance_method)
+    permanova[["permanova"]] <- list(
+      aov.tab = with_preserved_seed(
+        seed,
+        vegan::adonis2(
+          dist_formula,
+          data = meta,
+          permutations = 99,
+          method = distance_method
+        )
+      )
+    )
   }
 
   # Checking the homogeneity condition
@@ -58,7 +75,17 @@ permanova <- function(obj, distance_method = "bray", group = "TreatmentGroup") {
 
   # Investigate the top factors
   # Show coefficients for the top taxa separating the groups
-  permanova[["coefficients"]] <- coefficients(permanova$permanova)[paste0(group, "1"), ]
+  if (distance_method %in% c("wunifrac", "unifrac")) {
+    permanova[["coefficients"]] <- NULL
+  } else {
+    coefficient_matrix <- stats::coefficients(stats::lm(dist_formula, data = meta))
+    coefficient_rows <- setdiff(rownames(coefficient_matrix), "(Intercept)")
+    permanova[["coefficients"]] <- if (length(coefficient_rows) >= 1) {
+      coefficient_matrix[coefficient_rows[[1]], ]
+    } else {
+      NULL
+    }
+  }
   if (is.null(permanova$coefficients)) {
     warning("Coefficients were not able to be generated using this distance method.")
   } else {

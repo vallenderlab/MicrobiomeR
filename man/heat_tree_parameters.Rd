@@ -28,26 +28,27 @@ This function gets the parameters used for the heat_tree_plots function.
 \seealso{
 \code{\link[metacoder]{heat_tree}}
 
-\code{\link[taxa]{n_obs}},  \code{\link[taxa]{taxon_names}}
+\code{\link[metacoder]{n_obs}},  \code{\link[metacoder]{taxon_names}}
 
 \code{\link[purrr]{list_modify}}
 
 \code{\link[rlang:quotation]{enquos}},  \code{\link[rlang:quosure]{is_quosure}},  \code{\link[rlang]{eval_tidy}}
 
-Other Visualizations: \code{\link{alpha_diversity_plot}},
-  \code{\link{correlation_data}},
-  \code{\link{correlation_plots}},
-  \code{\link{correlation_plot}},
-  \code{\link{heat_tree_plots}},
-  \code{\link{ordination_plots}},
-  \code{\link{ordination_plot}}, \code{\link{plot_limits}},
-  \code{\link{save_alpha_diversity_plots}},
-  \code{\link{save_correlation_plots}},
-  \code{\link{save_heat_tree_plots}},
-  \code{\link{save_ordination_plots}},
-  \code{\link{save_stacked_barplots}},
-  \code{\link{stacked_barplots}},
-  \code{\link{stacked_barplot}},
-  \code{\link{top_coefficients_barplot}}
+Other Visualizations: 
+\code{\link{alpha_diversity_plot}()},
+\code{\link{correlation_data}()},
+\code{\link{correlation_plot}()},
+\code{\link{correlation_plots}()},
+\code{\link{heat_tree_plots}()},
+\code{\link{ordination_plot}()},
+\code{\link{plot_limits}()},
+\code{\link{save_alpha_diversity_plots}()},
+\code{\link{save_correlation_plots}()},
+\code{\link{save_heat_tree_plots}()},
+\code{\link{save_ordination_plots}()},
+\code{\link{save_stacked_barplots}()},
+\code{\link{stacked_barplot}()},
+\code{\link{stacked_barplots}()},
+\code{\link{top_coefficients_barplot}()}
 }
 \concept{Visualizations}

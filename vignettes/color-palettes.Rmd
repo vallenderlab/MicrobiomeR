@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 )
 library(MicrobiomeR)
 pkg.data <- MicrobiomeR:::pkg.private
+vignette_path <- knitr::current_input(dir = TRUE)
+source(file.path(dirname(vignette_path), "small-data.Rinc"), local = TRUE)
 ```
 
 # Introduction
@@ -29,9 +31,12 @@ come built with MicrobiomeR and are used in the plotting functions.
 ## Getting a Color Palette
 
 Getting a color palette is simple.  You can toggle the palette preview with `display=FALSE`.
+The example counts colors from the same deterministic, reduced dataset used by the other
+executable vignettes; it is illustrative and does not replace the full exported dataset.
 
 ```{r message=FALSE, warning=FALSE}
-analyzed_silva <- as_MicrobiomeR_format(MicrobiomeR::raw_silva_2, "analyzed_format")
+small_phyloseq <- small_phyloseq_example(MicrobiomeR::phyloseq_silva_2)
+analyzed_silva <- as_MicrobiomeR_format(small_phyloseq, "analyzed_format")
 data <- analyzed_silva$data$stats_tax_data$Phylum
 data_len <- length(unique(data))
 custom_pal <- get_color_palette(color_no=data_len)

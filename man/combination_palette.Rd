@@ -68,9 +68,10 @@ viridis_magma_palette <- function(viridis_number = 800,
 \seealso{
 \code{\link[grDevices]{colorRamp}}
 
-Other Color Palettes: \code{\link{get_color_palette}},
-  \code{\link{scico_palette}},
-  \code{\link{viridis_magma_palette}},
-  \code{\link{viridis_palette}}
+Other Color Palettes: 
+\code{\link{get_color_palette}()},
+\code{\link{scico_palette}()},
+\code{\link{viridis_magma_palette}()},
+\code{\link{viridis_palette}()}
 }
 \concept{Color Palettes}
