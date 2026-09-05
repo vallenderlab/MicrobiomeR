@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.8.0</span>
       </span>
     </div>
 
@@ -137,18 +137,19 @@ functions.</p>
 <h3 id="getting-a-color-palette">Getting a Color Palette<a class="anchor" aria-label="anchor" href="#getting-a-color-palette"></a>
 </h3>
 <p>Getting a color palette is simple. You can toggle the palette preview
-with <code>display=FALSE</code>.</p>
+with <code>display=FALSE</code>. The example counts colors from the same
+deterministic, reduced dataset used by the other executable vignettes;
+it is illustrative and does not replace the full exported dataset.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">analyzed_silva</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_MicrobiomeR_format.html">as_MicrobiomeR_format</a></span><span class="op">(</span><span class="fu">MicrobiomeR</span><span class="fu">::</span><span class="va"><a href="../reference/raw_silva_2.html">raw_silva_2</a></span>, <span class="st">"analyzed_format"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">small_phyloseq</span> <span class="op">&lt;-</span> <span class="fu">small_phyloseq_example</span><span class="op">(</span><span class="fu">MicrobiomeR</span><span class="fu">::</span><span class="va"><a href="../reference/phyloseq_silva_2.html">phyloseq_silva_2</a></span><span class="op">)</span></span>
+<span><span class="va">analyzed_silva</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_MicrobiomeR_format.html">as_MicrobiomeR_format</a></span><span class="op">(</span><span class="va">small_phyloseq</span>, <span class="st">"analyzed_format"</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">analyzed_silva</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">stats_tax_data</span><span class="op">$</span><span class="va">Phylum</span></span>
 <span><span class="va">data_len</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">custom_pal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_color_palette.html">get_color_palette</a></span><span class="op">(</span>color_no<span class="op">=</span><span class="va">data_len</span><span class="op">)</span></span></code></pre></div>
 <p><img src="color-palettes_files/figure-html/unnamed-chunk-1-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">custom_pal</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "#FDE725" "#D3E21A" "#A6DB35" "#7BD150" "#55C667" "#30B47B" "#218E8D"</span></span>
-<span><span class="co">#&gt;  [8] "#1E1149" "#471078" "#762181" "#A6317D" "#D8456B" "#F7725C" "#FEA26E"</span></span>
-<span><span class="co">#&gt; [15] "#FECF92" "#FCFDBF"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "#FDE725" "#90D743" "#30B47B" "#311165" "#A6317D" "#FC8A62" "#FCFDBF"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="scico">Scico<a class="anchor" aria-label="anchor" href="#scico"></a>

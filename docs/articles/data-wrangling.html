@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.8.0</span>
       </span>
     </div>
 
@@ -138,6 +138,11 @@ file</a>). file.</p>
 <p>(<em><strong>Note</strong></em>: <em>Test data can be found in a
 private environment variable called with
 MicrobiomeR:::pkg.private</em>)</p>
+<p>The complete import workflow is shown below. To keep the installed
+vignette quick to build, the executed examples use a deterministic
+subset containing four samples from each treatment group and the 100
+most abundant OTUs. These results illustrate data structures and should
+not be interpreted as estimates from the full study.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the data files from package</span></span>
 <span><span class="va">input_files</span> <span class="op">&lt;-</span> <span class="va">pkg.data</span><span class="op">$</span><span class="va">input_files</span></span>

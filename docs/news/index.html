@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MicrobiomeR</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.6.3</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.8.0</span>
       </span>
     </div>
 
@@ -85,10 +85,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.6.3" id="microbiomer-063">MicrobiomeR 0.6.3<a class="anchor" aria-label="anchor" href="#microbiomer-063"></a></h2>
+<h2 class="page-header" data-toc-text="0.8.0" id="microbiomer-080">MicrobiomeR 0.8.0<a class="anchor" aria-label="anchor" href="#microbiomer-080"></a></h2>
 <ul><li>Fixed heat-tree rank generation so each rank is filtered independently and nodes are sized by retained descendant OTU counts.</li>
 <li>Clarified the heat-tree node-size interpretation in the package documentation.</li>
 <li>Removed the outdated lab location and improved documentation readability.</li>
+<li>Restored stacked barplot sample labels and removed y-axis baseline padding (<a href="https://github.com/vallenderlab/MicrobiomeR/issues/109" class="external-link">#109</a>).</li>
+<li>Completed package citation metadata and usage guidance (<a href="https://github.com/vallenderlab/MicrobiomeR/issues/33" class="external-link">#33</a>).</li>
+<li>Made the <code>.rda</code> input-validation test independent of the test working directory.</li>
+<li>Reduced routine test and vignette build time with deterministic, clearly labeled example-data subsets while preserving the full exported datasets.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.6.2" id="microbiomer-062">MicrobiomeR 0.6.2<a class="anchor" aria-label="anchor" href="#microbiomer-062"></a></h2>
